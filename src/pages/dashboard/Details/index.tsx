@@ -8,17 +8,16 @@ import TabIcon from '@/components/Icons/mobile/Tab'
 import { useNavigate } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc_lg.png'
 import { aaveLink } from '@/config';
+import { useBalanceStore } from '@/store/balance';
 
 export default function Details() {
   const [showInfo1, setShowInfo1] = useState(false)
   const [showInfo2, setShowInfo2] = useState(false)
   const [showInfo3, setShowInfo3] = useState(false)
   const [showInfo4, setShowInfo4] = useState(false)
+  const { sevenDayApy } = useBalanceStore();
 
   const navigate = useNavigate();
-  const goBack = () => {
-    navigate('/dashboard')
-  }
 
   return (
     <Box height="100%">
@@ -77,14 +76,12 @@ export default function Details() {
             >
               <Box display="flex" alignItems="center" marginTop="16px">
                 <Box
-                  
                   fontSize="30px"
                   fontWeight="800"
                 >
-                  12.16
+                  {sevenDayApy}
                 </Box>
                 <Box
-                  
                   fontSize="16px"
                   fontWeight="700"
                   marginTop="10px"
