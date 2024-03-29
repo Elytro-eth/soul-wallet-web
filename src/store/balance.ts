@@ -87,19 +87,13 @@ export const useBalanceStore = create<IBalanceStore>()(
         })
       },
       fetchApy: async () => {
-        const res = await api.aave.apy({
-          reserveId: import.meta.env.VITE_AAVE_RESERVE_ID,
-          resolutionInHours: 6,
-          from: Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60,
+        const res:any = await api.aave.apy({
+          interval: "7day",
+          vaultAddress: import.meta.env.VITE_TOKEN_AUSDC,
+          network: "optimism"
         });
 
-        const latest7Days = res.data;
-
-        const totalApy = latest7Days.reduce((acc: number, cur: any) => {
-          return acc + cur.liquidityRate_avg;
-        }, 0);
-
-        set({ sevenDayApy: ((totalApy / latest7Days.length) * 100).toFixed(2) });
+        set({ sevenDayApy: BN(res.apy).div(100).toFixed(2) });
       },
       fetchInterest: async (address, chainID) => {
         const date = new Date();
@@ -129,8 +123,6 @@ export const useBalanceStore = create<IBalanceStore>()(
           address,
           chainID: chainId,
         });
-        // const resPrice = await api.price.token({});
-        // const targetedItem = resPrice.data.filter((item: any) => item.chainID === chainId)[0];
         let totalUsdValue = BN('0');
         const tokenList = res.data.balances.map((item: ITokenBalanceItem) => {
           let formattedItem = formatTokenBalance(item);

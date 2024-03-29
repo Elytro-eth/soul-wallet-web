@@ -65,20 +65,6 @@ export default function useTools() {
     });
   };
 
-  const emailJsonFile = async (jsonToSave: any, email: string) => {
-    const res: any = await api.notification.backup({
-      email,
-      filename: generateJsonName('guardian'),
-      backupObject: jsonToSave,
-    });
-    if (res.code === 200) {
-      toast({
-        title: 'Email sent.',
-        status: 'success',
-      });
-      return res;
-    }
-  };
 
   const verifyAddressFormat = (address: string) => {
     return /^0x[0-9a-fA-F]{40}$/.test(address);
@@ -91,7 +77,6 @@ export default function useTools() {
   return {
     verifyAddressFormat,
     downloadJsonFile,
-    emailJsonFile,
     getJsonFromFile,
     generateQrCode,
     generateJsonName,

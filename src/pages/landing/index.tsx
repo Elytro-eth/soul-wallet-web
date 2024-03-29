@@ -12,6 +12,7 @@ import { useBalanceStore } from '@/store/balance';
 import treasuryIcon from '@/assets/mobile/treasury.png'
 import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
+import BN from 'bignumber.js'
 
 export default function Landing() {
   const { loginWallet  } = useWallet();
@@ -21,6 +22,10 @@ export default function Landing() {
     await loginWallet();
     navigate('/dashboard');
   }
+
+  const baseHeight = 59;
+  const aaveHeight = BN(sevenDayApy).div(5).times(baseHeight).toNumber();
+
   return (
     <Box
       width="100%"
@@ -136,7 +141,7 @@ export default function Landing() {
             >
               <Box
                 width="40px"
-                height="59px"
+                height={`${baseHeight}px`}
                 borderRadius="12px 12px 0 0"
                 background="linear-gradient(180deg, rgba(73, 126, 230, 0.60) 0%, rgba(73, 126, 230, 0.10) 100%)"
                 display="flex"
@@ -155,7 +160,7 @@ export default function Landing() {
             >
               <Box
                 width="40px"
-                height="59px"
+                height={`${baseHeight}px`}
                 borderRadius="12px 12px 0 0"
                 background="linear-gradient(180deg, rgba(252, 209, 22, 0.60) 0%, rgba(252, 209, 22, 0.10) 100%)"
                 display="flex"
@@ -174,7 +179,7 @@ export default function Landing() {
             >
               <Box
                 width="40px"
-                height="132px"
+                height={`${aaveHeight}px`}
                 borderRadius="12px 12px 0 0"
                 background="linear-gradient(180deg, rgba(70, 167, 191, 0.60) 0%, rgba(176, 84, 160, 0.10) 100%)"
                 display="flex"
@@ -258,7 +263,7 @@ export default function Landing() {
                 fontSize="14px"
                 textAlign="center"
               >
-                12.16% APY
+                {sevenDayApy}% APY
               </Box>
               <Box
                 
