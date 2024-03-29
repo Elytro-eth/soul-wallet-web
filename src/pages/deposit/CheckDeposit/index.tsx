@@ -30,7 +30,7 @@ import { shareFile } from '@/lib/tools';
 import { useSettingStore } from '@/store/setting';
 import { useHistoryStore } from '@/store/history';
 
-export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive }: any) {
+export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, isModal }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { historyList } = useHistoryStore();
   const { selectedAddress } = useAddressStore();
@@ -42,7 +42,8 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive }: 
   const { isDepositAllChecked, setIsDepositAllChecked } = useSettingStore();
   const isAllChecked = (checked1 && checked2 && checked3) || isDepositAllChecked;
   const innerHeight = window.innerHeight
-  const contentHeight = innerHeight - 64
+  const contentHeight = isModal ? (innerHeight - 140) : (innerHeight - 64)
+  // console.log('isModal', isModal)
 
   useEffect(()=>{
     if(historyList.filter(item => item.action === 'Deposit').length > 3){
@@ -64,7 +65,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive }: 
     <Box width="100%" height={contentHeight} position="relative" overflowY={isAllChecked ? 'auto' : 'hidden'}>
       <Box
         padding="30px"
-        marginBottom={isAllChecked ? '120px' : '0px'}
+        marginBottom={isAllChecked ? '80px' : '0px'}
       >
         <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
           Prior to deposit,<br/> please verify

@@ -7,7 +7,7 @@ import LoadingIcon from '@/assets/mobile/loading.gif';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 
-export default function Review({ onPrev, withdrawAmount, sendTo }: any) {
+export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any) {
   const { getWithdrawOp, signAndSend } = useWallet();
   const [executing, setExecuting] = useState(false);
   const userOpRef = useRef();
@@ -60,9 +60,9 @@ export default function Review({ onPrev, withdrawAmount, sendTo }: any) {
   };
 
   return (
-    <Box width="100%" height="100%">
-      <Header title="Review" showBackButton onBack={onPrev} />
-      <Box padding="30px" minHeight="calc(100vh - 62px)">
+    <Box width="100%" maxWidth="100vw" height="100%">
+      <Header title="Review" onBack={onPrev} />
+      <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         {isTransferingRef.current && (
           <Box
             fontSize="32px"

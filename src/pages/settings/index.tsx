@@ -16,7 +16,7 @@ import { useAddressStore } from '@/store/address';
 import AddressIcon from '@/components/AddressIcon';
 import LogoutIcon from '@/components/Icons/mobile/Logout'
 
-export default function Settings() {
+export default function Settings({ isModal }: any) {
   const { walletName, selectedAddress } = useAddressStore();
   const { logoutWallet } = useWallet();
 
@@ -32,6 +32,8 @@ export default function Settings() {
       justifyContent="flex-start"
       width="100%"
       paddingTop="34px"
+      paddingLeft="30px"
+      paddingRight="30px"
     >
       <Box
         fontSize="18px"

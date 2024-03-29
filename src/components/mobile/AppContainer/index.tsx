@@ -13,6 +13,8 @@ import AddressIcon from '@/components/AddressIcon';
 import useNavigation from '@/hooks/useNavigation'
 import Settings from '@/pages/settings'
 import Activity from '@/pages/activity'
+import Deposit from '@/pages/deposit'
+import Withdraw from '@/pages/withdraw'
 import Details from '@/pages/dashboard/Details'
 
 export function Header({ openMenu, username, ...props }: any) {
@@ -66,11 +68,15 @@ export default function AppContainer() {
 
   const renderModal = (name: any) => {
     if (name === 'settings') {
-      return <Settings />
+      return <Settings isModal={true} />
     } else if (name === 'activity') {
-      return <Activity />
+      return <Activity isModal={true} />
     } else if (name === 'details') {
-      return <Details />
+      return <Details isModal={true} openModal={openModal} />
+    } else if (name === 'deposit') {
+      return <Deposit isModal={true} closeModal={closeModal} />
+    } else if (name === 'withdraw') {
+      return <Withdraw isModal={true} closeModal={closeModal} />
     }
   }
 
@@ -128,15 +134,17 @@ export default function AppContainer() {
               // md: '250px'
             }}
             overflow="auto"
+            padding="0"
           >
             <Box tabIndex={0} />
-            <ModalCloseButton />
+            <ModalCloseButton zIndex="1" marginTop="14px" />
             <ModalBody
               display="flex"
               flexDirection="column"
               alignItems="center"
               justifyContent="flex-start"
               width="100%"
+              padding="0"
             >
               {renderModal(activeModal)}
             </ModalBody>

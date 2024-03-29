@@ -20,7 +20,7 @@ import HistoryIcon from '@/components/Icons/mobile/History'
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit'
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer'
 
-export default function Activity() {
+export default function Activity({ isModal }: any) {
   const { walletName, selectedAddress } = useAddressStore();
   const { historyList } = useHistoryStore();
 
@@ -35,6 +35,8 @@ export default function Activity() {
       width="100%"
       marginTop="34px"
       position="relative"
+      paddingLeft="30px"
+      paddingRight="30px"
     >
       <Box
         fontSize="18px"

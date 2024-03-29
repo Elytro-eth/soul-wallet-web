@@ -247,7 +247,7 @@ export default function Dashboard() {
                   justifyContent="center"
                   width={{ xs: '100%', sm: '34%' }}
                 >
-                  <Link to="/withdraw" style={{ width: "100%" }}>
+                  <Box onClick={() => openModal('withdraw')} style={{ width: "100%" }}>
                     <Box width="100%">
                       <Button
                         width="100%"
@@ -258,7 +258,7 @@ export default function Dashboard() {
                         Transfer
                       </Button>
                     </Box>
-                  </Link>
+                  </Box>
                 </Box>
                 <Box
                   display="flex"
@@ -267,19 +267,19 @@ export default function Dashboard() {
                   justifyContent="center"
                   width={{ xs: '100%', sm: 'calc(66% - 14px)' }}
                 >
-                  <Link to="/deposit" style={{ width: "100%"}}>
+                  <Box onClick={() => openModal('deposit')} style={{ width: "100%"}}>
                     <Box width="100%">
                       <Button width="100%" fontWeight="600" size="xl" type="black" minWidth="auto">
                         Deposit USDC
                       </Button>
                     </Box>
-                  </Link>
+                  </Box>
                 </Box>
               </Box>
             )}
             {!hasBalance && (
               <Box display="flex" alignItems="center" justifyContent="center" gap="14px">
-                <Link to="/deposit" style={{ width: "100%"}}>
+                <Box  onClick={() => openModal('deposit')} style={{ width: "100%"}}>
                   <Box
                     display="flex"
                     flexDirection="column"
@@ -292,7 +292,7 @@ export default function Dashboard() {
                       </Button>
                     </Box>
                   </Box>
-                </Link>
+                </Box>
               </Box>
             )}
           </Box>
