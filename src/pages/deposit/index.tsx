@@ -75,14 +75,14 @@ export default function Deposit({ isModal, closeModal }: any) {
   const innerHeight = isModal ? (window.innerHeight - 40) : window.innerHeight
 
   const onFinish = useCallback(() => {
-    if(historyList.length){
-      if (isModal) {
-        closeModal()
-      } else {
+    if (isModal) {
+      closeModal()
+    } else {
+      if (historyList.length) {
         navigate('/dashboard')
+      } else {
+        navigate('/intro')
       }
-    }else{
-      navigate('/intro')
     }
   }, [isModal])
 

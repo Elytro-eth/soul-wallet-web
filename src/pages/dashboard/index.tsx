@@ -279,7 +279,7 @@ export default function Dashboard() {
             )}
             {!hasBalance && (
               <Box display="flex" alignItems="center" justifyContent="center" gap="14px">
-                <Link to="/deposit" style={{ width: "100%"}}>
+                <Box  onClick={() => openModal('deposit')} style={{ width: "100%"}}>
                   <Box
                     display="flex"
                     flexDirection="column"
@@ -292,7 +292,7 @@ export default function Dashboard() {
                       </Button>
                     </Box>
                   </Box>
-                </Link>
+                </Box>
               </Box>
             )}
           </Box>

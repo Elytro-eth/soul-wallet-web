@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { Box } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import InputAmount from './InputAmount';
 import Review from './Review';
@@ -25,25 +26,29 @@ export default function Withdraw({ isModal }: any) {
     setStep(step + 1);
   }, [step]);
 
-  return <FadeSwitch key={step}>
-    {step === 0 && (
-      <InputAmount
-        withdrawAmount={withdrawAmount}
-        onWithdrawAmountChange={setWithdrawAmount}
-        sendTo={sendTo}
-        onSendToChange={setSendTo}
-        onPrev={onPrev}
-        onNext={onNext}
-        isModal={true}
-      />
-    )}
-    {step === 1 && (
-      <Review
-        withdrawAmount={withdrawAmount}
-        onPrev={onPrev}
-        sendTo={sendTo}
-        isModal={true}
-      />
-    )}
-  </FadeSwitch>
+  return (
+    <Box width="100%" height="100%">
+      <FadeSwitch key={step}>
+        {step === 0 && (
+          <InputAmount
+            withdrawAmount={withdrawAmount}
+            onWithdrawAmountChange={setWithdrawAmount}
+            sendTo={sendTo}
+            onSendToChange={setSendTo}
+            onPrev={onPrev}
+            onNext={onNext}
+            isModal={true}
+          />
+        )}
+        {step === 1 && (
+          <Review
+            withdrawAmount={withdrawAmount}
+            onPrev={onPrev}
+            sendTo={sendTo}
+            isModal={true}
+          />
+        )}
+      </FadeSwitch>
+    </Box>
+  )
 }

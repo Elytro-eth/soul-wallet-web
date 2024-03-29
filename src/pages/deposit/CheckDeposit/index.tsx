@@ -65,7 +65,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
     <Box width="100%" height={contentHeight} position="relative" overflowY={isAllChecked ? 'auto' : 'hidden'}>
       <Box
         padding="30px"
-        marginBottom={isAllChecked ? '120px' : '0px'}
+        marginBottom={isAllChecked ? '80px' : '0px'}
       >
         <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
           Prior to deposit,<br/> please verify
