@@ -14,7 +14,7 @@ export default {
   provider: `https://mainnet.optimism.io`,
   scanUrl: 'https://optimistic.etherscan.io',
   scanName: 'Etherscan',
-  bundlerUrl: `https://api.soulwallet.io/alpha/appapi/bundler/optimism/rpc`,
+  bundlerUrl: `${import.meta.env.VITE_BACKEND_URL}/appapi/bundler/optimism/rpc`,
   maxCostMultiplier: 120,
   chainId,
   chainIdHex: `0x${(chainId).toString(16)}`,
