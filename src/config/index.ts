@@ -18,6 +18,8 @@ import OpConfig from './chains/op';
 // import OpConfig from './chains/op-sepolia';
 // import SepoliaConfig from './chains/sepolia';
 
+export const xLink = 'https://twitter.com/stabledotcash';
+
 export const chainIdMapping = {
   1: 'ETH Mainnet',
   5: 'Goerli',
@@ -106,7 +108,7 @@ export default {
     {
       icon: IconTwitter,
       iconActivated: IconTwitterActivated,
-      link: 'https://twitter.com/stabledotcash',
+      link: xLink,
     },
     // {
     //   icon: IconTelegram,

@@ -135,6 +135,7 @@ export default function AppContainer() {
             }}
             overflow="auto"
             padding="0"
+            boxShadow={"none"}
           >
             <Box tabIndex={0} />
             <ModalCloseButton zIndex="1" marginTop="14px" />

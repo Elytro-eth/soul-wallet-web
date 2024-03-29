@@ -1,6 +1,7 @@
-import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure } from '@chakra-ui/react';
+import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import InputLoading from '@/components/InputLoading';
+import { xLink } from '@/config';
 
 export default function InputInviteCode({value, onChange, codeStatus, checking, onNext}: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -92,7 +93,9 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
               We are currently under internal testing. Please be patient and join our Telegram group. We’ll send out more invitations very soon. Thanks again for your patience.
             </Box>
             <Box width="100%">
-              <Button size="xl" type="black" width="100%">Follow Stable.cash on X</Button>
+              <Link target='_blank' href={xLink}>
+                <Button size="xl" type="black" width="100%">Follow Stable.cash on X</Button>
+              </Link>
             </Box>
           </ModalBody>
         </ModalContent>
