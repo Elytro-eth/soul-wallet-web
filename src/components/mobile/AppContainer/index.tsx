@@ -31,7 +31,7 @@ export function Header({ openMenu, username, ...props }: any) {
       {...props}
     >
       <Box display="flex" gap="2" alignItems="center" justifyContent="center">
-        <Box fontSize="16px" lineHeight={"20px"} fontWeight="800">{walletName}</Box>
+        <Box fontSize="16px" lineHeight={"20px"} fontWeight="700">{walletName}</Box>
       </Box>
       <Box fontSize="18px" fontWeight="700" color="black" lineHeight="24px">
         <Box background="white" height="36px" width="36px" borderRadius="36px" display="flex" alignItems="center" justifyContent="center" onClick={openMenu}>

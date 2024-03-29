@@ -43,7 +43,7 @@ export default function Details({ isModal, openModal }: any) {
           </Box>
           <Box
             fontSize="36px"
-            fontWeight="800"
+            fontWeight="700"
             marginTop="10px"
           >
             USDC
@@ -85,7 +85,7 @@ export default function Details({ isModal, openModal }: any) {
               <Box display="flex" alignItems="center" marginTop="16px">
                 <Box
                   fontSize="30px"
-                  fontWeight="800"
+                  fontWeight="700"
                 >
                   {sevenDayApy}
                 </Box>
@@ -113,14 +113,14 @@ export default function Details({ isModal, openModal }: any) {
                 <Box
 
                   fontSize="30px"
-                  fontWeight="800"
+                  fontWeight="700"
                 >
                   $825.6
                 </Box>
                 <Box
 
                   fontSize="16px"
-                  fontWeight="800"
+                  fontWeight="700"
                   marginTop="10px"
                   marginLeft="10px"
                 >

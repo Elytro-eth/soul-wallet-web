@@ -196,7 +196,7 @@ export default function InputAmount({
               fontSize="14px"
               borderRadius="48px"
               padding="2px 12px"
-              fontWeight="800"
+              fontWeight="700"
               marginLeft="10px"
               onClick={()=> onWithdrawAmountChange(Number(totalUsdValue))}
             >

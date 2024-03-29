@@ -74,7 +74,7 @@ export default function Activity({ isModal }: any) {
                     display="flex"
                     alignItems="center"
                   >
-                    <Box fontSize="14px" fontWeight="800">{item.action}</Box>
+                    <Box fontSize="14px" fontWeight="700">{item.action}</Box>
                     {/* <Box
                         fontSize="12px"
                         background="#F1F1F1"

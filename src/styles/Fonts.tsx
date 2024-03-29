@@ -6,7 +6,7 @@ import { Global } from '@emotion/react';
 import SfRegular from '@/assets/fonts/sf/SF-Pro-Text-Regular.otf';
 import SfSemiBold from '@/assets/fonts/sf/SF-Pro-Text-Semibold.otf';
 import SfBold from '@/assets/fonts/sf/SF-Pro-Text-Bold.otf';
-import SfExtraBold from '@/assets/fonts/Nunito/Nunito-ExtraBold.ttf';
+// import SfExtraHeavy from '@/assets/fonts/sf/SF-Pro-Text-Heavy.otf';
 
 const Fonts = () => (
   <Global
@@ -25,11 +25,6 @@ const Fonts = () => (
       font-family: 'SF';
       font-weight: 700;
       src: url(${SfBold});
-    }
-    @font-face {
-      font-family: 'SF';
-      font-weight: 800;
-      src: url(${SfExtraBold});
     }
  `}
   />

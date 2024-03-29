@@ -28,7 +28,7 @@ const GuardianInfo = ({ guardiansInfo }: any) => {
   const guardianList = guardiansInfo.guardianDetails.guardians;
   return (
     <Box>
-      <Text mb="2" fontSize="20px" fontWeight="800" textAlign={'center'}>
+      <Text mb="2" fontSize="20px" fontWeight="700" textAlign={'center'}>
         Confirm Guardian Change
       </Text>
       <Text fontSize={'14px'} textAlign={'center'} fontWeight={'500'} mb="18px">

@@ -114,14 +114,14 @@ export default function Landing() {
               <Box
                 
                 fontSize="72px"
-                fontWeight="800"
+                fontWeight="700"
               >
                 {sevenDayApy}
               </Box>
               <Box
                 
                 fontSize="24px"
-                fontWeight="800"
+                fontWeight="700"
                 marginTop="24px"
                 marginLeft="10px"
               >

@@ -15,7 +15,7 @@ export function SectionMenuItem({ children, isActive, ...restProps }: any) {
   return (
     <Box
       
-      fontWeight="800"
+      fontWeight="700"
       fontSize="20px"
       marginRight="24px"
       cursor="pointer"

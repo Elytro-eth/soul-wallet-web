@@ -198,7 +198,7 @@ export default function Dashboard() {
                   
                   fontSize={fontSize}
                   lineHeight={"1"}
-                  fontWeight="800"
+                  fontWeight="700"
                 >
                   {valueLeft}
                 </Box>
@@ -207,7 +207,7 @@ export default function Dashboard() {
                     
                     fontSize={smFontSize}
                     lineHeight={"1"}
-                    fontWeight="800"
+                    fontWeight="700"
                     marginTop={fontBottomMargin}
                     // marginLeft="10px"
                     color="#939393"
@@ -369,7 +369,7 @@ export default function Dashboard() {
                         display="flex"
                         alignItems="center"
                       >
-                        <Box fontSize="14px" fontWeight="800">{item.action}</Box>
+                        <Box fontSize="14px" fontWeight="700">{item.action}</Box>
                         {/* <Box
                             fontSize="12px"
                             background="#F1F1F1"
