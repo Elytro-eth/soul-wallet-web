@@ -87,13 +87,14 @@ export const useBalanceStore = create<IBalanceStore>()(
         })
       },
       fetchApy: async () => {
-        const res:any = await api.aave.apy({
-          interval: "7day",
-          vaultAddress: import.meta.env.VITE_TOKEN_AUSDC,
-          network: "optimism"
-        });
+        set({ sevenDayApy: '14.98' });
+        // const res:any = await api.aave.apy({
+        //   interval: "7day",
+        //   vaultAddress: import.meta.env.VITE_TOKEN_AUSDC,
+        //   network: "optimism"
+        // });
 
-        set({ sevenDayApy: BN(res.apy).div(100).toFixed(2) });
+        // set({ sevenDayApy: BN(res.apy).div(100).toFixed(2) });
       },
       fetchInterest: async (address, chainID) => {
         const date = new Date();
