@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Box, Image, Link } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header'
 import Button from '@/components/mobile/Button'
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc_lg.png'
 import { aaveLink } from '@/config';
 
-export default function Details() {
+export default function Details({ isModal, openModal }: any) {
   const [showInfo1, setShowInfo1] = useState(false)
   const [showInfo2, setShowInfo2] = useState(false)
   const [showInfo3, setShowInfo3] = useState(false)
@@ -19,6 +19,14 @@ export default function Details() {
   const goBack = () => {
     navigate('/dashboard')
   }
+
+  const goToDeposit = useCallback(() => {
+    if (isModal) {
+      openModal('deposit')
+    } else {
+      navigate('/deposit')
+    }
+  }, [isModal])
 
   return (
     <Box height="100%">
@@ -46,7 +54,7 @@ export default function Details() {
             alignItems="center"
           >
             <Box
-              
+
               fontSize="14px"
               fontWeight="700"
               lineHeight="17.5px"
@@ -77,14 +85,14 @@ export default function Details() {
             >
               <Box display="flex" alignItems="center" marginTop="16px">
                 <Box
-                  
+
                   fontSize="30px"
                   fontWeight="800"
                 >
                   12.16
                 </Box>
                 <Box
-                  
+
                   fontSize="16px"
                   fontWeight="700"
                   marginTop="10px"
@@ -106,14 +114,14 @@ export default function Details() {
             >
               <Box display="flex" alignItems="center" marginTop="16px">
                 <Box
-                  
+
                   fontSize="30px"
                   fontWeight="800"
                 >
                   $825.6
                 </Box>
                 <Box
-                  
+
                   fontSize="16px"
                   fontWeight="800"
                   marginTop="10px"
@@ -266,7 +274,7 @@ export default function Details() {
             )}
           </Box>
 
-          <Link as={Rlink} to="/deposit" style={{ width: "100%" }}>
+          <Box onClick={goToDeposit} style={{ width: "100%" }}>
             <Box
               marginTop="50px"
               marginBottom="10px"
@@ -274,7 +282,7 @@ export default function Details() {
             >
               <Button size="xl" type="black" width="100%">Deposit to save</Button>
             </Box>
-          </Link>
+          </Box>
         </Box>
       </Box>
     </Box>

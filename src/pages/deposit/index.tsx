@@ -55,7 +55,7 @@ const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => 
         )}
         {activeIndex === 3 && (
           <Box display="flex" alignItems="center" justifyContent="center">
-            <Box onClick={() => navigate('/dashboard')} fontWeight="700" fontSize="18px" cursor="pointer">I’ve done with all these steps!</Box>
+            <Box onClick={onFinish} fontWeight="700" fontSize="18px" cursor="pointer">I’ve done with all these steps!</Box>
           </Box>
         )}
         <Box>
@@ -66,21 +66,25 @@ const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => 
   )
 }
 
-export default function Deposit() {
+export default function Deposit({ isModal, closeModal }: any) {
   const navigate = useNavigate();
   const [swiper, setSwiper] = useState<any>(null)
   const [step, setStep] = useState(0)
   const [isPaginationActive, setIsPaginationActive] = useState(false)
   const { historyList } = useHistoryStore();
-  const innerHeight = window.innerHeight
+  const innerHeight = isModal ? (window.innerHeight - 40) : window.innerHeight
 
-  const onFinish = () => {
+  const onFinish = useCallback(() => {
     if(historyList.length){
-      navigate('/dashboard')
+      if (isModal) {
+        closeModal()
+      } else {
+        navigate('/dashboard')
+      }
     }else{
       navigate('/intro')
     }
-  }
+  }, [isModal])
 
   const onPrev = useCallback(() => {
     console.log('prev')
@@ -117,11 +121,12 @@ export default function Deposit() {
      * }); */
   }, [])
 
+  console.log('isModal', isModal)
   return (
     <Box width="100%" height={innerHeight} overflow="hidden">
       <Header
         title="Deposit"
-        showBackButton
+        showBackButton={!isModal}
         onBack={onPrev}
       />
       <Swiper
@@ -130,16 +135,16 @@ export default function Deposit() {
         onInit={onInit}
       >
         <SwiperSlide>
-          <CheckDeposit setIsPaginationActive={setIsPaginationActive} onPrev={onPrev} onNext={onNext} />
+          <CheckDeposit setIsPaginationActive={setIsPaginationActive} onPrev={onPrev} onNext={onNext} isModal={isModal} />
         </SwiperSlide>
         <SwiperSlide>
-          <MakeTransfer onPrev={onPrev} onNext={onNext} />
+          <MakeTransfer onPrev={onPrev} onNext={onNext} isModal={isModal} />
         </SwiperSlide>
         <SwiperSlide>
-          <SelectNetwork onPrev={onPrev} onNext={onNext} />
+          <SelectNetwork onPrev={onPrev} onNext={onNext} isModal={isModal} />
         </SwiperSlide>
         <SwiperSlide>
-          <SendToken onFinish={onFinish} />
+          <SendToken onFinish={onFinish} isModal={isModal} />
         </SwiperSlide>
       </Swiper>
       <Pagination isActive={isPaginationActive} activeIndex={step} count={4} onNext={onNext} onFinish={onFinish} />

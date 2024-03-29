@@ -4,7 +4,7 @@ import InputAmount from './InputAmount';
 import Review from './Review';
 import FadeSwitch from '@/components/FadeSwitch';
 
-export default function Withdraw() {
+export default function Withdraw({ isModal }: any) {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState('');
@@ -26,18 +26,24 @@ export default function Withdraw() {
   }, [step]);
 
   return <FadeSwitch key={step}>
-    {step === 0 && <InputAmount
-      withdrawAmount={withdrawAmount}
-      onWithdrawAmountChange={setWithdrawAmount}
-      sendTo={sendTo}
-      onSendToChange={setSendTo}
-      onPrev={onPrev}
-      onNext={onNext}
-    />}
-    {step === 1 && <Review
-      withdrawAmount={withdrawAmount}
-      onPrev={onPrev}
-      sendTo={sendTo}
-    />}
+    {step === 0 && (
+      <InputAmount
+        withdrawAmount={withdrawAmount}
+        onWithdrawAmountChange={setWithdrawAmount}
+        sendTo={sendTo}
+        onSendToChange={setSendTo}
+        onPrev={onPrev}
+        onNext={onNext}
+        isModal={true}
+      />
+    )}
+    {step === 1 && (
+      <Review
+        withdrawAmount={withdrawAmount}
+        onPrev={onPrev}
+        sendTo={sendTo}
+        isModal={true}
+      />
+    )}
   </FadeSwitch>
 }

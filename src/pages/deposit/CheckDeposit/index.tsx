@@ -30,7 +30,7 @@ import { shareFile } from '@/lib/tools';
 import { useSettingStore } from '@/store/setting';
 import { useHistoryStore } from '@/store/history';
 
-export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive }: any) {
+export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, isModal }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { historyList } = useHistoryStore();
   const { selectedAddress } = useAddressStore();
@@ -42,7 +42,8 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive }: 
   const { isDepositAllChecked, setIsDepositAllChecked } = useSettingStore();
   const isAllChecked = (checked1 && checked2 && checked3) || isDepositAllChecked;
   const innerHeight = window.innerHeight
-  const contentHeight = innerHeight - 64
+  const contentHeight = isModal ? (innerHeight - 140) : (innerHeight - 64)
+  // console.log('isModal', isModal)
 
   useEffect(()=>{
     if(historyList.filter(item => item.action === 'Deposit').length > 3){

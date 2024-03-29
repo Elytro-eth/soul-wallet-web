@@ -13,7 +13,8 @@ export default function InputAmount({
   withdrawAmount,
   onWithdrawAmountChange,
   sendTo,
-  onSendToChange
+  onSendToChange,
+  isModal
 }: any) {
   const { totalUsdValue, } = useBalanceStore();
   const [isENSOpen, setIsENSOpen] = useState(false);
@@ -108,10 +109,10 @@ export default function InputAmount({
     <Box width="100%" height="100%">
       <Header
         title="Transfer"
-        showBackButton
+        showBackButton={!isModal}
         onBack={onPrev}
       />
-      <Box padding="30px" minHeight="calc(100vh - 62px)">
+      <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         <Box marginTop="46px">
           <Box
             fontSize="24px"
@@ -276,15 +277,15 @@ export default function InputAmount({
             </Box>
           </Box>
           }
-           <Box
-          padding="10px"
-          borderRadius="12px"
-          background="rgba(252, 151, 0, 0.10)"
-          marginTop="12px"
-          fontSize="14px"
-          fontWeight="400"
-        >
-          Confirm deposit address is on <Box as="span" fontWeight="700">OP Mainnet</Box>; deposit to other networks could result in lost assets.
+          <Box
+            padding="10px"
+            borderRadius="12px"
+            background="rgba(252, 151, 0, 0.10)"
+            marginTop="12px"
+            fontSize="14px"
+            fontWeight="400"
+          >
+            Confirm deposit address is on <Box as="span" fontWeight="700">OP Mainnet</Box>; deposit to other networks could result in lost assets.
           </Box>
         </Box>
         <Box
