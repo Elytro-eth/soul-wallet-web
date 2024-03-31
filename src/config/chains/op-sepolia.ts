@@ -14,7 +14,7 @@ export default {
   provider: `https://sepolia.optimism.io`,
   scanUrl: 'https://sepolia-optimism.etherscan.io',
   scanName: 'Etherscan',
-  bundlerUrl: `https://api-dev.soulwallet.io/bundler/op-sepolia/rpc`,
+  bundlerUrl: `https://api-dev.stable.cash/bundler/op-sepolia/rpc`,
   maxCostMultiplier: 120,
   chainId,
   chainIdHex: `0x${(chainId).toString(16)}`,

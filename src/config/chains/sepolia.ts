@@ -14,7 +14,7 @@ export default {
   provider: `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_KEY}`,
   scanUrl: 'https://sepolia.etherscan.io',
   scanName: 'Etherscan',
-  bundlerUrl: `https://api-dev.soulwallet.io/bundler/eth-sepolia/rpc`,
+  bundlerUrl: `https://api-dev.stable.cash/bundler/eth-sepolia/rpc`,
   maxCostMultiplier: 110,
   chainId,
   chainIdHex: `0x${(chainId).toString(16)}`,

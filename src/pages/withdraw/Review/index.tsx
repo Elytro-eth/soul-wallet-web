@@ -66,7 +66,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal, closeM
 
   return (
     <Box width="100%" maxWidth="100vw" height="100%">
-      <Header title="Review" onBack={onPrev} />
+      <Header title="Review" showBackButton onBack={onPrev} />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         {isTransferingRef.current && (
           <Box

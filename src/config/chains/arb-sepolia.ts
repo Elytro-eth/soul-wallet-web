@@ -14,7 +14,7 @@ export default {
   provider: `https://arb-sepolia.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_KEY_ARB_SEPOLIA}`,
   scanUrl: 'https://sepolia.arbiscan.io',
   scanName: 'Arbiscan',
-  bundlerUrl: `https://api-dev.soulwallet.io/bundler/arb-sepolia/rpc`,
+  bundlerUrl: `https://api-dev.stable.cash/bundler/arb-sepolia/rpc`,
   maxCostMultiplier: 120,
   chainId,
   chainIdHex: `0x${chainId.toString(16)}`,
