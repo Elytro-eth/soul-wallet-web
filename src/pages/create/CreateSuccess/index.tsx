@@ -8,14 +8,15 @@ import { useNavigate } from 'react-router-dom';
 export default function CreateSuccess({ credential, username, invitationCode }: any) {
   const { getActivateOp, signAndSend, initWallet } = useWallet();
   const userOpRef = useRef<any>();
-  const [executing, setExecuting] = useState(false);
+  // const [executing, setExecuting] = useState(false);
   const initialKeysRef = useRef<any>();
   const creatingRef = useRef(false);
+  const executingRef = useRef(false);
   const navigate = useNavigate();
   const toast = useToast();
 
   const prepareAction = async () => {
-    try{
+    try {
       if (!initialKeysRef.current) {
         const { initialKeys: _initialKeys } = await initWallet(credential, username, invitationCode);
         initialKeysRef.current = _initialKeys;
@@ -25,34 +26,37 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
         const _userOp = await getActivateOp(initialKeysRef.current);
         userOpRef.current = _userOp;
       }
-    }catch(e){
+    } catch (e) {
       creatingRef.current = false;
-      setExecuting(false);
+      executingRef.current = false;
+      // setExecuting(false);
     }
-   
   };
 
   useEffect(() => {
     prepareAction();
     const interval = setInterval(() => {
-      if(creatingRef.current){
-        return
+      if (creatingRef.current) {
+        return;
       }
       prepareAction();
     }, 15000);
     return () => clearInterval(interval);
   }, []);
 
-  const onCreate = async () => {
-    if(executing){
-      return
+  const onCreate = async (skipExecutingCheck = false) => {
+    console.log('executingRef', executingRef.current)
+    if (executingRef.current && !skipExecutingCheck) {
+      return;
     }
-    setExecuting(true);
+    executingRef.current = true;
+    // setExecuting(true);
     creatingRef.current = true;
     if (userOpRef.current) {
       try {
         await signAndSend(userOpRef.current);
-        setExecuting(false);
+        executingRef.current = false;
+        // setExecuting(false);
         navigate('/intro');
       } catch (error: any) {
         toast({
@@ -61,11 +65,13 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
           status: 'error',
         });
         creatingRef.current = false;
-        setExecuting(false);
+        executingRef.current = false;
+        // setExecuting(false);
       }
     } else {
+      creatingRef.current = false;
       setTimeout(() => {
-        onCreate();
+        onCreate(true);
       }, 1000);
     }
   };

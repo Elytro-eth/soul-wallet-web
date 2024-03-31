@@ -9,52 +9,56 @@ import useWallet from '@/hooks/useWallet';
 
 export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any) {
   const { getWithdrawOp, signAndSend } = useWallet();
-  const [executing, setExecuting] = useState(false);
+  // const [executing, setExecuting] = useState(false);
+  const executingRef = useRef(false);
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);
   const isTransferingRef = useRef(false);
 
   const prepareAction = async () => {
-    try{
+    try {
       const _userOp = await getWithdrawOp(withdrawAmount, sendTo);
       userOpRef.current = _userOp;
-    }catch(e){
-      setExecuting(false);
-      isTransferingRef.current = false;
+    } catch (e) {
+      // setExecuting(false);
+      executingRef.current = false;
+      // isTransferingRef.current = false;
     }
   };
 
   useEffect(() => {
     prepareAction();
     const interval = setInterval(() => {
-      if(isTransferingRef.current || isCompletedRef.current){
-        return
+      if (isTransferingRef.current || isCompletedRef.current) {
+        return;
       }
       prepareAction();
     }, 15000);
     return () => clearInterval(interval);
   }, []);
 
-  const onWithdraw = async () => {
-    if(executing){
-      return
+  const onWithdraw = async (skipExecutingCheck = false) => {
+    console.log('executingRef', executingRef.current);
+    if (executingRef.current && !skipExecutingCheck) {
+      return;
     }
-    setExecuting(true);
+    executingRef.current = true;
     isTransferingRef.current = true;
-    console.log('on withdraw', userOpRef)
     if (userOpRef.current) {
       try {
         await signAndSend(userOpRef.current);
         isTransferingRef.current = false;
         isCompletedRef.current = true;
       } catch (e) {
-        setExecuting(false);
+        // setExecuting(false);
+        executingRef.current = false;
         isTransferingRef.current = false;
         isCompletedRef.current = false;
       }
     } else {
+      executingRef.current = false;
       setTimeout(() => {
-        onWithdraw();
+        onWithdraw(true);
       }, 1000);
     }
   };
