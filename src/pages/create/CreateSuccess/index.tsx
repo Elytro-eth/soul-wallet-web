@@ -50,7 +50,6 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       return;
     }
     executingRef.current = true;
-    // setExecuting(true);
     creatingRef.current = true;
     if (userOpRef.current) {
       try {

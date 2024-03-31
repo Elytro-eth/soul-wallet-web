@@ -25,6 +25,10 @@ export default function FindRoute({ children }: { children: ReactNode }) {
     if (storeVersion !== storageVersion) {
       storage.setItem('storeVersion', storeVersion);
       clearLogData();
+      navigate({
+        pathname: '/landing',
+        search: location.search,
+      })
     }
 
     if (!selectedAddress && !allowBypass) {
