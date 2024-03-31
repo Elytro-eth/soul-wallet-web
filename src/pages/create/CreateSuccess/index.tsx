@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 export default function CreateSuccess({ credential, username, invitationCode }: any) {
   const { getActivateOp, signAndSend, initWallet } = useWallet();
   const userOpRef = useRef<any>();
-  // const [executing, setExecuting] = useState(false);
   const initialKeysRef = useRef<any>();
   const creatingRef = useRef(false);
   const executingRef = useRef(false);
@@ -29,7 +28,6 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
     } catch (e) {
       creatingRef.current = false;
       executingRef.current = false;
-      // setExecuting(false);
     }
   };
 
@@ -45,12 +43,11 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
   }, []);
 
   const onCreate = async (skipExecutingCheck = false) => {
-    console.log('executingRef', executingRef.current)
+    creatingRef.current = true;
     if (executingRef.current && !skipExecutingCheck) {
       return;
     }
     executingRef.current = true;
-    creatingRef.current = true;
     if (userOpRef.current) {
       try {
         await signAndSend(userOpRef.current);

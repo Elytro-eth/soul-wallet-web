@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import LoadingIcon from '@/assets/mobile/loading.gif';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
+import useNavigation from '@/hooks/useNavigation';
 
-export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any) {
+export default function Review({ onPrev, withdrawAmount, sendTo, isModal, closeModal, }: any) {
   const { getWithdrawOp, signAndSend } = useWallet();
-  // const [executing, setExecuting] = useState(false);
   const executingRef = useRef(false);
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);
@@ -20,9 +20,10 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
       const _userOp = await getWithdrawOp(withdrawAmount, sendTo);
       userOpRef.current = _userOp;
     } catch (e) {
-      // setExecuting(false);
+      // user may reach limit of gas sponsor
       executingRef.current = false;
-      // isTransferingRef.current = false;
+      isTransferingRef.current = false;
+      closeModal();
     }
   };
 
@@ -38,7 +39,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
   }, []);
 
   const onWithdraw = async (skipExecutingCheck = false) => {
-    console.log('executingRef', executingRef.current);
+    isTransferingRef.current = true;
     if (executingRef.current && !skipExecutingCheck) {
       return;
     }
@@ -159,11 +160,11 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
           )}
 
           {isCompletedRef.current && (
-            <Link to="/dashboard">
+            <a onClick={() => closeModal()}>
               <Button size="xl" type="black" width="100%">
                 Confirm
               </Button>
-            </Link>
+            </a>
           )}
         </Box>
       </Box>
