@@ -100,7 +100,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal, closeM
             flexDirection="column"
           >
             <Box marginBottom="6px">
-              <Image width="100px" height="100px" src={LoadingIcon} />
+              <Image width="100px" height="100px" src={CompletedIcon} />
             </Box>
             <Box>Transfer completed</Box>
           </Box>

@@ -77,12 +77,12 @@ export default function Deposit({ isModal, closeModal }: any) {
   const onFinish = useCallback(() => {
     if (isModal) {
       closeModal()
+    }
+
+    if (historyList.length) {
+      navigate('/dashboard')
     } else {
-      if (historyList.length) {
-        navigate('/dashboard')
-      } else {
-        navigate('/intro')
-      }
+      navigate('/intro')
     }
   }, [isModal])
 
