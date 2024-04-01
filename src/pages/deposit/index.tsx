@@ -13,6 +13,7 @@ import {
   ModalBody,
   useDisclosure,
 } from '@chakra-ui/react';
+import api from '@/lib/api';
 import NextIcon from '@/components/Icons/mobile/Next';
 import Header from '@/components/mobile/Header'
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +26,8 @@ import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { useHistoryStore } from '@/store/history';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { useChainStore } from '@/store/chain';
+import { useAddressStore } from '@/store/address';
 // import { Pagination } from 'swiper/modules';
 
 const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => {
@@ -72,29 +75,36 @@ export default function Deposit({ isModal, closeModal }: any) {
   const [step, setStep] = useState(0)
   const [isPaginationActive, setIsPaginationActive] = useState(false)
   const { historyList } = useHistoryStore();
+  const {selectedChainId} = useChainStore();
+  const { selectedAddress } = useAddressStore();
   const innerHeight = isModal ? (window.innerHeight - 40) : window.innerHeight
 
-  const onFinish = useCallback(() => {
+  const onFinish = useCallback(async() => {
     if (isModal) {
       closeModal()
     } else {
-      if (historyList.length) {
-        navigate('/dashboard')
-      } else {
-        navigate('/intro')
-      }
+      navigate('/dashboard')
     }
   }, [isModal])
 
-  const onPrev = useCallback(() => {
+  const onPrev = useCallback(async() => {
     console.log('prev')
 
     if (step > 0) {
       // setStep(step - 1)
       swiper.slidePrev()
     }else{
-      // onFinish()
-      navigate(-1)
+      if(historyList.length){
+        navigate('/dashboard')
+        return
+      }
+      // get history length
+      const res = await api.token.history({ address: selectedAddress, chainID: selectedChainId });
+      if (res.data.history.length) {
+        navigate('/dashboard')
+      } else {
+        navigate('/intro')
+      }
     }
   }, [step, swiper])
 
