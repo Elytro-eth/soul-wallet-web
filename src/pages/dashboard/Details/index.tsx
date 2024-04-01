@@ -31,7 +31,7 @@ export default function Details({ isModal, registerScrollable }: any) {
   }, [isModal])
 
   useEffect(() => {
-    registerScrollable(scrollableRef.current)
+    if (registerScrollable) registerScrollable(scrollableRef.current)
   }, [])
 
   return (

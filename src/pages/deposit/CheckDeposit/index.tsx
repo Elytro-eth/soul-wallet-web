@@ -63,7 +63,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
   }, [checked1, checked2, checked3])
 
   useEffect(() => {
-    registerScrollable(scrollableRef.current)
+    if (registerScrollable) registerScrollable(scrollableRef.current)
   }, [])
 
   return (
