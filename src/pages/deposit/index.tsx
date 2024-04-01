@@ -23,6 +23,7 @@ import SendToken from './SendToken'
 import FadeSwitch from '@/components/FadeSwitch';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { useHistoryStore } from '@/store/history';
+import useWalletContext from '@/context/hooks/useWalletContext';
 import 'swiper/css';
 import 'swiper/css/pagination';
 // import { Pagination } from 'swiper/modules';
@@ -66,7 +67,8 @@ const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => 
   )
 }
 
-export default function Deposit({ isModal, closeModal }: any) {
+export default function Deposit({ isModal }: any) {
+  const { closeModal } = useWalletContext()
   const navigate = useNavigate();
   const [swiper, setSwiper] = useState<any>(null)
   const [step, setStep] = useState(0)

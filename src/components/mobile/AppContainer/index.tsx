@@ -10,12 +10,12 @@ import IconProfile from '@/assets/icons/profile.svg';
 import Button from '@/components/mobile/Button'
 import useWallet from '@/hooks/useWallet';
 import AddressIcon from '@/components/AddressIcon';
-import useNavigation from '@/hooks/useNavigation'
 import Settings from '@/pages/settings'
 import Activity from '@/pages/activity'
 import Deposit from '@/pages/deposit'
 import Withdraw from '@/pages/withdraw'
 import Details from '@/pages/dashboard/Details'
+import useWalletContext from '@/context/hooks/useWalletContext';
 
 export function Header({ openMenu, username, ...props }: any) {
   const { walletName, selectedAddress } = useAddressStore();
@@ -43,7 +43,7 @@ export function Header({ openMenu, username, ...props }: any) {
 }
 
 export default function AppContainer() {
-  const { isModalOpen, openModal, closeModal, activeModal } = useNavigation()
+  const { isModalOpen, openModal, closeModal, activeModal } = useWalletContext()
   const { logoutWallet } = useWallet();
   const innerHeight = window.innerHeight
   const contentHeight = innerHeight - 56
@@ -72,11 +72,11 @@ export default function AppContainer() {
     } else if (name === 'activity') {
       return <Activity isModal={true} />
     } else if (name === 'details') {
-      return <Details isModal={true} openModal={openModal} />
+      return <Details isModal={true} />
     } else if (name === 'deposit') {
-      return <Deposit isModal={true} closeModal={closeModal} />
+      return <Deposit isModal={true} />
     } else if (name === 'withdraw') {
-      return <Withdraw isModal={true} closeModal={closeModal} />
+      return <Withdraw isModal={true} />
     }
   }
 

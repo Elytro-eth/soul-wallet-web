@@ -9,8 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc_lg.png'
 import { aaveLink } from '@/config';
 import { useBalanceStore } from '@/store/balance';
+import useWalletContext from '@/context/hooks/useWalletContext';
 
-export default function Details({ isModal, openModal }: any) {
+export default function Details({ isModal }: any) {
+  const { openModal } = useWalletContext()
   const [showInfo1, setShowInfo1] = useState(false)
   const [showInfo2, setShowInfo2] = useState(false)
   const [showInfo3, setShowInfo3] = useState(false)

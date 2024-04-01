@@ -7,9 +7,10 @@ import LoadingIcon from '@/assets/mobile/loading.gif';
 import CompletedIcon from '@/assets/mobile/completed.gif';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
-import useNavigation from '@/hooks/useNavigation';
+import useWalletContext from '@/context/hooks/useWalletContext';
 
-export default function Review({ onPrev, withdrawAmount, sendTo, isModal, closeModal, }: any) {
+export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any) {
+  const { closeModal } = useWalletContext()
   const { getWithdrawOp, signAndSend } = useWallet();
   const executingRef = useRef(false);
   const userOpRef = useRef();
