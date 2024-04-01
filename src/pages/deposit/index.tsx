@@ -67,7 +67,7 @@ const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => 
   )
 }
 
-export default function Deposit({ isModal }: any) {
+export default function Deposit({ isModal, registerScrollable }: any) {
   const { closeModal } = useWalletContext()
   const navigate = useNavigate();
   const [swiper, setSwiper] = useState<any>(null)
@@ -137,16 +137,16 @@ export default function Deposit({ isModal }: any) {
         onInit={onInit}
       >
         <SwiperSlide>
-          <CheckDeposit setIsPaginationActive={setIsPaginationActive} onPrev={onPrev} onNext={onNext} isModal={isModal} />
+          <CheckDeposit setIsPaginationActive={setIsPaginationActive} onPrev={onPrev} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
         <SwiperSlide>
-          <MakeTransfer onPrev={onPrev} onNext={onNext} isModal={isModal} />
+          <MakeTransfer onPrev={onPrev} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
         <SwiperSlide>
-          <SelectNetwork onPrev={onPrev} onNext={onNext} isModal={isModal} />
+          <SelectNetwork onPrev={onPrev} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
         <SwiperSlide>
-          <SendToken onFinish={onFinish} isModal={isModal} />
+          <SendToken onFinish={onFinish} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
       </Swiper>
       <Pagination isActive={isPaginationActive} activeIndex={step} count={4} onNext={onNext} onFinish={onFinish} />

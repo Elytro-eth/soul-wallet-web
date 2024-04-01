@@ -1,3 +1,4 @@
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Box, Image, useDisclosure } from '@chakra-ui/react';
 import NextIcon from '@/components/Icons/mobile/Next'
 import MetamaskIcon from '@/assets/mobile/metamask.png'
@@ -5,15 +6,21 @@ import OKEXIcon from '@/assets/mobile/okex.png'
 import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import BinanceIcon from '@/assets/mobile/binance.png'
 
-export default function MakeTransfer({ onNext }: any) {
+export default function MakeTransfer({ onNext, registerScrollable }: any) {
+  const scrollableRef = useRef<any>()
   const innerHeight = window.innerHeight
   const contentHeight = innerHeight - 64 - 120
+
+  useEffect(() => {
+    registerScrollable(scrollableRef.current)
+  }, [])
 
   return (
     <Box
       width="100%"
       height={contentHeight}
       position="relative"
+      ref={scrollableRef}
     >
       <Box padding="30px">
         <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
