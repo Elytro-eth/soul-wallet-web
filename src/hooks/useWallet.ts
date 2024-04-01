@@ -16,6 +16,7 @@ import { useSignerStore } from '@/store/signer';
 import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
 import { defaultGuardianSafePeriod } from '@/config';
+import { fetchTokenBalanceApi } from '@/store/balance';
 import { aaveUsdcPoolAbi } from '@/contracts/abis';
 import useTransaction from './useTransaction';
 import useTools from './useTools';
@@ -38,7 +39,7 @@ export default function useWallet() {
   const { soulWallet } = useSdk();
   const { navigate } = useBrowser();
   const toast = useToast();
-  const { getTokenBalance, maxFeePerGas, maxPriorityFeePerGas } = useBalanceStore();
+  const { getTokenBalance, maxFeePerGas, maxPriorityFeePerGas, setTokenBalance } = useBalanceStore();
   const { clearLogData } = useTools();
   const { selectedAddress, setSelectedAddress, setWalletName } = useAddressStore();
 
@@ -61,6 +62,10 @@ export default function useWallet() {
 
       // consider first item only for now
       const item = res.data[0];
+
+      const balances = await fetchTokenBalanceApi(item.address, item.chainID);
+
+      setTokenBalance(balances);
 
       setCredentials([credential as any]);
       setWalletName(item.name);

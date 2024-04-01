@@ -46,12 +46,25 @@ export interface IBalanceStore {
   tokenBalance: ITokenBalanceItem[];
   clearBalance: () => void;
   getTokenBalance: (tokenAddress: string) => any;
-  fetchTokenBalance: (address: string, chainId: string) => void;
+  setTokenBalance: (balanceList: any) => void;
 }
 
 export interface priceMapping {
   [address: string]: number;
 }
+
+export const fetchTokenBalanceApi = async (address: string, chainId: string) => {
+  if (!address || !chainId) {
+    return;
+  }
+
+  const res = await api.token.balance({
+    address,
+    chainID: chainId,
+  });
+
+  return res.data.balances;
+};
 
 export const formatTokenBalance = (item: ITokenBalanceItem) => {
   if (!item.logoURI) {
@@ -72,8 +85,8 @@ export const formatTokenBalance = (item: ITokenBalanceItem) => {
 export const useBalanceStore = create<IBalanceStore>()(
   persist(
     (set, get) => ({
-      maxFeePerGas: "0x",
-      maxPriorityFeePerGas: "0x",
+      maxFeePerGas: '0x',
+      maxPriorityFeePerGas: '0x',
       totalUsdValue: '0',
       apy: '0',
       sevenDayApy: '0',
@@ -84,13 +97,13 @@ export const useBalanceStore = create<IBalanceStore>()(
         set({
           maxFeePerGas: `0x${feeData.maxFeePerGas?.toString(16)}`,
           maxPriorityFeePerGas: `0x${feeData.maxPriorityFeePerGas?.toString(16)}`,
-        })
+        });
       },
       fetchApy: async () => {
-        const res:any = await api.aave.apy({
-          interval: "7day",
+        const res: any = await api.aave.apy({
+          interval: '7day',
           vaultAddress: import.meta.env.VITE_TOKEN_AUSDC,
-          network: "optimism"
+          network: 'optimism',
         });
 
         set({ sevenDayApy: BN(res.data.apy).div(100).toFixed(2) });
@@ -101,7 +114,7 @@ export const useBalanceStore = create<IBalanceStore>()(
         const res = await api.token.interest({
           chainID,
           address,
-          startTime: Math.floor(date.getTime() / 1000)
+          startTime: Math.floor(date.getTime() / 1000),
         });
 
         set({ oneDayInterest: res.data.interest });
@@ -109,22 +122,16 @@ export const useBalanceStore = create<IBalanceStore>()(
       tokenBalance: [defaultEthBalance],
       nftBalance: [],
       getTokenBalance: (tokenAddress: string) => {
-        return get().tokenBalance.filter((item: ITokenBalanceItem) => item.contractAddress.toLowerCase() === tokenAddress.toLowerCase())[0];
+        return get().tokenBalance.filter(
+          (item: ITokenBalanceItem) => item.contractAddress.toLowerCase() === tokenAddress.toLowerCase(),
+        )[0];
       },
       clearBalance: () => {
         set({ tokenBalance: [defaultEthBalance], totalUsdValue: '0' });
       },
-      fetchTokenBalance: async (address: string, chainId: string) => {
-        if (!address || !chainId) {
-          return;
-        }
-
-        const res = await api.token.balance({
-          address,
-          chainID: chainId,
-        });
+      setTokenBalance: (balanceList: any) => {
         let totalUsdValue = BN('0');
-        const tokenList = res.data.balances.map((item: ITokenBalanceItem) => {
+        const tokenList = balanceList.map((item: ITokenBalanceItem) => {
           let formattedItem = formatTokenBalance(item);
           totalUsdValue = totalUsdValue.plus(item.tokenBalanceFormatted);
           return formattedItem;

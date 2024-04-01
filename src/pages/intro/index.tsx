@@ -9,46 +9,13 @@ import treasuryIcon from '@/assets/mobile/treasury.png'
 import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import BN from 'bignumber.js'
-
-const getFontSize = (value: any) => {
-  const length = value ? String(value).length : 0
-
-  if (length > 9) {
-    return '40px'
-  } else if (length > 5) {
-    return '50px'
-  }
-
-  return '72px'
-}
-
-const getSmallFontSize = (value: any) => {
-  const length = value ? String(value).length : 0
-
-  if (length > 9) {
-    return '30px'
-  } else if (length > 5) {
-    return '50px'
-  }
-
-  return '36px'
-}
-
-const getFontBottomMargin = (value: any) => {
-  const length = value ? String(value).length : 0
-
-  if (length > 9) {
-    return '0px'
-  } else if (length > 5) {
-    return '10px'
-  }
-
-  return '26px'
-}
+import { useEffect } from 'react';
 
 export default function Intro() {
   const { sevenDayApy,} = useBalanceStore();
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { historyList } = useHistoryStore();
+  const navigate = useNavigate();
 
   const innerHeight = window.innerHeight
   const marginHeight = innerHeight - 428
@@ -56,6 +23,11 @@ export default function Intro() {
   const baseHeight = 59;
   const aaveHeight = BN(sevenDayApy).div(5).times(baseHeight).toNumber();
 
+  useEffect(()=>{
+    if(historyList.length){
+      navigate('/dashboard')
+    }
+  }, [historyList])
 
   return (
     <Box

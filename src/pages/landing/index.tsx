@@ -1,11 +1,13 @@
 import { Box, Image, Flex } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Header from '@/components/mobile/Header'
 import Button from '@/components/mobile/Button'
 import IntroItem1Icon from '@/components/Icons/mobile/Intro/Item1'
 import IntroItem2Icon from '@/components/Icons/mobile/Intro/Item2'
 import IntroItem3Icon from '@/components/Icons/mobile/Intro/Item3'
 import USDCIcon from '@/assets/tokens/usdc.png'
+import IconLoading from '@/assets/mobile/loading.gif';
 import config from '@/config';
 import useWallet from '@/hooks/useWallet';
 import { useBalanceStore } from '@/store/balance';
@@ -17,10 +19,18 @@ import BN from 'bignumber.js'
 export default function Landing() {
   const { loginWallet  } = useWallet();
   const { sevenDayApy } = useBalanceStore();
+  const [logging, setLogging] = useState(false);
   const navigate = useNavigate();
   const doSignIn = async () => {
-    await loginWallet();
-    navigate('/dashboard');
+    try{
+      setLogging(true)
+      await loginWallet();
+      setLogging(false);
+      navigate('/dashboard');
+    }catch(err){
+      setLogging(false);
+    }
+   
   }
 
   const baseHeight = 59;
@@ -58,7 +68,7 @@ export default function Landing() {
           marginBottom="20px"
           onClick={doSignIn}
         >
-          Sign in
+          {logging ? <Image src={IconLoading} width="50px" /> : 'Sign in'}
         </Button>
         <Box
           width="100%"

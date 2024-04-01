@@ -8,15 +8,17 @@ import { useHistoryStore } from '@/store/history';
 import { useBalanceStore } from '@/store/balance';
 import { useChainStore } from '@/store/chain';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import { fetchTokenBalanceApi } from '@/store/balance';
 export default function Pooling() {
   const { ethersProvider } = useWalletContext();
   const { selectedAddress } = useAddressStore();
   const { fetchHistory } = useHistoryStore();
   const { selectedChainId } = useChainStore();
-  const { fetchTokenBalance, fetchApy, fetchInterest, fetchFeeData, } = useBalanceStore();
+  const { setTokenBalance, fetchApy, fetchInterest, fetchFeeData, } = useBalanceStore();
 
-  const getUserInfo = () => {
-    fetchTokenBalance(selectedAddress, selectedChainId);
+  const getUserInfo = async() => {
+    const balances = await fetchTokenBalanceApi(selectedAddress, selectedChainId);
+    setTokenBalance(balances);
     fetchHistory(selectedAddress, selectedChainId);
     fetchInterest(selectedAddress, selectedChainId);
   };
