@@ -24,6 +24,7 @@ import SendToken from './SendToken'
 import FadeSwitch from '@/components/FadeSwitch';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { useHistoryStore } from '@/store/history';
+import useWalletContext from '@/context/hooks/useWalletContext';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { useChainStore } from '@/store/chain';
@@ -69,7 +70,8 @@ const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => 
   )
 }
 
-export default function Deposit({ isModal, closeModal }: any) {
+export default function Deposit({ isModal, registerScrollable }: any) {
+  const { closeModal } = useWalletContext()
   const navigate = useNavigate();
   const [swiper, setSwiper] = useState<any>(null)
   const [step, setStep] = useState(0)
@@ -82,8 +84,12 @@ export default function Deposit({ isModal, closeModal }: any) {
   const onFinish = useCallback(async() => {
     if (isModal) {
       closeModal()
-    } else {
+    }
+
+    if (historyList.length) {
       navigate('/dashboard')
+    } else {
+      navigate('/intro')
     }
   }, [isModal])
 
@@ -145,16 +151,16 @@ export default function Deposit({ isModal, closeModal }: any) {
         onInit={onInit}
       >
         <SwiperSlide>
-          <CheckDeposit setIsPaginationActive={setIsPaginationActive} onPrev={onPrev} onNext={onNext} isModal={isModal} />
+          <CheckDeposit setIsPaginationActive={setIsPaginationActive} onPrev={onPrev} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
         <SwiperSlide>
-          <MakeTransfer onPrev={onPrev} onNext={onNext} isModal={isModal} />
+          <MakeTransfer onPrev={onPrev} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
         <SwiperSlide>
-          <SelectNetwork onPrev={onPrev} onNext={onNext} isModal={isModal} />
+          <SelectNetwork onPrev={onPrev} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
         <SwiperSlide>
-          <SendToken onFinish={onFinish} isModal={isModal} />
+          <SendToken onFinish={onFinish} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
       </Swiper>
       <Pagination isActive={isPaginationActive} activeIndex={step} count={4} onNext={onNext} onFinish={onFinish} />

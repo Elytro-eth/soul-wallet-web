@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useRef, useMemo } from 'react';
+import { useDisclosure } from '@chakra-ui/react';
 import { ethers } from 'ethers';
 import SignMessageModal from '@/components/SignMessageModal';
 import SendModal from '@/components/SendModal';
@@ -10,6 +11,10 @@ interface IWalletContext {
   showSignMessage: (messageToSign: any, signType?: string, guardianInfo?: any) => Promise<any>;
   showReceive: () => Promise<void>;
   showSend: (tokenAddress?: string, transferType?: string) => Promise<void>;
+  isModalOpen: any;
+  activeModal: any;
+  openModal: any;
+  closeModal: any;
 }
 
 export const WalletContext = createContext<IWalletContext>({
@@ -17,6 +22,10 @@ export const WalletContext = createContext<IWalletContext>({
   showSignMessage: async () => {},
   showReceive: async () => {},
   showSend: async () => {},
+  isModalOpen: false,
+  activeModal: null,
+  openModal: () => {},
+  closeModal: () => {},
 });
 
 export const WalletContextProvider = ({ children }: any) => {
@@ -26,6 +35,19 @@ export const WalletContextProvider = ({ children }: any) => {
   const signMessageModal = useRef<any>();
   const receiveModal = useRef<any>();
   const sendModal = useRef<any>();
+
+  const [activeModal, setActiveModal] = useState(null)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const openModal = (activeModal: any) => {
+    setActiveModal(activeModal)
+    onOpen()
+  }
+
+  const closeModal = () => {
+    setActiveModal(null)
+    onClose()
+  }
 
   const ethersProvider = useMemo(() => {
     console.log('trigger ethers provider');
@@ -61,6 +83,10 @@ export const WalletContextProvider = ({ children }: any) => {
         showSignMessage,
         showReceive,
         showSend,
+        isModalOpen: isOpen,
+        activeModal,
+        openModal,
+        closeModal
       }}
     >
       {children}

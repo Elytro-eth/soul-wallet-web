@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Box, Flex, Image, Link } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header'
 import Button from '@/components/mobile/Button'
@@ -20,11 +20,16 @@ import HistoryIcon from '@/components/Icons/mobile/History'
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit'
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer'
 
-export default function Activity({ isModal }: any) {
+export default function Activity({ isModal, registerScrollable }: any) {
   const { walletName, selectedAddress } = useAddressStore();
   const { historyList } = useHistoryStore();
+  const scrollableRef = useRef<any>()
 
   const finalHistoryList = historyList
+
+  useEffect(() => {
+    registerScrollable(scrollableRef.current)
+  }, [])
 
   return (
     <Box
@@ -33,16 +38,17 @@ export default function Activity({ isModal }: any) {
       alignItems="center"
       justifyContent="flex-start"
       width="100%"
-      marginTop="34px"
+      marginTop="24px"
       position="relative"
-      paddingLeft="30px"
-      paddingRight="30px"
+      height={window.innerHeight - 40 - 40}
     >
       <Box
         fontSize="18px"
         fontWeight="700"
         lineHeight="24px"
         width="100%"
+        paddingLeft="30px"
+        paddingRight="30px"
       >
         Activity
       </Box>
@@ -51,6 +57,10 @@ export default function Activity({ isModal }: any) {
           width="100%"
           background="white"
           marginTop="27px"
+          overflow="auto"
+          ref={scrollableRef}
+          paddingLeft="30px"
+          paddingRight="30px"
         >
           <Flex
             gap="36px"

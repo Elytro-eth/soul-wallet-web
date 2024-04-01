@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Link as RLink, useNavigate } from 'react-router-dom';
 import { Box, Image, Modal, ModalOverlay, ModalContent, Link, Text, ModalCloseButton, ModalBody, useDisclosure } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
@@ -12,6 +13,7 @@ import BN from 'bignumber.js'
 import { useEffect } from 'react';
 
 export default function Intro() {
+  const [loaded, setLoaded] = useState(false);
   const { sevenDayApy,} = useBalanceStore();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { historyList } = useHistoryStore();
@@ -28,6 +30,11 @@ export default function Intro() {
       navigate('/dashboard')
     }
   }, [historyList])
+  
+  useEffect(() => {
+    setLoaded(true)
+  }, [loaded])
+
 
   return (
     <Box
@@ -76,7 +83,7 @@ export default function Intro() {
               </Box>
               <Box marginLeft="10px">
                 <Box
-                  
+
                   fontSize="24px"
                   fontWeight="700"
                   lineHeight="30px"
@@ -88,7 +95,7 @@ export default function Intro() {
                   alignItems="center"
                 >
                   <Box
-                    
+
                     fontSize="14px"
                     fontWeight="700"
                     lineHeight="18px"
@@ -108,14 +115,14 @@ export default function Intro() {
             </Box>
             <Box display="flex" alignItems="center" marginTop="16px">
               <Box
-                
+
                 fontSize="72px"
                 fontWeight="700"
               >
                 {sevenDayApy}
               </Box>
               <Box
-                
+
                 fontSize="24px"
                 fontWeight="700"
                 marginTop="24px"
@@ -128,12 +135,15 @@ export default function Intro() {
               7D Average APY
             </Box>
           </Box>
-          <Box display="flex">
+          <Box display="flex" overflow="hidden">
             <Box
               width="33.33%"
               display="flex"
               alignItems="flex-end"
               justifyContent="center"
+              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
+              opacity={loaded ? 1 : 0}
+              transition="all 0.5s ease"
             >
               <Box
                 width="40px"
@@ -153,6 +163,9 @@ export default function Intro() {
               display="flex"
               alignItems="flex-end"
               justifyContent="center"
+              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
+              opacity={loaded ? 1 : 0}
+              transition="all 0.5s ease 0.5s"
             >
               <Box
                 width="40px"
@@ -172,6 +185,9 @@ export default function Intro() {
               display="flex"
               alignItems="flex-end"
               justifyContent="center"
+              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
+              opacity={loaded ? 1 : 0}
+              transition="all 0.5s ease 1s"
             >
               <Box
                 width="40px"
@@ -200,7 +216,7 @@ export default function Intro() {
               padding="18px 10px"
             >
               <Box
-                
+
                 fontWeight="600"
                 fontSize="14px"
                 textAlign="center"
@@ -208,7 +224,7 @@ export default function Intro() {
                 5.01% APY
               </Box>
               <Box
-                
+
                 fontWeight="600"
                 fontSize="12px"
                 color="rgba(0, 0, 0, 0.5)"
@@ -227,7 +243,7 @@ export default function Intro() {
               padding="18px 10px"
             >
               <Box
-                
+
                 fontWeight="600"
                 fontSize="14px"
                 textAlign="center"
@@ -235,7 +251,7 @@ export default function Intro() {
                 5.03% APY
               </Box>
               <Box
-                
+
                 fontWeight="600"
                 fontSize="12px"
                 color="rgba(0, 0, 0, 0.5)"
@@ -254,7 +270,7 @@ export default function Intro() {
               padding="18px 10px"
             >
               <Box
-                
+
                 fontWeight="600"
                 fontSize="14px"
                 textAlign="center"
@@ -262,7 +278,7 @@ export default function Intro() {
                 {sevenDayApy}% APY
               </Box>
               <Box
-                
+
                 fontWeight="600"
                 fontSize="12px"
                 color="rgba(0, 0, 0, 0.5)"

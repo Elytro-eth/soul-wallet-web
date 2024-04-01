@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   Box,
   Image,
@@ -30,7 +30,7 @@ import { shareFile } from '@/lib/tools';
 import { useSettingStore } from '@/store/setting';
 import { useHistoryStore } from '@/store/history';
 
-export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, isModal }: any) {
+export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, isModal, registerScrollable }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { historyList } = useHistoryStore();
   const { selectedAddress } = useAddressStore();
@@ -43,6 +43,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
   const isAllChecked = (checked1 && checked2 && checked3) || isDepositAllChecked;
   const innerHeight = window.innerHeight
   const contentHeight = isModal ? (innerHeight - 140) : (innerHeight - 64)
+  const scrollableRef = useRef<any>()
   // console.log('isModal', isModal)
 
   useEffect(()=>{
@@ -61,8 +62,12 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
     }
   }, [checked1, checked2, checked3])
 
+  useEffect(() => {
+    registerScrollable(scrollableRef.current)
+  }, [])
+
   return (
-    <Box width="100%" height={contentHeight} position="relative" overflowY={isAllChecked ? 'auto' : 'hidden'}>
+    <Box width="100%" height={contentHeight} position="relative" overflowY={isAllChecked ? 'auto' : 'hidden'} ref={scrollableRef}>
       <Box
         padding="30px"
         marginBottom={isAllChecked ? '80px' : '0px'}
