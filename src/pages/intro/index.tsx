@@ -10,7 +10,6 @@ import treasuryIcon from '@/assets/mobile/treasury.png'
 import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import BN from 'bignumber.js'
-import { useEffect } from 'react';
 
 export default function Intro() {
   const [loaded, setLoaded] = useState(false);
@@ -30,11 +29,10 @@ export default function Intro() {
       navigate('/dashboard')
     }
   }, [historyList])
-  
+
   useEffect(() => {
     setLoaded(true)
   }, [loaded])
-
 
   return (
     <Box
