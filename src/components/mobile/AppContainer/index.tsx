@@ -1,3 +1,4 @@
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { Flex, Box, Modal, ModalOverlay, ModalContent, ModalHeader, Image, ModalCloseButton, ModalBody, useDisclosure } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
 import ProfileIcon from '@/components/Icons/mobile/Profile'
@@ -42,6 +43,95 @@ export function Header({ openMenu, username, ...props }: any) {
   );
 }
 
+export function ModalPage({ name, openModal, closeModal }: any) {
+  const scrollableRef = useRef(null);
+  const scrollTop = useRef(0);
+  const [startPosition, setStartPosition] = useState(null);
+
+  const handleStart = (position: any) => {
+    setStartPosition(position);
+  };
+
+  const handleMove = (currentPosition: any) => {
+    if (startPosition == null) return;
+
+    if (startPosition > currentPosition + 20) {
+      // console.log('Moving up');
+    } else if (startPosition < currentPosition - 30) {
+      console.log('Moving down', scrollTop.current);
+      if (scrollTop.current == 0) {
+        closeModal()
+      }
+    }
+  };
+
+  const handleTouchStart = (e: any) => {
+    handleStart(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: any) => {
+    handleMove(e.touches[0].clientY);
+  };
+
+  const handleMouseDown = (e: any) => {
+    handleStart(e.clientY);
+  };
+
+  const handleMouseMove = (e: any) => {
+    if (e.buttons === 1) {
+      handleMove(e.clientY);
+    }
+  };
+
+  const setScrollableRef = (e: any) => {
+    scrollableRef.current = e
+  };
+
+  const renderPage = (name: any) => {
+    if (name === 'settings') {
+      return <Settings isModal={true} />
+    } else if (name === 'activity') {
+      return <Activity isModal={true} registerScrollable={registerScrollable} />
+    } else if (name === 'details') {
+      return <Details isModal={true} registerScrollable={registerScrollable} />
+    } else if (name === 'deposit') {
+      return <Deposit isModal={true} registerScrollable={registerScrollable} />
+    } else if (name === 'withdraw') {
+      return <Withdraw isModal={true} />
+    }
+  }
+
+  const registerScrollable = (element: any) => {
+    const handleScroll = () => {
+      scrollTop.current = element.scrollTop
+      console.log('handleScroll', scrollTop.current)
+    };
+
+    if (element) {
+      element.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (element) {
+        element.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }
+
+  return (
+    <Box
+      width="100%"
+      height={window.innerHeight - 40}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+    >
+      {renderPage(name)}
+    </Box>
+  )
+}
+
 export default function AppContainer() {
   const { isModalOpen, openModal, closeModal, activeModal } = useWalletContext()
   const { logoutWallet } = useWallet();
@@ -64,20 +154,6 @@ export default function AppContainer() {
     }
 
     return {}
-  }
-
-  const renderModal = (name: any) => {
-    if (name === 'settings') {
-      return <Settings isModal={true} />
-    } else if (name === 'activity') {
-      return <Activity isModal={true} />
-    } else if (name === 'details') {
-      return <Details isModal={true} />
-    } else if (name === 'deposit') {
-      return <Deposit isModal={true} />
-    } else if (name === 'withdraw') {
-      return <Withdraw isModal={true} />
-    }
   }
 
   return (
@@ -115,6 +191,10 @@ export default function AppContainer() {
         >
           <ModalOverlay zIndex="999" />
           <ModalContent
+            // onTouchStart={handleTouchStart}
+            // onTouchMove={handleTouchMove}
+            // onMouseDown={handleMouseDown}
+            // onMouseMove={handleMouseMove}
             zIndex="2"
             borderRadius={{
               sm: '20px 20px 0 0',
@@ -147,7 +227,11 @@ export default function AppContainer() {
               width="100%"
               padding="0"
             >
-              {renderModal(activeModal)}
+              <ModalPage
+                name={activeModal}
+                openModal={openModal}
+                closeModal={closeModal}
+              />
             </ModalBody>
           </ModalContent>
         </Modal>

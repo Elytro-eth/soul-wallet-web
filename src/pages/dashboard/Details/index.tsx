@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Box, Image, Link } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header'
 import Button from '@/components/mobile/Button'
@@ -11,13 +11,14 @@ import { aaveLink } from '@/config';
 import { useBalanceStore } from '@/store/balance';
 import useWalletContext from '@/context/hooks/useWalletContext';
 
-export default function Details({ isModal }: any) {
+export default function Details({ isModal, registerScrollable }: any) {
   const { openModal } = useWalletContext()
   const [showInfo1, setShowInfo1] = useState(false)
   const [showInfo2, setShowInfo2] = useState(false)
   const [showInfo3, setShowInfo3] = useState(false)
   const [showInfo4, setShowInfo4] = useState(false)
   const { sevenDayApy } = useBalanceStore();
+  const scrollableRef = useRef<any>()
 
   const navigate = useNavigate();
 
@@ -29,8 +30,16 @@ export default function Details({ isModal }: any) {
     }
   }, [isModal])
 
+  useEffect(() => {
+    registerScrollable(scrollableRef.current)
+  }, [])
+
   return (
-    <Box height="100%">
+    <Box
+      height={window.innerHeight - 40}
+      overflow="auto"
+      ref={scrollableRef}
+    >
       <Box
         padding="30px"
         paddingTop="40px"
