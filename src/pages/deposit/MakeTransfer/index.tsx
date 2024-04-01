@@ -12,7 +12,7 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
   const contentHeight = innerHeight - 64 - 120
 
   useEffect(() => {
-    registerScrollable(scrollableRef.current)
+    if (registerScrollable) registerScrollable(scrollableRef.current)
   }, [])
 
   return (
