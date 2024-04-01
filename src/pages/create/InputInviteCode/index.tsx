@@ -15,7 +15,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
       <Box
-        fontWeight="700"
+        fontWeight="590"
         fontSize="24px"
         lineHeight="14px"
         marginBottom="20px"
@@ -23,7 +23,26 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
         Invite code
       </Box>
       <Box width="100%" marginBottom="74px">
-        <Input height="40px" value={value} spellCheck={false} onChange={e => onChange(e.target.value)} fontSize="28px" lineHeight="24px" padding="0" fontWeight="700" placeholder="Enter or paste here" borderRadius="0" border="none" outline="none" _focusVisible={{ border: 'none', boxShadow: 'none' }} />
+        <Input
+          height="40px"
+          value={value}
+          spellCheck={false}
+          onChange={e => onChange(e.target.value)}
+          fontSize="28px"
+          lineHeight="24px"
+          padding="0"
+          fontWeight="700"
+          placeholder="Enter or paste here"
+          borderRadius="0"
+          border="none"
+          outline="none"
+          _focusVisible={{ border: 'none', boxShadow: 'none' }}
+          sx={{
+            '::placeholder': {
+              color: '#C1C1C1'
+            }
+          }}
+        />
         <Box marginTop="10px" width="100%" height="1px" background="rgba(73, 126, 130, 0.2)" />
         <Box mt="1" h="44px" overflow={"hidden"}>
           {checking ? <InputLoading /> : <>

@@ -1,9 +1,10 @@
 import { Box, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import Header from '@/components/mobile/Header';
-import CompletedIcon from '@/components/Icons/mobile/Completed';
+// import CompletedIcon from '@/components/Icons/mobile/Completed';
 import { Link } from 'react-router-dom';
 import LoadingIcon from '@/assets/mobile/loading.gif';
+import CompletedIcon from '@/assets/mobile/completed.gif';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 import useNavigation from '@/hooks/useNavigation';
@@ -80,8 +81,8 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal, closeM
             justifyContent="flex-end"
             flexDirection="column"
           >
-            <Box marginBottom="6px">
-              <Image width="80px" height="60px" src={LoadingIcon} />
+            <Box marginBottom="6px" marginTop="20px">
+              <Image width="80px" height="80px" src={LoadingIcon} />
             </Box>
             <Box>Transfer in progress</Box>
           </Box>
@@ -98,8 +99,8 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal, closeM
             justifyContent="flex-end"
             flexDirection="column"
           >
-            <Box marginBottom="20px">
-              <CompletedIcon />
+            <Box marginBottom="6px">
+              <Image width="100px" height="100px" src={LoadingIcon} />
             </Box>
             <Box>Transfer completed</Box>
           </Box>
@@ -162,7 +163,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal, closeM
           {isCompletedRef.current && (
             <a onClick={() => closeModal()}>
               <Button size="xl" type="black" width="100%">
-                Confirm
+                Done
               </Button>
             </a>
           )}

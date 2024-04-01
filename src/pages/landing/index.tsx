@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Box, Image, Flex } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/mobile/Header'
@@ -15,6 +16,7 @@ import AAVEIcon from '@/assets/mobile/aave.png'
 import BN from 'bignumber.js'
 
 export default function Landing() {
+  const [loaded, setLoaded] = useState(false);
   const { loginWallet  } = useWallet();
   const { sevenDayApy } = useBalanceStore();
   const navigate = useNavigate();
@@ -25,6 +27,10 @@ export default function Landing() {
 
   const baseHeight = 59;
   const aaveHeight = BN(sevenDayApy).div(5).times(baseHeight).toNumber();
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [loaded])
 
   return (
     <Box
@@ -80,7 +86,6 @@ export default function Landing() {
               </Box>
               <Box marginLeft="10px">
                 <Box
-                  
                   fontSize="24px"
                   fontWeight="700"
                   lineHeight="30px"
@@ -92,7 +97,6 @@ export default function Landing() {
                   alignItems="center"
                 >
                   <Box
-                    
                     fontSize="14px"
                     fontWeight="700"
                     lineHeight="18px"
@@ -110,16 +114,14 @@ export default function Landing() {
                 </Box>
               </Box>
             </Box>
-            <Box display="flex" alignItems="center" marginTop="16px">
+            <Box display="flex" alignItems="center" marginTop="16px" fontFamily={"SF Pro"}>
               <Box
-                
                 fontSize="72px"
                 fontWeight="700"
               >
                 {sevenDayApy}
               </Box>
               <Box
-                
                 fontSize="24px"
                 fontWeight="700"
                 marginTop="24px"
@@ -132,12 +134,15 @@ export default function Landing() {
               7D Average APY
             </Box>
           </Box>
-          <Box display="flex">
+          <Box display="flex" overflow="hidden">
             <Box
               width="33.33%"
               display="flex"
               alignItems="flex-end"
               justifyContent="center"
+              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
+              opacity={loaded ? 1 : 0}
+              transition="all 0.5s ease"
             >
               <Box
                 width="40px"
@@ -157,6 +162,9 @@ export default function Landing() {
               display="flex"
               alignItems="flex-end"
               justifyContent="center"
+              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
+              opacity={loaded ? 1 : 0}
+              transition="all 0.5s ease 0.5s"
             >
               <Box
                 width="40px"
@@ -176,6 +184,9 @@ export default function Landing() {
               display="flex"
               alignItems="flex-end"
               justifyContent="center"
+              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
+              opacity={loaded ? 1 : 0}
+              transition="all 0.5s ease 1s"
             >
               <Box
                 width="40px"
@@ -374,7 +385,7 @@ export default function Landing() {
             </Box>
           </Box>
 
-          <Box display="flex" padding="24px" borderBottom="1px solid rgba(0, 0, 0, 0.1)">
+          <Box display="flex" padding="24px">
             <Box>
               <Box fontSize="18px" fontWeight="700">
                 Earn the most with Auto-saving

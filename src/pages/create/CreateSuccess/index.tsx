@@ -1,6 +1,7 @@
 import { Box, Input, Image, useToast } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import LoadingIcon from '@/assets/mobile/loading.gif';
+import ReadyIcon from '@/assets/mobile/ready.gif';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 import { useNavigate } from 'react-router-dom';
@@ -87,7 +88,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       >
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
           <Box>
-            <Image width="80px" height="60px" src={LoadingIcon} />
+            <Image width="80px" height="80px" src={LoadingIcon} />
           </Box>
           <Box marginTop="18px" fontWeight="400" fontSize="18px" lineHeight="14px" marginBottom="14px">
             Setting up wallet...
@@ -108,7 +109,9 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       justifyContent="center"
       flexDirection="column"
     >
-      <Box width="120px" height="120px" background="#D9D9D9" borderRadius="120px" marginBottom="30px"></Box>
+      <Box width="100px" height="100px" marginBottom="30px">
+        <Image width="100px" height="100px" src={ReadyIcon} />
+      </Box>
       <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="14px">
         Your account is ready
       </Box>
