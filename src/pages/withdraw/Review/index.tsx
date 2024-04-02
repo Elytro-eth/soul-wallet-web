@@ -5,6 +5,7 @@ import Header from '@/components/mobile/Header';
 import { Link } from 'react-router-dom';
 import LoadingIcon from '@/assets/mobile/loading.gif';
 import CompletedIcon from '@/assets/mobile/completed.gif';
+import CompletedStaticIcon from '@/assets/mobile/completed_static.svg';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 import useWalletContext from '@/context/hooks/useWalletContext';
@@ -16,6 +17,9 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);
   const isTransferingRef = useRef(false);
+
+  const [animated, setAnimated] = useState(false)
+  const [completed, setCompleted] = useState(false)
 
   const prepareAction = async () => {
     try {
@@ -52,6 +56,14 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
         await signAndSend(userOpRef.current);
         isTransferingRef.current = false;
         isCompletedRef.current = true;
+        setAnimated(false)
+        setCompleted(true)
+        console.log('setAnimated false')
+
+        setTimeout(() => {
+          setAnimated(true)
+          console.log('setAnimated true')
+        }, 1300)
       } catch (e) {
         // setExecuting(false);
         executingRef.current = false;
@@ -88,7 +100,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
             <Box>Transfer in progress</Box>
           </Box>
         )}
-        {isCompletedRef.current && (
+        {isCompletedRef.current && completed && (
           <Box
             fontSize="32px"
             fontWeight="700"
@@ -100,8 +112,9 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
             justifyContent="flex-end"
             flexDirection="column"
           >
-            <Box marginBottom="6px">
-              <Image width="100px" height="100px" src={CompletedIcon} />
+            <Box width="100px" height="100px" position="relative" marginBottom="6px">
+              {!animated && <Image position="absolute" left="0" top="0" width="100px" height="100px" src={CompletedIcon} />}
+              <Image position="absolute" left="13px" top="13px" width="74px" height="74px" src={CompletedStaticIcon} />
             </Box>
             <Box>Transfer completed</Box>
           </Box>

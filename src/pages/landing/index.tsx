@@ -34,7 +34,7 @@ export default function Landing() {
   useEffect(() => {
     setLoaded(true)
   }, [loaded])
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -59,8 +59,6 @@ export default function Landing() {
     };
   }, []);
 
-  console.log('isButtonVisible', isButtonVisible)
-  
   return (
     <Box
       width="100%"
@@ -285,7 +283,7 @@ export default function Landing() {
               padding="18px 10px"
             >
               <Box
-                
+
                 fontWeight="600"
                 fontSize="14px"
                 textAlign="center"
@@ -293,7 +291,7 @@ export default function Landing() {
                 5.01% APY
               </Box>
               <Box
-                
+
                 fontWeight="600"
                 fontSize="12px"
                 color="rgba(0, 0, 0, 0.5)"
@@ -312,7 +310,7 @@ export default function Landing() {
               padding="18px 10px"
             >
               <Box
-                
+
                 fontWeight="600"
                 fontSize="14px"
                 textAlign="center"
@@ -320,7 +318,7 @@ export default function Landing() {
                 5.03% APY
               </Box>
               <Box
-                
+
                 fontWeight="600"
                 fontSize="12px"
                 color="rgba(0, 0, 0, 0.5)"
@@ -339,7 +337,7 @@ export default function Landing() {
               padding="18px 10px"
             >
               <Box
-                
+
                 fontWeight="600"
                 fontSize="14px"
                 textAlign="center"
@@ -347,7 +345,7 @@ export default function Landing() {
                 {sevenDayApy}% APY
               </Box>
               <Box
-                
+
                 fontWeight="600"
                 fontSize="12px"
                 color="rgba(0, 0, 0, 0.5)"
@@ -497,7 +495,7 @@ export default function Landing() {
                   justifyContent="center"
                 >
                   <Box
-                    
+
                     fontWeight="700"
                     fontSize="18px"
                     textAlign="center"
@@ -505,7 +503,7 @@ export default function Landing() {
                     $8.317b
                   </Box>
                   <Box
-                    
+
                     fontWeight="400"
                     fontSize="12px"
                     marginTop="5px"
@@ -521,7 +519,7 @@ export default function Landing() {
                   justifyContent="center"
                 >
                   <Box
-                    
+
                     fontWeight="700"
                     fontSize="18px"
                     textAlign="center"
@@ -529,7 +527,7 @@ export default function Landing() {
                     2th
                   </Box>
                   <Box
-                    
+
                     fontWeight="400"
                     fontSize="12px"
                     marginTop="5px"
@@ -545,7 +543,7 @@ export default function Landing() {
                   justifyContent="center"
                 >
                   <Box
-                    
+
                     fontWeight="700"
                     fontSize="18px"
                     textAlign="center"
@@ -553,7 +551,7 @@ export default function Landing() {
                     21.28%
                   </Box>
                   <Box
-                    
+
                     fontWeight="400"
                     fontSize="12px"
                     marginTop="5px"

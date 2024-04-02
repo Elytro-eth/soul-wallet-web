@@ -12,6 +12,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
   const marginHeight = innerHeight - 428
   console.log('innerHeight', innerHeight)
 
+
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
       <Box

@@ -5,8 +5,8 @@ const Transfer = () => {
       <path
         d="M23 17.3333V9C23 8.44772 22.5523 8 22 8H10C9.44772 8 9 8.44772 9 9V23C9 23.5523 9.44772 24 10 24H22C22.5523 24 23 23.5523 23 23V21.3333"
         stroke="#5B606D"
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
       <path d="M12 13L20 13" stroke="#5B606D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M12 16H16" stroke="#5B606D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
