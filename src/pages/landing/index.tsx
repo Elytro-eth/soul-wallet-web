@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Box, Image, Flex } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/mobile/Header'
@@ -25,13 +25,42 @@ export default function Landing() {
     navigate('/dashboard');
   }
 
+  const [isButtonVisible, setIsButtonVisible] = useState(true);
+  const observingElementRef = useRef(null);
+
   const baseHeight = 59;
   const aaveHeight = BN(sevenDayApy).div(5).times(baseHeight).toNumber();
 
   useEffect(() => {
     setLoaded(true)
   }, [loaded])
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update our state when observer callback fires
+        setIsButtonVisible(entry.isIntersecting);
+      },
+      {
+        root: null, // observing changes to visibility in the viewport
+        rootMargin: '0px',
+        threshold: 0.1, // Trigger if at least 10% of the element is visible
+      }
+    );
 
+    if (observingElementRef.current) {
+      observer.observe(observingElementRef.current);
+    }
+
+    return () => {
+      if (observingElementRef.current) {
+        observer.unobserve(observingElementRef.current);
+      }
+    };
+  }, []);
+
+  console.log('isButtonVisible', isButtonVisible)
+  
   return (
     <Box
       width="100%"
@@ -52,9 +81,50 @@ export default function Landing() {
         <Box  fontSize="16px" fontWeight="500" textAlign="center" marginTop="14px">
           Security first. Completely controlled by yourself and your trusted networks
         </Box>
-        <Link to="/create">
-          <Button size="xl" type="black" minWidth="283px" marginTop="50px">Create free account</Button>
-        </Link>
+        <Box
+          ref={observingElementRef}
+          bottom="36px"
+          width="100%"
+          left="0"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Link to="/create">
+            <Button
+              size="xl"
+              type="black"
+              minWidth="283px"
+              marginTop="50px"
+            >
+              Create free account
+            </Button>
+          </Link>
+        </Box>
+        <Box
+          position="fixed"
+          bottom="36px"
+          width="100%"
+          left="0"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          opacity={isButtonVisible ? 0 : 1}
+          pointerEvents={isButtonVisible ? 'none' : 'all'}
+          transition="all 0.2s ease"
+        >
+          <Link to="/create">
+            <Button
+              boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.20)"
+              size="xl"
+              type="black"
+              minWidth="283px"
+              marginTop="50px"
+            >
+              Create free account
+            </Button>
+          </Link>
+        </Box>
         <Button
           size="xl"
           type="text"

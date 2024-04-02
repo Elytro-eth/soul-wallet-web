@@ -165,7 +165,6 @@ export default function AppContainer() {
         sx={getContentStyles(isModalOpen)}
       >
         <Header
-          showLogo
           paddingTop="10px"
           paddingBottom="10px"
           height="64px"
