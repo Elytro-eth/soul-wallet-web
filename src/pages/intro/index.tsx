@@ -26,7 +26,7 @@ export default function Intro() {
 
   useEffect(()=>{
     if(historyList.length){
-      navigate('/dashboard')
+      // navigate('/dashboard')
     }
   }, [historyList])
 

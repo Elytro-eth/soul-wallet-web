@@ -353,8 +353,9 @@ export default function Dashboard() {
                 </Box>
               </Box>
               <Flex gap="36px" padding="0" flexDir="column" width="100%" overflow="auto" maxHeight={`${40 * 4 + 36 * 3}px`}>
-                {finalHistoryList.map(item => (
+                {finalHistoryList.map((item, index) => (
                   <Box
+                    key={index}
                     display="flex"
                     alignItems="center"
                     height="40px"

@@ -15,7 +15,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
       <Box
-        fontWeight="590"
+        fontWeight="600"
         fontSize="24px"
         lineHeight="14px"
         marginBottom="20px"
@@ -37,11 +37,6 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           border="none"
           outline="none"
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
-          sx={{
-            '::placeholder': {
-              color: '#C1C1C1'
-            }
-          }}
         />
         <Box marginTop="10px" width="100%" height="1px" background="rgba(73, 126, 130, 0.2)" />
         <Box mt="1" h="44px" overflow={"hidden"}>

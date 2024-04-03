@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Box, Image, Flex } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import Header from '@/components/mobile/Header'
 import Button from '@/components/mobile/Button'
 import IntroItem1Icon from '@/components/Icons/mobile/Intro/Item1'
@@ -50,7 +49,7 @@ export default function Landing() {
       // background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
     >
       <Header
-        showLogo
+        showLogo={true}
         title=""
         height="60px"
         background="transparent"
@@ -124,7 +123,7 @@ export default function Landing() {
                 </Box>
               </Box>
             </Box>
-            <Box display="flex" alignItems="center" marginTop="16px" fontFamily={"SF Pro"}>
+            <Box display="flex" alignItems="center" marginTop="16px">
               <Box
                 fontSize="72px"
                 fontWeight="700"
