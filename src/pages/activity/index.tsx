@@ -70,8 +70,9 @@ export default function Activity({ isModal, registerScrollable }: any) {
             overflow="auto"
             // maxHeight="calc(100% - 120px)"
           >
-            {finalHistoryList.map(item => (
+            {finalHistoryList.map((item: any, i: any) => (
               <Box
+                key={i}
                 display="flex"
                 alignItems="center"
                 height="40px"
