@@ -53,6 +53,7 @@ const getFontBottomMargin = (value: any) => {
 
 export default function Dashboard() {
   const { totalUsdValue, getTokenBalance, sevenDayApy, oneDayInterest, } = useBalanceStore();
+  // const [totalUsdValue, setTotalUsdValue] = useState("0.1")
   const { historyList } = useHistoryStore();
   const [modalMargin, setModalMargin] = useState(494)
   const [modalHeight, setModalHeight] = useState(window.innerHeight - 494)
@@ -80,6 +81,15 @@ export default function Dashboard() {
     console.log("Page scroll: ", latest)
   })
 
+  /* useEffect(() => {
+   *   let i = 0.1
+
+   *   setInterval(() => {
+   *     setTotalUsdValue(String(i))
+   *     i = i + 3.5
+   *   }, 1000)
+   * }, [])
+   */
   useEffect(() => {
     getContentHeight()
     console.log('contentRef', contentRef)
@@ -195,16 +205,29 @@ export default function Dashboard() {
               <Box display="flex" alignItems="center">
                 <Box fontSize="24px" fontWeight="700" marginRight="2px">$</Box>
                 <Box
-                  
+
                   fontSize={fontSize}
                   lineHeight={"1"}
                   fontWeight="700"
-                >
-                  {valueLeft}
-                </Box>
+                  sx={{
+                    "@property --num":  {
+                      "syntax": `'<integer>'`,
+                      "initialValue": "0",
+                      "inherits": "false"
+                    },
+                    "&": {
+                      "transition": "--num 1s",
+                      "counterReset": "num var(--num)",
+                      "--num": valueLeft
+                    },
+                    "&::after": {
+                      "content": "counter(num)",
+                    }
+                  }}
+                />
                 {valueRight && BN(valueRight).isGreaterThan(0) && Number(valueRight.slice(0,3).replace(/0+$/, "")) > 0 && (
                   <Box
-                    
+
                     fontSize={smFontSize}
                     lineHeight={"1"}
                     fontWeight="700"
@@ -212,7 +235,24 @@ export default function Dashboard() {
                     // marginLeft="10px"
                     color="#939393"
                   >
-                    .{valueRight.slice(0,3).replace(/0+$/, "")}
+                    .<Box
+                       as="span"
+                       sx={{
+                         "@property --num":  {
+                           "syntax": `'<integer>'`,
+                           "initialValue": "0",
+                           "inherits": "false"
+                         },
+                         "&": {
+                           "transition": "--num 1s",
+                           "counterReset": "num var(--num)",
+                           "--num": valueRight.slice(0,3).replace(/0+$/, "")
+                         },
+                         "&::after": {
+                           "content": "counter(num)",
+                         }
+                       }}
+                    />
                   </Box>
                 )}
               </Box>
