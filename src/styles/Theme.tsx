@@ -4,6 +4,9 @@ const inputTheme = defineStyleConfig({
   baseStyle: {
     field: {
       borderRadius: '12px',
+      _placeholder: {
+        color: '#c1c1c1',
+      },
     },
   },
 });

@@ -7,6 +7,7 @@ import IntroItem1Icon from '@/components/Icons/mobile/Intro/Item1'
 import IntroItem2Icon from '@/components/Icons/mobile/Intro/Item2'
 import IntroItem3Icon from '@/components/Icons/mobile/Intro/Item3'
 import USDCIcon from '@/assets/tokens/usdc.png'
+import IconLoading from '@/assets/mobile/loading.gif';
 import config from '@/config';
 import useWallet from '@/hooks/useWallet';
 import { useBalanceStore } from '@/store/balance';
@@ -19,10 +20,18 @@ export default function Landing() {
   const [loaded, setLoaded] = useState(false);
   const { loginWallet  } = useWallet();
   const { sevenDayApy } = useBalanceStore();
+  const [logging, setLogging] = useState(false);
   const navigate = useNavigate();
   const doSignIn = async () => {
-    await loginWallet();
-    navigate('/dashboard');
+    try{
+      setLogging(true)
+      await loginWallet();
+      setLogging(false);
+      navigate('/dashboard');
+    }catch(err){
+      setLogging(false);
+    }
+   
   }
 
   const [isButtonVisible, setIsButtonVisible] = useState(true);
@@ -67,7 +76,7 @@ export default function Landing() {
       // background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
     >
       <Header
-        showLogo
+        showLogo={true}
         title=""
         height="60px"
         background="transparent"
@@ -132,7 +141,7 @@ export default function Landing() {
           marginBottom="20px"
           onClick={doSignIn}
         >
-          Sign in
+          {logging ? <Image src={IconLoading} width="50px" /> : 'Sign in'}
         </Button>
         <Box
           width="100%"
@@ -182,7 +191,7 @@ export default function Landing() {
                 </Box>
               </Box>
             </Box>
-            <Box display="flex" alignItems="center" marginTop="16px" fontFamily={"SF Pro"}>
+            <Box display="flex" alignItems="center" marginTop="16px">
               <Box
                 fontSize="72px"
                 fontWeight="700"

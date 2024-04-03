@@ -10,9 +10,7 @@ import useConfig from '@/hooks/useConfig';
 import { toFixed } from '@/lib/tools';
 
 export default function AmountInput({ sendToken, label, onTokenChange, amount, onBlur, onChange }: any) {
-  const { tokenBalance, fetchTokenBalance } = useBalanceStore();
-  const { selectedAddress } = useAddressStore();
-  const { selectedChainItem } = useConfig();
+  const { tokenBalance, setTokenBalance } = useBalanceStore();
 
   const selectedToken = tokenBalance.filter((item: ITokenBalanceItem) => item.contractAddress === sendToken)[0];
 
@@ -33,14 +31,6 @@ export default function AmountInput({ sendToken, label, onTokenChange, amount, o
       onChange(filteredValue);
     }
   };
-
-  useEffect(() => {
-    const { chainIdHex } = selectedChainItem;
-    if (!selectedAddress || !chainIdHex ) {
-      return;
-    }
-    fetchTokenBalance(selectedAddress, chainIdHex);
-  }, [selectedAddress, selectedChainItem]);
 
   const unselectedTokens = tokenBalance.filter((item: ITokenBalanceItem) => item.contractAddress !== sendToken);
 

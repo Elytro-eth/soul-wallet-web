@@ -70,7 +70,7 @@ const buttonStyles = {
   grey: {
     color: '#000',
     bg: '#f2f2f2',
-    _hover: { bg: '#898989' },
+    _hover: { bg: '#e8e8e8' },
     _disabled: { cursor: 'not-allowed', bg: '#B2B2B2', _hover: { bg: '#B2B2B2' } },
   },
   red: {
