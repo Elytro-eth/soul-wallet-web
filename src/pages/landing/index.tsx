@@ -15,12 +15,15 @@ import treasuryIcon from '@/assets/mobile/treasury.png'
 import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import BN from 'bignumber.js'
+import APYCard from '@/components/mobile/APYCard'
 
 export default function Landing() {
   const [loaded, setLoaded] = useState(false);
   const { loginWallet  } = useWallet();
   const { sevenDayApy } = useBalanceStore();
   const [logging, setLogging] = useState(false);
+  const innerHeight = window.innerHeight
+
   const navigate = useNavigate();
   const doSignIn = async () => {
     try{
@@ -31,7 +34,7 @@ export default function Landing() {
     }catch(err){
       setLogging(false);
     }
-   
+
   }
 
   const [isButtonVisible, setIsButtonVisible] = useState(true);
@@ -71,7 +74,7 @@ export default function Landing() {
   return (
     <Box
       width="100%"
-      height="100%"
+      height={innerHeight}
       fontFamily={"SF"}
       // background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
     >
@@ -81,7 +84,15 @@ export default function Landing() {
         height="60px"
         background="transparent"
       />
-      <Box width="100%" padding="30px" display="flex" alignItems="center" flexDirection="column">
+      <Box
+        width="100%"
+        padding="30px"
+        display="flex"
+        alignItems="center"
+        flexDirection="column"
+        height={innerHeight - 60}
+        overflowY="auto"
+      >
         <Box  fontSize="48px" fontWeight="700" textAlign="center" lineHeight="56px">
           Save for<br /> Every Human
         </Box>
@@ -143,229 +154,7 @@ export default function Landing() {
         >
           {logging ? <Image src={IconLoading} width="50px" /> : 'Sign in'}
         </Button>
-        <Box
-          width="100%"
-          background="white"
-          borderRadius="24px"
-          boxShadow="0px 8px 60px 0px rgba(44, 53, 131, 0.12)"
-          border="1px solid #EAECF0"
-        >
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            padding="50px 10px"
-            paddingBottom="6px"
-          >
-            <Box display="flex" alignItems="center">
-              <Box>
-                <Image src={USDCIcon} />
-              </Box>
-              <Box marginLeft="10px">
-                <Box
-                  fontSize="24px"
-                  fontWeight="700"
-                  lineHeight="30px"
-                >
-                  Earn USDC
-                </Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box
-                    fontSize="14px"
-                    fontWeight="700"
-                    lineHeight="18px"
-                  >
-                    on AAVE |
-                  </Box>
-                  <Box
-                    fontSize="14px"
-                    fontWeight="400"
-                    marginLeft="4px"
-                    lineHeight="18px"
-                  >
-                    OP Mainnet
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-            <Box display="flex" alignItems="center" marginTop="16px">
-              <Box
-                fontSize="72px"
-                fontWeight="700"
-              >
-                {sevenDayApy}
-              </Box>
-              <Box
-                fontSize="24px"
-                fontWeight="700"
-                marginTop="24px"
-                marginLeft="10px"
-              >
-                %
-              </Box>
-            </Box>
-            <Box  fontSize="18px" fontWeight="600">
-              7D Average APY
-            </Box>
-          </Box>
-          <Box display="flex" overflow="hidden">
-            <Box
-              width="33.33%"
-              display="flex"
-              alignItems="flex-end"
-              justifyContent="center"
-              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
-              opacity={loaded ? 1 : 0}
-              transition="all 0.5s ease"
-            >
-              <Box
-                width="40px"
-                height={`${baseHeight}px`}
-                borderRadius="12px 12px 0 0"
-                background="linear-gradient(180deg, rgba(73, 126, 230, 0.60) 0%, rgba(73, 126, 230, 0.10) 100%)"
-                display="flex"
-                alignItems="flex-start"
-                paddingTop="6px"
-                justifyContent="center"
-              >
-                <Image width="28px" height="28px" src={CoinbaseIcon} className="icon" />
-              </Box>
-            </Box>
-            <Box
-              width="33.33%"
-              display="flex"
-              alignItems="flex-end"
-              justifyContent="center"
-              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
-              opacity={loaded ? 1 : 0}
-              transition="all 0.5s ease 0.5s"
-            >
-              <Box
-                width="40px"
-                height={`${baseHeight}px`}
-                borderRadius="12px 12px 0 0"
-                background="linear-gradient(180deg, rgba(252, 209, 22, 0.60) 0%, rgba(252, 209, 22, 0.10) 100%)"
-                display="flex"
-                alignItems="flex-start"
-                paddingTop="6px"
-                justifyContent="center"
-              >
-                <Image width="28px" height="28px" src={treasuryIcon} className="icon" />
-              </Box>
-            </Box>
-            <Box
-              width="33.33%"
-              display="flex"
-              alignItems="flex-end"
-              justifyContent="center"
-              transform={loaded ? 'translateY(0)' : 'translateY(100%)'}
-              opacity={loaded ? 1 : 0}
-              transition="all 0.5s ease 1s"
-            >
-              <Box
-                width="40px"
-                height={`${aaveHeight}px`}
-                borderRadius="12px 12px 0 0"
-                background="linear-gradient(180deg, rgba(70, 167, 191, 0.60) 0%, rgba(176, 84, 160, 0.10) 100%)"
-                display="flex"
-                alignItems="flex-start"
-                paddingTop="6px"
-                justifyContent="center"
-              >
-                <Image width="28px" height="28px" src={AAVEIcon} className="icon" />
-              </Box>
-            </Box>
-          </Box>
-          <Box
-            display="flex"
-            borderTop="1px solid rgba(0, 0, 0, 0.1)"
-          >
-            <Box
-              width="33.33%"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              padding="18px 10px"
-            >
-              <Box
-
-                fontWeight="600"
-                fontSize="14px"
-                textAlign="center"
-              >
-                5.01% APY
-              </Box>
-              <Box
-
-                fontWeight="600"
-                fontSize="12px"
-                color="rgba(0, 0, 0, 0.5)"
-                marginTop="5px"
-                textAlign="center"
-              >
-                Coinbase
-              </Box>
-            </Box>
-            <Box
-              width="33.33%"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              padding="18px 10px"
-            >
-              <Box
-
-                fontWeight="600"
-                fontSize="14px"
-                textAlign="center"
-              >
-                5.03% APY
-              </Box>
-              <Box
-
-                fontWeight="600"
-                fontSize="12px"
-                color="rgba(0, 0, 0, 0.5)"
-                marginTop="5px"
-                textAlign="center"
-              >
-                U.S. Treasury bill
-              </Box>
-            </Box>
-            <Box
-              width="33.33%"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              padding="18px 10px"
-            >
-              <Box
-
-                fontWeight="600"
-                fontSize="14px"
-                textAlign="center"
-              >
-                {sevenDayApy}% APY
-              </Box>
-              <Box
-
-                fontWeight="600"
-                fontSize="12px"
-                color="rgba(0, 0, 0, 0.5)"
-                marginTop="5px"
-                textAlign="center"
-              >
-                USDC on AAVE
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+        <APYCard />
         <Box display="flex" alignItems="flex-end" marginTop="42px" marginBottom="20px">
           <Box
             fontSize="24px"
