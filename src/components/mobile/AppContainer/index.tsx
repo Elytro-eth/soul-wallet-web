@@ -135,7 +135,8 @@ export function ModalPage({ name, openModal, closeModal }: any) {
 export default function AppContainer() {
   const { isModalOpen, openModal, closeModal, activeModal } = useWalletContext()
   const { logoutWallet } = useWallet();
-  const innerHeight = window.innerHeight
+  const [innerHeight] = useState(window.innerHeight);
+  // const innerHeight = window.innerHeight
   const contentHeight = innerHeight - 56
   const marginHeight = innerHeight - 250
   console.log('isModalOpen', isModalOpen)
