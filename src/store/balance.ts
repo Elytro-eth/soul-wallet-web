@@ -92,12 +92,16 @@ export const useBalanceStore = create<IBalanceStore>()(
       sevenDayApy: '0',
       oneDayInterest: '0',
       totalInterest: '0',
-      fetchFeeData: async (provider) => {
-        const feeData = await provider.getFeeData();
-        set({
-          maxFeePerGas: `0x${feeData.maxFeePerGas?.toString(16)}`,
-          maxPriorityFeePerGas: `0x${feeData.maxPriorityFeePerGas?.toString(16)}`,
-        });
+      fetchFeeData: async () => {
+        // const feeData = await provider.getFeeData();
+        // const feeData2 = await provider.send('pimlico_getUserOperationGasPrice', []);
+
+        // console.log('fee data', feeData2)
+
+        // set({
+        //   maxFeePerGas: `0x${feeData.maxFeePerGas?.toString(16)}`,
+        //   maxPriorityFeePerGas: `0x${feeData.maxPriorityFeePerGas?.toString(16)}`,
+        // });
       },
       fetchApy: async () => {
         const res: any = await api.aave.apy({

@@ -18,12 +18,13 @@ import { useChainStore } from '@/store/chain';
 import { defaultGuardianSafePeriod } from '@/config';
 import { fetchTokenBalanceApi } from '@/store/balance';
 import { aaveUsdcPoolAbi } from '@/contracts/abis';
-import useTransaction from './useTransaction';
+// import useTransaction from './useTransaction';
 import useTools from './useTools';
 import BN from 'bignumber.js';
 import useBrowser from './useBrowser';
 import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
+import useWalletContext from '@/context/hooks/useWalletContext';
 
 const noGuardian = {
   initialGuardianHash: ethers.ZeroHash,
@@ -39,7 +40,8 @@ export default function useWallet() {
   const { soulWallet } = useSdk();
   const { navigate } = useBrowser();
   const toast = useToast();
-  const { getTokenBalance, maxFeePerGas, maxPriorityFeePerGas, setTokenBalance } = useBalanceStore();
+  const { ethersProvider } = useWalletContext();
+  const { getTokenBalance, setTokenBalance } = useBalanceStore();
   const { clearLogData } = useTools();
   const { selectedAddress, setSelectedAddress, setWalletName } = useAddressStore();
 
@@ -213,6 +215,8 @@ export default function useWallet() {
 
     userOp.callData = soulAbi.encodeFunctionData('executeBatch((address,uint256,bytes)[])', [executions]);
 
+    const {maxFeePerGas, maxPriorityFeePerGas} = await ethersProvider.getFeeData();
+
     userOp.maxFeePerGas = maxFeePerGas;
     userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
 
@@ -223,6 +227,8 @@ export default function useWallet() {
 
   const getUserOp: any = async (txns: any) => {
     try {
+      const {maxFeePerGas, maxPriorityFeePerGas} = await ethersProvider.getFeeData();
+
       const userOpRet = await soulWallet.fromTransaction(maxFeePerGas, maxPriorityFeePerGas, selectedAddress, txns);
 
       if (userOpRet.isErr()) {

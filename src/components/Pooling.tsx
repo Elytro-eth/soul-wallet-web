@@ -45,7 +45,7 @@ export default function Pooling() {
     getCommonInfo();
     const interval = setInterval(() => {
       getCommonInfo();
-    }, 20000);
+    }, 5000);
     return () => {
       clearInterval(interval);
     };

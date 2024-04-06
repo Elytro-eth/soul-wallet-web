@@ -48,7 +48,7 @@ const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => 
     >
       <Box display="flex" alignItems="center" justifyContent="center" marginBottom="24px">
         {Array(count || 0).fill(1).map((_: any, i: any) =>
-          <Box width="8px" height="8px" marginLeft="4px" marginRight="4px" borderRadius="8px" background={i === activeIndex ? 'black' : '#D9D9D9'} />
+          <Box key={i} width="8px" height="8px" marginLeft="4px" marginRight="4px" borderRadius="8px" background={i === activeIndex ? 'black' : '#D9D9D9'} />
         )}
       </Box>
       <Box display="flex" alignItems="center" justifyContent="center">
