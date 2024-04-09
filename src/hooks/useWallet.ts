@@ -24,7 +24,7 @@ import BN from 'bignumber.js';
 import useBrowser from './useBrowser';
 import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
-import useWalletContext from '@/context/hooks/useWalletContext';
+import axios from 'axios';
 
 const noGuardian = {
   initialGuardianHash: ethers.ZeroHash,
@@ -40,7 +40,6 @@ export default function useWallet() {
   const { soulWallet } = useSdk();
   const { navigate } = useBrowser();
   const toast = useToast();
-  const { ethersProvider } = useWalletContext();
   const { getTokenBalance, setTokenBalance } = useBalanceStore();
   const { clearLogData } = useTools();
   const { selectedAddress, setSelectedAddress, setWalletName } = useAddressStore();
@@ -215,7 +214,11 @@ export default function useWallet() {
 
     userOp.callData = soulAbi.encodeFunctionData('executeBatch((address,uint256,bytes)[])', [executions]);
 
-    const {maxFeePerGas, maxPriorityFeePerGas} = await ethersProvider.getFeeData();
+    const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
+
+    const gas = await getGasPrice();
+
+    console.log('GAS', gas);
 
     userOp.maxFeePerGas = maxFeePerGas;
     userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
@@ -227,7 +230,7 @@ export default function useWallet() {
 
   const getUserOp: any = async (txns: any) => {
     try {
-      const {maxFeePerGas, maxPriorityFeePerGas} = await ethersProvider.getFeeData();
+      const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
 
       const userOpRet = await soulWallet.fromTransaction(maxFeePerGas, maxPriorityFeePerGas, selectedAddress, txns);
 
@@ -315,6 +318,27 @@ export default function useWallet() {
     }
 
     return userOp;
+  };
+
+  const getGasPrice = async () => {
+    try {
+      const res = await axios.post(chainConfig.bundlerUrl, {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'pimlico_getUserOperationGasPrice',
+        params: [],
+      });
+
+      console.log('pricessss', res);
+
+      if (res.data.result.fast) {
+        return res.data.result.fast;
+      } else {
+        throw new Error('Failed to get gas price');
+      }
+    } catch {
+      throw new Error('Failed to get gas price');
+    }
   };
 
   const signAndSend = async (userOp: UserOperation) => {

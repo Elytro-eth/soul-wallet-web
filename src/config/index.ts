@@ -97,6 +97,8 @@ export const bundlerErrMapping: { [key: string]: string } = {
 
 export const ensContractAddress = '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85';
 
+export const trialFundAddress = '0x36cdd4d6cecee18d0ea76b7baa1c26f11037ade4';
+
 export const tgLink = 'https://t.me/+XFUHusXFdTYyODQ9';
 
 export const aaveLink = 'https://aave.com';

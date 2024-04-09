@@ -1,107 +1,104 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Image, Flex } from '@chakra-ui/react';
-import Button from '@/components/mobile/Button'
-import MoreIcon from '@/components/Icons/mobile/More'
-import USDCIcon from '@/assets/tokens/usdc.png'
-import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit'
-import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer'
+import Button from '@/components/mobile/Button';
+import MoreIcon from '@/components/Icons/mobile/More';
+import USDCIcon from '@/assets/tokens/usdc.png';
+import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
+import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
 import { useBalanceStore } from '@/store/balance';
 import { useHistoryStore } from '@/store/history';
-import BN from 'bignumber.js'
-import { toFixed } from '@/lib/tools';
-import { useScroll, useMotionValueEvent } from "framer-motion"
-import HistoryIcon from '@/components/Icons/mobile/History'
-import useNavigation from '@/hooks/useNavigation'
-import { useOutletContext } from "react-router-dom"
+import BN from 'bignumber.js';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
+import HistoryIcon from '@/components/Icons/mobile/History';
+import { useOutletContext } from 'react-router-dom';
 
 const getFontSize = (value: any) => {
-  const length = value ? String(value).length : 0
+  const length = value ? String(value).length : 0;
 
   if (length > 9) {
-    return '40px'
+    return '24px';
+  } else if (length > 7) {
+    return '36px';
   } else if (length > 5) {
-    return '50px'
+    return '40px';
+  } else if (length > 3) {
+    return '50px';
   }
 
-  return '72px'
-}
+  return '72px';
+};
 
 const getSmallFontSize = (value: any) => {
-  const length = value ? String(value).length : 0
+  const length = value ? String(value).length : 0;
 
-  if (length > 9) {
-    return '30px'
-  } else if (length > 5) {
-    return '50px'
-  }
+  return '24px'
 
-  return '36px'
-}
+  // if (length > 2) {
+  //   return '24px';
+  // } else if (length > 1) {
+  //   return '32px';
+  // }
+
+  // return '36px';
+};
 
 const getFontBottomMargin = (value: any) => {
-  const length = value ? String(value).length : 0
+  const length = value ? String(value).length : 0;
 
   if (length > 9) {
-    return '0px'
+    return '0px';
   } else if (length > 5) {
-    return '10px'
+    return '10px';
   }
 
-  return '20px'
-}
+  return '20px';
+};
 
 export default function Dashboard() {
-  const { totalUsdValue, getTokenBalance, sevenDayApy, oneDayInterest, } = useBalanceStore();
-  // const [totalUsdValue, setTotalUsdValue] = useState("0.1")
+  const { totalUsdValue, totalTrialValue, getTokenBalance, sevenDayApy, oneDayInterest } = useBalanceStore();
   const { historyList } = useHistoryStore();
-  const [modalMargin, setModalMargin] = useState(494)
-  const [modalHeight, setModalHeight] = useState(window.innerHeight - 494)
+  const [modalMargin, setModalMargin] = useState(494);
+  const [modalHeight, setModalHeight] = useState(window.innerHeight - 494);
   const [showFullHistory, setShowFullHistory] = useState(false);
-  const [modalPosition, setModalPosition] = useState('bottom')
-  const [isMoving, setIsMoving] = useState(false)
+  const [modalPosition, setModalPosition] = useState('bottom');
+  const [isMoving, setIsMoving] = useState(false);
   // const { openModal } = useNavigation()
-  const [openModal] = useOutletContext<any>()
-  const contentRef = useRef()
+  const [openModal] = useOutletContext<any>();
+  const contentRef = useRef();
 
-  const pendingUsdcBalance = getTokenBalance(import.meta.env.VITE_TOKEN_USDC)
-  const hasBalance = BN(totalUsdValue).isGreaterThan(0);
+  const pendingUsdcBalance = getTokenBalance(import.meta.env.VITE_TOKEN_USDC);
 
-  const valueLeft = totalUsdValue.split('.')[0]
-  const valueRight = totalUsdValue.split('.')[1]
+  const totalShowBalance = BN(totalUsdValue).plus(totalTrialValue).toFixed(2);
 
-  const fontSize = getFontSize(valueLeft)
-  const smFontSize = getSmallFontSize(valueRight)
-  const fontBottomMargin = getFontBottomMargin(valueLeft)
+  const hasBalance = BN(totalShowBalance).isGreaterThan(0);
+
+  const valueLeft = totalShowBalance.split('.')[0];
+  const valueRight = totalShowBalance.split('.')[1];
+
+  const fontSize = getFontSize(valueLeft);
+  const smFontSize = getSmallFontSize(valueRight);
+  const fontBottomMargin = getFontBottomMargin(valueLeft);
 
   const [startPosition, setStartPosition] = useState(null);
-  const { scrollY } = useScroll()
+  const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    console.log("Page scroll: ", latest)
-  })
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    console.log('Page scroll: ', latest);
+  });
 
-  /* useEffect(() => {
-   *   let i = 0.1
-
-   *   setInterval(() => {
-   *     setTotalUsdValue(String(i))
-   *     i = i + 3.5
-   *   }, 1000)
-   * }, [])
-   */
   useEffect(() => {
-    getContentHeight()
-    console.log('contentRef', contentRef)
-  }, [])
+    getContentHeight();
+    console.log('contentRef', contentRef);
+  }, []);
 
   const handleStart = (position: any) => {
     setStartPosition(position);
   };
 
   const openActivity = () => {
-    console.log('openActivity')
-    openModal('activity')
+    console.log('openActivity');
+    openModal('activity');
   };
 
   const handleMove = (currentPosition: any) => {
@@ -109,16 +106,16 @@ export default function Dashboard() {
 
     if (startPosition > currentPosition + 20) {
       console.log('Moving up');
-      changeModalPosition('top')
-      setTimeout(()=>{
+      changeModalPosition('top');
+      setTimeout(() => {
         setShowFullHistory(true);
-      }, 600)
+      }, 600);
     } else if (startPosition < currentPosition - 20) {
       console.log('Moving down');
-      changeModalPosition('bottom')
-      setTimeout(()=>{
+      changeModalPosition('bottom');
+      setTimeout(() => {
         setShowFullHistory(false);
-      }, 600)
+      }, 600);
     }
   };
 
@@ -142,48 +139,53 @@ export default function Dashboard() {
   };
 
   const getContentHeight = () => {
-    const elem: any = contentRef.current
+    const elem: any = contentRef.current;
 
     if (elem) {
-      return elem.clientHeight + 62 + 60 - 6
+      return elem.clientHeight + 62 + 60 - 6;
     }
 
-    return 494
-  }
+    return 494;
+  };
 
-  const changeModalPosition = useCallback((intentPosition: any) => {
-    if (!isMoving && intentPosition !== modalPosition) {
-      setIsMoving(true)
+  const changeModalPosition = useCallback(
+    (intentPosition: any) => {
+      if (!isMoving && intentPosition !== modalPosition) {
+        setIsMoving(true);
 
-      if (modalPosition === 'bottom') {
-        setModalMargin(64)
-        setModalHeight(window.innerHeight - 64)
-        setModalPosition('top')
-      } else {
-        const height = getContentHeight()
-        setModalMargin(height)
-        setModalPosition('bottom')
+        if (modalPosition === 'bottom') {
+          setModalMargin(64);
+          setModalHeight(window.innerHeight - 64);
+          setModalPosition('top');
+        } else {
+          const height = getContentHeight();
+          setModalMargin(height);
+          setModalPosition('bottom');
+
+          setTimeout(() => {
+            setModalHeight(window.innerHeight - height);
+          }, 620);
+        }
 
         setTimeout(() => {
-          setModalHeight(window.innerHeight - height)
-        }, 620)
+          setIsMoving(false);
+        }, 600);
       }
+    },
+    [modalPosition, isMoving],
+  );
 
-      setTimeout(() => {
-        setIsMoving(false)
-      }, 600)
-    }
-  }, [modalPosition, isMoving])
-
-  const finalHistoryList = showFullHistory ? historyList : historyList.slice(0, 2)
+  const finalHistoryList = showFullHistory ? historyList : historyList.slice(0, 2);
   // const finalHistoryList = historyList
 
   return (
     <Box>
-      <Box
-        padding={{ xs: '20px', sm: '30px' }}
-      >
-        <Box ref={(v: any) => { contentRef.current = v }}>
+      <Box padding={{ xs: '20px', sm: '30px' }}>
+        <Box
+          ref={(v: any) => {
+            contentRef.current = v;
+          }}
+        >
           <Box
             width="100%"
             background="white"
@@ -195,7 +197,9 @@ export default function Dashboard() {
             position="relative"
             zIndex="1"
           >
-            <Box fontSize="18px" fontWeight="700" lineHeight="24px" marginBottom="45px">Balance</Box>
+            <Box fontSize="18px" fontWeight="700" lineHeight="24px" marginBottom="45px">
+              Balance
+            </Box>
             <Box
               display="flex"
               flexDirection="column"
@@ -203,74 +207,73 @@ export default function Dashboard() {
               // fontFamily={"Nunito"}
             >
               <Box display="flex" alignItems="center">
-                <Box fontSize="24px" fontWeight="700" marginRight="2px">$</Box>
+                <Box fontSize="24px" fontWeight="700" marginRight="2px">
+                  $
+                </Box>
                 <Box
-
                   fontSize={fontSize}
-                  lineHeight={"1"}
+                  lineHeight={'1'}
                   fontWeight="700"
                   sx={{
-                    "@property --num":  {
-                      "syntax": `'<integer>'`,
-                      "initialValue": "0",
-                      "inherits": "false"
+                    '@property --num': {
+                      syntax: `'<integer>'`,
+                      initialValue: '0',
+                      inherits: 'false',
                     },
-                    "&": {
-                      "transition": "--num 1s",
-                      "counterReset": "num var(--num)",
-                      "--num": valueLeft
+                    '&': {
+                      transition: '--num 1s',
+                      counterReset: 'num var(--num)',
+                      '--num': valueLeft,
                     },
-                    "&::after": {
-                      "content": "counter(num)",
-                    }
+                    '&::after': {
+                      content: 'counter(num)',
+                    },
                   }}
                 />
-                {valueRight && BN(valueRight).isGreaterThan(0) && Number(valueRight.slice(0,3).replace(/0+$/, "")) > 0 && (
-                  <Box
-
-                    fontSize={smFontSize}
-                    lineHeight={"1"}
-                    fontWeight="700"
-                    marginTop={fontBottomMargin}
-                    // marginLeft="10px"
-                    color="#939393"
-                  >
-                    .<Box
-                       as="span"
-                       sx={{
-                         "@property --num":  {
-                           "syntax": `'<integer>'`,
-                           "initialValue": "0",
-                           "inherits": "false"
-                         },
-                         "&": {
-                           "transition": "--num 1s",
-                           "counterReset": "num var(--num)",
-                           "--num": valueRight.slice(0,3).replace(/0+$/, "")
-                         },
-                         "&::after": {
-                           "content": "counter(num)",
-                         }
-                       }}
-                    />
+                {valueRight &&
+                  BN(valueRight).isGreaterThan(0) &&
+                  Number(valueRight.slice(0, 3).replace(/0+$/, '')) > 0 && (
+                    <Box
+                      fontSize={smFontSize}
+                      lineHeight={'1'}
+                      fontWeight="700"
+                      marginTop={fontBottomMargin}
+                      // marginLeft="10px"
+                      color="#939393"
+                    >
+                      .
+                      <Box
+                        as="span"
+                        sx={{
+                          '@property --num': {
+                            syntax: `'<integer>'`,
+                            initialValue: '0',
+                            inherits: 'false',
+                          },
+                          '&': {
+                            transition: '--num 1s',
+                            counterReset: 'num var(--num)',
+                            '--num': valueRight.slice(0, 3).replace(/0+$/, ''),
+                          },
+                          '&::after': {
+                            content: 'counter(num)',
+                          },
+                        }}
+                      />
+                    </Box>
+                  )}
+              </Box>
+              <Box color="#0CB700" fontSize="16px" fontWeight="600" marginBottom="40px" marginTop="4px">
+                + ${oneDayInterest} earned today
+              </Box>
+              {Number(pendingUsdcBalance) > 0 && (
+                <Box color="rgba(0, 0, 0, 0.60)" fontSize="14px">
+                  Deposit in progress, est complete in{' '}
+                  <Box color="#497EE6" as="span">
+                    1 min
                   </Box>
-                )}
-              </Box>
-              <Box
-                color="#0CB700"
-                fontSize="16px"
-                fontWeight="600"
-                marginBottom="40px"
-                marginTop="4px"
-              >
-                + ${oneDayInterest} earned  today
-              </Box>
-              {
-                Number(pendingUsdcBalance) > 0 && <Box color="rgba(0, 0, 0, 0.60)" fontSize="14px">
-                  Deposit in progress, est complete in <Box color="#497EE6" as="span">1 min</Box>
                 </Box>
-              }
-
+              )}
             </Box>
             {hasBalance && (
               <Box
@@ -287,14 +290,9 @@ export default function Dashboard() {
                   justifyContent="center"
                   width={{ xs: '100%', sm: '34%' }}
                 >
-                  <Box onClick={() => openModal('withdraw')} style={{ width: "100%" }}>
+                  <Box onClick={() => openModal('withdraw')} style={{ width: '100%' }}>
                     <Box width="100%">
-                      <Button
-                        width="100%"
-                        size="xl"
-                        type="grey" fontWeight="600"
-                        minWidth="auto"
-                      >
+                      <Button width="100%" size="xl" type="grey" fontWeight="600" minWidth="auto">
                         Transfer
                       </Button>
                     </Box>
@@ -307,7 +305,7 @@ export default function Dashboard() {
                   justifyContent="center"
                   width={{ xs: '100%', sm: 'calc(66% - 14px)' }}
                 >
-                  <Box onClick={() => openModal('deposit')} style={{ width: "100%"}}>
+                  <Box onClick={() => openModal('deposit')} style={{ width: '100%' }}>
                     <Box width="100%">
                       <Button width="100%" fontWeight="600" size="xl" type="black" minWidth="auto">
                         Deposit USDC
@@ -319,13 +317,8 @@ export default function Dashboard() {
             )}
             {!hasBalance && (
               <Box display="flex" alignItems="center" justifyContent="center" gap="14px">
-                <Box  onClick={() => openModal('deposit')} style={{ width: "100%"}}>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
+                <Box onClick={() => openModal('deposit')} style={{ width: '100%' }}>
+                  <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
                     <Box width="100%">
                       <Button width="100%" size="xl" type="black">
                         Deposit USDC
@@ -346,19 +339,25 @@ export default function Dashboard() {
             borderRadius="24px"
             paddingTop="44px"
           >
-            <Box fontSize="18px" fontWeight="700" marginBottom="12px">Earn</Box>
+            <Box fontSize="18px" fontWeight="700" marginBottom="12px">
+              Earn
+            </Box>
             <Box onClick={() => openModal('details')} display="flex" justifyContent="space-between" alignItems="center">
               <Box display="flex" alignItems="center">
                 <Box marginRight="8px">
                   <Image src={USDCIcon} minW="8" w="8" h="8" />
                 </Box>
                 <Box>
-                  <Box fontSize="18px" lineHeight={"23px"} fontWeight="700">USDC</Box>
+                  <Box fontSize="18px" lineHeight={'23px'} fontWeight="700">
+                    USDC
+                  </Box>
                 </Box>
               </Box>
               <Box display="flex" alignItems="center">
                 <Box display="flex" flexDirection="column" alignItems="flex-end">
-                  <Box fontSize="18px" lineHeight={"23px"} fontWeight="700">{sevenDayApy}%</Box>
+                  <Box fontSize="18px" lineHeight={'23px'} fontWeight="700">
+                    {sevenDayApy}%
+                  </Box>
                 </Box>
                 <Box marginLeft="10px">
                   <MoreIcon />
@@ -375,8 +374,7 @@ export default function Dashboard() {
               borderRadius="24px"
               marginTop="27px"
             >
-              <Box
-              >
+              <Box>
                 <Box
                   width="100%"
                   fontSize="18px"
@@ -389,10 +387,19 @@ export default function Dashboard() {
                   justifyContent="space-between"
                 >
                   <Box>Activity</Box>
-                  <Box onClick={() => openActivity()}><HistoryIcon /></Box>
+                  <Box onClick={() => openActivity()}>
+                    <HistoryIcon />
+                  </Box>
                 </Box>
               </Box>
-              <Flex gap="36px" padding="0" flexDir="column" width="100%" overflow="auto" maxHeight={`${40 * 4 + 36 * 3}px`}>
+              <Flex
+                gap="36px"
+                padding="0"
+                flexDir="column"
+                width="100%"
+                overflow="auto"
+                maxHeight={`${40 * 4 + 36 * 3}px`}
+              >
                 {finalHistoryList.map((item, index) => (
                   <Box
                     key={index}
@@ -403,14 +410,13 @@ export default function Dashboard() {
                     paddingRight="22px"
                   >
                     <Box marginRight="12px">
-                      {item.action === 'Deposit' ? <ActivityDepositIcon /> :  <ActivityTransferIcon />}
+                      {item.action === 'Deposit' ? <ActivityDepositIcon /> : <ActivityTransferIcon />}
                     </Box>
                     <Box>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                      >
-                        <Box fontSize="14px" fontWeight="700">{item.action}</Box>
+                      <Box display="flex" alignItems="center">
+                        <Box fontSize="14px" fontWeight="700">
+                          {item.action}
+                        </Box>
                         {/* <Box
                             fontSize="12px"
                             background="#F1F1F1"
@@ -425,7 +431,9 @@ export default function Dashboard() {
                       <Box fontSize="12px">{item.dateFormatted}</Box>
                     </Box>
                     <Box marginLeft="auto">
-                      <Box fontSize="14px" fontWeight="700">{item.amountFormatted} USDC</Box>
+                      <Box fontSize="14px" fontWeight="700">
+                        {item.amountFormatted} USDC
+                      </Box>
                     </Box>
                   </Box>
                 ))}
@@ -435,5 +443,5 @@ export default function Dashboard() {
         </Box>
       </Box>
     </Box>
-  )
+  );
 }

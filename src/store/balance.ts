@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import IconDefaultToken from '@/assets/tokens/default.svg';
 import IconEth from '@/assets/tokens/eth.svg';
 import BN from 'bignumber.js';
+import { trialFundAddress } from '@/config';
 
 export interface ITokenBalanceItem {
   chainID: string;
@@ -43,6 +44,7 @@ export interface IBalanceStore {
   totalInterest: string;
   fetchInterest: (address: string, chainID: string) => void;
   totalUsdValue: string;
+  totalTrialValue: string;
   tokenBalance: ITokenBalanceItem[];
   clearBalance: () => void;
   getTokenBalance: (tokenAddress: string) => any;
@@ -88,6 +90,7 @@ export const useBalanceStore = create<IBalanceStore>()(
       maxFeePerGas: '0x',
       maxPriorityFeePerGas: '0x',
       totalUsdValue: '0',
+      totalTrialValue: '0',
       apy: '0',
       sevenDayApy: '0',
       oneDayInterest: '0',
@@ -135,13 +138,18 @@ export const useBalanceStore = create<IBalanceStore>()(
       },
       setTokenBalance: (balanceList: any) => {
         let totalUsdValue = BN('0');
+        let totalTrialValue = BN('0');
         const tokenList = balanceList.map((item: ITokenBalanceItem) => {
           let formattedItem = formatTokenBalance(item);
-          totalUsdValue = totalUsdValue.plus(item.tokenBalanceFormatted);
+          if(item.contractAddress === trialFundAddress){
+            totalTrialValue = totalTrialValue.plus(item.tokenBalanceFormatted);
+          }else{
+            totalUsdValue = totalUsdValue.plus(item.tokenBalanceFormatted);
+          }
           return formattedItem;
         });
         // format balance list here
-        set({ tokenBalance: tokenList, totalUsdValue: totalUsdValue.toString() });
+        set({ tokenBalance: tokenList, totalUsdValue: totalUsdValue.toString(), totalTrialValue: totalTrialValue.toString() });
       },
     }),
     {

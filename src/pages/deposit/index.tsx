@@ -16,7 +16,7 @@ import {
 import api from '@/lib/api';
 import NextIcon from '@/components/Icons/mobile/Next';
 import Header from '@/components/mobile/Header'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CheckDeposit from './CheckDeposit'
 import MakeTransfer from './MakeTransfer'
 import SelectNetwork from './SelectNetwork'
@@ -59,7 +59,9 @@ const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => 
         )}
         {activeIndex === 3 && (
           <Box display="flex" alignItems="center" justifyContent="center">
-            <Box onClick={onFinish} fontWeight="700" fontSize="18px" cursor="pointer">I’ve done with all these steps!</Box>
+            <Link to="/dashboard">
+              <Box fontWeight="700" fontSize="18px" cursor="pointer">I’ve done with all these steps!</Box>
+            </Link>
           </Box>
         )}
         <Box>
