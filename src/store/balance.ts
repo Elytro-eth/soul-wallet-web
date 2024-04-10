@@ -79,7 +79,7 @@ export const formatTokenBalance = (item: ITokenBalanceItem) => {
     item.name = 'Unknown';
   }
   if (item.tokenBalance) {
-    item.tokenBalanceFormatted = ethers.formatUnits(item.tokenBalance, item.decimals);
+    item.tokenBalanceFormatted = ethers.formatUnits(parseInt(item.tokenBalance), item.decimals);
   }
   return item;
 };

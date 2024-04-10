@@ -36,10 +36,12 @@ export const fetchHistoryApi = async (address: string, chainId: string) => {
       if (historyItem.item.from === addressLowercase && historyItem.item.to === addressLowercase) {
         return [
           {
+            ...historyItem,
             action: 'Deposit',
             amountFormatted: `+ ${historyItem.amount}`,
           },
           {
+            ...historyItem,
             action: 'Transfer',
             amountFormatted: `- ${historyItem.amount}`,
           },

@@ -26,7 +26,6 @@ export default function Activity({ isModal, registerScrollable }: any) {
   const scrollableRef = useRef<any>()
 
   const finalHistoryList = historyList
-
   useEffect(() => {
     registerScrollable(scrollableRef.current)
   }, [])
