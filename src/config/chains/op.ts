@@ -11,7 +11,7 @@ export default {
   icon: IconOpSquare,
   iconFaded: IconOpFaded,
   iconSquare: IconOpSquare,
-  provider: `https://mainnet.optimism.io`,
+  provider: `https://optimism.drpc.org`,
   scanUrl: 'https://optimistic.etherscan.io',
   scanName: 'Etherscan',
   bundlerUrl: `${import.meta.env.VITE_BACKEND_URL}/appapi/bundler/optimism/rpc`,

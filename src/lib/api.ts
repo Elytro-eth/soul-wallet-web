@@ -44,6 +44,7 @@ const token = {
   interest: (params: any) => axio.post('/token/interest',params),
   balance: (params: any) => axio.post('/token/balance',params),
   history: (params: any) => axio.post('/token/history',params),
+  spendTrialInterest: (params: any) => axio.post('/token/spend-trial-interest',params),
 }
 
 const aave = {

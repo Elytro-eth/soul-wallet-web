@@ -17,7 +17,7 @@ import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
 import { defaultGuardianSafePeriod } from '@/config';
 import { fetchTokenBalanceApi } from '@/store/balance';
-import { aaveUsdcPoolAbi } from '@/contracts/abis';
+import { aaveUsdcPoolAbi, claimInterestAbi } from '@/contracts/abis';
 // import useTransaction from './useTransaction';
 import useTools from './useTools';
 import BN from 'bignumber.js';
@@ -91,14 +91,16 @@ export default function useWallet() {
 
   const getWithdrawOp = async (amount: string, to: string) => {
     const aaveUsdcPool = new ethers.Interface(aaveUsdcPoolAbi);
+    const claimInterest = new ethers.Interface(claimInterestAbi);
     const erc20 = new ethers.Interface(erc20Abi);
 
     const usdcBalance = getTokenBalance(import.meta.env.VITE_TOKEN_USDC)?.tokenBalanceFormatted;
     const ausdcBalance = getTokenBalance(import.meta.env.VITE_TOKEN_AUSDC)?.tokenBalanceFormatted;
+    const trialInterestBalance = getTokenBalance(import.meta.env.VITE_TOKEN_TRIAL_INTEREST)?.tokenBalanceFormatted;
 
     let txs = [];
 
-    if (BN(amount).isGreaterThan(BN(usdcBalance).plus(ausdcBalance))) {
+    if (BN(amount).isGreaterThan(BN(usdcBalance).plus(ausdcBalance).plus(trialInterestBalance))) {
       toast({
         title: 'Insufficient balance',
         status: 'error',
@@ -106,7 +108,26 @@ export default function useWallet() {
       return;
     }
 
-    const withdrawAmount = BN(amount).minus(usdcBalance);
+    let deductTrialAmount = BN(0);
+    // 1. deduct interest balance first
+    if (BN(trialInterestBalance).isGreaterThan(0)) {
+      deductTrialAmount = BN(amount).isGreaterThan(trialInterestBalance) ? BN(trialInterestBalance) : BN(amount);
+      if (deductTrialAmount.isGreaterThan(0)) {
+        const res = await api.token.spendTrialInterest({
+          address: selectedAddress,
+          chainID: selectedChainId,
+          amount: `0x${deductTrialAmount.shiftedBy(6).toString(16)}`,
+        });
+        const { actualAmount, nonce, signature, expireTime } = res.data;
+        txs.push({
+          from: selectedAddress,
+          to: import.meta.env.VITE_ClaimInterest,
+          data: claimInterest.encodeFunctionData('claimInterest', [actualAmount, nonce, expireTime, signature]),
+        });
+      }
+    }
+
+    const withdrawAmount = BN(amount).minus(deductTrialAmount).minus(usdcBalance);
 
     if (withdrawAmount.isGreaterThan(0)) {
       txs.push({
