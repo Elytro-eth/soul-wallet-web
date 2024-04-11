@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import useBrowser from '@/hooks/useBrowser';
-import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, Link, PopoverTrigger } from '@chakra-ui/react';
+import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, Link, PopoverTrigger, Input } from '@chakra-ui/react';
 import config from '@/config';
 import RoundContainer from '@/components/new/RoundContainer';
 import Heading from '@/components/new/Heading';
@@ -387,22 +387,6 @@ export default function Auth() {
                   <TextBody>Recover wallet through trusted friends</TextBody>
                 </Box>
               </Box>
-              <Box marginBottom="18px" height="20px" display="flex">
-                <Box marginRight="14px">
-                  <TransferIcon />
-                </Box>
-                <Box>
-                  <TextBody>Pay gas fee with ERC-20 tokens and stablecoin</TextBody>
-                </Box>
-              </Box>
-              <Box marginBottom="18px" height="20px" display="flex">
-                <Box marginRight="14px">
-                  <TokenIcon />
-                </Box>
-                <Box>
-                  <TextBody>Cross-L2 experience secured by Ethereum</TextBody>
-                </Box>
-              </Box>
             </Box>
             <TextBody fontWeight="700" color="#818181">
               For more info, check out{' '}
@@ -414,20 +398,56 @@ export default function Auth() {
               >{`FAQs >`}</Box>
             </TextBody>
           </Box>
-          <Box width={{ base: '100%', md: '50%' }} background="#F7F7FF" flex="1" display="flex" padding="60px">
+          <Box width={{ base: '100%', md: '50%' }} background="#F8F8F8" flex="1" display="flex" padding="60px">
             <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-              <Box marginBottom="40px">
-                <Image src={AuthImg} w="300px" h="200px" />
-              </Box>
-              <Box width="335px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              <Box width="348px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                <Box marginBottom="12px" width="100%">
+                  <Input
+                    height="52px"
+                    type="text"
+                    width="100%"
+                    background="white"
+                    placeholder="Enter wallet name"
+                  />
+                </Box>
                 <Button width="100%" type="black" color="white" marginBottom="18px" size="xl" onClick={openRegister}>
-                  Create account
+                  Create wallet for free
                 </Button>
-                <Button width="100%" type="white" marginBottom="48px" onClick={openLogin} size="xl">
-                  Login
+                <Box
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  position="relative"
+                  margin="0 auto"
+                  marginBottom="18px"
+                >
+                  <Box
+                    width="100%"
+                    height="1px"
+                    background="rgba(0, 0, 0, 0.1)"
+                    position="absolute"
+                  />
+                  <TextBody
+                    fontSize="14px"
+                    fontWeight="normal"
+                    width="40px"
+                    height="20px"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    zIndex="1"
+                    background="#F8F8F8"
+                    color="rgba(0, 0, 0, 0.6)"
+                  >
+                    or
+                  </TextBody>
+                </Box>
+                <Button width="100%" type="white" marginBottom="24px" onClick={openLogin} size="xl">
+                  Login with passkey
                 </Button>
                 <TextBody onClick={openRecover} cursor="pointer">
-                  Lost access to your account?
+                  Lost access to my account?
                 </TextBody>
               </Box>
             </Box>
