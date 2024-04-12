@@ -21,7 +21,7 @@ import { passkeyTooltipText } from '@/config/constants';
 import QuestionIcon from '@/components/Icons/Auth/Question'
 import { SignHeader } from '@/pages/public/Sign';
 
-export default function SetPasskey({ back }: any) {
+export default function SetPasskey({ back, next: nextStep }: any) {
   const { createInfo, updateCreateInfo, setDoneAuth } = useTempStore()
   const [credentials, setCredentials] = useState<any>([])
   const { register } = usePassKey()
@@ -64,7 +64,7 @@ export default function SetPasskey({ back }: any) {
       credentials
     })
     setDoneAuth(true);
-    navigate(`/dashboard`);
+    nextStep()
   }, [credentials])
 
   useEffect(() => {
@@ -229,8 +229,7 @@ export default function SetPasskey({ back }: any) {
                   type="black"
                   color="white"
                   padding="0 20px"
-                  disabled={!name}
-                  onClick={() => {}}
+                  onClick={nextStep}
                   size="lg"
                 >
                   Next

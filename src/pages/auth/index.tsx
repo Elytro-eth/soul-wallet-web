@@ -22,6 +22,7 @@ import { useSignerStore } from '@/store/signer';
 import AuthImg from '@/assets/auth.svg';
 import useKeystore from '@/hooks/useKeystore';
 import SetPasskey from './SetPasskey';
+import SetGuardian from './SetGuardian';
 import SelectNetwork from './SelectNetwork';
 import ImportAccount from './ImportAccount';
 import LoginModal from './LoginModal';
@@ -65,7 +66,7 @@ export default function Auth() {
   const signerIdAddress = getSignerIdAddress();
   const activeSignerId = loginInfo.signerId;
   const activeLoginAccounts = signerIdAddress[loginInfo.signerId];
-  console.log('signerIdAddress', activeSignerId, activeLoginAccounts, signerIdAddress);
+  console.log('signerIdAddress', activeSignerId, activeLoginAccounts, signerIdAddress, stepType);
 
   const openRecover = useCallback(() => {
     navigate('/recover');
@@ -336,8 +337,12 @@ export default function Auth() {
     return <SelectNetwork updateWalletName={updateWalletName} back={() => setStepType('auth')} />;
   }
 
+  if (stepType === 'setGuardian') {
+    return <SetGuardian back={() => setStepType('setPassKey')} />;
+  }
+
   if (stepType === 'setPassKey' || registerMethod === 'passkey') {
-    return <SetPasskey back={() => setStepType('selectNetwork')} />;
+    return <SetPasskey back={() => setStepType('selectNetwork')} next={() => setStepType('setGuardian')} />;
   }
 
   return (
