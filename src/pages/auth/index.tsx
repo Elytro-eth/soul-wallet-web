@@ -22,7 +22,7 @@ import { useSignerStore } from '@/store/signer';
 import AuthImg from '@/assets/auth.svg';
 import useKeystore from '@/hooks/useKeystore';
 import SetPasskey from './SetPasskey';
-import SetWalletName from './SetWalletName';
+import SelectNetwork from './SelectNetwork';
 import ImportAccount from './ImportAccount';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
@@ -134,7 +134,7 @@ export default function Auth() {
     setIsConnectAtive(true);
     setRegisterMethod('passkey');
     closeRegister();
-    setStepType('setWalletName');
+    setStepType('selectNetwork');
   }, []);
 
   const startRegisterWithEOA = useCallback((address: any) => {
@@ -144,7 +144,7 @@ export default function Auth() {
     updateCreateInfo({
       eoaAddress: [address],
     });
-    setStepType('setWalletName');
+    setStepType('selectNetwork');
   }, []);
 
   const disconnectEOA = useCallback(async () => {
@@ -332,12 +332,12 @@ export default function Auth() {
     return <ImportAccount importWallet={importWallet} isImporting={isImporting} back={() => setStepType('auth')} />;
   }
 
-  if (stepType === 'setWalletName') {
-    return <SetWalletName updateWalletName={updateWalletName} back={() => setStepType('auth')} />;
+  if (stepType === 'selectNetwork') {
+    return <SelectNetwork updateWalletName={updateWalletName} back={() => setStepType('auth')} />;
   }
 
   if (stepType === 'setPassKey' || registerMethod === 'passkey') {
-    return <SetPasskey />;
+    return <SetPasskey back={() => setStepType('selectNetwork')} />;
   }
 
   return (

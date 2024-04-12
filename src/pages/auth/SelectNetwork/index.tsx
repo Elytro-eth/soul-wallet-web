@@ -57,6 +57,7 @@ export default function SetWalletName({ updateWalletName, back }: any) {
       >
         <RoundContainer
           width="1058px"
+          minHeight="348px"
           maxWidth="100%"
           maxHeight="100%"
           display="flex"
@@ -93,7 +94,6 @@ export default function SetWalletName({ updateWalletName, back }: any) {
                 justifyContent="center"
                 fontSize="20px"
                 fontWeight="800"
-                fontFamily="Inter"
               >
                 1
               </Box>
@@ -192,7 +192,7 @@ export default function SetWalletName({ updateWalletName, back }: any) {
                     padding="0 20px"
                     disabled={!name}
                     onClick={() => updateWalletName(name)}
-                    size="xl"
+                    size="lg"
                   >
                     Next
                   </Button>
