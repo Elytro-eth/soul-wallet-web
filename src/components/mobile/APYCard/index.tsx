@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
-import { Box, Image, Flex } from '@chakra-ui/react';
+import { Box, Image, Flex, Modal, ModalBody, ModalContent, ModalOverlay, ModalCloseButton, Link as CLink } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/mobile/Header'
 import Button from '@/components/mobile/Button'
 import IntroItem1Icon from '@/components/Icons/mobile/Intro/Item1'
 import IntroItem2Icon from '@/components/Icons/mobile/Intro/Item2'
 import IntroItem3Icon from '@/components/Icons/mobile/Intro/Item3'
+import IconQuestion from '@/assets/icons/apy-question.svg';
 import USDCIcon from '@/assets/tokens/usdc.png'
 import IconLoading from '@/assets/mobile/loading.gif';
 import config from '@/config';
@@ -14,9 +16,12 @@ import { useBalanceStore } from '@/store/balance';
 import treasuryIcon from '@/assets/mobile/treasury.png'
 import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
+import StableCashIcon from '@/assets/mobile/stable-cash.svg';
 import BN from 'bignumber.js'
 
 export default function APYCard() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   const [loaded, setLoaded] = useState(false);
   const { sevenDayApy } = useBalanceStore();
 
@@ -25,6 +30,9 @@ export default function APYCard() {
 
   const baseHeight = 59;
   const aaveHeight = BN(sevenDayApy).div(5).times(baseHeight).toNumber();
+
+  const innerHeight = window.innerHeight
+  const marginHeight = innerHeight - 428
 
   useEffect(() => {
     setLoaded(true)
@@ -119,9 +127,12 @@ export default function APYCard() {
             %
           </Box>
         </Box>
-        <Box  fontSize="18px" fontWeight="600">
-          7D Average APY
-        </Box>
+        <Flex align={'center'} gap="1px">
+          <Box  fontSize="18px" fontWeight="600">
+            7D Average APY
+          </Box>
+          <Image src={IconQuestion} onClick={()=> onOpen()} />
+        </Flex>
       </Box>
       <Box display="flex" overflow="hidden">
         <Box
@@ -181,13 +192,13 @@ export default function APYCard() {
             width="40px"
             height={`${aaveHeight}px`}
             borderRadius="12px 12px 0 0"
-            background="linear-gradient(180deg, rgba(70, 167, 191, 0.60) 0%, rgba(176, 84, 160, 0.10) 100%)"
+            background="linear-gradient(180deg, rgba(121, 121, 121, 0.6) 0%, rgba(215, 215, 215, 0.1) 100%)"
             display="flex"
             alignItems="flex-start"
             paddingTop="6px"
             justifyContent="center"
           >
-            <Image width="28px" height="28px" src={AAVEIcon} className="icon" />
+            <Image width="28px" height="28px" src={StableCashIcon} className="icon" />
           </Box>
         </Box>
       </Box>
@@ -204,7 +215,6 @@ export default function APYCard() {
           padding="18px 10px"
         >
           <Box
-
             fontWeight="600"
             fontSize="14px"
             textAlign="center"
@@ -246,7 +256,7 @@ export default function APYCard() {
             marginTop="5px"
             textAlign="center"
           >
-            U.S. Treasury bill
+            T-Bills
           </Box>
         </Box>
         <Box
@@ -273,10 +283,65 @@ export default function APYCard() {
             marginTop="5px"
             textAlign="center"
           >
-            USDC on AAVE
+            Stable.cash
           </Box>
         </Box>
       </Box>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        motionPreset="slideInBottom"
+        blockScrollOnMount={true}
+      >
+        <ModalOverlay height="100vh" />
+        <ModalContent
+          borderRadius={{
+            sm: '20px 20px 0 0',
+            md: '20px',
+          }}
+          maxW={{
+            sm: '100vw',
+            md: '430px'
+          }}
+          marginTop={{
+            sm: `${marginHeight}px`,
+            md: 'calc(50vh - 125px)'
+          }}
+          height="428px"
+          overflow="auto"
+          mb="0"
+        >
+          <ModalCloseButton />
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            width="100%"
+          >
+            <Box
+              background="#D9D9D9"
+              height="120px"
+              width="120px"
+              borderRadius="120px"
+              marginBottom="30px"
+            />
+            <Box fontSize="24px" fontWeight="700" marginBottom="14px" textAlign={'center'}>
+              Where does the yield come from
+            </Box>
+            <Box
+              fontSize="16px"
+              textAlign="center"
+              marginBottom="40px"
+            >
+              The APY data is acquired from <CLink href="https://www.vaults.fyi/vaults" textDecoration={"underline"} >https://www.vaults.fyi/vaults</CLink>, presented and shown by Stable.cash.
+            </Box>
+            <Box width="100%">
+              <Button onClick={()=> onClose()} size="xl" type="black" width="100%">Got it</Button>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
