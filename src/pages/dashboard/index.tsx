@@ -33,7 +33,6 @@ export default function Dashboard() {
         borderLeft={'1px solid #EAECF0'}
       >
         <Tokens />
-        <DappList />
       </Flex>
     </Flex>
   );

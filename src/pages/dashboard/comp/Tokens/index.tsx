@@ -76,6 +76,37 @@ const DepositHint = () => {
   );
 };
 
+const DepositHint2 = () => {
+  const { selectedAddress } = useAddressStore();
+  return (
+    <Flex
+      align={'center'}
+      justify={'center'}
+      backdropFilter={'blur(12px)'}
+      pos="absolute"
+      pt={{ base: '40px', xl: '80px', '2xl': '100px' }}
+      pb="100px"
+      top="0"
+      right={'0'}
+      zIndex={'10'}
+      left={0}
+      // bottom={0}
+    >
+      <Box>
+        <Text mb="107px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
+          You are not holding any token yet.<br />Get your first deposit with your wallet address
+        </Text>
+        <Text fontWeight="500" marginBottom="18px">I acknowledge the network is Ethereum, not any other chain</Text>
+        <Flex gap="2" flexDir={'column'} align={'center'}>
+          <Button py="13px">
+            Show wallet address
+          </Button>
+        </Flex>
+      </Box>
+    </Flex>
+  );
+};
+
 const lineColors = [
   '#5B92FF',
   '#AF81F2',
@@ -133,7 +164,7 @@ export default function Tokens() {
       external={checkInitialized() ? <ExternalLink title="View more" to="/asset" /> : null}
       h="100%"
     >
-      {(!slotInfo.initialGuardianHash || isSkipOpen) && <SetGuardianHint onShowSkip={() => setIsSkipOpen(true)} />}
+      {(!slotInfo.initialGuardianHash || isSkipOpen) && <DepositHint2 />}
       {isTokenBalanceEmpty ? (
         <DepositHint />
       ) : (
