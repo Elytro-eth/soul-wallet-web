@@ -19,8 +19,6 @@ import api from '@/lib/api';
 import useWallet from '@/hooks/useWallet';
 import useSdk from '@/hooks/useSdk';
 import { useSignerStore } from '@/store/signer';
-import AuthImg from '@/assets/auth.svg';
-import useKeystore from '@/hooks/useKeystore';
 import SetPasskey from './SetPasskey';
 import SetGuardian from './SetGuardian';
 import SelectNetwork from './SelectNetwork';
@@ -60,7 +58,6 @@ export default function Auth() {
   const toast = useToast();
   const { navigate } = useBrowser();
   const { setCredentials, setEoas } = useSignerStore();
-  const { getActiveGuardianHash, rawOwnersBySlot } = useKeystore();
   const { listOwnerByAddress } = useWalletContract();
   const { updateGuardiansInfo } = useGuardianStore();
   const signerIdAddress = getSignerIdAddress();
@@ -213,105 +210,6 @@ export default function Auth() {
   const startImportAccount = useCallback(() => {
     setIsSelectAccountOpen(false);
     setIsImportAccountOpen(true);
-  }, []);
-
-  const importWallet = useCallback(async (address: string) => {
-    setIsImporting(true);
-    const slotInfo = (
-      await api.guardian.getSlotInfo({
-        walletAddress: address,
-      })
-    ).data;
-
-    // GET signer list from L1 keystore
-    // ABI_KeyStore
-    // const res = await rawOwnersBySlot(slotInfo.slot);
-    // console.log('rawOwnersBySlot', res);
-    // TO BE REPLACED
-    let owners: string[] = [];
-    try {
-      owners = Object.values(
-        await listOwnerByAddress(`https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_KEY}`, address),
-      );
-    } catch (err) {
-      console.log('kkkk')
-      owners = slotInfo.initialKeys;
-    }
-
-    // IMPORTANT TODO, should switch chain
-
-    const loginInfo = getLoginInfo();
-    console.log('login info ', loginInfo, slotInfo);
-    // const initialKeys = slotInfo.initialKeys;
-    // compare if this is correct
-    if (loginInfo.method === 'eoa') {
-      const valid = owners.some((item: string) => item.toLowerCase() === `0x${'0'.repeat(24)}${loginInfo.eoaAddress.toLowerCase().slice(2)}`);
-      if (valid) {
-        setEoas([loginInfo.eoaAddress]);
-      } else {
-        toast({
-          title: 'Wallet address and signer mismatch',
-          status: 'error',
-        });
-        setIsImporting(false);
-        return;
-      }
-    } else {
-      const valid = owners.some((item: string) => item.toLowerCase() === loginInfo.credential.publicKey.toLowerCase());
-      if (valid) {
-        setCredentials([loginInfo.credential]);
-      } else {
-        toast({
-          title: 'Wallet address and signer mismatch',
-          status: 'error',
-        });
-        setIsImporting(false);
-        return;
-      }
-    }
-
-    retrieveSlotInfo(slotInfo);
-
-    const addresses = await calcWalletAddressAllChains(0);
-    console.log('addresses', addresses);
-    setAddressList(addresses);
-
-    const activeGuardianInfo = await getActiveGuardianHash(slotInfo.slotInitInfo);
-    let activeGuardianHash;
-
-    if (
-      activeGuardianInfo.pendingGuardianHash !== activeGuardianInfo.activeGuardianHash &&
-      activeGuardianInfo.guardianActivateAt &&
-      activeGuardianInfo.guardianActivateAt * 1000 < Date.now()
-    ) {
-      activeGuardianHash = activeGuardianInfo.pendingGuardianHash;
-    } else {
-      activeGuardianHash = activeGuardianInfo.activeGuardianHash;
-    }
-
-    const res2 = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
-    const data = res2.data;
-
-    if (!data) {
-      console.log('No guardians found!');
-    } else {
-      const guardianDetails = data.guardianDetails;
-      const guardianNames = data.guardianNames;
-
-      updateGuardiansInfo({
-        guardianDetails,
-        guardianNames,
-      });
-    }
-
-    // console.log('loginInfo', loginInfo);
-    setIsImporting(false);
-    toast({
-      title: 'Logged in',
-      status: 'success',
-    });
-    setIsSelectAccountOpen(false);
-    navigate('/dashboard');
   }, []);
 
   useEffect(() => {
@@ -506,6 +404,19 @@ export default function Auth() {
           disconnectEOA={disconnectEOA}
           activeConnector={activeConnector}
           address={address}
+        />
+        <SelectAccountModal
+          isOpen={isSelectAccountOpen}
+          onClose={closeSelectAccount}
+          startImportAccount={startImportAccount}
+          activeLoginAccounts={activeLoginAccounts}
+          isImporting={isImporting}
+        />
+        <ImportAccountModal
+          isOpen={isImportAccountOpen}
+          onClose={closeImportAccount}
+          openSelectAccount={openSelectAccount}
+          isImporting={isImporting}
         />
       </Box>
     </Flex>

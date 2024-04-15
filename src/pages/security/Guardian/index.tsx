@@ -7,15 +7,12 @@ import SelectGuardianTypeModal from '@/pages/security/SelectGuardianTypeModal'
 import IntroGuardianModal from '@/pages/security/IntroGuardianModal'
 import RemoveGuardianModal from '@/pages/security/RemoveGuardianModal'
 import EditGuardianModal from '@/pages/security/EditGuardianModal'
-import BackupGuardianModal from '@/pages/security/BackupGuardianModal'
 import WalletConnectModal from '@/pages/security/WalletConnectModal'
 import useBrowser from '@/hooks/useBrowser';
 import { useTempStore } from '@/store/temp';
 import { useGuardianStore } from '@/store/guardian';
 import { useSettingStore } from '@/store/setting';
 import { useSlotStore } from '@/store/slot';
-import useKeystore from '@/hooks/useKeystore';
-import api from '@/lib/api';
 import EditGuardian from '../EditGuardian'
 import ListGuardian from '../ListGuardian'
 
@@ -48,7 +45,6 @@ export default function Guardian() {
   const [removeIndex, setRemoveIndex] = useState<any>(0)
   const [removeAddress, setRemoveAddress] = useState<any>('')
   const { getSlotInfo } = useSlotStore();
-  const { getActiveGuardianHash } = useKeystore();
 
   const [isEditing, setIsEditing] = useState<any>(false);
   const { getAddressName, saveAddressName } = useSettingStore();
@@ -113,20 +109,6 @@ export default function Guardian() {
 
   const closeEditGuardianModal = useCallback(() => {
     setIsEditGuardianOpen(false)
-  }, [])
-
-  const openBackupGuardianModal = useCallback((callback: any) => {
-    setIsBackupGuardianOpen(true)
-    backupFinishedRef.current = callback
-    setKeepPrivate(!!callback)
-  }, [])
-
-  const closeBackupGuardianModal = useCallback((isDone: any) => {
-    setIsBackupGuardianOpen(false)
-
-    if (isDone && backupFinishedRef.current) {
-      onBackupFinished()
-    }
   }, [])
 
   const startAddGuardian = useCallback(() => {
@@ -272,111 +254,6 @@ export default function Guardian() {
     }
   }, [])
 
-  const loadGuardianInfo = async () => {
-    const slotInfo = getSlotInfo()
-    if(!Object.keys(slotInfo).length) return;
-    const activeGuardianInfo = await getActiveGuardianHash(slotInfo)
-    let activeGuardianHash
-
-    if (activeGuardianInfo.pendingGuardianHash !== activeGuardianInfo.activeGuardianHash && activeGuardianInfo.guardianActivateAt && activeGuardianInfo.guardianActivateAt * 1000 < Date.now()) {
-      if (!!Number(activeGuardianInfo.pendingGuardianHash)) {
-        activeGuardianHash = activeGuardianInfo.pendingGuardianHash
-      } else {
-        activeGuardianHash = activeGuardianInfo.activeGuardianHash
-      }
-    } else {
-      activeGuardianHash = activeGuardianInfo.activeGuardianHash
-    }
-
-    console.log('loadGuardianInfo', activeGuardianHash)
-    const res2 = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
-    const data = res2.data;
-
-    if (!data) {
-      console.log('No guardians found!')
-      guardianStore.updateGuardiansInfo({
-        guardianDetails: {
-          guardians: [],
-          threshold: 0,
-        },
-        guardianNames: [],
-        keepPrivate: true
-      })
-    } else {
-      const guardianDetails = data.guardianDetails;
-      const guardianNames = data.guardianNames;
-
-      guardianStore.updateGuardiansInfo({
-        guardianDetails,
-        guardianNames,
-        keepPrivate: false
-      })
-    }
-  }
-
-  const waitForPendingGuardian = (targetGuardianHash?: any) => {
-    return new Promise((resolve: any, reject: any) => {
-      const interval = setInterval(async () => {
-        try {
-          const slotInfo = getSlotInfo()
-          if(!Object.keys(slotInfo).length) return;
-          const activeGuardianInfo = await getActiveGuardianHash(slotInfo)
-          let activeGuardianHash
-          const isPending =  (activeGuardianInfo.pendingGuardianHash !== activeGuardianInfo.activeGuardianHash && activeGuardianInfo.guardianActivateAt && activeGuardianInfo.guardianActivateAt * 1000 < Date.now()) || activeGuardianInfo.activeGuardianHash !== targetGuardianHash
-
-          if (isPending) {
-            if (!!Number(activeGuardianInfo.pendingGuardianHash)) {
-              activeGuardianHash = activeGuardianInfo.pendingGuardianHash
-            } else {
-              activeGuardianHash = activeGuardianInfo.activeGuardianHash
-            }
-          } else {
-            activeGuardianHash = activeGuardianInfo.activeGuardianHash
-          }
-
-          setIsPending(!!isPending)
-
-          const res2 = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
-          const data = res2.data;
-
-          if (!data) {
-            console.log('No guardians found!')
-            guardianStore.updateGuardiansInfo({
-              guardianDetails: {
-                guardians: [],
-                threshold: 0,
-              },
-              guardianNames: [],
-              keepPrivate: true
-            })
-          } else {
-            const guardianDetails = data.guardianDetails;
-            const guardianNames = data.guardianNames;
-
-            guardianStore.updateGuardiansInfo({
-              guardianDetails,
-              guardianNames,
-              keepPrivate: false
-            })
-          }
-
-          if (!isPending) {
-            clearInterval(interval)
-            setIsPending(false)
-            resolve(true)
-          }
-        } catch (error: any) {
-          console.log('error', error.message)
-        }
-      }, 2000)
-    })
-  }
-
-  useEffect(() => {
-    loadGuardianInfo()
-    // waitForPendingGuardian()
-  }, [])
-
   return (
     <Fragment>
       <Box
@@ -403,11 +280,9 @@ export default function Guardian() {
           <EditGuardian
             startEditGuardian={startEditGuardian}
             cancelEditGuardian={cancelEditGuardian}
-            openBackupGuardianModal={openBackupGuardianModal}
             startAddGuardian={startAddGuardian}
             startEditSingleGuardian={startEditSingleGuardian}
             startRemoveGuardian={startRemoveGuardian}
-            waitForPendingGuardian={waitForPendingGuardian}
             count={count}
           />
         )}
@@ -418,7 +293,6 @@ export default function Guardian() {
             enterEditGuardian={enterEditGuardian}
             startAddGuardian={startAddGuardian}
             cancelEditGuardian={cancelEditGuardian}
-            openBackupGuardianModal={openBackupGuardianModal}
             isPending={isPending}
           />
         )}
@@ -460,11 +334,6 @@ export default function Guardian() {
         onConfirm={onRemoveGuardianConfirm}
         removeIndex={removeIndex}
         address={removeAddress}
-      />
-      <BackupGuardianModal
-        isOpen={isBackupGuardianOpen}
-        onClose={closeBackupGuardianModal}
-        keepPrivate={keepPrivate}
       />
       <WalletConnectModal
         isOpen={isWalletConnectOpen}

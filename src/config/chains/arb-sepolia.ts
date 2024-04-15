@@ -4,7 +4,6 @@
 
 import IconArbFaded from '@/assets/chains/arb-faded.svg';
 import IconArbSquare from '@/assets/chains/arb-square.svg';
-import { keystoreContracts } from './common';
 
 const chainId = 421614;
 
@@ -31,7 +30,6 @@ export default {
   paymasterTokens: [
   ],
   contracts: {
-    ...keystoreContracts,
     soulWalletFactory: import.meta.env.VITE_SoulwalletFactory,
     defaultCallbackHandler: import.meta.env.VITE_DefaultCallbackHandler,
     securityControlModule: import.meta.env.VITE_SecurityControlModule,

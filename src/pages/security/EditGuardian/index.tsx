@@ -12,7 +12,6 @@ import { useTempStore } from '@/store/temp';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import { useSettingStore } from '@/store/setting';
 import useForm from '@/hooks/useForm';
-import useKeystore from '@/hooks/useKeystore';
 import { defaultGuardianSafePeriod } from '@/config';
 import { nanoid } from 'nanoid';
 import useConfig from '@/hooks/useConfig';
@@ -21,7 +20,6 @@ import { ethers } from 'ethers';
 import { useGuardianStore } from '@/store/guardian';
 import { useSlotStore } from '@/store/slot';
 import { useSignerStore } from '@/store/signer';
-import { L1KeyStore } from '@soulwallet/sdk';
 import useTransaction from '@/hooks/useTransaction';
 import api from '@/lib/api';
 import EmptyGuardianIcon from '@/assets/icons/empty-guardian.svg';
@@ -63,17 +61,14 @@ const amountValidate = (values: any, props: any) => {
 
 export default function EditGuardian({
   cancelEditGuardian,
-  openBackupGuardianModal,
   startAddGuardian,
   startEditSingleGuardian,
   startRemoveGuardian,
-  waitForPendingGuardian,
 }: any) {
   const { getAddressName, saveAddressName } = useSettingStore();
   const { getEditingGuardiansInfo, updateEditingGuardiansInfo, clearCreateInfo } = useTempStore();
   const guardiansInfo = getEditingGuardiansInfo();
   const { listOwner } = useWalletContract();
-  const { getReplaceGuardianInfo, calcGuardianHash, getActiveGuardianHash } = useKeystore();
   const [keepPrivate, setKeepPrivate] = useState(!!guardiansInfo?.keepPrivate);
   const { createWallet } = useWallet();
   const [isCreating, setIsCreating] = useState(false);
@@ -144,12 +139,10 @@ export default function EditGuardian({
         const guardianAddresses = guardianList.map((item: any) => item.address);
         const guardianNames = guardianList.map((item: any) => item.name);
         const threshold = amountForm.values.amount || 0;
-        const keystore = chainConfig.contracts.l1Keystore;
-        const newGuardianHash = calcGuardianHash(guardianAddresses, threshold);
+        const newGuardianHash = '';
         const salt = ethers.ZeroHash;
 
         const guardiansInfo = {
-          keystore,
           guardianHash: newGuardianHash,
           guardianNames,
           guardianDetails: {
@@ -202,12 +195,10 @@ export default function EditGuardian({
         const guardianAddresses = guardianList.map((item: any) => item.address);
         const guardianNames = guardianList.map((item: any) => item.name);
         const threshold = amountForm.values.amount || 0;
-        const keystore = chainConfig.contracts.l1Keystore;
-        const newGuardianHash = calcGuardianHash(guardianAddresses, threshold);
+        const newGuardianHash = '';
         const salt = ethers.ZeroHash;
 
         const guardiansInfo = {
-          keystore,
           guardianHash: newGuardianHash,
           guardianNames,
           guardianDetails: {
@@ -234,11 +225,11 @@ export default function EditGuardian({
             ],
           );
         } else {
-          const currentKeys = L1KeyStore.initialKeysToAddress([
-            ...credentials.map((credential: any) => credential.publicKey),
-            ...eoas,
-          ]);
-          rawKeys = new ethers.AbiCoder().encode(['bytes32[]'], [currentKeys]);
+          // const currentKeys = L1KeyStore.initialKeysToAddress([
+          //   ...credentials.map((credential: any) => credential.publicKey),
+          //   ...eoas,
+          // ]);
+          // rawKeys = new ethers.AbiCoder().encode(['bytes32[]'], [currentKeys]);
         }
 
         const { keySignature } = await getReplaceGuardianInfo(newGuardianHash, guardiansInfo);
@@ -275,7 +266,6 @@ export default function EditGuardian({
 
         setIsCreating(false);
         cancelEditGuardian();
-        await waitForPendingGuardian(newGuardianHash);
       } catch (error: any) {
         setIsCreating(false);
 
@@ -322,21 +312,6 @@ export default function EditGuardian({
               flexDirection={{ base: 'column', md: 'row' }}
               width={{ base: '100%', md: 'auto' }}
             >
-              {!!guardianList.length && (
-                <Button
-                  size="mid"
-                  type="white"
-                  onClick={() => openBackupGuardianModal()}
-                  marginBottom={{ base: '20px', md: '0px' }}
-                  marginRight={{ base: '0px', md: '14px' }}
-                  width={{ base: '100%', md: 'auto' }}
-                >
-                  <Box marginRight="2px">
-                    <HistoryIcon />
-                  </Box>
-                  Backup guardians
-                </Button>
-              )}
               {!!guardianList.length && (
                 <Button
                   size="mid"
@@ -605,11 +580,7 @@ export default function EditGuardian({
           <Button
             size="mid"
             onClick={
-              keepPrivate
-                ? () => {
-                    openBackupGuardianModal(onBackupFinished);
-                  }
-                : () => next()
+              () => next()
             }
             isLoading={isCreating}
             disabled={isCreating || !guardianList.length}

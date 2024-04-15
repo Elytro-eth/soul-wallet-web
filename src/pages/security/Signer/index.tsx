@@ -8,12 +8,10 @@ import SelectSignerTypeModal from '@/pages/security/SelectSignerTypeModal';
 import SelectGuardianTypeModal from '@/pages/security/SelectGuardianTypeModal';
 import IntroGuardianModal from '@/pages/security/IntroGuardianModal';
 import EditGuardianModal from '@/pages/security/EditGuardianModal';
-import BackupGuardianModal from '@/pages/security/BackupGuardianModal';
 import WalletConnectModal from '@/pages/security/WalletConnectModal';
 import useBrowser from '@/hooks/useBrowser';
 import { ICredentialItem, useSignerStore } from '@/store/signer';
 import { toShortAddress } from '@/lib/tools';
-import useWalletContract from '@/hooks/useWalletContract';
 
 export default function Signer() {
   const { navigate } = useBrowser();
@@ -58,10 +56,6 @@ export default function Signer() {
 
   const closeEditGuardianModal = useCallback(() => {
     setIsEditGuardianOpen(false);
-  }, []);
-
-  const closeBackupGuardianModal = useCallback(() => {
-    setIsBackupGuardianOpen(false);
   }, []);
 
   return (
@@ -136,7 +130,6 @@ export default function Signer() {
       />
       <IntroGuardianModal isOpen={isIntroGuardianOpen} onClose={closeIntroGuardianModal} />
       <EditGuardianModal isOpen={isEditGuardianOpen} onClose={closeEditGuardianModal} />
-      <BackupGuardianModal isOpen={isBackupGuardianOpen} onClose={closeBackupGuardianModal} />
       <WalletConnectModal isOpen={isWalletConnectOpen} onClose={closeWalletConnectModal} />
     </Fragment>
   );

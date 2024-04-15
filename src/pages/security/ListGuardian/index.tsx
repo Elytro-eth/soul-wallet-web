@@ -16,7 +16,6 @@ import EmptyGuardianIcon from '@/assets/icons/empty-guardian.svg'
 
 export default function ListGuardian({
   startEditGuardian,
-  openBackupGuardianModal,
   enterEditGuardian,
   isPending
 }: any) {
@@ -65,7 +64,6 @@ export default function ListGuardian({
                 <Button
                   size="mid"
                   type="white"
-                  onClick={() => openBackupGuardianModal()}
                   marginBottom={{ base: '20px', md: '0px' }}
                   marginRight={{ base: '0px', md: '14px' }}
                   width={{ base: '100%', md: 'auto' }}
