@@ -38,7 +38,6 @@ export default function AddSigner({ next, back }: any) {
   const [isConfirming, setIsConfirming] = useState<any>(false)
   const { getJsonFromFile, doCopy, } = useTools();
   const { chainConfig } = useConfig();
-  const { calcGuardianHash } = useKeystore();
   const [isAddGuardianOpen, setIsAddGuardianOpen] = useState<any>(false);
   const { saveRecoverRecordId } = useSettingStore();
   const guardianSignUrl = `${location.origin}/public/sign/${recoveryRecordID}`
@@ -52,7 +51,8 @@ export default function AddSigner({ next, back }: any) {
       threshold,
       salt: ethers.ZeroHash
     }
-    const guardianHash = calcGuardianHash(guardians, threshold);
+    // const guardianHash = calcGuardianHash(guardians, threshold);
+    const guardianHash = '';
 
     updateRecoverInfo({
       guardianDetails,
@@ -83,7 +83,7 @@ export default function AddSigner({ next, back }: any) {
       const guardianNames = data.guardianNames
       const guardians = guardianDetails.guardians
       const threshold = guardianDetails.threshold
-      const guardianHash = calcGuardianHash(guardians, threshold);
+      const guardianHash = '';
 
       updateRecoverInfo({
         guardianDetails,

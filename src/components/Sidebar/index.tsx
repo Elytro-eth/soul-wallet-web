@@ -2,14 +2,9 @@ import { Box, Flex, Image, Button, Text, FlexProps, Tooltip } from '@chakra-ui/r
 import { sidebarLinks } from '@/config/constants';
 import { Link, useLocation } from 'react-router-dom';
 import useWalletContext from '@/context/hooks/useWalletContext';
-import IconGuide from '@/assets/icons/guide.svg';
-import IconGuideActive from '@/assets/icons/guide-active.svg';
-import IconClaim from '@/assets/icons/claim.svg';
-import IconClaimActive from '@/assets/icons/claim-active.svg';
 import IconFeedback from '@/assets/icons/feedback.svg';
 import IconFeedbackActive from '@/assets/icons/feedback-active.svg';
 import Footer from '../Footer';
-import { guideList } from '@/data';
 import api from '@/lib/api';
 import { useSettingStore } from '@/store/setting';
 import { useEffect, useState } from 'react';
@@ -38,7 +33,7 @@ export default function Sidebar() {
   const { finishedSteps, claimableCount, setClaimableCount } = useSettingStore();
   const { selectedAddress } = useAddressStore();
   const { selectedChainId } = useChainStore();
-  const { showClaimAssets, showTestGuide, showFeedback } = useWalletContext();
+  const { showFeedback } = useWalletContext();
   const [navHoverIndex, setNavHoverIndex] = useState(-1);
   const [externalHoverIndex, setExternalHoverIndex] = useState(-1);
   const { checkInitialized } = useTools();
@@ -113,58 +108,6 @@ export default function Sidebar() {
           fontWeight={{ base: 600, lg: 400 }}
           color="#383838"
         >
-          <ExtraLink
-            onMouseEnter={() => setExternalHoverIndex(0)}
-            onMouseLeave={() => setExternalHoverIndex(-1)}
-            onClick={() => (checkInitialized(true) ? showTestGuide() : null)}
-          >
-            <Image
-              w={{ base: 3, md: 4, lg: 6 }}
-              h={{ base: 3, md: 4, lg: 6 }}
-              src={externalHoverIndex === 0 ? IconGuideActive : IconGuide}
-            />
-            <Text>Test guide</Text>
-            <Box
-              bg="brand.white"
-              display={{ base: 'none', lg: 'block' }}
-              py="2px"
-              px="8px"
-              lineHeight={'1'}
-              rounded="100px"
-              color="brand.black"
-              fontWeight={'600'}
-              whiteSpace={'nowrap'}
-              fontSize={'12px'}
-            >
-              {finishedSteps.length}/{guideList.length} Done
-            </Box>
-          </ExtraLink>
-          <ExtraLink
-            onMouseEnter={() => setExternalHoverIndex(1)}
-            onMouseLeave={() => setExternalHoverIndex(-1)}
-            onClick={() => (checkInitialized(true) ? showClaimAssets() : null)}
-          >
-            <Image
-              w={{ base: 3, md: 4, lg: 6 }}
-              h={{ base: 3, md: 4, lg: 6 }}
-              src={externalHoverIndex === 1 ? IconClaimActive : IconClaim}
-            />
-            <Box pos={'relative'}>
-              <Text>Claim test tokens</Text>
-              {claimableCount > 0 && (
-                <Box
-                  display={{ base: 'none', lg: 'block' }}
-                  bg="#ff2e79"
-                  w="6px"
-                  h="6px"
-                  rounded={'full'}
-                  pos="absolute"
-                  right={'-8px'}
-                  top="2px"
-                />
-              )}
-            </Box>
-          </ExtraLink>
           <ExtraLink
             onMouseEnter={() => setExternalHoverIndex(2)}
             onMouseLeave={() => setExternalHoverIndex(-1)}

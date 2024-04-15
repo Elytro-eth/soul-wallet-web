@@ -14,7 +14,6 @@ import useForm from '@/hooks/useForm';
 import FormInput from '@/components/new/FormInput'
 import { ethers } from 'ethers';
 import api from '@/lib/api';
-import useKeystore from '@/hooks/useKeystore';
 import StepProgress from '../StepProgress'
 import { SignHeader } from '@/pages/public/Sign';
 
@@ -43,7 +42,6 @@ export default function SetWalletAddress({ next, back }: any) {
     fields: ['address'],
     validate,
   });
-  const { getActiveGuardianHash } = useKeystore();
   const disabled = loading || invalid;
 
   const handleNext = async () => {
@@ -68,50 +66,47 @@ export default function SetWalletAddress({ next, back }: any) {
       const info = res1.data
       const {
         initialKeys,
-        keystore,
         slot,
         slotInitInfo,
         walletAddresses
       } = info
 
       const initialKeysAddress = initialKeys
-      const activeGuardianInfo = await getActiveGuardianHash(slotInitInfo)
-      let activeGuardianHash
 
-      if (activeGuardianInfo.pendingGuardianHash !== activeGuardianInfo.activeGuardianHash && activeGuardianInfo.guardianActivateAt && activeGuardianInfo.guardianActivateAt * 1000 < Date.now()) {
-        activeGuardianHash = activeGuardianInfo.pendingGuardianHash
-      } else {
-        activeGuardianHash = activeGuardianInfo.activeGuardianHash
-      }
+      // if (activeGuardianInfo.pendingGuardianHash !== activeGuardianInfo.activeGuardianHash && activeGuardianInfo.guardianActivateAt && activeGuardianInfo.guardianActivateAt * 1000 < Date.now()) {
+      //   activeGuardianHash = activeGuardianInfo.pendingGuardianHash
+      // } else {
+      //   activeGuardianHash = activeGuardianInfo.activeGuardianHash
+      // }
 
-      const res2 = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
-      const data = res2.data;
+      // const res2 = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
+      // const data = res2.data;
 
-      if (!data) {
-        console.log('No guardians found!')
+      // if (!data) {
+      //   console.log('No guardians found!')
 
-        updateRecoverInfo({
-          slot,
-          slotInitInfo,
-          activeGuardianInfo,
-          initialKeysAddress,
-          walletAddresses
-        })
-      } else {
-        const guardianDetails = data.guardianDetails;
-        const guardianNames = data.guardianNames;
+      //   updateRecoverInfo({
+      //     slot,
+      //     slotInitInfo,
+      //     activeGuardianInfo,
+      //     initialKeysAddress,
+      //     walletAddresses
+      //   })
+      // } else {
+      //   const guardianDetails = data.guardianDetails;
+      //   const guardianNames = data.guardianNames;
 
-        updateRecoverInfo({
-          slot,
-          slotInitInfo,
-          activeGuardianInfo,
-          guardianDetails,
-          initialKeysAddress,
-          guardianHash: activeGuardianHash,
-          guardianNames,
-          walletAddresses
-        })
-      }
+      //   updateRecoverInfo({
+      //     slot,
+      //     slotInitInfo,
+      //     activeGuardianInfo,
+      //     guardianDetails,
+      //     initialKeysAddress,
+      //     guardianHash: activeGuardianHash,
+      //     guardianNames,
+      //     walletAddresses
+      //   })
+      // }
 
       setLoading(false);
       next()

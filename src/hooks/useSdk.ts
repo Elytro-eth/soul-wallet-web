@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
-import { L1KeyStore, SoulWallet } from '@soulwallet/sdk';
+import { SoulWallet } from '@soulwallet/sdk';
 import { useChainStore } from '@/store/chain';
 import { useSlotStore } from '@/store/slot';
-import { useTempStore } from '@/store/temp';
-import { defaultGuardianSafePeriod } from '@/config';
 
 export default function useSdk() {
   const { getSelectedChainItem, selectedChainId } = useChainStore();
@@ -18,8 +16,6 @@ export default function useSdk() {
       selectedChainItem.contracts.soulWalletFactory,
       selectedChainItem.contracts.defaultValidator,
       selectedChainItem.contracts.defaultCallbackHandler,
-      // selectedChainItem.contracts.keyStoreModuleProxy,
-      // selectedChainItem.contracts.securityControlModule,
     );
   }, [selectedChainId]);
 
