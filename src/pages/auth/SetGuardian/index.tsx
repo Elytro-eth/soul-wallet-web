@@ -120,7 +120,7 @@ export default function SetGuardian({ back }: any) {
               >
                 Get protected with social recovery once you lost the wallet
               </TextBody>
-              <Box marginTop="35px">
+              <Box marginTop="35px" width="100%">
                 <EditGuardianForm onConfirm={() => {}} canGoBack={false} canConfirm={false} editType={'add'} />
               </Box>
               <Box
