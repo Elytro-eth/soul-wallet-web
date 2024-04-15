@@ -6,7 +6,6 @@ import { nextRandomId } from '@/lib/tools';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import { useGuardianStore } from '@/store/guardian';
 import { useSlotStore } from '@/store/slot';
-import useKeystore from '@/hooks/useKeystore';
 import useConfig from '@/hooks/useConfig';
 import useTransaction from '@/hooks/useTransaction';
 import { useSignerStore } from '@/store/signer';

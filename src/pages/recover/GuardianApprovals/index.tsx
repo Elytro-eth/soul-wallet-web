@@ -14,7 +14,6 @@ import OpenScanIcon from '@/components/Icons/OpenScan';
 import { toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
 import useConfig from '@/hooks/useConfig';
-import useKeystore from '@/hooks/useKeystore';
 import { L1KeyStore } from '@soulwallet/sdk';
 import api from '@/lib/api';
 import UploadIcon from '@/components/Icons/Upload'

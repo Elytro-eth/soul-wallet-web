@@ -232,40 +232,37 @@ export default function EditGuardian({
           // rawKeys = new ethers.AbiCoder().encode(['bytes32[]'], [currentKeys]);
         }
 
-        const { keySignature } = await getReplaceGuardianInfo(newGuardianHash, guardiansInfo);
+        /* const { keySignature } = await getReplaceGuardianInfo(newGuardianHash, guardiansInfo);
 
-        const functionName = `setGuardian(bytes32,bytes32,uint256,bytes32,bytes,bytes)`;
-        const parameters = [
-          initialKeyHash,
-          initialGuardianHash,
-          initialGuardianSafePeriod,
-          newGuardianHash,
-          rawKeys,
-          keySignature,
-        ];
+         * const functionName = `setGuardian(bytes32,bytes32,uint256,bytes32,bytes,bytes)`;
+         * const parameters = [
+         *   initialKeyHash,
+         *   initialGuardianHash,
+         *   initialGuardianSafePeriod,
+         *   newGuardianHash,
+         *   rawKeys,
+         *   keySignature,
+         * ];
 
-        const res1 = await api.guardian.createTask({
-          keystore,
-          functionName,
-          parameters,
-        });
+         * const res1 = await api.guardian.createTask({
+         *   keystore,
+         *   functionName,
+         *   parameters,
+         * });
 
-        const task = res1.data;
-        const paymentContractAddress = chainConfig.contracts.paymentContractAddress;
-        await showConfirmPayment(task.estiamtedFee);
-        await payTask(paymentContractAddress, task.estiamtedFee, task.taskID);
-        /* guardianStore.updateGuardiansInfo({
-         *   ...guardiansInfo,
-         * }); */
+         * const task = res1.data;
+         * const paymentContractAddress = chainConfig.contracts.paymentContractAddress;
+         * await showConfirmPayment(task.estiamtedFee);
+         * await payTask(paymentContractAddress, task.estiamtedFee, task.taskID);
 
-        for (let i = 0; i < guardianAddresses.length; i++) {
-          const address = guardianAddresses[i];
-          const name = guardianNames[i];
-          if (address) saveAddressName(address.toLowerCase(), name);
-        }
+         * for (let i = 0; i < guardianAddresses.length; i++) {
+         *   const address = guardianAddresses[i];
+         *   const name = guardianNames[i];
+         *   if (address) saveAddressName(address.toLowerCase(), name);
+         * }
 
-        setIsCreating(false);
-        cancelEditGuardian();
+         * setIsCreating(false);
+         * cancelEditGuardian(); */
       } catch (error: any) {
         setIsCreating(false);
 

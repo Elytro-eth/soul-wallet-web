@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import SignTransactionModal from '@/components/SignTransactionModal';
 import ConfirmPaymentModal from '@/components/ConfirmPaymentModal';
 import SignMessageModal from '@/components/SignMessageModal';
-import ClaimAssetsModal from '@/components/ClaimAssetsModal';
+// import ClaimAssetsModal from '@/components/ClaimAssetsModal';
 import LogoutModal from '@/components/LogoutModal';
 import TestGuideModal from '@/components/TestGuideModal';
 import FeedbackModal from '@/components/FeedbackModal';
@@ -187,7 +187,7 @@ export const WalletContextProvider = ({ children }: any) => {
       <SignTransactionModal ref={signTransactionModal} />
       <ConfirmPaymentModal ref={confirmPaymentModal} />
       <SignMessageModal ref={signMessageModal} />
-      <ClaimAssetsModal ref={claimAssetsModal} />
+      {/* <ClaimAssetsModal ref={claimAssetsModal} /> */}
       <ReceiveModal ref={receiveModal} />
       <SendModal ref={sendModal} />
       <TestGuideModal ref={testGuideModal} />
