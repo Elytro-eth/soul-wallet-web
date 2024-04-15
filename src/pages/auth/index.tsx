@@ -20,7 +20,9 @@ import useWallet from '@/hooks/useWallet';
 import useSdk from '@/hooks/useSdk';
 import { useSignerStore } from '@/store/signer';
 import SetPasskey from './SetPasskey';
-import SetWalletName from './SetWalletName';
+import SetGuardian from './SetGuardian';
+import SelectNetwork from './SelectNetwork';
+import ImportAccount from './ImportAccount';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import SelectAccountModal from './SelectAccountModal';
@@ -61,7 +63,7 @@ export default function Auth() {
   const signerIdAddress = getSignerIdAddress();
   const activeSignerId = loginInfo.signerId;
   const activeLoginAccounts = signerIdAddress[loginInfo.signerId];
-  console.log('signerIdAddress', activeSignerId, activeLoginAccounts, signerIdAddress);
+  console.log('signerIdAddress', activeSignerId, activeLoginAccounts, signerIdAddress, stepType);
 
   const openRecover = useCallback(() => {
     navigate('/recover');
@@ -130,7 +132,7 @@ export default function Auth() {
     setIsConnectAtive(true);
     setRegisterMethod('passkey');
     closeRegister();
-    setStepType('setWalletName');
+    setStepType('selectNetwork');
   }, []);
 
   const startRegisterWithEOA = useCallback((address: any) => {
@@ -140,7 +142,7 @@ export default function Auth() {
     updateCreateInfo({
       eoaAddress: [address],
     });
-    setStepType('setWalletName');
+    setStepType('selectNetwork');
   }, []);
 
   const disconnectEOA = useCallback(async () => {
@@ -225,12 +227,20 @@ export default function Auth() {
     clearLogData();
   }, []);
 
-  if (stepType === 'setWalletName') {
-    return <SetWalletName updateWalletName={updateWalletName} back={() => setStepType('auth')} />;
+  if (stepType === 'importAccount') {
+    return <ImportAccount importWallet={importWallet} isImporting={isImporting} back={() => setStepType('auth')} />;
+  }
+
+  if (stepType === 'selectNetwork') {
+    return <SelectNetwork updateWalletName={updateWalletName} back={() => setStepType('auth')} />;
+  }
+
+  if (stepType === 'setGuardian') {
+    return <SetGuardian back={() => setStepType('setPassKey')} />;
   }
 
   if (stepType === 'setPassKey' || registerMethod === 'passkey') {
-    return <SetPasskey />;
+    return <SetPasskey back={() => setStepType('selectNetwork')} next={() => setStepType('setGuardian')} />;
   }
 
   return (

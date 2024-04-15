@@ -20,8 +20,10 @@ import { useTempStore } from '@/store/temp';
 import { SignHeader } from '@/pages/public/Sign';
 import IconEth from '@/assets/chains/eth.svg';
 import IconChevron from '@/assets/icons/chevron-down-gray.svg';
+import DropDownIcon from '@/components/Icons/DropDown';
+import EditGuardianForm from './EditGuardianForm'
 
-export default function SetWalletName({ updateWalletName, back }: any) {
+export default function SetGuardian({ back }: any) {
   const [name, setName] = useState('')
   const {
     credentials,
@@ -33,13 +35,6 @@ export default function SetWalletName({ updateWalletName, back }: any) {
     console.log('name', name)
     setName(name)
   }, [])
-
-  const onKeyDown = useCallback((event: any) => {
-    console.log('onKeyDown', event)
-    if (event.keyCode === 13) {
-      updateWalletName(name)
-    }
-  }, [name])
 
   return (
     <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
@@ -57,6 +52,7 @@ export default function SetWalletName({ updateWalletName, back }: any) {
       >
         <RoundContainer
           width="1058px"
+          minHeight="348px"
           maxWidth="100%"
           maxHeight="100%"
           display="flex"
@@ -68,7 +64,7 @@ export default function SetWalletName({ updateWalletName, back }: any) {
           <Box
             position="absolute"
             height="4px"
-            width="25%"
+            width="75%"
             background="#FF2E79"
             top="0"
             left="0"
@@ -93,9 +89,8 @@ export default function SetWalletName({ updateWalletName, back }: any) {
                 justifyContent="center"
                 fontSize="20px"
                 fontWeight="800"
-                fontFamily="Inter"
               >
-                1
+                3
               </Box>
             </Box>
             <Box
@@ -117,14 +112,17 @@ export default function SetWalletName({ updateWalletName, back }: any) {
                 width="100%"
                 marginBottom="2px"
               >
-                Select network
+                {`Setup guardians for < Wallet_1 >`}
               </Heading>
               <TextBody
                 fontWeight="400"
                 fontSize="16px"
               >
-                Name your wallet and choose a network
+                Get protected with social recovery once you lost the wallet
               </TextBody>
+              <Box marginTop="35px" width="100%">
+                <EditGuardianForm onConfirm={() => {}} canGoBack={false} canConfirm={false} editType={'add'} />
+              </Box>
               <Box
                 background="white"
                 height="100%"
@@ -132,69 +130,96 @@ export default function SetWalletName({ updateWalletName, back }: any) {
                 roundedBottom="20px"
                 display="flex"
                 flexDirection="column"
-                alignItems="center"
-                marginTop="40px"
+                alignItems="flex-start"
+                marginTop="16px"
+                borderTop="1px solid rgba(0, 0, 0, 0.1)"
+                paddingTop="24px"
               >
                 <Box
-                  width="100%"
-                  maxWidth="548px"
                   display="flex"
-                  gap="8px"
+                  justifyContent="flex-start"
+                  marginTop="10px"
+                  alignItems="flex-start"
+                  flexDirection="column"
                 >
-                  <Box>
-                    <Menu>
-                      <MenuButton>
-                        <Box
-                          height="52px"
-                          border="1px solid rgb(226, 232, 240)"
-                          borderRadius="12px"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="flex-start"
-                          flexDirection="row"
-                          width="192px"
-                          padding="14px"
-                        >
-                          <Image src={IconEth} w="24px" h="24px" />
-                          <Box marginLeft="4px">
-                            <Box fontWeight="600" fontSize="16px">Ethereum</Box>
-                          </Box>
-                          <Image src={IconChevron} marginLeft="auto" />
-                        </Box>
-                      </MenuButton>
-                      <MenuList w="260px">
-
-                      </MenuList>
-                    </Menu>
+                  <Box
+                    fontFamily="Nunito"
+                    fontWeight="700"
+                    fontSize="14px"
+                    marginRight="6px"
+                  >
+                    Threshold
                   </Box>
-                  <Input
-                    height="52px"
-                    borderRadius="12px"
-                    placeholder="Enter wallet name"
-                    value={name}
-                    onChange={onNameChange}
-                    onKeyDown={onKeyDown}
-                  />
+                  <Box marginTop="2px">
+                    <TextBody
+                      type="t2"
+                      justifyContent="flex-start"
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="flex-start"
+                    >
+                      <Box>Recovery wallet requires number of guardian(s) confirmation.</Box>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        marginTop="14px"
+                      >
+                        <Box
+                          width="80px"
+                          marginRight="10px"
+                        >
+                          <Box
+                            px={2}
+                            py={2}
+                            width="80px"
+                            transition="all 0.2s"
+                            borderRadius="16px"
+                            borderWidth="1px"
+                            padding="12px"
+                            background="white"
+                            _expanded={{
+                              borderColor: '#3182ce',
+                              boxShadow: '0 0 0 1px #3182ce',
+                            }}
+                          >
+                            <Box display="flex" alignItems="center" justifyContent="space-between">
+                              {0}
+                              <DropDownIcon />
+                            </Box>
+                          </Box>
+                        </Box>
+                        <Box>{`out of ${3} guardian(s) confirmation.`}</Box>
+                      </Box>
+                    </TextBody>
+                  </Box>
                 </Box>
               </Box>
               <Box
                 display="flex"
                 alignItems="flex-end"
-                justifyContent="center"
-                flexDirection="column"
+                justifyContent="space-between"
                 width="100%"
                 marginTop="24px"
               >
                 <Box>
                   <Button
+                    type="white"
+                    padding="0 20px"
+                    onClick={back}
+                    size="lg"
+                  >
+                    Back
+                  </Button>
+                </Box>
+                <Box>
+                  <Button
                     type="black"
                     color="white"
                     padding="0 20px"
-                    disabled={!name}
-                    onClick={() => updateWalletName(name)}
-                    size="xl"
+                    onClick={() => {}}
+                    size="lg"
                   >
-                    Next
+                    Done
                   </Button>
                 </Box>
               </Box>
