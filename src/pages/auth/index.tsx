@@ -329,10 +329,6 @@ export default function Auth() {
     clearLogData();
   }, []);
 
-  if (stepType === 'importAccount') {
-    return <ImportAccount importWallet={importWallet} isImporting={isImporting} back={() => setStepType('auth')} />;
-  }
-
   if (stepType === 'selectNetwork') {
     return <SelectNetwork updateWalletName={updateWalletName} back={() => setStepType('auth')} />;
   }
@@ -510,21 +506,6 @@ export default function Auth() {
           disconnectEOA={disconnectEOA}
           activeConnector={activeConnector}
           address={address}
-        />
-        <SelectAccountModal
-          isOpen={isSelectAccountOpen}
-          onClose={closeSelectAccount}
-          startImportAccount={startImportAccount}
-          activeLoginAccounts={activeLoginAccounts}
-          importWallet={importWallet}
-          isImporting={isImporting}
-        />
-        <ImportAccountModal
-          isOpen={isImportAccountOpen}
-          onClose={closeImportAccount}
-          importWallet={importWallet}
-          openSelectAccount={openSelectAccount}
-          isImporting={isImporting}
         />
       </Box>
     </Flex>
