@@ -159,3 +159,14 @@ export const guideListOfSetGuardian = [
     statusText: 'Change guardians',
   },
 ];
+
+export const guideListOfActiveWallet = [
+  {
+    id: 2,
+    title: 'Active your Soul Wallet',
+    desc: `Add native assets and complete the first transaction to active your wallet.`,
+    buttonText: 'Active now',
+    buttonTextFull: 'Active now',
+    statusText: 'Active the wallet',
+  },
+];

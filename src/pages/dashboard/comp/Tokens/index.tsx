@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ExternalLink } from '../HomeCard';
 import ListItem from '@/components/ListItem';
-import { Text, Box, Flex } from '@chakra-ui/react';
+import { Text, Box, Flex, Checkbox } from '@chakra-ui/react';
 import { ITokenBalanceItem, useBalanceStore } from '@/store/balance';
 import HomeCard from '../HomeCard';
 import useWalletContext from '@/context/hooks/useWalletContext';
@@ -96,7 +96,11 @@ const DepositHint2 = () => {
         <Text mb="107px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
           You are not holding any token yet.<br />Get your first deposit with your wallet address
         </Text>
-        <Text fontWeight="500" marginBottom="18px">I acknowledge the network is Ethereum, not any other chain</Text>
+        <Checkbox defaultChecked={false} marginBottom="18px">
+          <Text fontWeight="500">
+            I acknowledge the network is Ethereum, not any other chain
+          </Text>
+        </Checkbox>
         <Flex gap="2" flexDir={'column'} align={'center'}>
           <Button py="13px">
             Show wallet address

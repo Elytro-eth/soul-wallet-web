@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import Button from '@/components/Button';
-import { guideList, guideListOfSetGuardian } from '@/data';
+import { guideList, guideListOfSetGuardian, guideListOfActiveWallet } from '@/data';
 import api from '@/lib/api';
 import ImgArrowUp from '@/assets/icons/arrow-up.svg';
 import { findMissingNumbers } from '@/lib/tools';
@@ -36,7 +36,7 @@ export default function Guidance() {
   const missingSteps = findMissingNumbers([0, 1, 2, 3, 4, 5], finishedSteps);
 
   // check if initialized
-  const currentStep = checkInitialized() ? guideList[missingSteps[0]] : guideListOfSetGuardian[0];
+  const currentStep = checkInitialized() ? guideList[missingSteps[0]] : guideListOfActiveWallet[0];
 
   if (!missingSteps.length) {
     return;
