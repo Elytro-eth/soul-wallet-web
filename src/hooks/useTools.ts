@@ -18,7 +18,7 @@ import { useAccount } from 'wagmi';
 
 export default function useTools() {
   const toast = useToast();
-  const { showSetGuardianHintModal, showLogout } = useWalletContext();
+    const { showSetGuardianHintModal, showActiveWalletModal, showLogout } = useWalletContext();
   const { clearSigners, getSelectedKeyType, eoas } = useSignerStore();
   const { clearAddresses } = useAddressStore();
   const { address } = useAccount();
@@ -29,7 +29,7 @@ export default function useTools() {
   const { clearSlotStore, slotInfo } = useSlotStore();
   const { clearTempStore } = useTempStore();
   const { getAddressName, saveAddressName } = useSettingStore();
-  const { showClaimAssets, showSend } = useWalletContext();
+    const { showClaimAssets, showSend } = useWalletContext();
   const { navigate } = useBrowser();
 
   const checkValidSigner = () => {
@@ -90,6 +90,9 @@ export default function useTools() {
 
   const goGuideAction = (id: number) => {
     switch (id) {
+      case -1:
+        showActiveWalletModal();
+        break;
       case 0:
         showClaimAssets();
         break;

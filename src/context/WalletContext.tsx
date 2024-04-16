@@ -10,6 +10,7 @@ import FeedbackModal from '@/components/FeedbackModal';
 import SendModal from '@/components/SendModal';
 import ReceiveModal from '@/components/ReceiveModal';
 import SetGuardianHintModal from '@/components/SetGuardianHintModal';
+import ActiveWalletModal from '@/components/ActiveWalletModal';
 import ConnectWalletModal from '@/components/ConnectWalletModal';
 import useConfig from '@/hooks/useConfig';
 import { useTempStore } from '@/store/temp';
@@ -30,6 +31,7 @@ interface IWalletContext {
   showFeedback: () => Promise<void>;
   showLogout: (_redirectUrl?: string) => Promise<void>;
   showSetGuardianHintModal: () => Promise<void>;
+  showActiveWalletModal: () => Promise<void>;
   checkActivated: () => Promise<boolean | undefined>;
 }
 
@@ -47,6 +49,7 @@ export const WalletContext = createContext<IWalletContext>({
   showTestGuide: async () => {},
   checkActivated: async () => false,
   showSetGuardianHintModal: async () => {},
+  showActiveWalletModal: async () => {},
 });
 
 export const WalletContextProvider = ({ children }: any) => {
@@ -67,6 +70,7 @@ export const WalletContextProvider = ({ children }: any) => {
   const testGuideModal = useRef<any>();
   const feedbackModal = useRef<any>();
   const setGuardianHintModal = useRef<any>();
+  const activeWalletModal = useRef<any>();
 
   const ethersProvider = useMemo(() => {
     console.log('trigger ethers provider');
@@ -156,6 +160,10 @@ export const WalletContextProvider = ({ children }: any) => {
     return await setGuardianHintModal.current.show();
   };
 
+  const showActiveWalletModal = async () => {
+    return await activeWalletModal.current.show();
+  };
+
   // if address on chain is not activated, check again
   useEffect(() => {
     if (!selectedAddress || !selectedChainId) {
@@ -180,6 +188,7 @@ export const WalletContextProvider = ({ children }: any) => {
         showFeedback,
         checkActivated,
         showSetGuardianHintModal,
+        showActiveWalletModal
       }}
     >
       {children}
@@ -193,6 +202,7 @@ export const WalletContextProvider = ({ children }: any) => {
       <TestGuideModal ref={testGuideModal} />
       <FeedbackModal ref={feedbackModal} />
       <SetGuardianHintModal ref={setGuardianHintModal} />
+      <ActiveWalletModal ref={activeWalletModal} />
       <LogoutModal ref={logoutModal} />
       {/* <ConnectWalletModal ref={connectWalletModal} /> */}
     </WalletContext.Provider>

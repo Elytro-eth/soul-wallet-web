@@ -162,7 +162,7 @@ export const guideListOfSetGuardian = [
 
 export const guideListOfActiveWallet = [
   {
-    id: 2,
+    id: -1,
     title: 'Active your Soul Wallet',
     desc: `Add native assets and complete the first transaction to active your wallet.`,
     buttonText: 'Active now',
