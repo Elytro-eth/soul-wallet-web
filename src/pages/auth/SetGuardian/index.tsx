@@ -20,12 +20,15 @@ import DropDownIcon from '@/components/Icons/DropDown';
 import EditGuardianForm from './EditGuardianForm'
 
 export default function SetGuardian({walletName, back, onCreate }: any) {
-  const onDone = () => {
-    // 1. get guardian details
-
-    // 2.
-    onCreate();
+  const onDone = (guardianAddresses: any, guardianNames: any, threshold: any) => {
+    console.log('onDone', guardianAddresses, guardianNames, threshold)
+    // onCreate();
   }
+
+  const onSkip = () => {
+    console.log('onSkip')
+  }
+
   return (
     <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
       <SignHeader />
@@ -111,107 +114,14 @@ export default function SetGuardian({walletName, back, onCreate }: any) {
                 Get protected with social recovery once you lost the wallet
               </TextBody>
               <Box marginTop="35px" width="100%">
-                <EditGuardianForm onConfirm={(v:any) => {console.log(v)}} canGoBack={false} canConfirm={false} editType={'add'} />
-              </Box>
-              <Box
-                background="white"
-                height="100%"
-                width="100%"
-                roundedBottom="20px"
-                display="flex"
-                flexDirection="column"
-                alignItems="flex-start"
-                marginTop="16px"
-                borderTop="1px solid rgba(0, 0, 0, 0.1)"
-                paddingTop="24px"
-              >
-                <Box
-                  display="flex"
-                  justifyContent="flex-start"
-                  marginTop="10px"
-                  alignItems="flex-start"
-                  flexDirection="column"
-                >
-                  <Box
-                    fontFamily="Nunito"
-                    fontWeight="700"
-                    fontSize="14px"
-                    marginRight="6px"
-                  >
-                    Threshold
-                  </Box>
-                  <Box marginTop="2px">
-                    <TextBody
-                      type="t2"
-                      justifyContent="flex-start"
-                      display="flex"
-                      flexDirection="column"
-                      alignItems="flex-start"
-                    >
-                      <Box>Recovery wallet requires number of guardian(s) confirmation.</Box>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        marginTop="14px"
-                      >
-                        <Box
-                          width="80px"
-                          marginRight="10px"
-                        >
-                          <Box
-                            px={2}
-                            py={2}
-                            width="80px"
-                            transition="all 0.2s"
-                            borderRadius="16px"
-                            borderWidth="1px"
-                            padding="12px"
-                            background="white"
-                            _expanded={{
-                              borderColor: '#3182ce',
-                              boxShadow: '0 0 0 1px #3182ce',
-                            }}
-                          >
-                            <Box display="flex" alignItems="center" justifyContent="space-between">
-                              {0}
-                              <DropDownIcon />
-                            </Box>
-                          </Box>
-                        </Box>
-                        <Box>{`out of ${3} guardian(s) confirmation.`}</Box>
-                      </Box>
-                    </TextBody>
-                  </Box>
-                </Box>
-              </Box>
-              <Box
-                display="flex"
-                alignItems="flex-end"
-                justifyContent="space-between"
-                width="100%"
-                marginTop="24px"
-              >
-                <Box>
-                  <Button
-                    type="white"
-                    padding="0 20px"
-                    onClick={back}
-                    size="lg"
-                  >
-                    Back
-                  </Button>
-                </Box>
-                <Box>
-                  <Button
-                    type="black"
-                    color="white"
-                    padding="0 20px"
-                    onClick={onDone}
-                    size="lg"
-                  >
-                    Done
-                  </Button>
-                </Box>
+                <EditGuardianForm
+                  onConfirm={onDone}
+                  onBack={back}
+                  onSkip={onSkip}
+                  canGoBack={false}
+                  canConfirm={false}
+                  editType={'add'}
+                />
               </Box>
             </Box>
           </Box>

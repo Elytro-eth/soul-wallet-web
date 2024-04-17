@@ -87,6 +87,18 @@ const buttonStyles = {
       cursor: 'not-allowed',
     },
   },
+  text: {
+    color: '#000',
+    bg: 'transparent',
+    _hover: {
+      bg: 'transparent',
+    },
+    _disabled: {
+      cursor: 'not-allowed',
+      bg: 'transparent',
+      _hover: { bg: 'transparent' },
+    },
+  },
 };
 
 interface IProps extends Omit<ButtonProps, 'type'> {

@@ -210,6 +210,7 @@ export default function SetPasskey({ back, walletName, next: nextStep,  }: any) 
                   padding="0 20px"
                   onClick={nextStep}
                   size="lg"
+                  disabled={!credentials || !credentials.length}
                 >
                   Next
                 </Button>
