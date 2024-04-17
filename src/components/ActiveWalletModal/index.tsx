@@ -70,12 +70,14 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     alignItems="center"
                     border="1px solid rgba(0, 0, 0, 0.1)"
                     borderRadius="12px"
-                    padding="16px"
+                    padding="35px 39px"
                     marginBottom="24px"
                     width="100%"
                     cursor="pointer"
                     onClick={() => {}}
                     position="relative"
+                    overflow="hidden"
+                    boxSizing="border-box"
                   >
                     {true ? (
                       <Box
@@ -105,9 +107,9 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       </Box>
                     )}
                     <Box
-                      width="60px"
-                      height="60px"
-                      borderRadius="60px"
+                      width="80px"
+                      height="80px"
+                      borderRadius="80px"
                       marginRight="12px"
                       display="flex"
                       alignItems="center"
@@ -116,8 +118,8 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     >
                       <Image
                         src={TokenEmptyIcon}
-                        width="60px"
-                        height="60px"
+                        width="80px"
+                        height="80px"
                       />
                     </Box>
                     <Box>
@@ -159,11 +161,13 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     alignItems="center"
                     border="1px solid rgba(0, 0, 0, 0.1)"
                     borderRadius="12px"
-                    padding="16px"
+                    padding="35px 39px"
                     marginBottom="14px"
                     width="100%"
                     cursor="pointer"
                     position="relative"
+                    overflow="hidden"
+                    boxSizing="border-box"
                   >
                     {true ? (
                       <Box
@@ -193,9 +197,9 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       </Box>
                     )}
                     <Box
-                      width="60px"
-                      height="60px"
-                      borderRadius="60px"
+                      width="80px"
+                      height="80px"
+                      borderRadius="80px"
                       marginRight="12px"
                       display="flex"
                       alignItems="center"
@@ -204,8 +208,8 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     >
                       <Image
                         src={ActivityEmptyIcon}
-                        width="60px"
-                        height="60px"
+                        width="80px"
+                        height="80px"
                       />
                     </Box>
                     <Box>
