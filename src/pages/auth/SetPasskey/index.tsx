@@ -132,16 +132,22 @@ export default function SetPasskey({ back, walletName, next: nextStep,  }: any) 
             </TextBody>
             {(!!credentials && !!credentials.length) && (
               <Box
-                padding="24px"
                 borderRadius="12px"
                 width="700px"
                 maxWidth="100%"
                 marginTop="40px"
-                border="1px solid #F0F0F0"
               >
                 <Flex display="flex" alignItems="flex-start" justifyContent="center" flexDirection="column" width="100%" gap="2">
                   {credentials.map((passKey: any, index: number) =>
-                    <Box key={index} background="white" borderRadius="16px" padding="16px" width="100%" marginBottom="4px">
+                    <Box
+                      key={index}
+                      background="white"
+                      borderRadius="16px"
+                      padding="12px"
+                      width="100%"
+                      marginBottom="4px"
+                      border="1px solid #F0F0F0"
+                    >
                       <Box display="flex" alignItems="center">
                         <Box width="50px" height="50px" background="#efefef" borderRadius="50px" marginRight="16px" display="flex" alignItems="center" justifyContent="center"><ComputerIcon /></Box>
                         <Box>
@@ -204,6 +210,7 @@ export default function SetPasskey({ back, walletName, next: nextStep,  }: any) 
                   padding="0 20px"
                   onClick={nextStep}
                   size="lg"
+                  disabled={!credentials || !credentials.length}
                 >
                   Next
                 </Button>

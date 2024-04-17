@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, Fragment } from 'react';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, Image,  Menu, MenuList, MenuButton, MenuItem, Tooltip } from '@chakra-ui/react';
 import Button from '@/components/Button'
 import TextButton from '@/components/new/TextButton';
 import { ethers } from 'ethers';
@@ -8,7 +8,20 @@ import DoubleFormInput from '@/components/new/DoubleFormInput';
 import Icon from '@/components/Icon';
 import { nextRandomId } from '@/lib/tools';
 import PlusIcon from '@/components/Icons/Plus';
+import TextBody from '@/components/new/TextBody'
+import DropDownIcon from '@/components/Icons/DropDown';
 import ENSResolver, { extractENSAddress } from '@/components/ENSResolver'
+import { nanoid } from 'nanoid';
+
+const getNumberArray = (count: number) => {
+  const arr = [];
+
+  for (let i = 1; i <= count; i++) {
+    arr.push(i);
+  }
+
+  return arr;
+};
 
 const GuardianInput = ({
   id,
@@ -115,7 +128,7 @@ const GuardianInput = ({
           fontFamily: 'Nunito'
         }}
         _rightContainerStyles={{
-          width: { base: 'calc(100%)', 'md': 'calc(100% - 240px)' },
+          width: { base: 'calc(100%)', 'md': 'calc(100% - 170px)' },
           zIndex: 0
         }}
         leftAutoFocus={id === guardianIds[0]}
@@ -125,13 +138,13 @@ const GuardianInput = ({
         leftOnBlur={onBlur(`name_${id}`)}
         leftErrorMsg={showErrors[`name_${id}`] && errors[`name_${id}`]}
         _leftContainerStyles={{
-          width: { base: '100%', 'md': '240px' },
-          marginBottom: { base: '20px', 'md': '0' },
+          width: { base: '100%', 'md': '170px' },
+          marginBottom: { base: '20px', 'md': '0' }
         }}
         _leftInputStyles={{
           fontWeight: 600,
           fontSize: '14px',
-          fontFamily: 'Nunito'
+          fontFamily: 'Nunito',
         }}
         onEnter={handleSubmit}
         _styles={{ width: '100%', fontSize: '16px' }}
@@ -154,9 +167,9 @@ const GuardianInput = ({
       )}
       <ENSResolver
         _styles={{
-          width: { base: "100%", lg: "calc(100% - 240px)" },
+          width: { base: "100%", lg: "calc(100% - 170px)" },
           top: { base: "120px", lg: "50px" },
-          left: { base: "0", lg: "240px" },
+          left: { base: "0", lg: "170px" },
           right: "0",
         }}
         isENSOpen={isENSOpen}
@@ -180,6 +193,7 @@ const GuardianInput = ({
 
 export default function Edit({
   guardianIds,
+  guardiansList,
   values,
   onChange,
   onBlur,
@@ -188,8 +202,11 @@ export default function Edit({
   addGuardian,
   removeGuardian,
   handleSubmit,
+  amountForm,
+  amountData,
   loading,
   disabled,
+  selectAmount,
   onChangeValues,
   formWidth,
   handleConfirm,
@@ -226,13 +243,104 @@ export default function Edit({
             />
           ))}
           {editType !== 'editSingle' && (
-            <TextButton onClick={() => addGuardian()} color="#FF2E79" _hover={{ color: '#FF2E79' }} padding="2px">
+            <TextButton onClick={() => addGuardian()} color="#FF2E79" _hover={{ color: '#FF2E79' }} _active={{ background: 'transparent' }} padding="2px">
               <PlusIcon color="#FF2E79" />
               <Text fontSize="16px" fontWeight="800" marginLeft="5px" color="#FF2E79">
                 Add more guardians
               </Text>
             </TextButton>
           )}
+        </Box>
+      </Box>
+      <Box
+        background="white"
+        height="100%"
+        width="100%"
+        roundedBottom="20px"
+        display="flex"
+        flexDirection="column"
+        alignItems="flex-start"
+        marginTop="16px"
+        borderTop="1px solid rgba(0, 0, 0, 0.1)"
+        paddingTop="24px"
+      >
+        <Box
+          display="flex"
+          justifyContent="flex-start"
+          marginTop="10px"
+          alignItems="flex-start"
+          flexDirection="column"
+        >
+          <Box
+            fontFamily="Nunito"
+            fontWeight="700"
+            fontSize="14px"
+            marginRight="6px"
+          >
+            Threshold
+          </Box>
+          <Box marginTop="2px">
+            <TextBody
+              type="t2"
+              justifyContent="flex-start"
+              display="flex"
+              flexDirection="column"
+              alignItems="flex-start"
+            >
+              <Box>Recovery wallet requires number of guardian(s) confirmation.</Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                marginTop="14px"
+              >
+                <Box
+                  width="80px"
+                  marginRight="10px"
+                >
+                  <Menu>
+                    <MenuButton
+                      px={2}
+                      py={2}
+                      width="80px"
+                      transition="all 0.2s"
+                      borderRadius="16px"
+                      borderWidth="1px"
+                      padding="12px"
+                      background="white"
+                      _hover={{
+                        borderColor: '#3182ce',
+                        boxShadow: '0 0 0 1px #3182ce',
+                      }}
+                      _expanded={{
+                        borderColor: '#3182ce',
+                        boxShadow: '0 0 0 1px #3182ce',
+                      }}
+                    >
+                      <Box display="flex" alignItems="center" justifyContent="space-between">
+                        {amountForm.values.amount || 0}
+                        <DropDownIcon />
+                      </Box>
+                    </MenuButton>
+                    <MenuList>
+                      {!amountData.guardiansCount && (
+                        <MenuItem key={nanoid(4)} onClick={selectAmount(0)}>
+                          0
+                        </MenuItem>
+                      )}
+                      {!!amountData.guardiansCount &&
+                       getNumberArray(guardiansList.length || 0).map((i: any) => (
+                         <MenuItem key={nanoid(4)} onClick={selectAmount(i)}>
+                           {i}
+                         </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Menu>
+
+                </Box>
+                <Box>{`out of ${guardiansList.length || 0} guardian(s) confirmation.`}</Box>
+              </Box>
+            </TextBody>
+          </Box>
         </Box>
       </Box>
     </Fragment>

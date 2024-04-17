@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { useToast } from '@chakra-ui/react';
+import { Box, useToast } from '@chakra-ui/react';
 import { ethers } from 'ethers';
 import useForm from '@/hooks/useForm';
 import { nextRandomId } from '@/lib/tools';
@@ -13,6 +13,7 @@ import useTools from '@/hooks/useTools';
 import Edit from './Edit';
 import { useSettingStore } from '@/store/setting';
 import { useTempStore } from '@/store/temp';
+import Button from '@/components/Button'
 
 const getRecommandCount = (c: number) => {
   if (!c) {
@@ -131,6 +132,7 @@ export default function GuardianForm({
   cancelEdit,
   onConfirm,
   onBack,
+  onSkip,
   canGoBack,
   editType
 }: any) {
@@ -224,13 +226,9 @@ export default function GuardianForm({
 
       const guardianAddresses = guardiansList.map((item: any) => item.address);
       const guardianNames = guardiansList.map((item: any) => item.name);
+      const threshold = amountForm.values.amount
 
-      if (editType === 'editSingle') {
-        const info = getEditingSingleGuardiansInfo()
-        onConfirm(guardianAddresses, guardianNames, info.i)
-      } else {
-        onConfirm(guardianAddresses, guardianNames)
-      }
+      onConfirm(guardianAddresses, guardianNames, threshold)
     }
   }, [editType, values])
 
@@ -263,6 +261,12 @@ export default function GuardianForm({
     amountForm.onChange('amount')(amount);
   };
 
+  useEffect(() => {
+    if (!amountForm.values.amount || Number(amountForm.values.amount) > amountData.guardiansCount) {
+      amountForm.onChange('amount')(getRecommandCount(amountData.guardiansCount));
+    }
+  }, [amountData.guardiansCount, amountForm.values.amount]);
+
   const hasGuardians = guardianDetails && guardianDetails.guardians && !!guardianDetails.guardians.length
 
   const goBack = () => {
@@ -270,33 +274,73 @@ export default function GuardianForm({
   };
 
   return (
-    <Edit
-      guardianIds={guardianIds}
-      guardiansList={guardiansList}
-      values={values}
-      onChange={onChange}
-      onChangeValues={onChangeValues}
-      onBlur={onBlur}
-      showErrors={showErrors}
-      errors={errors}
-      addGuardian={addGuardian}
-      removeGuardian={removeGuardian}
-      handleSubmit={() => setIsConfirmOpen(false)}
-      handleConfirm={handleConfirm}
-      handleBack={handleBack}
-      amountForm={amountForm}
-      amountData={amountData}
-      showAdvance={showAdvance}
-      setShowAdvance={setShowAdvance}
-      loading={loading}
-      disabled={disabled}
-      hasGuardians={hasGuardians}
-      cancelEdit={cancelEdit}
-      selectAmount={selectAmount}
-      keepPrivate={keepPrivate}
-      setKeepPrivate={setKeepPrivate}
-      canGoBack={canGoBack}
-      editType={editType}
-    />
+    <Box>
+      <Edit
+        guardianIds={guardianIds}
+        guardiansList={guardiansList}
+        values={values}
+        onChange={onChange}
+        onChangeValues={onChangeValues}
+        onBlur={onBlur}
+        showErrors={showErrors}
+        errors={errors}
+        addGuardian={addGuardian}
+        removeGuardian={removeGuardian}
+        handleSubmit={() => setIsConfirmOpen(false)}
+        handleConfirm={handleConfirm}
+        handleBack={handleBack}
+        amountForm={amountForm}
+        amountData={amountData}
+        showAdvance={showAdvance}
+        setShowAdvance={setShowAdvance}
+        loading={loading}
+        disabled={disabled}
+        hasGuardians={hasGuardians}
+        cancelEdit={cancelEdit}
+        selectAmount={selectAmount}
+        keepPrivate={keepPrivate}
+        setKeepPrivate={setKeepPrivate}
+        canGoBack={canGoBack}
+        editType={editType}
+      />
+      <Box
+        display="flex"
+        alignItems="flex-end"
+        justifyContent="space-between"
+        width="100%"
+        marginTop="24px"
+      >
+        <Box>
+          <Button
+            type="white"
+            padding="0 20px"
+            onClick={onBack}
+            size="lg"
+          >
+            Back
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            type="text"
+            padding="0 20px"
+            onClick={onSkip}
+            size="lg"
+          >
+            Skip
+          </Button>
+          <Button
+            type="black"
+            color="white"
+            padding="0 20px"
+            onClick={handleConfirm}
+            disabled={disabled}
+            size="lg"
+          >
+            Done
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   )
 }
