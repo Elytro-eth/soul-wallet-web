@@ -1,38 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, PopoverTrigger, Link } from '@chakra-ui/react';
-// import { Link } from 'react-router-dom';
-import Header from '@/components/Header';
 import IconLogo from '@/assets/logo-all-v3.svg';
-import IntroImg from '@/assets/Intro.jpg';
 import RoundContainer from '@/components/new/RoundContainer';
-import Heading from '@/components/new/Heading';
-import TextBody from '@/components/new/TextBody';
 import Button from '@/components/Button';
-import TwitterIcon from '@/components/Icons/Social/Twitter';
-import TelegramIcon from '@/components/Icons/Social/Telegram';
-import GithubIcon from '@/components/Icons/Social/Github';
-import PasskeyIcon from '@/components/Icons/Intro/Passkey';
-import AccountIcon from '@/components/Icons/Intro/Account';
-import TransferIcon from '@/components/Icons/Intro/Transfer';
-import TokenIcon from '@/components/Icons/Intro/Token';
-import { useAccount, useConfig, useConnect, useDisconnect, useSignTypedData, useSwitchChain } from 'wagmi';
-import { useTempStore } from '@/store/temp';
-import { useAddressStore } from '@/store/address';
-import { useSettingStore } from '@/store/setting';
-import usePassKey from '@/hooks/usePasskey';
+import { useSwitchChain } from 'wagmi';
+import { SocialRecovery } from '@soulwallet/sdk';
 import api from '@/lib/api';
-import useWallet from '@/hooks/useWallet';
-import useSdk from '@/hooks/useSdk';
-import { useSignerStore } from '@/store/signer';
-import AuthImg from '@/assets/auth.svg';
 import SignatureRequestImg from '@/assets/icons/signature-request.svg';
 import { useParams } from 'react-router-dom';
 import WarningIcon from '@/components/Icons/Warning';
 import SuccessIcon from '@/components/Icons/Success';
-import { metaMask } from 'wagmi/connectors';
-import { L1KeyStore } from '@soulwallet/sdk';
 import { useEthersSigner } from '@/hooks/useEthersSigner';
-import { useChainStore } from '@/store/chain';
 import ConnectWalletModal from '@/pages/recover/ConnectWalletModal'
 import useWagmi from '@/hooks/useWagmi'
 
@@ -127,8 +105,6 @@ export default function Sign() {
         verifyingContract: recoveryRecord.keystore,
       };
 
-      // SocialRecovery(bytes32 keyStoreSlot,uint256 nonce,bytes32 newKey)
-      // SetKey(bytes32 keyStoreSlot,uint256 nonce,bytes32 newKey)
       const types = {
         SocialRecovery: [
           { name: 'keyStoreSlot', type: 'bytes32' },
@@ -137,8 +113,7 @@ export default function Sign() {
         ],
       };
 
-      const newKeyHash = L1KeyStore.getKeyHash(recoveryRecord.newOwners);
-      console.log('L1KeyStore', newKeyHash);
+      const newKeyHash = SocialRecovery.getKeyHash(recoveryRecord.newOwners);
 
       const message = {
         keyStoreSlot: recoveryRecord.slot,

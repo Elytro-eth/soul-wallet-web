@@ -17,6 +17,7 @@ export default function ConfirmPayment({ onSuccess, fee }: any) {
   const { tokenBalance } = useBalanceStore();
   const { chainConfig, selectedAddressItem } = useConfig();
   const { selectedAddress } = useAddressStore();
+  const { chainID } = chainConfig;
 
   const onConfirm = async () => {
     try {
@@ -30,13 +31,9 @@ export default function ConfirmPayment({ onSuccess, fee }: any) {
   useEffect(() => {
     const getTokenBalance = async () => {
       const res = await api.balance.token({
-        walletAddress: selectedAddress,
-        chains: [
-          {
-            chainID: '',
-            reservedTokenAddresses: [],
-          },
-        ],
+        address: selectedAddress,
+        chainID,
+        reservedTokenAddresses: [],
       });
       console.log('ressssss', res);
     };

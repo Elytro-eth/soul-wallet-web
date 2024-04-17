@@ -59,10 +59,10 @@ const backup = {
 };
 
 const sponsor = {
-  check: (chainId: string, entryPoint: string, op: UserOperation) =>
+  check: (chainId: string, entrypoint: string, op: UserOperation) =>
     axio.post('/sponsor/sponsor-op', {
       chainId,
-      entryPoint,
+      entrypoint,
       op,
     }),
 };

@@ -32,7 +32,7 @@ export function AccountSelectFull({ ...restProps }) {
           src={IconCopy}
           w="20px"
           cursor={'pointer'}
-          onClick={() => doCopy(`${chainConfig.addressPrefix}${selectedAddress}`)}
+          onClick={() => doCopy(selectedAddress)}
         />
       </Flex>
     </Flex>

@@ -66,10 +66,6 @@ export default function Auth() {
     setIsImportAccountOpen(false);
   }, []);
 
-  const startLogin = useCallback(() => {
-    setIsSelectAccountOpen(true);
-  }, []);
-
   const connectEOA = useCallback(
     async (connector: any) => {
       setIsConnectAtive(true);
@@ -108,11 +104,11 @@ export default function Auth() {
     setStepType('selectNetwork')
   }
 
-  const doCreate = async() => {
-    const res = await initWallet(credentials, walletName, '');
-
-
-    
+  const onCreate = async(initialGuardianHash:string) => {
+    console.log('ccccc', credentials)
+    const res = await initWallet(credentials, initialGuardianHash, walletName);
+    console.log('res is', res)
+    navigate('/dashboard')
   }
 
   const doLogin = async () => {
@@ -133,7 +129,7 @@ export default function Auth() {
   }
 
   if (stepType === 'setGuardian') {
-    return <SetGuardian walletName={walletName} back={() => setStepType('setPassKey')} onCreate={doCreate} />;
+    return <SetGuardian walletName={walletName} back={() => setStepType('setPassKey')} onCreate={onCreate} />;
   }
 
   return (

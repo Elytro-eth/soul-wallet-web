@@ -14,7 +14,6 @@ import OpenScanIcon from '@/components/Icons/OpenScan';
 import { toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
 import useConfig from '@/hooks/useConfig';
-import { L1KeyStore } from '@soulwallet/sdk';
 import api from '@/lib/api';
 import UploadIcon from '@/components/Icons/Upload'
 import UploadedIcon from '@/components/Icons/Uploaded'
@@ -104,9 +103,8 @@ export default function AddSigner({ next, back }: any) {
   const handleNext = useCallback(async () => {
     try {
       setIsConfirming(true)
-      const keystore = chainConfig.contracts.l1Keystore;
       const initialKeys = signers.map((signer: any) => signer.signerId)
-      const newOwners = L1KeyStore.initialKeysToAddress(initialKeys);
+      // const newOwners = L1KeyStore.initialKeysToAddress(initialKeys);
       const recoverInfo = getRecoverInfo()
       const slot = recoverInfo.slot
       const slotInitInfo = recoverInfo.slotInitInfo
@@ -116,8 +114,8 @@ export default function AddSigner({ next, back }: any) {
         guardianDetails,
         slot,
         slotInitInfo,
-        keystore,
-        newOwners
+        // keystore,
+        // newOwners
       }
 
       console.log('createRecoverRecord', params);

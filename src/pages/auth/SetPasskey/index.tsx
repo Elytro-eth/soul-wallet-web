@@ -16,8 +16,7 @@ import ComputerIcon from '@/components/Icons/Computer';
 import usePassKey from '@/hooks/usePasskey';
 import { SignHeader } from '@/pages/public/Sign';
 
-export default function SetPasskey({ back, walletName, next: nextStep,  }: any) {
-  const [credentials, setCredentials] = useState<any>([])
+export default function SetPasskey({ back, walletName, next: nextStep, credentials, setCredentials  }: any) {
   const { register } = usePassKey()
   const toast = useToast();
   const [isCreating, setIsCreating] = useState(false);

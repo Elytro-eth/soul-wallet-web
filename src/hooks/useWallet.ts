@@ -1,4 +1,4 @@
-import { MaxUint256, ZeroHash, ethers } from 'ethers';
+import { MaxUint256, ZeroAddress, ZeroHash, ethers } from 'ethers';
 import useSdk from './useSdk';
 import useQuery from './useQuery';
 import { ABI_SoulWallet } from '@soulwallet/abi';
@@ -25,22 +25,17 @@ import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
-const noGuardian = {
-  initialGuardianHash: ethers.ZeroHash,
-  initialGuardianSafePeriod: defaultGuardianSafePeriod,
-};
-
 export default function useWallet() {
   const { signByPasskey, authenticate } = usePasskey();
   const { chainConfig } = useConfig();
-  const { setSlotInfo } = useSlotStore();
+  const { setSlotInfo, slotInfo } = useSlotStore();
   const { selectedChainId, setSelectedChainId } = useChainStore();
   const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
   const { soulWallet } = useSdk();
   const { navigate } = useBrowser();
   const toast = useToast();
   const { clearLogData } = useTools();
-  const { selectedAddress, setSelectedAddress, setWalletName } = useAddressStore();
+  const { selectedAddress, setSelectedAddress, setWalletName, setAddressList } = useAddressStore();
 
   const loginWallet = async () => {
     const { credential } = await authenticate();
@@ -82,15 +77,15 @@ export default function useWallet() {
     navigate('/landing');
   };
 
-  const initWallet = async (credential: any, walletName: string, invitationCode: string) => {
+  const initWallet = async (credentials: any, initialGuardianHash: string, walletName: string) => {
     const createIndex = 0;
 
-    const initialKeys = [credential.publicKey as string];
+    const initialKeys = credentials.map((item: any) => item.publicKey);
 
     const createSlotInfo = {
       initialKeys,
-      initialGuardianHash: noGuardian.initialGuardianHash,
-      initialGuardianSafePeriod: toHex(noGuardian.initialGuardianSafePeriod),
+      initialGuardianHash,
+      initialGuardianSafePeriod: toHex(defaultGuardianSafePeriod),
     };
 
     // do time consuming jobs
@@ -98,13 +93,32 @@ export default function useWallet() {
       await soulWallet.calcWalletAddress(
         createIndex,
         initialKeys,
-        noGuardian.initialGuardianHash,
-        Number(noGuardian.initialGuardianSafePeriod),
-        selectedChainId,
+        initialGuardianHash,
       )
     ).OK;
 
-    setSelectedAddress(address);
+    // const address2 = (
+    //   await soulWallet.calcWalletAddress(
+    //     createIndex,
+    //     initialKeys,
+    //     initialGuardianHash,
+    //     Number(defaultGuardianSafePeriod),
+    //     selectedChainId,
+    //   )
+    // ).OK;
+
+    // console.log('ADDDR', address, address2)
+
+    // setSelectedAddress(address);
+    setAddressList([
+      {
+        address,
+        chainIdHex: selectedChainId,
+        activated: false,
+        recovering: false,
+      },
+    ]);
+
     setWalletName(walletName);
     const res: any = await api.account.create({
       address,
@@ -114,7 +128,7 @@ export default function useWallet() {
         index: createIndex,
         ...createSlotInfo,
       },
-      invitationCode,
+      // invitationCode,
     });
     if (res.code !== 200) {
       toast({
@@ -127,19 +141,19 @@ export default function useWallet() {
 
     setSlotInfo(createSlotInfo);
 
-    setCredentials([credential as any]);
+    setCredentials(credentials as any);
 
     return {
       initialKeys,
     };
   };
 
-  const getActivateOp = async (_initialKeys: any) => {
+  const getActivateOp = async () => {
     const createIndex = 0;
     const userOpRet = await soulWallet.createUnsignedDeployWalletUserOp(
       createIndex,
-      _initialKeys,
-      noGuardian.initialGuardianHash,
+      slotInfo.initialKeys,
+      slotInfo.initialGuardianHash,
       '0x',
     );
 
@@ -150,33 +164,35 @@ export default function useWallet() {
     let userOp = userOpRet.OK;
 
     // approve paymaster to spend ERC-20
-    const soulAbi = new ethers.Interface(ABI_SoulWallet);
-    const erc20Interface = new ethers.Interface(erc20Abi);
+    // const soulAbi = new ethers.Interface(ABI_SoulWallet);
+    // const erc20Interface = new ethers.Interface(erc20Abi);
     // approve defi contract to spend token
-    const approveTos = [import.meta.env.VITE_TOKEN_USDC];
-    const approveCalldata = erc20Interface.encodeFunctionData('approve', [
-      import.meta.env.VITE_AaveUsdcSaveAutomation,
-      MaxUint256,
-    ]);
+    // const approveTos = [import.meta.env.VITE_TOKEN_USDC];
+    // const approveCalldata = erc20Interface.encodeFunctionData('approve', [
+    //   import.meta.env.VITE_AaveUsdcSaveAutomation,
+    //   MaxUint256,
+    // ]);
 
-    const approveCalldatas = [...new Array(approveTos.length)].map(() => approveCalldata);
+    // const approveCalldatas = [...new Array(approveTos.length)].map(() => approveCalldata);
 
-    const finalValues = [...new Array(approveTos.length).fill('0x0')];
+    // const finalValues = [...new Array(approveTos.length).fill('0x0')];
 
-    const executions: string[][] = approveTos.map((to, index) => [to, finalValues[index], approveCalldatas[index]]);
+    // const executions: string[][] = approveTos.map((to, index) => [to, finalValues[index], approveCalldatas[index]]);
 
-    userOp.callData = soulAbi.encodeFunctionData('executeBatch((address,uint256,bytes)[])', [executions]);
+    // userOp.callData = soulAbi.encodeFunctionData('executeBatch((address,uint256,bytes)[])', [executions]);
 
-    const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
+    userOp.callData = '0x'
 
-    const gas = await getGasPrice();
+    userOp = await estimateGas(userOp, ZeroAddress);
 
-    console.log('GAS', gas);
+    // const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
 
-    userOp.maxFeePerGas = maxFeePerGas;
-    userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
+    // userOp.maxFeePerGas = maxFeePerGas;
+    // userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
 
-    userOp = await getSponsor(userOp);
+    // userOp = await getSponsor(userOp);
+
+    console.log(userOp, 'userOp')
 
     return userOp;
   };
@@ -199,6 +215,28 @@ export default function useWallet() {
     } catch (err: any) {
       throw new Error(err.message);
     }
+  };
+
+  const estimateGas = async (userOp: any, payToken: string) => {
+    // set 1559 fee
+    // if (!userOp.maxFeePerGas || !userOp.maxPriorityFeePerGas) {
+      const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
+      userOp.maxFeePerGas = maxFeePerGas;
+      userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
+    // }
+
+    // if (payToken && payToken !== ethers.ZeroAddress) {
+    //   userOp.paymasterAndData = addPaymasterAndData(payToken, chainConfig.contracts.paymaster);
+    // }
+
+    // get gas limit
+    const gasLimit = await soulWallet.estimateUserOperationGas(chainConfig.contracts.defaultValidator, userOp, selectedKeyType);
+
+    if (gasLimit.isErr()) {
+      throw new Error(gasLimit.ERR.message);
+    }
+
+    return userOp;
   };
 
   const getPasskeySignature = async (packedHash: string, validationData: string) => {

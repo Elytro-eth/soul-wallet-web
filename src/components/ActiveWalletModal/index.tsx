@@ -18,11 +18,14 @@ import VideoIcon from '@/components/Icons/Video'
 import TokenEmptyIcon from '@/assets/icons/token-empty.svg'
 import ActivityEmptyIcon from '@/assets/icons/activity-empty.svg'
 import QrcodeIcon from '@/components/Icons/Qrcode'
+import { useAddressStore } from '@/store/address';
+import useWallet from '@/hooks/useWallet';
 
 const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
-  const [isSkipOpen, setIsSkipOpen] = useState(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [promiseInfo, setPromiseInfo] = useState<any>({});
+  const { getActivateOp, signAndSend } = useWallet();
+  const { selectedAddress } = useAddressStore();
 
   useImperativeHandle(ref, () => ({
     async show() {
@@ -40,6 +43,12 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
     setVisible(false);
     promiseInfo.reject('User close');
   };
+
+  const doActivate = async() => {
+    const userOp = await getActivateOp()
+    console.log('user op', userOp)
+    await signAndSend(userOp);
+  }
 
   return (
     <div ref={ref}>
@@ -142,7 +151,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                             fontWeight="500"
                             lineHeight="18px"
                           >
-                            <Box as="span" fontWeight="700">ETH address:</Box> 0xFDF7AC7Be34f2882734b1e6A8f39656D6B14691C
+                            <Box as="span" fontWeight="700">ETH address:</Box> {selectedAddress}
                           </TextBody>
                         </Box>
                         <Box marginLeft="8px">
@@ -228,7 +237,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           <TextBody type="t3">{`The activation fee will be covered by Soul Wallet. $0 cost on you.`}</TextBody>
                         </Box>
                         <Box marginLeft="63px">
-                          <Button size="sm" height="28px" disabled={true}>Active now</Button>
+                          <Button size="sm" height="28px" onClick={doActivate}>Active now</Button>
                         </Box>
                       </Box>
                     </Box>

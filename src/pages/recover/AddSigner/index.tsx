@@ -24,12 +24,12 @@ import { useSettingStore } from '@/store/setting';
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import useConfig from '@/hooks/useConfig';
 import api from '@/lib/api';
-import { L1KeyStore } from '@soulwallet/sdk';
 import Icon from '@/components/Icon';
 import MinusIcon from '@/assets/icons/minus.svg';
 import ConnectWalletModal from '../ConnectWalletModal'
 import StepProgress from '../StepProgress'
 import { SignHeader } from '@/pages/public/Sign';
+import { SocialRecovery } from '@soulwallet/sdk';
 
 export default function AddSigner({ next, back }: any) {
   const [signers, setSigners] = useState<any>([])
@@ -76,7 +76,7 @@ export default function AddSigner({ next, back }: any) {
       setIsConfirming(true)
       const keystore = chainConfig.contracts.l1Keystore;
       const initialKeys = signers.map((signer: any) => signer.signerId)
-      const newOwners = L1KeyStore.initialKeysToAddress(initialKeys)
+      const newOwners = SocialRecovery.initialKeysToAddress(initialKeys)
       const slot = recoverInfo.slot
       const slotInitInfo = recoverInfo.slotInitInfo
       const guardianDetails = recoverInfo.guardianDetails

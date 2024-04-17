@@ -103,13 +103,9 @@ export const useBalanceStore = create<IBalanceStore>()(
         }
 
         const res = await api.balance.token({
-          walletAddress: address,
-          chains: [
-            {
-              chainID: chainId,
-              reservedTokenAddresses: paymasterTokens,
-            },
-          ],
+          address,
+          chainID: chainId,
+          reservedTokenAddresses: paymasterTokens,
         });
         const resPrice = await api.price.token({});
         const targetedItem = resPrice.data.filter((item: any) => item.chainID === chainId)[0];

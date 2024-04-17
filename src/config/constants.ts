@@ -31,13 +31,13 @@ export const sidebarLinks = [
     iconActive: IconActivityActive,
     isComing: false,
   },
-  {
-    title: 'Dapps',
-    href: "/dapps",
-    icon: IconDapps,
-    iconActive: IconDappsActive,
-    isComing: true,
-  },
+  // {
+  //   title: 'Dapps',
+  //   href: "/dapps",
+  //   icon: IconDapps,
+  //   iconActive: IconDappsActive,
+  //   isComing: true,
+  // },
   {
     title: 'Settings',
     href: "/security",

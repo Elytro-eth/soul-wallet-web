@@ -201,7 +201,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
         return await getUserOp(txns, payTokenAddress);
       } else {
         // if not activated, prepend activate txns
-        return await getActivateOp(0);
+        return await getActivateOp();
       }
     } catch (err: any) {
       console.log('Get final userOp err:', err.message);
