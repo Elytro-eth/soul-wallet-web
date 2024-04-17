@@ -110,6 +110,9 @@ export default function Auth() {
 
   const doCreate = async() => {
     const res = await initWallet(credentials, walletName, '');
+
+
+    
   }
 
   const doLogin = async () => {

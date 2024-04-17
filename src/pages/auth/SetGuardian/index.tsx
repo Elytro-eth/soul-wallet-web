@@ -20,6 +20,12 @@ import DropDownIcon from '@/components/Icons/DropDown';
 import EditGuardianForm from './EditGuardianForm'
 
 export default function SetGuardian({walletName, back, onCreate }: any) {
+  const onDone = () => {
+    // 1. get guardian details
+
+    // 2.
+    onCreate();
+  }
   return (
     <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
       <SignHeader />
@@ -200,7 +206,7 @@ export default function SetGuardian({walletName, back, onCreate }: any) {
                     type="black"
                     color="white"
                     padding="0 20px"
-                    onClick={onCreate}
+                    onClick={onDone}
                     size="lg"
                   >
                     Done

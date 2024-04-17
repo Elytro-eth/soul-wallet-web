@@ -43,7 +43,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
 
   return (
     <div ref={ref}>
-      <Modal isOpen={visible} onClose={onClose}>
+      <Modal isOpen={visible} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent maxW="840px" borderRadius="20px">
           <ModalHeader

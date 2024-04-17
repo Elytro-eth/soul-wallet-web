@@ -23,7 +23,8 @@ export default function FindRoute({ children }: { children: ReactNode }) {
     const allowBypass =
       location.pathname.includes('recover') ||
       location.pathname.includes('create') ||
-      location.pathname.includes('auth')
+      location.pathname.includes('auth') ||
+      location.pathname.includes('dashboard')
 
     if (storeVersion !== storageVersion) {
       storage.setItem('storeVersion', storeVersion);
