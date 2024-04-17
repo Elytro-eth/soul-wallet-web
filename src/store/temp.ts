@@ -6,7 +6,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
 
-const createStagingSlice = immer<any>((set, get) => ({
+const createTempSlice = immer<any>((set, get) => ({
   doneAuth: false,
   createInfo: {},
   setDoneAuth: (value: boolean) => set({ doneAuth: value }),
@@ -136,7 +136,7 @@ const createStagingSlice = immer<any>((set, get) => ({
 }));
 
 export const useTempStore = create<any>()(
-  persist((...set) => ({ ...createStagingSlice(...set) }), {
+  persist((...set) => ({ ...createTempSlice(...set) }), {
     name: 'temp-storage',
     version: 3,
   }),
