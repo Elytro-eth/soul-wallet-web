@@ -4,11 +4,9 @@ import PublicWrapper from './wrapper/PublicWrapper';
 import Dashboard from '@/pages/dashboard';
 import Recover from '@/pages/recover';
 import Popup from '@/pages/popup';
-import Apps from '@/pages/apps';
 import Asset from '@/pages/asset';
 import Activity from '@/pages/activity';
 import Security from '@/pages/security';
-import Signer from '@/pages/security/Signer';
 import Guardian from '@/pages/security/Guardian';
 import Pay from '@/pages/public/Pay';
 import Sign from '@/pages/public/Sign';
@@ -33,8 +31,7 @@ export const router = createBrowserRouter([
             path: 'security',
             element: <Security />,
             children: [
-              { index: true, element: <Navigate to="signer" replace /> },
-              { path: 'signer', element: <Signer /> },
+              { index: true, element: <Navigate to="guardian" replace /> },
               { path: 'guardian', element: <Guardian /> },
             ],
           },
@@ -44,7 +41,6 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      { path: 'apps', element: <Apps /> },
       {
         path: '/recover',
         element: <PublicWrapper />,

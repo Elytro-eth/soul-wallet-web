@@ -117,7 +117,7 @@ export default {
     // },
   ],
   magicValue: '0x1626ba7e',
-  backendURL: `${import.meta.env.VITE_BACKEND_URL}/appapi`,
+  backendURL: `${import.meta.env.VITE_BACKEND_URL}/walletapi`,
   soulScanURL: `${import.meta.env.VITE_SCAN_URL}/opapi`,
   chainList: [
     // ArbConfig,

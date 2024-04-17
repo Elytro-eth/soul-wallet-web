@@ -8,10 +8,8 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 import { useSlotStore } from '@/store/slot';
 import Button from '@/components/Button';
 import { Link } from 'react-router-dom';
-import SkipModal from '@/components/SkipModal';
 import ReceiveCode from '@/components/ReceiveCode';
 import { useAddressStore } from '@/store/address';
-import useTools from '@/hooks/useTools';
 import { toFixed } from '@/lib/tools';
 
 const SetGuardianHint = ({ onShowSkip }: { onShowSkip: () => void }) => {
@@ -150,7 +148,6 @@ const TokenBalanceTable = ({ tokenBalance, showSendAssets }: any) => {
 
 export default function Tokens() {
   const { showSend } = useWalletContext();
-  const { checkInitialized } = useTools();
   const { tokenBalance } = useBalanceStore();
   const { slotInfo } = useSlotStore();
   const [isSkipOpen, setIsSkipOpen] = useState(false);
@@ -165,7 +162,7 @@ export default function Tokens() {
     <HomeCard
       title={'Assets'}
       pos="relative"
-      external={checkInitialized() ? <ExternalLink title="View more" to="/asset" /> : null}
+      external={<ExternalLink title="View more" to="/asset" />}
       h="100%"
     >
       {(!slotInfo.initialGuardianHash || isSkipOpen) && <DepositHint2 />}
@@ -174,7 +171,6 @@ export default function Tokens() {
       ) : (
         <TokenBalanceTable tokenBalance={tokenBalance} showSendAssets={showSendAssets} />
       )}
-      <SkipModal isOpen={isSkipOpen} onClose={() => setIsSkipOpen(false)} />
     </HomeCard>
   );
 }

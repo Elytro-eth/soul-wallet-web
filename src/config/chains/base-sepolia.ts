@@ -17,7 +17,7 @@ export default {
   l1Provider: `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_KEY}`,
   scanUrl: 'https://base-sepolia.blockscout.com',
   scanName: 'Arbiscan',
-  bundlerUrl: `https://api-dev.soulwallet.io/appapi/bundler/base-sepolia/rpc`,
+  bundlerUrl: `https://api-dev.soulwallet.io/walletapi/bundler/base-sepolia/rpc`,
   maxCostMultiplier: 120,
   chainId,
   chainIdHex: `0x${chainId.toString(16)}`,

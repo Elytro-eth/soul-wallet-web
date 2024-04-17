@@ -1,130 +1,146 @@
-import { ethers } from 'ethers';
+import { MaxUint256, ZeroHash, ethers } from 'ethers';
 import useSdk from './useSdk';
 import useQuery from './useQuery';
 import { ABI_SoulWallet } from '@soulwallet/abi';
-import { useGuardianStore } from '@/store/guardian';
 import { useSlotStore } from '@/store/slot';
 import { addPaymasterData } from '@/lib/tools';
 import { erc20Abi, verifyMessage } from 'viem';
-import { L1KeyStore, SignkeyType, UserOperation } from '@soulwallet/sdk';
+import { SignkeyType, UserOperation } from '@soulwallet/sdk';
 import { executeTransaction } from '@/lib/tx';
-import BN from 'bignumber.js';
+import { UserOpUtils } from '@soulwallet/sdk';
 import useConfig from './useConfig';
 import api from '@/lib/api';
 import usePasskey from './usePasskey';
 import { toHex } from '@/lib/tools';
-import { useSignMessage } from 'wagmi';
 import { useSignerStore } from '@/store/signer';
 import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
-import useWalletContext from '@/context/hooks/useWalletContext';
-import { useTempStore } from '@/store/temp';
-import { useSettingStore } from '@/store/setting';
-import { getWalletAddress } from '@/pages/recover/RecoverProgress';
+import { defaultGuardianSafePeriod } from '@/config';
+// import { fetchTokenBalanceApi } from '@/store/balance';
+// import useTransaction from './useTransaction';
+import useTools from './useTools';
+import BN from 'bignumber.js';
+import useBrowser from './useBrowser';
+import { useBalanceStore } from '@/store/balance';
+import { useToast } from '@chakra-ui/react';
+import axios from 'axios';
+
+const noGuardian = {
+  initialGuardianHash: ethers.ZeroHash,
+  initialGuardianSafePeriod: defaultGuardianSafePeriod,
+};
 
 export default function useWallet() {
-  const { signByPasskey } = usePasskey();
-  const { set1559Fee } = useQuery();
+  const { signByPasskey, authenticate } = usePasskey();
   const { chainConfig } = useConfig();
-  const { ethersProvider } = useWalletContext();
-  const { signMessageAsync } = useSignMessage();
-  const { updateGuardiansInfo } = useGuardianStore();
-  const { slotInfo, setSlotInfo, getSlotInfo } = useSlotStore();
-  const { updateChainItem, setSelectedChainId } = useChainStore();
-  const { setCredentials, getSelectedCredential } = useSignerStore();
-  const { soulWallet, calcWalletAddressAllChains } = useSdk();
-  const { selectedAddress, setAddressList, updateAddressItem } = useAddressStore();
-  const { getSelectedKeyType, setEoas } = useSignerStore();
-  const { setSignerIdAddress, setFinishedSteps, saveAddressName, getRecoverRecordId } = useSettingStore();
-  const { clearCreateInfo, recoverInfo, setRecoverInfo, updateRecoverInfo, clearTempStore } = useTempStore();
+  const { setSlotInfo } = useSlotStore();
+  const { selectedChainId, setSelectedChainId } = useChainStore();
+  const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
+  const { soulWallet } = useSdk();
+  const { navigate } = useBrowser();
+  const toast = useToast();
+  const { clearLogData } = useTools();
+  const { selectedAddress, setSelectedAddress, setWalletName } = useAddressStore();
 
-  const createWallet = async ({
-    initialGuardianHash,
-    initialGuardianSafePeriod,
-  }: {
-    initialGuardianHash: string;
-    initialGuardianSafePeriod: number;
-  }) => {
-    // retrieve info from temp store
-    const { credentials = [], eoaAddress = [] } = useTempStore.getState().createInfo;
-    const keystore = chainConfig.contracts.l1Keystore;
+  const loginWallet = async () => {
+    const { credential } = await authenticate();
+    try {
+      const res: any = await api.account.list({
+        ownerKey: credential.publicKey,
+      });
 
-    const credentialKeys = credentials.map((item: any) => item.publicKey);
-    const credentialIds = credentials.map((item: any) => item.id);
+      if (!res || !res.data || !res.data.length || res.code !== 200) {
+        toast({
+          title: 'Failed to login',
+          description: res.msg,
+          status: 'error',
+          duration: 5000,
+        });
+        throw new Error('Failed to login');
+      }
 
-    const initialKeys = [...credentialKeys, ...eoaAddress].filter((item) => item);
-
-    const initialSignerIds = [...credentialIds, ...eoaAddress].filter((item) => item);
-
-    const initialKeysAddress = L1KeyStore.initialKeysToAddress(initialKeys);
-    const initialKeyHash = L1KeyStore.getKeyHash(initialKeysAddress);
-
-    const slot = L1KeyStore.getSlot(initialKeyHash, initialGuardianHash, initialGuardianSafePeriod);
-
-    // save slot info to api
-    await api.guardian.backupSlot({
-      keystore,
-      slot,
-      slotInitInfo: {
-        initialKeyHash,
-        initialGuardianHash,
-        initialGuardianSafePeriod: toHex(initialGuardianSafePeriod),
-      },
-      initialKeys: initialKeysAddress,
-    });
-
-    setSlotInfo({
-      initialKeys,
-      initialKeyHash,
-      initialKeysAddress,
-      slot,
-      initialGuardianHash,
-      initialGuardianSafePeriod: toHex(initialGuardianSafePeriod),
-    });
-
-    const { walletName } = useTempStore.getState().createInfo;
-    console.log('walletName', slot, walletName);
-    if (walletName && slot) saveAddressName(slot, walletName);
-
-    console.log('after public backup slot');
-
-    const addresses = await calcWalletAddressAllChains(0);
-
-    setAddressList(addresses);
-
-    // save signer id to address mapping
-    const chainIdAddress = addresses.reduce((obj, item) => {
-      return {
-        ...obj,
-        [item.chainIdHex]: item.address,
-      };
-    }, {});
-
-    initialSignerIds.forEach((item) => {
-      setSignerIdAddress(item, chainIdAddress);
-    });
-
-    if (credentials.length > 0) {
-      setCredentials(credentials);
+      // consider first item only for now
+      const item = res.data[0];
+      setCredentials([credential as any]);
+      setWalletName(item.name);
+      setSelectedAddress(item.address);
+      setSelectedChainId(item.chainID);
+      setSlotInfo(item.initInfo);
+    } catch (e: any) {
+      toast({
+        title: 'Failed to login',
+        description: e.response.data.data.message,
+        status: 'error',
+        duration: 5000,
+      });
+      throw new Error('Failed to login');
     }
-    if (eoaAddress && eoaAddress.length > 0) {
-      setEoas(eoaAddress);
-    }
-
-    // clearTempStore();
-
-    clearCreateInfo();
   };
 
-  const getActivateOp = async (index: number, payToken: string, extraTxs: any = []) => {
-    console.log('extraTxs', extraTxs);
-    const { initialKeys, initialGuardianHash, initialGuardianSafePeriod } = slotInfo;
-    const userOpRet = await soulWallet.createUnsignedDeployWalletUserOp(
-      index,
+  const logoutWallet = async () => {
+    clearLogData();
+    navigate('/landing');
+  };
+
+  const initWallet = async (credential: any, walletName: string, invitationCode: string) => {
+    const createIndex = 0;
+
+    const initialKeys = [credential.publicKey as string];
+
+    const createSlotInfo = {
       initialKeys,
-      initialGuardianHash,
+      initialGuardianHash: noGuardian.initialGuardianHash,
+      initialGuardianSafePeriod: toHex(noGuardian.initialGuardianSafePeriod),
+    };
+
+    // do time consuming jobs
+    const address = (
+      await soulWallet.calcWalletAddress(
+        createIndex,
+        initialKeys,
+        noGuardian.initialGuardianHash,
+        Number(noGuardian.initialGuardianSafePeriod),
+        selectedChainId,
+      )
+    ).OK;
+
+    setSelectedAddress(address);
+    setWalletName(walletName);
+    const res: any = await api.account.create({
+      address,
+      chainID: selectedChainId,
+      name: walletName,
+      initInfo: {
+        index: createIndex,
+        ...createSlotInfo,
+      },
+      invitationCode,
+    });
+    if (res.code !== 200) {
+      toast({
+        title: 'Create wallet failed',
+        description: res.msg,
+        status: 'error',
+      });
+      throw new Error('Create wallet failed');
+    }
+
+    setSlotInfo(createSlotInfo);
+
+    setCredentials([credential as any]);
+
+    return {
+      initialKeys,
+    };
+  };
+
+  const getActivateOp = async (_initialKeys: any) => {
+    const createIndex = 0;
+    const userOpRet = await soulWallet.createUnsignedDeployWalletUserOp(
+      createIndex,
+      _initialKeys,
+      noGuardian.initialGuardianHash,
       '0x',
-      initialGuardianSafePeriod,
     );
 
     if (userOpRet.isErr()) {
@@ -136,80 +152,58 @@ export default function useWallet() {
     // approve paymaster to spend ERC-20
     const soulAbi = new ethers.Interface(ABI_SoulWallet);
     const erc20Interface = new ethers.Interface(erc20Abi);
-    const approveTos = chainConfig.paymasterTokens;
+    // approve defi contract to spend token
+    const approveTos = [import.meta.env.VITE_TOKEN_USDC];
     const approveCalldata = erc20Interface.encodeFunctionData('approve', [
-      chainConfig.contracts.paymaster,
-      ethers.parseEther('1000'),
+      import.meta.env.VITE_AaveUsdcSaveAutomation,
+      MaxUint256,
     ]);
 
     const approveCalldatas = [...new Array(approveTos.length)].map(() => approveCalldata);
 
-    const finalTos = [...approveTos, ...extraTxs.map((tx: any) => tx.to)];
+    const finalValues = [...new Array(approveTos.length).fill('0x0')];
 
-    const finalCalldatas = [...approveCalldatas, ...extraTxs.map((tx: any) => tx.data)];
-
-    const finalValues = [...new Array(approveTos.length).fill('0x0'), ...extraTxs.map((tx: any) => tx.value || '0x0')];
-
-    const executions: string[][] = finalTos.map((to, index) => [to, finalValues[index], finalCalldatas[index]]);
+    const executions: string[][] = approveTos.map((to, index) => [to, finalValues[index], approveCalldatas[index]]);
 
     userOp.callData = soulAbi.encodeFunctionData('executeBatch((address,uint256,bytes)[])', [executions]);
 
-    userOp = await set1559Fee(userOp, payToken);
+    const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
 
-    let callGasLimit = BN(approveTos.length * 50000);
+    const gas = await getGasPrice();
 
-    for (let i = 0; i < extraTxs.length; i++) {
-      // get gas from tx or onchain
-      const gas = BN(extraTxs[i].gas).isGreaterThan(0)
-        ? BN(extraTxs[i].gas)
-        : await ethersProvider.estimateGas(extraTxs[i]);
-      callGasLimit = callGasLimit.plus(gas);
-    }
+    console.log('GAS', gas);
 
-    console.log('estimate callGaslimit', callGasLimit);
+    userOp.maxFeePerGas = maxFeePerGas;
+    userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
 
-    userOp.callGasLimit = `0x${
-      BN(callGasLimit).isGreaterThan(finalTos.length * 50000)
-        ? callGasLimit.toString(16)
-        : Number(finalTos.length * 50000).toString(16)
-    }`;
-    userOp.preVerificationGas = `0x${BN(userOp.preVerificationGas.toString()).plus(15000).toString(16)}`;
-    userOp.verificationGasLimit = `0x${BN(userOp.verificationGasLimit.toString()).plus(30000).toString(16)}`;
+    userOp = await getSponsor(userOp);
 
     return userOp;
   };
 
-  const getSetGuardianCalldata = async (slot: string, guardianHash: string, keySignature: string) => {
-    const soulAbi = new ethers.Interface(ABI_SoulWallet);
-    return soulAbi.encodeFunctionData('setGuardian(bytes32,bytes32,bytes32)', [slot, guardianHash, keySignature]);
-  };
+  const getUserOp: any = async (txns: any) => {
+    try {
+      const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
 
-  const getEoaSignature = async (packedHash: any, validationData: string) => {
-    const signatureData: any = await signWithEoa(packedHash);
+      const userOpRet = await soulWallet.fromTransaction(maxFeePerGas, maxPriorityFeePerGas, selectedAddress, txns);
 
-    console.log('packUserEoaSignature params:', signatureData, validationData);
+      if (userOpRet.isErr()) {
+        throw new Error(userOpRet.ERR.message);
+      }
 
-    const packedSignatureRet = await soulWallet.packUserOpEOASignature(
-      chainConfig.contracts.defaultValidator,
-      signatureData,
-      validationData,
-    );
+      let userOp = userOpRet.OK;
 
-    if (!packedSignatureRet) {
-      throw new Error('failed to sign');
+      userOp = await getSponsor(userOp);
+
+      return userOp;
+    } catch (err: any) {
+      throw new Error(err.message);
     }
-
-    if (packedSignatureRet.isErr()) {
-      throw new Error(packedSignatureRet.ERR.message);
-    }
-
-    return packedSignatureRet.OK;
   };
 
   const getPasskeySignature = async (packedHash: string, validationData: string) => {
     const selectedCredential: any = getSelectedCredential();
     const signatureData: any = await signByPasskey(selectedCredential, packedHash);
-
     console.log('packUserOp256Signature params:', signatureData, validationData);
     const packedSignatureRet =
       selectedCredential.algorithm === 'ES256'
@@ -237,17 +231,72 @@ export default function useWallet() {
     return packedSignatureRet.OK;
   };
 
-  const signAndSend = async (userOp: UserOperation, payToken?: string) => {
-    const selectedKeyType = getSelectedKeyType();
-    // checkpaymaster
-    if (payToken && payToken !== ethers.ZeroAddress && userOp.paymasterData === '0x') {
-      userOp.paymasterData = addPaymasterData(payToken, chainConfig.contracts.paymaster);
+  const getSponsor = async (userOp: UserOperation) => {
+    userOp.signature = (
+      await soulWallet.getSemiValidSignature(import.meta.env.VITE_SoulWalletDefaultValidator, userOp, selectedKeyType)
+    ).OK;
+
+    let res: any;
+
+    try {
+      res = await api.sponsor.check(
+        selectedChainId,
+        chainConfig.contracts.entryPoint,
+        JSON.parse(UserOpUtils.userOperationToJSON(userOp)),
+      );
+
+      if (res.code !== 200) {
+        toast({
+          title: 'Sponsor check failed',
+          description: res.msg,
+          status: 'error',
+        });
+        throw new Error('Sponsor check failed');
+      }
+    } catch (e: any) {
+      toast({
+        title: 'Sponsor check failed',
+        description: e.response.data.data.message,
+        status: 'error',
+        duration: 5000,
+      });
+      throw new Error('Sponsor check failed');
     }
 
+    if (res.data && res.data.paymasterData) {
+      userOp = {
+        ...userOp,
+        ...res.data,
+      };
+    }
+
+    return userOp;
+  };
+
+  const getGasPrice = async () => {
+    try {
+      const res = await axios.post(chainConfig.bundlerUrl, {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'pimlico_getUserOperationGasPrice',
+        params: [],
+      });
+
+      console.log('pricessss', res);
+
+      if (res.data.result.fast) {
+        return res.data.result.fast;
+      } else {
+        throw new Error('Failed to get gas price');
+      }
+    } catch {
+      throw new Error('Failed to get gas price');
+    }
+  };
+
+  const signAndSend = async (userOp: UserOperation) => {
     const validAfter = Math.floor(Date.now() / 1000 - 300);
     const validUntil = validAfter + 3600;
-    // const validAfter = '0';
-    // const validUntil = '0';
 
     const packedUserOpHashRet = await soulWallet.packUserOpHash(userOp, validAfter, validUntil);
 
@@ -256,32 +305,27 @@ export default function useWallet() {
     }
     const packedUserOpHash = packedUserOpHashRet.OK;
 
-    console.log('selected key type', selectedKeyType);
+    userOp.signature = await getPasskeySignature(packedUserOpHash.packedUserOpHash, packedUserOpHash.validationData);
 
-    if (selectedKeyType === SignkeyType.EOA) {
-      userOp.signature = await getEoaSignature(packedUserOpHash.packedUserOpHash, packedUserOpHash.validationData);
-    } else if (selectedKeyType === SignkeyType.P256 || selectedKeyType === SignkeyType.RS256) {
-      userOp.signature = await getPasskeySignature(packedUserOpHash.packedUserOpHash, packedUserOpHash.validationData);
-    } else {
-      console.error('No sign key type selected');
+    try {
+      return await executeTransaction(userOp, chainConfig);
+    } catch (err) {
+      toast({
+        title: 'Transaction failed',
+        status: 'error',
+        description: String(err),
+      });
+      throw new Error(String(err));
     }
-
-    return await executeTransaction(userOp, chainConfig);
   };
 
   const signRawHash = async (hash: string) => {
-    const selectedKeyType = getSelectedKeyType();
-
     const packed1271HashRet = await soulWallet.getEIP1271TypedData(selectedAddress, hash);
     const packedHashRet = await soulWallet.packRawHash(packed1271HashRet.OK.typedMessage);
 
     let signature;
 
-    if (selectedKeyType === SignkeyType.EOA) {
-      signature = await getEoaSignature(packedHashRet.OK.packedHash, packedHashRet.OK.validationData);
-    } else if (selectedKeyType === SignkeyType.P256 || selectedKeyType === SignkeyType.RS256) {
-      signature = await getPasskeySignature(packedHashRet.OK.packedHash, packedHashRet.OK.validationData);
-    }
+    signature = await getPasskeySignature(packedHashRet.OK.packedHash, packedHashRet.OK.validationData);
     return signature;
   };
 
@@ -290,128 +334,15 @@ export default function useWallet() {
     return await signByPasskey(selectedCredential, hash);
   };
 
-  const signWithEoa = async (hash: any) => {
-    return await signMessageAsync({
-      message: {
-        raw: hash,
-      },
-    });
-  };
-
-  const retrieveSlotInfo = (initInfo: any) => {
-    // set slot info
-    const initialKeysAddress = L1KeyStore.initialKeysToAddress(initInfo.initialKeys);
-    const initialKeyHash = L1KeyStore.getKeyHash(initialKeysAddress);
-
-    setSlotInfo({
-      initialKeys: initInfo.initialKeys,
-      initialKeyHash,
-      initialKeysAddress,
-      slot: initInfo.slot,
-      initialGuardianHash: initInfo.slotInitInfo.initialGuardianHash,
-      initialGuardianSafePeriod: initInfo.slotInitInfo.initialGuardianSafePeriod,
-    });
-  };
-
-  // will be executed only once after recover process finished
-  const boostAfterRecovered = async (_recoverInfo: any) => {
-    retrieveSlotInfo({
-      ..._recoverInfo,
-      initialKeys: _recoverInfo.initialKeysAddress,
-    });
-    const addressList = _recoverInfo.recoveryRecord.addresses.map((item: any) => ({
-      address: item.address,
-      chainIdHex: item.chain_id,
-    }));
-    console.log('yoooo', addressList);
-    setAddressList(addressList);
-    const credentialsInStore = _recoverInfo.signers.filter((signer: any) => signer.type === 'passkey');
-    const eoasInStore = _recoverInfo.signers.filter((signer: any) => signer.type === 'eoa');
-    if (credentialsInStore.length) setCredentials(credentialsInStore);
-    if (eoasInStore.length) setEoas(eoasInStore.map((signer: any) => signer.signerId));
-    // set mainnet if no selected chainId
-    setSelectedChainId(import.meta.env.VITE_MAINNET_CHAIN_ID);
-
-    updateGuardiansInfo({
-      guardianDetails: _recoverInfo.guardianDetails,
-      guardianHash: _recoverInfo.guardianHash,
-      guardianNames: _recoverInfo.guardianNames,
-      keystore: _recoverInfo.keystore,
-      slot: _recoverInfo.slot,
-    });
-
-    const res = await api.operation.finishStep({
-      slot: _recoverInfo.slot,
-      steps: [5],
-    });
-
-    setFinishedSteps(res.data.finishedSteps);
-
-    // set new signerIds and remove old ones
-    const credentialIds = credentialsInStore.map((item: any) => item.id);
-    const eoaIds = eoasInStore.map((item: any) => item.address);
-
-    const chainIdAddress = addressList.reduce((obj: any, item: any) => {
-      return {
-        ...obj,
-        [item.chainIdHex]: item.address,
-      };
-    }, {});
-
-    const newSignerIds = [...credentialIds, ...eoaIds].filter((item) => item);
-    // set new signerIdAddress
-    newSignerIds.forEach((item) => {
-      setSignerIdAddress(item, chainIdAddress);
-    });
-
-    updateRecoverInfo({
-      enabled: true,
-    });
-  };
-
-  const checkRecoverStatus = async (_recoverInfo: any) => {
-    const { recoveryRecordID } = _recoverInfo;
-    if (!recoveryRecordID) {
-      return;
-    }
-
-    const res = (await api.guardian.getRecoverRecord({ recoveryRecordID })).data;
-    updateRecoverInfo({
-      recoveryRecord: res,
-    });
-
-    // check if should replace key
-    if (res.status >= 3) {
-      if (!_recoverInfo.enabled) {
-        await boostAfterRecovered(_recoverInfo);
-      }
-    }
-
-    // recover process finished
-    if (res.status === 4) {
-      setRecoverInfo({});
-    }
-
-    const chainRecoverStatus = res.statusData.chainRecoveryStatus;
-    for (let item of chainRecoverStatus) {
-      const addressToSet = getWalletAddress(item.chainId, res.addresses);
-      updateAddressItem(addressToSet, {
-        recovering: item.status === 0,
-      });
-    }
-  };
-
   return {
-    createWallet,
+    loginWallet,
     addPaymasterData,
     getActivateOp,
-    getSetGuardianCalldata,
     signAndSend,
     signRawHash,
     signWithPasskey,
-    signWithEoa,
-    retrieveSlotInfo,
-    boostAfterRecovered,
-    checkRecoverStatus,
+    logoutWallet,
+    getSponsor,
+    initWallet,
   };
 }

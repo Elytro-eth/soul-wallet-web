@@ -79,7 +79,6 @@ export default function SignMessage({ messageToSign, onSign, signType, guardians
   const { signTypedDataAsync, signTypedData } = useSignTypedData();
   const { signRawHash, signWithPasskey } = useWallet();
   const { getSelectedKeyType } = useSignerStore();
-  const { checkValidSigner } = useTools();
   const [showMore, setShowMore] = useState(guardiansInfo ? false : true);
   const [isActivated, setIsActivated] = useState(false);
   const [targetChainId, setTargetChainId] = useState<undefined | number>();
@@ -87,9 +86,6 @@ export default function SignMessage({ messageToSign, onSign, signType, guardians
   const { connectEOA, isConnected, isConnectOpen, openConnect, closeConnect, chainId } = useWagmi();
 
   const onConfirm = async () => {
-    if (!checkValidSigner()) {
-      return;
-    }
     try {
       let signHash;
       let signature;

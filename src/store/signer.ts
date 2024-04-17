@@ -5,14 +5,11 @@ import { SignkeyType } from '@soulwallet/sdk';
 
 export interface ISignerStore {
   signerId: string;
+  selectedKeyType: SignkeyType;
   setSignerId: (signerId: string) => void;
-  eoas: string[];
-  addEoa: (eoa: string) => void;
-  setEoas: (eoas: string[]) => void;
   credentials: ICredentialItem[];
   getSelectedKeyType: () => SignkeyType;
   getSelectedCredential: () => void;
-  addCredential: (credential: ICredentialItem) => void;
   setCredentials: (credentials: ICredentialItem[]) => void;
   changeCredentialName: (credentialId: string, name: string) => void;
   clearSigners: () => void;
@@ -33,52 +30,29 @@ export const getIndexByCredentialId = (credentials: ICredentialItem[], id: strin
 const createCredentialSlice = immer<ISignerStore>((set, get) => ({
   // eoa address, credential id
   signerId: '',
+  selectedKeyType: SignkeyType.P256,
   setSignerId: (signerId: string) => {
     set({
       signerId,
     });
   },
-  eoas: [],
-  addEoa: (eoa: string) => {
-    set((state) => {
-      state.eoas.push(eoa);
-    });
-  },
-  setEoas: (eoas: string[]) => {
-    console.log('setEOAs', eoas);
-    set((state) => {
-      if (eoas.length > 0) {
-        state.eoas = eoas;
-        state.signerId = eoas[0];
-      }
-    });
-  },
   credentials: [],
   getSelectedKeyType: () => {
-    if (get().eoas.includes(get().signerId)) {
-      return SignkeyType.EOA;
-    } else {
-      const index = getIndexByCredentialId(get().credentials, get().signerId);
-      const algorithm = get().credentials[index].algorithm;
-      return algorithm === 'ES256' ? SignkeyType.P256 : SignkeyType.RS256;
-    }
-  },
-  addCredential: (credential: ICredentialItem) => {
-    set((state) => {
-      state.credentials.push(credential);
-    });
+    const index = getIndexByCredentialId(get().credentials, get().signerId);
+    const algorithm = get().credentials[index].algorithm;
+    return algorithm === 'ES256' ? SignkeyType.P256 : SignkeyType.RS256;
   },
   setCredentials: (credentials: ICredentialItem[]) => {
     set((state) => {
       state.credentials = credentials;
       // set the first one as default
       state.signerId = credentials[0].id;
+      state.selectedKeyType = credentials[0].algorithm === 'ES256' ? SignkeyType.P256 : SignkeyType.RS256;
     });
   },
   clearSigners: () => {
     set((state) => {
       state.credentials = [];
-      state.eoas = [];
       state.signerId = '';
     });
   },

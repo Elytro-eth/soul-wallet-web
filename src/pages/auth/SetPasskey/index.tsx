@@ -9,28 +9,20 @@ import {
 } from '@chakra-ui/react';
 import RoundContainer from '@/components/new/RoundContainer'
 import Heading from '@/components/new/Heading'
-import Title from '@/components/new/Title'
 import TextBody from '@/components/new/TextBody'
 import Button from '@/components/Button'
 import PlusIcon from '@/components/Icons/Plus';
 import ComputerIcon from '@/components/Icons/Computer';
-import RedCheckIcon from '@/components/Icons/RedCheck'
 import usePassKey from '@/hooks/usePasskey';
-import { useTempStore } from '@/store/temp';
-import { passkeyTooltipText } from '@/config/constants';
-import QuestionIcon from '@/components/Icons/Auth/Question'
 import { SignHeader } from '@/pages/public/Sign';
 
-export default function SetPasskey({ back, next: nextStep }: any) {
-  const { createInfo, updateCreateInfo, setDoneAuth } = useTempStore()
+export default function SetPasskey({ back, walletName, next: nextStep,  }: any) {
   const [credentials, setCredentials] = useState<any>([])
   const { register } = usePassKey()
   const toast = useToast();
   const [isCreating, setIsCreating] = useState(false);
-  const { navigate } = useBrowser();
-  console.log('create info', createInfo)
 
-  const createWallet = async () => {
+  const createCredential = async () => {
     try {
       setIsCreating(true);
       const credentialKey = await register();
@@ -53,25 +45,6 @@ export default function SetPasskey({ back, next: nextStep }: any) {
     }
   }
 
-  const skip = useCallback(() => {
-    console.log('skip')
-    setDoneAuth(true);
-    navigate(`/dashboard`);
-  }, [])
-
-  const next = useCallback(() => {
-    updateCreateInfo({
-      credentials
-    })
-    setDoneAuth(true);
-    nextStep()
-  }, [credentials])
-
-  useEffect(() => {
-    /* updateCreateInfo({
-     *   credentials
-     * }) */
-  }, [credentials])
 
   return (
     <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
@@ -149,7 +122,7 @@ export default function SetPasskey({ back, next: nextStep }: any) {
               width="100%"
               marginBottom="2px"
             >
-              {`Set up passkey for < Wallet_1 >`}
+              {`Set up passkey for < ${walletName} >`}
             </Heading>
             <TextBody
               fontWeight="400"
@@ -196,7 +169,7 @@ export default function SetPasskey({ back, next: nextStep }: any) {
                 type="white"
                 disabled={isCreating}
                 loading={isCreating}
-                onClick={createWallet}
+                onClick={createCredential}
                 size="lg"
                 height="48px"
                 borderWidth="0"

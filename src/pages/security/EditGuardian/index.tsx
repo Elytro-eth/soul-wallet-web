@@ -70,16 +70,11 @@ export default function EditGuardian({
   const guardiansInfo = getEditingGuardiansInfo();
   const { listOwner } = useWalletContract();
   const [keepPrivate, setKeepPrivate] = useState(!!guardiansInfo?.keepPrivate);
-  const { createWallet } = useWallet();
   const [isCreating, setIsCreating] = useState(false);
-  const { chainConfig } = useConfig();
   const guardianStore = useGuardianStore();
   const [showGuardianTip1, setShowGuardianTip1] = useState(true);
   const [showGuardianTip2, setShowGuardianTip2] = useState(true);
   const { slotInfo, getSlotInfo } = useSlotStore();
-  const { credentials, eoas } = useSignerStore();
-  const { showConfirmPayment, checkActivated } = useWalletContext();
-  const { payTask } = useTransaction();
   const toast = useToast();
 
   const guardianDetails = guardiansInfo?.guardianDetails || {
@@ -157,10 +152,10 @@ export default function EditGuardian({
         if (!keepPrivate) await api.guardian.backupGuardians(guardiansInfo);
 
         const initialGuardianSafePeriod = defaultGuardianSafePeriod;
-        await createWallet({
-          initialGuardianHash: newGuardianHash,
-          initialGuardianSafePeriod,
-        });
+        // await createWallet({
+        //   initialGuardianHash: newGuardianHash,
+        //   initialGuardianSafePeriod,
+        // });
 
         // guardianStore()
         console.log('keepPrivate', keepPrivate);
@@ -214,23 +209,19 @@ export default function EditGuardian({
         const { initialKeys, initialKeyHash, initialGuardianHash, initialGuardianSafePeriod } = slotInfo;
 
         let rawKeys;
-        if (await checkActivated()) {
-          const owners: any = await listOwner();
-          rawKeys = new ethers.AbiCoder().encode(
-            ['bytes32[]'],
-            [
-              Object.values(owners).sort((a: any, b: any) => {
-                return parseInt(a, 16) - parseInt(b, 16);
-              }),
-            ],
-          );
-        } else {
-          // const currentKeys = L1KeyStore.initialKeysToAddress([
-          //   ...credentials.map((credential: any) => credential.publicKey),
-          //   ...eoas,
-          // ]);
-          // rawKeys = new ethers.AbiCoder().encode(['bytes32[]'], [currentKeys]);
-        }
+        // if (await checkActivated()) {
+        //   const owners: any = await listOwner();
+        //   rawKeys = new ethers.AbiCoder().encode(
+        //     ['bytes32[]'],
+        //     [
+        //       Object.values(owners).sort((a: any, b: any) => {
+        //         return parseInt(a, 16) - parseInt(b, 16);
+        //       }),
+        //     ],
+        //   );
+        // } else {
+      
+        // }
 
         /* const { keySignature } = await getReplaceGuardianInfo(newGuardianHash, guardiansInfo);
 

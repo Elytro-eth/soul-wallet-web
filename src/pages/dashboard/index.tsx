@@ -2,8 +2,6 @@ import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import Tokens from './comp/Tokens';
 import Activity from './comp/Activity';
 import WalletCard from './comp/WalletCard';
-import DappList from '@/components/DappList';
-import Guidance from './comp/Guidance';
 
 export default function Dashboard() {
   return (
@@ -15,7 +13,6 @@ export default function Dashboard() {
     >
       <Flex w={{ base: '100%', lg: '40%' }} h={{ lg: '100%' }} flexDir={'column'} justify={'center'} align={'center'}>
         <WalletCard />
-        <Guidance />
         <Activity />
       </Flex>
       <Flex

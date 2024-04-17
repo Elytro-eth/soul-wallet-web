@@ -20,7 +20,6 @@ import { toFixed } from '@/lib/tools';
 export default function WalletCard() {
   const { showSend, showReceive } = useWalletContext();
   const [hoverIndex, setHoverIndex] = useState(-1);
-  const { checkInitialized } = useTools();
   const { selectedAddress } = useAddressStore();
   const { totalUsdValue } = useBalanceStore();
   const { chainConfig } = useConfig();
@@ -97,7 +96,7 @@ export default function WalletCard() {
                 ? {}
                 : {
                     onClick: () => {
-                      checkInitialized(true) ? item.onClick() : undefined;
+                      item.onClick();
                     },
                   })}
             >

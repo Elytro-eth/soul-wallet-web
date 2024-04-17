@@ -34,7 +34,7 @@ const SignerItem = ({
   );
 };
 export default function SignerSelect({ onChange }: { onChange?: () => void }) {
-  const { getSelectedKeyType, signerId, setSignerId, eoas, credentials } = useSignerStore();
+  const { getSelectedKeyType, signerId, setSignerId, credentials } = useSignerStore();
 
   const onSelect = (_signerId: string, _signerType: any) => {
     if (onChange) {
@@ -57,26 +57,6 @@ export default function SignerSelect({ onChange }: { onChange?: () => void }) {
         </DropdownSelect>
       </MenuButton>
       <MenuList p="4">
-        {eoas.length > 0 ? (
-          <>
-            <Text fontWeight={'700'} mb="5" lineHeight={'1'}>
-              EOA wallet
-            </Text>
-            {eoas.map((item) => (
-              <MenuItem p="0" bg="none !important" key={item}>
-                <SignerItem
-                  title={toShortAddress(item)}
-                  checked={signerId === item}
-                  onClick={() => onSelect(item, SignkeyType.EOA)}
-                  type="wallet"
-                />
-              </MenuItem>
-            ))}
-          </>
-        ) : null}
-
-        {eoas.length && availableCredentials.length ? <Box bg="rgba(0, 0, 0, 0.05)" h="1px" my="5" /> : null}
-
         {availableCredentials.length > 0 ? (
           <>
             <Text fontWeight={'700'} mb="5" lineHeight={'1'}>

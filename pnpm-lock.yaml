@@ -36,8 +36,8 @@ dependencies:
     specifier: ^0.3.0
     version: 0.3.0
   '@soulwallet/sdk':
-    specifier: ^0.3.2
-    version: 0.3.2
+    specifier: ^0.3.3
+    version: 0.3.3
   '@tanstack/react-query':
     specifier: ^5.17.9
     version: 5.27.5(react@18.2.0)
@@ -329,7 +329,7 @@ packages:
     dependencies:
       '@babel/core': 7.24.4
       '@babel/helper-environment-visitor': 7.22.20
-      '@babel/helper-module-imports': 7.22.15
+      '@babel/helper-module-imports': 7.24.3
       '@babel/helper-simple-access': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/helper-validator-identifier': 7.22.20
@@ -1280,7 +1280,7 @@ packages:
     dependencies:
       '@babel/core': 7.24.4
       '@babel/helper-annotate-as-pure': 7.22.5
-      '@babel/helper-module-imports': 7.22.15
+      '@babel/helper-module-imports': 7.24.3
       '@babel/helper-plugin-utils': 7.24.0
       '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.4)
       '@babel/types': 7.24.0
@@ -1589,7 +1589,7 @@ packages:
     resolution: {integrity: sha512-Bkf2q8lMB0AFpX0NFEqSbx1OkTHf0f+0j82mkw+ZpzBnkk7e9Ql0891vlfgi+kHwOk8tQjiQHpqh4LaSa0fKEA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/code-frame': 7.23.5
+      '@babel/code-frame': 7.24.2
       '@babel/parser': 7.24.4
       '@babel/types': 7.24.0
     dev: false
@@ -4236,8 +4236,8 @@ packages:
     resolution: {integrity: sha512-ggaCj+ySvndHEE7LojzGktqDzcW1exp3xaprWwly1T4+HjzD7PCuPC6hb22sBdDFdkVTn1nK/1TkKEiSw5fnIw==}
     dev: false
 
-  /@soulwallet/sdk@0.3.2:
-    resolution: {integrity: sha512-UyXds7HoTzVhVQDDq3Vh5+ruOo7v0a0DUclyqqN5GKv88nNHxQfNJjCEW4b8mB+NycZ7ka5vNNaQX+VBp6+KrQ==}
+  /@soulwallet/sdk@0.3.3:
+    resolution: {integrity: sha512-zsnghVflw09CJOXz6ZJ6KQBj5powz4GOfhGef3XdEUdYsuJs9BJLNe/yVrvWtFs+UYBEqYosrvEbiDUhD9o2hg==}
     dependencies:
       '@soulwallet/abi': 0.3.0
       '@soulwallet/result': 0.2.0
@@ -7339,7 +7339,7 @@ packages:
     resolution: {integrity: sha512-GBEV4GRADeP+qtB2+6u61stea8mGcOT4mCtrYISZwfu9/ISHFJ/5zOMXYbpBE9RsS5+Gb63DW4FgmnKJ79Kf6w==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@babel/code-frame': 7.23.5
+      '@babel/code-frame': 7.24.2
       '@jest/types': 29.6.3
       '@types/stack-utils': 2.0.3
       chalk: 4.1.2
@@ -7937,7 +7937,7 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@babel/code-frame': 7.23.5
+      '@babel/code-frame': 7.24.2
       '@babel/core': 7.24.4
       '@babel/generator': 7.24.4
       '@babel/parser': 7.24.4
@@ -8951,7 +8951,7 @@ packages:
     dependencies:
       object-assign: 4.1.1
       react: 18.2.0
-      react-is: 16.13.1
+      react-is: 18.2.0
     dev: false
 
   /react-style-singleton@2.2.1(@types/react@18.2.21)(react@18.2.0):

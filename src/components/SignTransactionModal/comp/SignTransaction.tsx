@@ -62,12 +62,11 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
   const [promiseInfo, setPromiseInfo] = useState<any>({});
   const [decodedData, setDecodedData] = useState<any>({});
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
-  const { checkValidSigner } = useTools();
   const [signing, setSigning] = useState<boolean>(false);
-  const { checkActivated, ethersProvider, showConnectWallet } = useWalletContext();
+  const { ethersProvider } = useWalletContext();
   const { getTokenBalance } = useBalanceStore();
   const [prechecked, setPrechecked] = useState(false);
-  const { getSelectedKeyType, eoas } = useSignerStore();
+  const { getSelectedKeyType } = useSignerStore();
   const [totalMsgValue, setTotalMsgValue] = useState('');
   const [payToken, setPayToken] = useState(ethers.ZeroAddress);
   const [payTokenSymbol, setPayTokenSymbol] = useState('');
@@ -76,7 +75,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
   const [activeOperation, setActiveOperation] = useState<UserOperation>();
   const [sponsor, setSponsor] = useState<any>(null);
   const { selectedChainId } = useChainStore();
-  const { toggleActivatedChain, selectedAddress } = useAddressStore();
+  const { selectedAddress } = useAddressStore();
   const { setFinishedSteps } = useSettingStore();
   const { slotInfo } = useSlotStore();
   const [useSponsor, setUseSponsor] = useState(true);
@@ -94,7 +93,8 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
 
   const checkSponser = async (userOp: UserOperation) => {
     // IMPORTANT TODO, simulate signature
-    userOp.signature = '0xaf2a5bcc4c10b5289946daaa87caa467f3abadcc0000006201000065f2af9f000065f2bdaf0000000000000000000000000000000000000000a1da5b66f8c211583e706136bee9ab6f1ff43878b885620a8a16b0af5d52cf2c29ffdaf22944306a12f06fdcc41f11ff0f964160ce1f35140d039000301c345d1b';
+    userOp.signature =
+      '0xaf2a5bcc4c10b5289946daaa87caa467f3abadcc0000006201000065f2af9f000065f2bdaf0000000000000000000000000000000000000000a1da5b66f8c211583e706136bee9ab6f1ff43878b885620a8a16b0af5d52cf2c29ffdaf22944306a12f06fdcc41f11ff0f964160ce1f35140d039000301c345d1b';
     try {
       const res = await api.sponsor.check(
         selectedChainId,
@@ -125,9 +125,6 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
 
   const onConfirm = async () => {
     try {
-      if (!checkValidSigner()) {
-        return;
-      }
       setSigning(true);
       let userOp: any;
       if (sponsor && useSponsor && sponsor.paymasterData) {
@@ -136,13 +133,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
         userOp = activeOperation;
       }
 
-      const receipt = await signAndSend(userOp, payToken);
-
-      // IMPORTANT TODO, get these params from receipt
-      // if first tx is completed, then it's activated
-      if (!checkActivated()) {
-        toggleActivatedChain(userOp.sender, selectedChainId);
-      }
+      const receipt = await signAndSend(userOp);
 
       toast({
         title: 'Transaction success.',
@@ -202,14 +193,15 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
 
   const getFinalUserOp = async (txns: any, payTokenAddress: string) => {
     try {
-      const isActivated = await checkActivated();
+      // IMPORTANT TODO
+      const isActivated = true;
       console.log('is Activated?', isActivated);
       if (isActivated) {
         // if activated, get userOp directly
         return await getUserOp(txns, payTokenAddress);
       } else {
         // if not activated, prepend activate txns
-        return await getActivateOp(0, payToken, txns);
+        return await getActivateOp(0);
       }
     } catch (err: any) {
       console.log('Get final userOp err:', err.message);

@@ -30,13 +30,12 @@ const ExtraLink = ({ children, ...restProps }: FlexProps) => {
 
 export default function Sidebar() {
   const location = useLocation();
-  const { finishedSteps, claimableCount, setClaimableCount } = useSettingStore();
+  const { setClaimableCount } = useSettingStore();
   const { selectedAddress } = useAddressStore();
   const { selectedChainId } = useChainStore();
   const { showFeedback } = useWalletContext();
   const [navHoverIndex, setNavHoverIndex] = useState(-1);
   const [externalHoverIndex, setExternalHoverIndex] = useState(-1);
-  const { checkInitialized } = useTools();
   const pathname = location.pathname;
 
   const checkClaimable = async () => {
@@ -77,8 +76,7 @@ export default function Sidebar() {
               <Flex
                 onMouseEnter={() => setNavHoverIndex(index)}
                 onMouseLeave={() => setNavHoverIndex(-1)}
-                {...(link.isComing || !checkInitialized() ? {} : { as: Link, to: link.href, cursor: 'pointer' })}
-                {...(checkInitialized() ? {} : { onClick: () => checkInitialized(true) })}
+                {...(link.isComing ? {} : { as: Link, to: link.href, cursor: 'pointer' })}
                 gap={{ base: 1, lg: 2 }}
                 align={'center'}
               >

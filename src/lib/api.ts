@@ -27,13 +27,8 @@ const notification = {
 };
 
 const account = {
-  add: (params: any) => axio.post('/add-account', params),
-  update: (params: any) => axio.post('/update-account', params),
-  verifyEmail: (params: any) => axio.post('/verify-email', params),
-  recover: (params: any) => axio.post('/add-recovery-record', params),
-  isWalletOwner: (params: any) => axio.post('/is-wallet-owner', params),
-  getWalletAddress: (params: any) => axio.post('/get-wallet-address', params),
-  finishRecoveryRecord: (params: any) => axio.post('/finish-recovery-record', params),
+  create: (params: any) => axio.post('/account/create', params),
+  list: (params: any) => axio.post('/account/list', params),
 };
 
 const guardian = {

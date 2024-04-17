@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Box, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import ChainSelectMultiple from '@/components/ChainSelectMultiple';
-import { useChainStore } from '@/store/chain';
 import ActivityTable from './comp/ActivityTable';
 import IconChevronDown from '@/assets/icons/chevron-down-black.svg';
 
@@ -83,9 +81,7 @@ export default function Activity() {
       <Flex px="6" justify={'space-between'} mb="3">
         <Flex gap="8">
           <FilterMenu active={activeStatus} list={statusList} />
-          {/* <FilterMenu active={activeTypes} list={typesList} /> */}
         </Flex>
-        {/* <ChainSelectMultiple activeChains={activeChains} onChange={setActiveChains} /> */}
       </Flex>
 
       <Box rounded="20px" bg="#fff" py="6px" px={{base: "16px", lg: "26px"}}>

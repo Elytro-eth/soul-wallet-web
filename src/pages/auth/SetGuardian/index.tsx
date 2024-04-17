@@ -15,27 +15,11 @@ import RoundContainer from '@/components/new/RoundContainer'
 import Heading from '@/components/new/Heading'
 import TextBody from '@/components/new/TextBody'
 import Button from '@/components/Button'
-import { useSignerStore } from '@/store/signer';
-import { useTempStore } from '@/store/temp';
 import { SignHeader } from '@/pages/public/Sign';
-import IconEth from '@/assets/chains/eth.svg';
-import IconChevron from '@/assets/icons/chevron-down-gray.svg';
 import DropDownIcon from '@/components/Icons/DropDown';
 import EditGuardianForm from './EditGuardianForm'
 
-export default function SetGuardian({ back }: any) {
-  const [name, setName] = useState('')
-  const {
-    credentials,
-  } = useSignerStore();
-  console.log('create', credentials)
-
-  const onNameChange = useCallback((e: any) => {
-    const name = e.target.value
-    console.log('name', name)
-    setName(name)
-  }, [])
-
+export default function SetGuardian({walletName, back, onCreate }: any) {
   return (
     <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
       <SignHeader />
@@ -112,7 +96,7 @@ export default function SetGuardian({ back }: any) {
                 width="100%"
                 marginBottom="2px"
               >
-                {`Setup guardians for < Wallet_1 >`}
+                {`Setup guardians for < ${walletName} >`}
               </Heading>
               <TextBody
                 fontWeight="400"
@@ -121,7 +105,7 @@ export default function SetGuardian({ back }: any) {
                 Get protected with social recovery once you lost the wallet
               </TextBody>
               <Box marginTop="35px" width="100%">
-                <EditGuardianForm onConfirm={() => {}} canGoBack={false} canConfirm={false} editType={'add'} />
+                <EditGuardianForm onConfirm={(v:any) => {console.log(v)}} canGoBack={false} canConfirm={false} editType={'add'} />
               </Box>
               <Box
                 background="white"
@@ -216,7 +200,7 @@ export default function SetGuardian({ back }: any) {
                     type="black"
                     color="white"
                     padding="0 20px"
-                    onClick={() => {}}
+                    onClick={onCreate}
                     size="lg"
                   >
                     Done

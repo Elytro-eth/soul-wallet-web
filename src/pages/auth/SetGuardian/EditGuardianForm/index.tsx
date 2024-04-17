@@ -156,7 +156,6 @@ export default function GuardianForm({
   const [guardiansList, setGuardiansList] = useState([]);
   const [amountData, setAmountData] = useState<any>({});
   const [loading, setLoading] = useState(false);
-  const { eoas } = useSignerStore();
   const [showAdvance, setShowAdvance] = useState(false)
   const [keepPrivate, setKeepPrivate] = useState(!!guardiansInfo?.keepPrivate)
   const [status, setStatus] = useState<string>('editing');
@@ -168,24 +167,13 @@ export default function GuardianForm({
     for (const addressKey of addressKeys) {
       const address = values[addressKey];
 
-      if (eoas.indexOf(address) !== -1) {
-        errors[addressKey] = 'Can not use signer as guardian';
-      } else if (editType === 'add') {
-        const editingGuardiansInfo = getEditingGuardiansInfo()
-        const guardians = (editingGuardiansInfo && editingGuardiansInfo.guardianDetails) ? (editingGuardiansInfo.guardianDetails.guardians || []) : []
-
-        if (guardians.map((address: any) => toLowerCase(address)).filter((address: any) => !!address).indexOf(toLowerCase(address)) !== -1) {
-          errors[addressKey] = 'Address already in use';
-        }
-      }
-
       if (createInfo && createInfo.eoaAddress && createInfo.eoaAddress.map((address: any) => toLowerCase(address)).filter((address: any) => !!address).indexOf(toLowerCase(address)) !== -1) {
         errors[addressKey] = 'This address is already been used as signer.';
       }
     }
 
     return errors
-  }, [editType, eoas, createInfo.eoaAddress])
+  }, [editType, createInfo.eoaAddress])
 
   const { values, errors, invalid, onChange, onBlur, showErrors, addFields, removeFields, onChangeValues } = useForm({
     fields,

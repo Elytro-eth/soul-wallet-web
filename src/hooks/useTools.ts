@@ -5,7 +5,6 @@ import { useToast } from '@chakra-ui/react';
 import { useSignerStore } from '@/store/signer';
 import { useAddressStore } from '@/store/address';
 import useBrowser from './useBrowser';
-import { SignkeyType } from '@soulwallet/sdk';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import { useGuardianStore } from '@/store/guardian';
 import { useBalanceStore } from '@/store/balance';
@@ -14,14 +13,12 @@ import { useChainStore } from '@/store/chain';
 import { useSlotStore } from '@/store/slot';
 import { useSettingStore } from '@/store/setting';
 import { useTempStore } from '@/store/temp';
-import { useAccount } from 'wagmi';
 
 export default function useTools() {
   const toast = useToast();
-    const { showSetGuardianHintModal, showActiveWalletModal, showLogout } = useWalletContext();
-  const { clearSigners, getSelectedKeyType, eoas } = useSignerStore();
+    const { showActiveWalletModal, showLogout } = useWalletContext();
+  const { clearSigners } = useSignerStore();
   const { clearAddresses } = useAddressStore();
-  const { address } = useAccount();
   const { clearGuardianInfo } = useGuardianStore();
   const { clearBalance } = useBalanceStore();
   const { clearHistory } = useHistoryStore();
@@ -31,43 +28,6 @@ export default function useTools() {
   const { getAddressName, saveAddressName } = useSettingStore();
     const { showClaimAssets, showSend } = useWalletContext();
   const { navigate } = useBrowser();
-
-  const checkValidSigner = () => {
-    // check eoa
-    if (getSelectedKeyType() === SignkeyType.EOA) {
-      if (!address) {
-        toast({
-          title: 'Please connect your wallet first.',
-          status: 'error',
-          duration: 5000,
-        });
-        return false;
-      }
-      if (eoas.some((item: string) => item.toLowerCase() === address?.toLowerCase())) {
-        return true;
-      } else {
-        toast({
-          title: 'The signer address you connected is not listed in the wallet signer list.',
-          status: 'error',
-          duration: 5000,
-        });
-        return false;
-      }
-    } else {
-      // check passkey
-      return true;
-    }
-  };
-
-  const checkInitialized = (showHintModal = false) => {
-    if (!slotInfo.initialGuardianHash) {
-      if (showHintModal) {
-        showSetGuardianHintModal();
-      }
-      return false;
-    }
-    return true;
-  };
 
   const getWalletName = () => {
     return getAddressName(slotInfo.slot);
@@ -191,7 +151,6 @@ export default function useTools() {
   };
 
   return {
-    checkValidSigner,
     verifyAddressFormat,
     downloadJsonFile,
     emailJsonFile,
@@ -204,6 +163,5 @@ export default function useTools() {
     goGuideAction,
     getWalletName,
     setWalletName,
-    checkInitialized,
   };
 }

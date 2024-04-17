@@ -38,7 +38,6 @@ const validate = (values: any, props: any = {}, callbackRef: any) => {
   const addressKeys = Object.keys(values).filter((key) => key.indexOf('address') === 0);
   const nameKeys = Object.keys(values).filter((key) => key.indexOf('name') === 0);
   const existedAddress = [];
-  const { editType, eoas, getEditingGuardiansInfo } = props
 
   for (const addressKey of addressKeys) {
     const address = values[addressKey];
@@ -150,7 +149,6 @@ export default function GuardianForm({
   const [guardiansList, setGuardiansList] = useState([]);
   const [amountData, setAmountData] = useState<any>({});
   const [loading, setLoading] = useState(false);
-  const { eoas } = useSignerStore();
   const [showAdvance, setShowAdvance] = useState(false)
   const [keepPrivate, setKeepPrivate] = useState(!!guardiansInfo?.keepPrivate)
   const [status, setStatus] = useState<string>('editing');
@@ -162,9 +160,7 @@ export default function GuardianForm({
     for (const addressKey of addressKeys) {
       const address = values[addressKey];
 
-      if (eoas.indexOf(address) !== -1) {
-        errors[addressKey] = 'Can not use signer as guardian';
-      } else if (editType === 'add') {
+      if (editType === 'add') {
         const editingGuardiansInfo = getEditingGuardiansInfo()
         const guardians = (editingGuardiansInfo && editingGuardiansInfo.guardianDetails) ? (editingGuardiansInfo.guardianDetails.guardians || []) : []
 
@@ -179,7 +175,7 @@ export default function GuardianForm({
     }
 
     return errors
-  }, [editType, eoas, createInfo.eoaAddress])
+  }, [editType, createInfo.eoaAddress])
 
   const { values, errors, invalid, onChange, onBlur, showErrors, addFields, removeFields, onChangeValues } = useForm({
     fields,
