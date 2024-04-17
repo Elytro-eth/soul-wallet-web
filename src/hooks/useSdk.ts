@@ -14,8 +14,8 @@ export default function useSdk() {
       selectedChainItem.provider,
       selectedChainItem.bundlerUrl,
       selectedChainItem.contracts.soulWalletFactory,
-      selectedChainItem.contracts.defaultValidator,
       selectedChainItem.contracts.defaultCallbackHandler,
+      selectedChainItem.contracts.socialRecoveryModule,
     );
   }, [selectedChainId]);
 

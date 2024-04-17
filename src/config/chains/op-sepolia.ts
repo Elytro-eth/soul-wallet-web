@@ -31,9 +31,9 @@ export default {
   contracts: {
     soulWalletFactory: import.meta.env.VITE_SoulwalletFactory,
     defaultCallbackHandler: import.meta.env.VITE_DefaultCallbackHandler,
-    securityControlModule: import.meta.env.VITE_SecurityControlModule,
     entryPoint: import.meta.env.VITE_EntryPoint,
     paymaster: import.meta.env.VITE_Paymaster,
     defaultValidator: import.meta.env.VITE_SoulWalletDefaultValidator,
+    socialRecoveryModule: import.meta.env.VITE_SocialRecoveryModule,
   },
 };

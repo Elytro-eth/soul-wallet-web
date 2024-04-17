@@ -105,7 +105,6 @@ export default function Auth() {
   }
 
   const onCreate = async(initialGuardianHash:string) => {
-    console.log('ccccc', credentials)
     const res = await initWallet(credentials, initialGuardianHash, walletName);
     console.log('res is', res)
     navigate('/dashboard')

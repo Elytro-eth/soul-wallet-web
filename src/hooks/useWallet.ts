@@ -24,10 +24,12 @@ import useBrowser from './useBrowser';
 import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
+import useWalletContext from '@/context/hooks/useWalletContext';
 
 export default function useWallet() {
   const { signByPasskey, authenticate } = usePasskey();
   const { chainConfig } = useConfig();
+  const { ethersProvider } = useWalletContext();
   const { setSlotInfo, slotInfo } = useSlotStore();
   const { selectedChainId, setSelectedChainId } = useChainStore();
   const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
@@ -89,13 +91,7 @@ export default function useWallet() {
     };
 
     // do time consuming jobs
-    const address = (
-      await soulWallet.calcWalletAddress(
-        createIndex,
-        initialKeys,
-        initialGuardianHash,
-      )
-    ).OK;
+    const address = (await soulWallet.calcWalletAddress(createIndex, initialKeys, initialGuardianHash)).OK;
 
     // const address2 = (
     //   await soulWallet.calcWalletAddress(
@@ -106,8 +102,6 @@ export default function useWallet() {
     //     selectedChainId,
     //   )
     // ).OK;
-
-    // console.log('ADDDR', address, address2)
 
     // setSelectedAddress(address);
     setAddressList([
@@ -181,7 +175,7 @@ export default function useWallet() {
 
     // userOp.callData = soulAbi.encodeFunctionData('executeBatch((address,uint256,bytes)[])', [executions]);
 
-    userOp.callData = '0x'
+    userOp.callData = '0x';
 
     userOp = await estimateGas(userOp, ZeroAddress);
 
@@ -192,7 +186,7 @@ export default function useWallet() {
 
     // userOp = await getSponsor(userOp);
 
-    console.log(userOp, 'userOp')
+    console.log(userOp, 'userOp');
 
     return userOp;
   };
@@ -220,9 +214,9 @@ export default function useWallet() {
   const estimateGas = async (userOp: any, payToken: string) => {
     // set 1559 fee
     // if (!userOp.maxFeePerGas || !userOp.maxPriorityFeePerGas) {
-      const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
-      userOp.maxFeePerGas = maxFeePerGas;
-      userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
+    const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
+    userOp.maxFeePerGas = maxFeePerGas;
+    userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
     // }
 
     // if (payToken && payToken !== ethers.ZeroAddress) {
@@ -230,7 +224,11 @@ export default function useWallet() {
     // }
 
     // get gas limit
-    const gasLimit = await soulWallet.estimateUserOperationGas(chainConfig.contracts.defaultValidator, userOp, selectedKeyType);
+    const gasLimit = await soulWallet.estimateUserOperationGas(
+      chainConfig.contracts.defaultValidator,
+      userOp,
+      selectedKeyType,
+    );
 
     if (gasLimit.isErr()) {
       throw new Error(gasLimit.ERR.message);
@@ -312,6 +310,14 @@ export default function useWallet() {
   };
 
   const getGasPrice = async () => {
+    // const res = await ethersProvider.getFeeData();
+    // console.log('rrr', res);
+
+    // return {
+    //   maxFeePerGas: `0x${BN(res.maxFeePerGas).toString(16)}`,
+    //   maxPriorityFeePerGas: `0x${BN(res.maxPriorityFeePerGas).toString(16)}`,
+    // };
+
     try {
       const res = await axios.post(chainConfig.bundlerUrl, {
         jsonrpc: '2.0',
