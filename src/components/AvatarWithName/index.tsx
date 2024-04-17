@@ -7,7 +7,6 @@ import Modal from '@/components/Modal';
 import useTools from '@/hooks/useTools';
 import Button from '@/components/Button';
 import { useAddressStore } from '@/store/address';
-import { useTempStore } from '@/store/temp';
 
 export const EditNameModal = ({
   defaultValue,
@@ -52,7 +51,6 @@ export default function AvatarWithName({ editable = false }: { editable: boolean
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   const walletName = getWalletName();
   const { selectedAddress } = useAddressStore();
-  const { createInfo } = useTempStore();
 
   const changeWalletName = (name: string) => {
     setWalletName(name);
@@ -63,7 +61,7 @@ export default function AvatarWithName({ editable = false }: { editable: boolean
         <Flex gap="2" align={'center'}>
           <AddressIcon address={selectedAddress} width={isLargerThan992 ? 32 : 24} />
           <Text fontWeight={'800'} fontSize={{ base: '14px', md: '16px', lg: '18px' }}>
-            {createInfo.walletName || walletName || 'Wallet'}
+            {walletName || 'Wallet'}
           </Text>
         </Flex>
         {editable && (

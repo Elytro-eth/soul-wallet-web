@@ -25,7 +25,7 @@ export default function SetPasskey({ back, walletName, next: nextStep,  }: any) 
   const createCredential = async () => {
     try {
       setIsCreating(true);
-      const credentialKey = await register();
+      const credentialKey = await register(walletName);
       setCredentials([...credentials, credentialKey])
       setIsCreating(false);
     } catch (error: any) {

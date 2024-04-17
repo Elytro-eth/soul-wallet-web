@@ -36,9 +36,6 @@ export default function AddSigner({ next, back }: any) {
   const [isConfirming, setIsConfirming] = useState<any>(false)
   const [isConnectOpen, setIsConnectOpen] = useState<any>(false)
   const toast = useToast();
-  const { isConnected } = useAccount();
-  const { connectAsync } = useConnect()
-  const { disconnectAsync } = useDisconnect()
   const { register } = usePassKey()
   const { updateRecoverInfo } = useTempStore()
   const { chainConfig } = useConfig();
@@ -58,23 +55,6 @@ export default function AddSigner({ next, back }: any) {
 
       toast({
         title: message,
-        status: 'error',
-      });
-    }
-  }, [signers])
-
-  const addEOA = useCallback(async (connector: any) => {
-    try {
-      if(isConnected){
-        await disconnectAsync()
-      }
-      const { accounts } = await connectAsync({ connector });
-      const eoa = accounts[0]
-      setSigners([...signers, { type: 'eoa', signerId: eoa }])
-      setIsConnectOpen(false)
-    } catch (error: any) {
-      toast({
-        title: error.message,
         status: 'error',
       });
     }
@@ -293,24 +273,6 @@ export default function AddSigner({ next, back }: any) {
                     fontSize="14px"
                     fontFamily="Nunito"
                     fontWeight="600"
-                    onClick={() => setIsConnectOpen(true)}
-                    borderBottom="1px solid #D0D5DD"
-                    height="48px"
-                  >
-                    <Box
-                      width="24px"
-                      height="24px"
-                      borderRadius="24px"
-                      marginRight="10px"
-                    >
-                      <EOASignerIcon />
-                    </Box>
-                    <Box>EOA Wallet</Box>
-                  </MenuItem>
-                  <MenuItem
-                    fontSize="14px"
-                    fontFamily="Nunito"
-                    fontWeight="600"
                     onClick={() => addCredential()}
                     height="48px"
                   >
@@ -353,7 +315,6 @@ export default function AddSigner({ next, back }: any) {
         </RoundContainer>
         <StepProgress activeIndex={1} />
       </Box>
-      <ConnectWalletModal isOpen={isConnectOpen} connectEOA={addEOA} onClose={() => setIsConnectOpen(false)} />
     </Flex>
   )
 }

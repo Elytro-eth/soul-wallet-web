@@ -22,7 +22,6 @@ import { SignHeader } from '../public/Sign';
 
 export default function Recover() {
   const [step, setStep] = useState(0)
-  const toast = useToast();
   const { navigate } = useBrowser();
   const { recoverInfo, updateRecoverInfo } = useTempStore()
   const { recoveryRecordID, recoveryRecord } = recoverInfo

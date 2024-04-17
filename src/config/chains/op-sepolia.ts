@@ -1,5 +1,5 @@
 /**
- * Arbitrum Sepolia
+ * OP Sepolia
  */
 
 import IconOpFaded from '@/assets/chains/op-faded.svg';
@@ -14,10 +14,9 @@ export default {
   cardBg: 'radial-gradient(52.03% 100% at 100% 100%, #FF9595 0%, #E2FC89 100%)',
   cardBgUnactivated: 'radial-gradient(52.03% 100% at 100% 100%, #FF9595 0%, #D7D7D7 100%)',
   provider: `https://sepolia.optimism.io`,
-  l1Provider: `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_KEY}`,
   scanUrl: 'https://sepolia-optimism.etherscan.io',
   scanName: 'Etherscan',
-  bundlerUrl: `https://api-dev.soulwallet.io/bundler/op-sepolia/rpc`,
+  bundlerUrl: `https://api-dev.soulwallet.io/walletapi/bundler/optimism-sepolia/rpc`,
   maxCostMultiplier: 120,
   chainId,
   chainIdHex: `0x${(chainId).toString(16)}`,

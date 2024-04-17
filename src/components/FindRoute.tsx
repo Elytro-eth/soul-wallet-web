@@ -10,14 +10,12 @@ import storage from '@/lib/storage';
 import { useLocation } from 'react-router-dom';
 import { storeVersion } from '@/config';
 import useTools from '@/hooks/useTools';
-import { useTempStore } from '@/store/temp';
 
 export default function FindRoute({ children }: { children: ReactNode }) {
   const { navigate } = useBrowser();
   const location = useLocation();
   const { addressList, selectedAddress } = useAddressStore();
   const { clearLogData } = useTools();
-  const { createInfo, doneAuth } = useTempStore();
 
   const findRoute = async () => {
     const storageVersion = storage.getItem('storeVersion');
@@ -34,9 +32,6 @@ export default function FindRoute({ children }: { children: ReactNode }) {
     }
 
     if (
-      // !createInfo.eoaAddress &&
-      // !(createInfo.credentials?.length > 0) &&
-      !doneAuth &&
       !selectedAddress &&
       !allowBypass
     ) {

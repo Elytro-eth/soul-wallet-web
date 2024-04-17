@@ -7,7 +7,7 @@ import {
   parseBase64url,
   arrayBufferToHex,
 } from '@/lib/tools';
-import { useTempStore } from '@/store/temp';
+import { useToast } from '@chakra-ui/react';
 import { client, server } from '@passwordless-id/webauthn';
 import { ECDSASigValue } from '@peculiar/asn1-ecc';
 import { AsnParser } from '@peculiar/asn1-schema';
@@ -24,7 +24,7 @@ const base64Tobase64url = (base64: string) => {
 };
 
 export default function usePasskey() {
-  const { createInfo } = useTempStore();
+  const toast = useToast();
   const decodeDER = (signature: string) => {
     const derSignature = base64ToBuffer(signature);
     const parsedSignature = AsnParser.parse(derSignature, ECDSASigValue);
@@ -68,7 +68,7 @@ export default function usePasskey() {
     return WebAuthN.publicKeyToKeyhash({
       x: `0x${Qx.toString(16).padStart(64, '0')}`,
       y: `0x${Qy.toString(16).padStart(64, '0')}`,
-    })
+    });
   };
 
   const getRS256Coordinates = async (credentialPublicKey: string) => {
@@ -93,7 +93,7 @@ export default function usePasskey() {
     return WebAuthN.publicKeyToKeyhash({
       e: arrayBufferToHex(parseBase64url(jwk.e)),
       n: arrayBufferToHex(parseBase64url(jwk.n)),
-    })
+    });
   };
 
   const getPublicKey = async (credential: any) => {
@@ -104,10 +104,10 @@ export default function usePasskey() {
     }
   };
 
-  const register = async () => {
+  const register = async (walletName: string = 'Wallet') => {
     const randomChallenge = btoa('1234567890');
     // const finalCredentialName = `${credentialName}_${getCurrentTimeFormatted()}`;
-    const finalCredentialName = `${createInfo.walletName || 'Wallet'}_${getCurrentTimeFormatted()}`;
+    const finalCredentialName = `${walletName}_${getCurrentTimeFormatted()}`;
     const registration = await client.register(finalCredentialName, randomChallenge, {
       authenticatorType: 'both',
     });
@@ -124,7 +124,7 @@ export default function usePasskey() {
     };
 
     // backup credential info
-    await api.backup.publicBackupCredentialId({
+    const res: any = await api.backup.publicBackupCredentialId({
       credentialID: credentialKey.id,
       data: JSON.stringify({
         publicKey: credentialKey.publicKey,
@@ -132,12 +132,20 @@ export default function usePasskey() {
       }),
     });
 
+    if (res.code !== 200) {
+      toast({
+        title: 'Failed to backup credential',
+        description: res.msg,
+        status: 'error',
+      });
+      throw new Error('Failed to backup credential');
+    }
+
     return credentialKey;
   };
 
   const signByPasskey = async (credential: any, userOpHash: string) => {
     const userOpHashForBytes = userOpHash.startsWith('0x') ? userOpHash.substr(2) : userOpHash;
-
     var byteArray = new Uint8Array(32);
     for (var i = 0; i < 64; i += 2) {
       byteArray[i / 2] = parseInt(userOpHashForBytes.substr(i, 2), 16);
@@ -145,10 +153,8 @@ export default function usePasskey() {
     let challenge = base64Tobase64url(btoa(String.fromCharCode(...byteArray)));
 
     console.log('Authenticating with credential id', credential.id);
-    let authentication = await client.authenticate([credential.id], challenge, {
-      userVerification: 'required',
-      authenticatorType: 'both',
-    });
+    let authentication = await client.authenticate([credential.id], challenge);
+
     const authenticatorData = `0x${base64ToBigInt(base64urlTobase64(authentication.authenticatorData)).toString(16)}`;
     const clientData = atob(base64urlTobase64(authentication.clientData));
 
@@ -195,7 +201,7 @@ export default function usePasskey() {
       userVerification: 'required',
     });
     // authentication method will return credentialId, but not id.
-    const credentialId = authentication.credentialId
+    const credentialId = authentication.credentialId;
     console.log('Authenticated', authentication);
     // const authenticatorData = `0x${base64ToBigInt(base64urlTobase64(authentication.authenticatorData)).toString(16)}`;
     const clientData = atob(base64urlTobase64(authentication.clientData));
@@ -206,15 +212,20 @@ export default function usePasskey() {
     const signature = base64urlTobase64(authentication.signature);
     console.log(`signature: ${signature}`);
 
-    const credentialInfo = JSON.parse(
-      (
-        await api.backup.credential({
-      
-          credentialID: credentialId,
-        })
-      ).data.data,
-    );
+    const res: any = await api.backup.credential({
+      credentialID: credentialId,
+    });
 
+    if (res.code !== 200) {
+      toast({
+        title: 'Failed to get credential',
+        description: res.msg,
+        status: 'error',
+        duration: 3000,
+      });
+      throw new Error('Failed to get credential');
+    }
+    const credentialInfo = JSON.parse(res.data.data);
     return {
       credential: {
         ...authentication,

@@ -35,8 +35,6 @@ const validate = (values: any) => {
 
 export default function SetWalletAddress({ next, back }: any) {
   const toast = useToast();
-  const { navigate } = useBrowser();
-  const { updateRecoverInfo } = useTempStore()
   const [loading, setLoading] = useState(false);
   const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
     fields: ['address'],

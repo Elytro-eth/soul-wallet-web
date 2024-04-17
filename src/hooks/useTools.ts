@@ -18,23 +18,22 @@ export default function useTools() {
   const toast = useToast();
     const { showActiveWalletModal, showLogout } = useWalletContext();
   const { clearSigners } = useSignerStore();
-  const { clearAddresses } = useAddressStore();
+  const { clearAddresses, selectedAddress } = useAddressStore();
   const { clearGuardianInfo } = useGuardianStore();
   const { clearBalance } = useBalanceStore();
   const { clearHistory } = useHistoryStore();
   const { clearChainStore } = useChainStore();
-  const { clearSlotStore, slotInfo } = useSlotStore();
   const { clearTempStore } = useTempStore();
   const { getAddressName, saveAddressName } = useSettingStore();
     const { showClaimAssets, showSend } = useWalletContext();
   const { navigate } = useBrowser();
 
   const getWalletName = () => {
-    return getAddressName(slotInfo.slot);
+    return getAddressName(selectedAddress);
   };
 
   const setWalletName = (name: string) => {
-    saveAddressName(slotInfo.slot, name);
+    saveAddressName(selectedAddress, name);
   };
 
   const clearLogData = () => {
@@ -44,7 +43,6 @@ export default function useTools() {
     clearSigners();
     clearGuardianInfo();
     clearHistory();
-    clearSlotStore();
     clearTempStore();
   };
 
