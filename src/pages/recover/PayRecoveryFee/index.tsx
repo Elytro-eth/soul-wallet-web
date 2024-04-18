@@ -26,7 +26,7 @@ import ConnectWalletModal from '../ConnectWalletModal'
 export default function PayRecoveryFee({ next }: any) {
   const { showConnectWallet } = useWalletContext();
   const { recoverInfo } = useTempStore()
-  const { recoveryRecordID, recoveryRecord  } = recoverInfo
+  const { recoveryID, recoveryRecord  } = recoverInfo
   const { estimatedFee } = recoveryRecord
   const [imgSrc, setImgSrc] = useState<string>('');
   const { generateQrCode } = useTools();
@@ -48,7 +48,7 @@ export default function PayRecoveryFee({ next }: any) {
 
   const mainnetChainId = Number(import.meta.env.VITE_MAINNET_CHAIN_ID);
 
-  const payUrl = `${location.origin}/public/pay/${recoveryRecordID}`
+  const payUrl = `${location.origin}/public/pay/${recoveryID}`
 
   const generateQR = async (text: string) => {
     try {
@@ -65,7 +65,7 @@ export default function PayRecoveryFee({ next }: any) {
         {
           ...paymentContractConfig,
           functionName: 'pay',
-          args: [recoveryRecordID],
+          args: [recoveryID],
           value: ethers.parseEther(ethers.formatEther(BN(estimatedFee).toFixed())),
         },
         {
@@ -104,7 +104,7 @@ export default function PayRecoveryFee({ next }: any) {
     } catch (error: any) {
       console.log('error', error.message)
     }
-  }, [recoveryRecordID, estimatedFee])
+  }, [recoveryID, estimatedFee])
 
   useEffect(() => {
     generateQR(payUrl);

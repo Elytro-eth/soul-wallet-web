@@ -67,9 +67,9 @@ export const WalletContextProvider = ({ children }: any) => {
 
     console.log('set interval recover info', recoverInfo);
 
-    // const recoveryRecordID = recoverInfo.recoveryRecordID;
+    // const recoveryID = recoverInfo.recoveryID;
 
-    // if (!recoveryRecordID) {
+    // if (!recoveryID) {
     //   return;
     // }
 
@@ -80,7 +80,7 @@ export const WalletContextProvider = ({ children }: any) => {
     // return () => {
     //   clearInterval(interval);
     // };
-  }, [recoverInfo.recoveryRecordID]);
+  }, [recoverInfo.recoveryID]);
 
   const showSignTransaction = async (txns: any, origin?: string, sendTo?: string) => {
     return await signTransactionModal.current.show(txns, origin, sendTo);

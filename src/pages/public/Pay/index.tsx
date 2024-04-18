@@ -33,7 +33,7 @@ export default function Pay() {
   const [estimatedFee, setEstimatedFee] = useState(0)
   const toast = useToast();
   const { switchChain } = useSwitchChain();
-  const recoveryRecordID = '';
+  const recoveryID = '';
   const {
     connectEOA,
     isConnected,
@@ -108,12 +108,12 @@ export default function Pay() {
   };
 
   useEffect(() => {
-    generateQR(`${location.origin}/public/pay/${recoveryRecordID}`);
+    generateQR(`${location.origin}/public/pay/${recoveryID}`);
   }, []);
 
   const loadRecord = async (recoverId: any) => {
     try {
-      const res = await api.guardian.getRecoverRecord({ recoveryRecordID: recoverId })
+      const res = await api.guardian.getRecoverRecord({ recoveryID: recoverId })
       const recoveryRecord = res.data
       setLoaded(true)
       setRecoveryRecord(recoveryRecord)

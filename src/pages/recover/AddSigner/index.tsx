@@ -5,28 +5,14 @@ import {
   Flex,
   useToast,
   Input,
-  Menu,
-  MenuList,
-  MenuButton,
-  MenuItem,
 } from '@chakra-ui/react';
 import RoundContainer from '@/components/new/RoundContainer'
 import Heading from '@/components/new/Heading'
-import TextBody from '@/components/new/TextBody'
 import Button from '@/components/Button'
-import PlusIcon from '@/components/Icons/Plus';
 import ComputerIcon from '@/components/Icons/Computer';
-import PasskeySignerIcon from '@/components/Icons/PasskeySigner'
-import EOASignerIcon from '@/components/Icons/EOASigner'
 import usePassKey from '@/hooks/usePasskey';
 import { useTempStore } from '@/store/temp';
-import { useSettingStore } from '@/store/setting';
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import useConfig from '@/hooks/useConfig';
 import api from '@/lib/api';
-import Icon from '@/components/Icon';
-import MinusIcon from '@/assets/icons/minus.svg';
-import ConnectWalletModal from '../ConnectWalletModal'
 import StepProgress from '../StepProgress'
 import { SignHeader } from '@/pages/public/Sign';
 import { SocialRecovery } from '@soulwallet/sdk';
@@ -35,17 +21,15 @@ import DeleteIcon from '@/components/Icons/Delete'
 export default function AddSigner({ next, back }: any) {
   const [signers, setSigners] = useState<any>([])
   const [isConfirming, setIsConfirming] = useState<any>(false)
-  const [isConnectOpen, setIsConnectOpen] = useState<any>(false)
   const toast = useToast();
   const { register } = usePassKey()
   const { updateRecoverInfo } = useTempStore()
-  const { chainConfig } = useConfig();
   const { recoverInfo } = useTempStore()
-  const { saveRecoverRecordId } = useSettingStore();
+  const [newWalletName, setNewWalletName] = useState<any>(recoverInfo.name)
 
   const addCredential = useCallback(async () => {
     try {
-      const credential = await register();
+      const credential = await register(newWalletName);
       setSigners([...signers, { type: 'passkey', signerId: credential.publicKey, ...credential }])
     } catch (error: any) {
       let message = error.message
@@ -66,42 +50,28 @@ export default function AddSigner({ next, back }: any) {
       signers
     })
 
-    const hasGuardians = recoverInfo.guardianDetails && recoverInfo.guardianDetails.guardians && !!recoverInfo.guardianDetails.guardians.length
-
-    if (!hasGuardians) {
-      next()
-      return
-    }
-
     try {
       setIsConfirming(true)
-      const keystore = chainConfig.contracts.l1Keystore;
       const initialKeys = signers.map((signer: any) => signer.signerId)
       const newOwners = SocialRecovery.initialKeysToAddress(initialKeys)
-      const slot = recoverInfo.slot
-      const slotInitInfo = recoverInfo.slotInitInfo
-      const guardianDetails = recoverInfo.guardianDetails
 
       const params = {
-        guardianDetails,
-        slot,
-        slotInitInfo,
-        keystore,
+        chainID: recoverInfo.chainID,
+        address: recoverInfo.address,
         newOwners
       }
 
       const res1 = await api.guardian.createRecoverRecord(params)
-      const recoveryRecordID = res1.data.recoveryRecordID
-      const res2 = await api.guardian.getRecoverRecord({ recoveryRecordID })
+      const recoveryID = res1.data.recoveryID
+      const res2 = await api.guardian.getRecoverRecord({ recoveryID })
       const recoveryRecord = res2.data
 
       updateRecoverInfo({
-        recoveryRecordID,
+        recoveryID,
         recoveryRecord,
-        enabled: false,
+        // enabled: false,
       });
 
-      saveRecoverRecordId(slot, recoveryRecordID)
       setIsConfirming(false)
       next()
     } catch (error: any) {
@@ -158,7 +128,7 @@ export default function AddSigner({ next, back }: any) {
               Name your wallet
             </Box>
             <Box marginTop="14px" width="100%" maxWidth="548px">
-              <Input type="text" placeholder="Enter wallet name" width="100%" />
+              <Input type="text" placeholder="Enter wallet name" width="100%" value={newWalletName} onChange={e => setNewWalletName(e.target.value)} />
             </Box>
             <Box width="100%" marginTop="14px">
               {signers.map((signer: any) => {

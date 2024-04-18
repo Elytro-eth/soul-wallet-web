@@ -37,6 +37,8 @@ const validate = (values: any) => {
 export default function SetWalletAddress({ next, back }: any) {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
+  const { updateRecoverInfo } = useTempStore()
+
   const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
     fields: ['address'],
     validate,
@@ -52,7 +54,7 @@ export default function SetWalletAddress({ next, back }: any) {
       if(walletAddress.includes(':')) {
         walletAddress = walletAddress.split(':')[1]
       }
-      const res1 = await api.guardian.getSlotInfo({ walletAddress });
+      const res1 = await api.account.list({ address: walletAddress });
       if (!res1.data) {
         setLoading(false);
         toast({
@@ -62,15 +64,23 @@ export default function SetWalletAddress({ next, back }: any) {
         return
       }
 
-      const info = res1.data
-      const {
-        initialKeys,
-        slot,
-        slotInitInfo,
-        walletAddresses
-      } = info
+      const info = res1.data[0]
+    //   {
+    //     "address": "0xfd2a27261850d891d1785df5c9f68e3f8ea19b2b",
+    //     "chainID": "0xaa37dc",
+    //     "name": "mini1",
+    //     "createAt": "2024-04-18T02:23:09.558Z",
+    //     "initInfo": {
+    //         "index": 0,
+    //         "initialKeys": [
+    //             "0x112293ace9b09d253449bb0041615e2df8cfad28575b2ca7329888a249700b85"
+    //         ],
+    //         "initialGuardianHash": "0x99906d01f2675f126415f03e75adc7995e62da2279edffb5ddd67dab0dbf763a",
+    //         "initialGuardianSafePeriod": "0x01"
+    //     }
+    // }
 
-      const initialKeysAddress = initialKeys
+      // const initialKeysAddress = initialKeys
 
       // if (activeGuardianInfo.pendingGuardianHash !== activeGuardianInfo.activeGuardianHash && activeGuardianInfo.guardianActivateAt && activeGuardianInfo.guardianActivateAt * 1000 < Date.now()) {
       //   activeGuardianHash = activeGuardianInfo.pendingGuardianHash
@@ -78,34 +88,21 @@ export default function SetWalletAddress({ next, back }: any) {
       //   activeGuardianHash = activeGuardianInfo.activeGuardianHash
       // }
 
-      // const res2 = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
-      // const data = res2.data;
+      const res2 = await api.guardian.getGuardianDetails({ guardianHash: info.initInfo.initialGuardianHash });
+      const data = res2.data;
 
-      // if (!data) {
-      //   console.log('No guardians found!')
+      if (!data) {
+        toast({
+          title: 'No guardians found!',
+          status: 'error',
+        })
+        throw new Error('No guardians found!')
+      }
 
-      //   updateRecoverInfo({
-      //     slot,
-      //     slotInitInfo,
-      //     activeGuardianInfo,
-      //     initialKeysAddress,
-      //     walletAddresses
-      //   })
-      // } else {
-      //   const guardianDetails = data.guardianDetails;
-      //   const guardianNames = data.guardianNames;
-
-      //   updateRecoverInfo({
-      //     slot,
-      //     slotInitInfo,
-      //     activeGuardianInfo,
-      //     guardianDetails,
-      //     initialKeysAddress,
-      //     guardianHash: activeGuardianHash,
-      //     guardianNames,
-      //     walletAddresses
-      //   })
-      // }
+      updateRecoverInfo({
+        ...info,
+        ...data,
+      })
 
       setLoading(false);
       next()

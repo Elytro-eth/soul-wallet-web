@@ -32,16 +32,15 @@ const account = {
 };
 
 const guardian = {
-  backupSlot: (params: any) => axio.post('/backup/public-backup-slot-info', params),
+  getGuardianDetails: (params: any) => axio.get('/backup/guardian-info', { params }),
   backupGuardians: (params: any) => axio.post('/backup/public-backup-guardians', params),
-  emailBackupGuardians: (params: any) => axio.post('/backup/email-backup-guardians', params),
+  // emailBackupGuardians: (params: any) => axio.post('/backup/email-backup-guardians', params),
   getSlotInfo: (params: any) => axio.get('/backup/slot-info', { params }),
-  getGuardianDetails: (params: any) => axio.get('/social-recovery/guardian-details', { params }),
   createRecoverRecord: (params: any) => axio.post('/social-recovery/create-recovery-record', params),
-  guardianSign: (params: any) => axio.post('/social-recovery/sign-recovery-record', params),
-  getRecoverRecord: (params: any) => axio.get('/social-recovery/recovery-record', { params }),
-  createTask: (params: any) => axio.post('/keystore-execute-helper/create-task', params),
-  getTask: (params: any) => axio.get('/keystore-execute-helper/task', { params }),
+  getRecoverRecord: (params: any) => axio.post('/social-recovery/record', params),
+  guardianSign: (params: any) => axio.post('/social-recovery/guardian-sign', params),
+  // createTask: (params: any) => axio.post('/keystore-execute-helper/create-task', params),
+  // getTask: (params: any) => axio.get('/keystore-execute-helper/task', { params }),
 };
 
 const balance = {

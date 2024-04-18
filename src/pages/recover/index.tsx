@@ -24,7 +24,7 @@ export default function Recover() {
   const [step, setStep] = useState(0)
   const { navigate } = useBrowser();
   const { recoverInfo, updateRecoverInfo } = useTempStore()
-  const { recoveryRecordID, recoveryRecord } = recoverInfo
+  const { recoveryID, recoveryRecord } = recoverInfo
 
   const back = useCallback(() => {
     console.log('step', step)
@@ -38,19 +38,19 @@ export default function Recover() {
   const next = useCallback(() => {
     setStep(step + 1)
   }, [step])
-  console.log('recoveryRecordID', recoveryRecordID)
+  console.log('recoveryID', recoveryID)
 
   useEffect(() => {
-    if (recoveryRecordID) {
+    if (recoveryID) {
       const interval = setInterval(async () => {
         try {
-          console.log('recoveryRecordID', recoveryRecordID)
-          const res2 = await api.guardian.getRecoverRecord({ recoveryRecordID })
+          console.log('recoveryID', recoveryID)
+          const res2 = await api.guardian.getRecoverRecord({ recoveryID })
           const recoveryRecord = res2.data
 
           updateRecoverInfo({
             recoveryRecord,
-            enabled: false,
+            // enabled: false,
           });
 
           const status = recoveryRecord.status
@@ -69,10 +69,10 @@ export default function Recover() {
 
       return () => clearInterval(interval)
     }
-  }, [recoveryRecordID])
+  }, [recoveryID])
 
   useEffect(() => {
-    if (recoveryRecordID) {
+    if (recoveryID) {
       const status = recoveryRecord.status
 
       if (status == 0) {
@@ -99,7 +99,7 @@ export default function Recover() {
 
   if (step === 3) {
     return (
-      <GuardianApprovals next={next} back={back}  />
+      <GuardianApprovals />
     )
   }
 

@@ -6,17 +6,18 @@ import Button from '@/components/Button';
 import { useSwitchChain } from 'wagmi';
 import { SocialRecovery } from '@soulwallet/sdk';
 import api from '@/lib/api';
+import useConfig from '@/hooks/useConfig';
 import SignatureRequestImg from '@/assets/icons/signature-request.svg';
 import { useParams } from 'react-router-dom';
 import WarningIcon from '@/components/Icons/Warning';
 import SuccessIcon from '@/components/Icons/Success';
 import { useEthersSigner } from '@/hooks/useEthersSigner';
-import ConnectWalletModal from '@/pages/recover/ConnectWalletModal'
-import useWagmi from '@/hooks/useWagmi'
+import ConnectWalletModal from '@/pages/recover/ConnectWalletModal';
+import useWagmi from '@/hooks/useWagmi';
 
 const validateSigner = (recoveryRecord: any, address: any) => {
   if (!recoveryRecord) return;
-  const guardians = recoveryRecord.guardianDetails.guardians;
+  const guardians = recoveryRecord.guardian_info.guardians;
   console.log('validateSigner', guardians, String(address).toLowerCase());
   return !!guardians && guardians.indexOf(String(address).toLowerCase()) !== -1;
 };
@@ -33,12 +34,12 @@ export const SignHeader = ({ url }: { url?: string }) => {
       <Link
         display="inline-block"
         {...(url
-           ? {
-             href: url,
-           }
-           : {
-             cursor: 'default',
-        })}
+          ? {
+              href: url,
+            }
+          : {
+              cursor: 'default',
+            })}
       >
         <Image src={IconLogo} h="44px" />
       </Link>
@@ -50,6 +51,7 @@ export default function Sign() {
   const { recoverId } = useParams();
   const [recoveryRecord, setRecoveryRecord] = useState<any>();
   const [signing, setSigning] = useState(false);
+  const { chainConfig } = useConfig();
   const [loaded, setLoaded] = useState(false);
   const [isSigned, setIsSigned] = useState<any>(false);
   const toast = useToast();
@@ -63,15 +65,15 @@ export default function Sign() {
     closeConnect,
     address,
     isConnecting,
-    chainId: connectedChainId
-  } = useWagmi()
+    chainId: connectedChainId,
+  } = useWagmi();
 
   const isValidSigner = validateSigner(recoveryRecord, address);
   console.log('recoverId', recoveryRecord, isSigned);
 
   const loadRecord = async (recoverId: any) => {
     try {
-      const res = await api.guardian.getRecoverRecord({ recoveryRecordID: recoverId });
+      const res = await api.guardian.getRecoverRecord({ recoveryID: recoverId });
       const recoveryRecord = res.data;
       setLoaded(true);
       setRecoveryRecord(recoveryRecord);
@@ -97,38 +99,22 @@ export default function Sign() {
       if (!recoveryRecord) return;
 
       setSigning(true);
-      // await ensureChainId()
-      const domain = {
-        name: 'KeyStore',
-        version: '1',
-        chainId: recoveryRecord.chainId,
-        verifyingContract: recoveryRecord.keystore,
-      };
 
-      const types = {
-        SocialRecovery: [
-          { name: 'keyStoreSlot', type: 'bytes32' },
-          { name: 'nonce', type: 'uint256' },
-          { name: 'newSigner', type: 'bytes32' },
-        ],
-      };
-
-      const newKeyHash = SocialRecovery.getKeyHash(recoveryRecord.newOwners);
-
-      const message = {
-        keyStoreSlot: recoveryRecord.slot,
-        nonce: recoveryRecord.nonce,
-        newSigner: newKeyHash,
-      };
+      const typedDataToSign = SocialRecovery.getSocialRecoveryTypedData(
+        recoveryRecord.chain_id,
+        chainConfig.contracts.socialRecoveryModule,
+        recoveryRecord.address,
+        recoveryRecord.nonce,
+        recoveryRecord.new_owners,
+      )
 
       const signer = await ethersSigner;
-      const signature = await signer?.signTypedData(domain, types, message);
-      // const signature = await signTypedDataAsync({ domain, types, primaryType: 'SocialRecovery', message });
-      // console.log('to sign type', domain, types, message, signature)
-      // const signature = await signMessage(recoverId);
+      const signature = await signer?.signTypedData(typedDataToSign.domain, typedDataToSign.types, typedDataToSign.message);
+
+      // SocialRecovery.packGuardianSignature(signature);
       const res: any = await api.guardian.guardianSign({
-        recoveryRecordID: recoverId,
-        guardianAddress: address,
+        recoveryID: recoverId,
+        guardian: address,
         signature: signature,
       });
 
@@ -155,6 +141,8 @@ export default function Sign() {
       console.log('error', message);
     }
   }, [recoveryRecord, address]);
+
+  const targetChainId = parseInt(recoveryRecord?.chain_id);
 
   if (!loaded) {
     return (
@@ -258,7 +246,7 @@ export default function Sign() {
                     marginTop="34px"
                     maxWidth="500px"
                   >
-                    Recover for: {recoveryRecord.addresses.map((item: any) => item.address).join(', ')}
+                    Recover for: {recoveryRecord.address}
                   </Box>
                 </Box>
                 {/* <Box
@@ -361,8 +349,6 @@ export default function Sign() {
     );
   }
 
-  const mainnetChainId = Number(import.meta.env.VITE_MAINNET_CHAIN_ID);
-
   return (
     <Flex justify="center" align="center" width="100%" minHeight="100vh" background="#F2F4F7">
       <SignHeader />
@@ -404,7 +390,13 @@ export default function Sign() {
                   Signature request
                 </Box>
                 {address && (
-                  <Box fontSize="14px" fontWeight="500" fontFamily="Nunito" color="rgba(0, 0, 0, 0.80)" wordBreak="break-all">
+                  <Box
+                    fontSize="14px"
+                    fontWeight="500"
+                    fontFamily="Nunito"
+                    color="rgba(0, 0, 0, 0.80)"
+                    wordBreak="break-all"
+                  >
                     From: {address}
                   </Box>
                 )}
@@ -430,7 +422,7 @@ export default function Sign() {
                 marginTop="30px"
               >
                 {isConnected ? (
-                  connectedChainId === mainnetChainId ? (
+                  connectedChainId === targetChainId ? (
                     <Button
                       width="100%"
                       type="black"
@@ -449,7 +441,7 @@ export default function Sign() {
                       type="black"
                       color="white"
                       marginBottom="18px"
-                      onClick={() => switchChain({ chainId: mainnetChainId })}
+                      onClick={() => switchChain({ chainId: targetChainId })}
                       size="xl"
                     >
                       Switch chain
