@@ -16,6 +16,7 @@ import { ethers } from 'ethers';
 import api from '@/lib/api';
 import StepProgress from '../StepProgress'
 import { SignHeader } from '@/pages/public/Sign';
+import WalletCheckedIcon from '@/components/Icons/WalletChecked'
 
 const validate = (values: any) => {
   const errors: any = {};
@@ -171,6 +172,17 @@ export default function SetWalletAddress({ next, back }: any) {
                 autoFocus={true}
                 onEnter={handleNext}
               />
+            </Box>
+            <Box
+              fontWeight="600"
+              fontSize="14px"
+              color="#0CB700"
+              marginTop="6px"
+              display="flex"
+              alignItems="center"
+            >
+              <WalletCheckedIcon />
+              <Box marginLeft="6px">Wallet found on Ethereum network</Box>
             </Box>
             <Box width="100%" display="flex" alignItems="center" justifyContent="center" marginTop="100px">
               <Button

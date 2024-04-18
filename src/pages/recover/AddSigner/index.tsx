@@ -30,6 +30,7 @@ import ConnectWalletModal from '../ConnectWalletModal'
 import StepProgress from '../StepProgress'
 import { SignHeader } from '@/pages/public/Sign';
 import { SocialRecovery } from '@soulwallet/sdk';
+import DeleteIcon from '@/components/Icons/Delete'
 
 export default function AddSigner({ next, back }: any) {
   const [signers, setSigners] = useState<any>([])
@@ -151,145 +152,72 @@ export default function AddSigner({ next, back }: any) {
             flexDirection="column"
           >
             <Heading marginBottom="18px" type="h4" fontSize="24px" fontWeight="700">
-              Step 2/4: Add Signer
+              Step 2/4: Wallet setup
             </Heading>
-            <TextBody
-              fontWeight="600"
-              maxWidth={{ base: '100%', 'md': '650px' }}
-              marginBottom="20px"
-            >
-              Sign transactions on the using your preferred method, whether it's through an externally owned account (EOA) such as MetaMask or Ledger, or by creating a passkey.
-            </TextBody>
-            <Box marginBottom="10px" width="100%">
+            <Box fontSize="14px" fontWeight="400">
+              Name your wallet
+            </Box>
+            <Box marginTop="14px" width="100%" maxWidth="548px">
+              <Input type="text" placeholder="Enter wallet name" width="100%" />
+            </Box>
+            <Box width="100%" marginTop="14px">
               {signers.map((signer: any) => {
-                if (signer.type === 'eoa') {
-                  return (
+                return (
+                  <Box
+                    background="white"
+                    borderRadius="12px"
+                    padding="16px"
+                    border="1px solid #E4E4E4"
+                    marginBottom="14px"
+                    key={signer.signerId}
+                    position="relative"
+                    maxWidth={{ base: '550px', md: '550px' }}
+                    width={{ base: 'calc(100% - 30px)', md: '100%' }}
+                  >
                     <Box
-                      marginBottom="10px"
-                      key={signer.signerId}
-                      position="relative"
-                      maxWidth={{ base: '550px', 'md': '550px' }}
-                      width={{ base: 'calc(100% - 30px)', md: '100%' }}
+                      display="flex"
+                      alignItems="center"
+                      width="100%"
                     >
-                      <Box
-                        width="100%"
-                      >
-                        <Input
-                          placeholder="Enter ENS or wallet adderss"
-                          borderColor="#E4E4E4"
-                          value={signer.signerId}
-                          readOnly={true}
-                        />
-                      </Box>
-                      <Box
-                        onClick={() => removeSigner(signer.signerId)}
-                        position="absolute"
-                        width="40px"
-                        right={{ base: '-40px', md: '-40px' }}
-                        top="0"
-                        height="100%"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        cursor="pointer"
-                      >
-                        <Icon src={MinusIcon} />
+                      <Box width="50px" height="50px" background="#efefef" borderRadius="50px" marginRight="16px" display="flex" alignItems="center" justifyContent="center"><ComputerIcon /></Box>
+                      <Box>
+                        <Text color="rgb(7, 32, 39)" fontSize="18px" fontWeight="800">
+                          {signer.name}
+                        </Text>
                       </Box>
                     </Box>
-                  )
-                } else {
-                  return (
                     <Box
-                      background="white"
-                      borderRadius="12px"
-                      padding="16px"
-                      border="1px solid #E4E4E4"
-                      marginBottom="10px"
-                      key={signer.signerId}
-                      position="relative"
-                      maxWidth={{ base: '550px', md: '550px' }}
-                      width={{ base: 'calc(100% - 30px)', md: '100%' }}
+                      onClick={() => removeSigner(signer.signerId)}
+                      position="absolute"
+                      width="40px"
+                      right="0px"
+                      top="0"
+                      height="100%"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      cursor="pointer"
                     >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        width="100%"
-                      >
-                        <Box width="50px" height="50px" background="#efefef" borderRadius="50px" marginRight="16px" display="flex" alignItems="center" justifyContent="center"><ComputerIcon /></Box>
-                        <Box>
-                          <Text color="rgb(7, 32, 39)" fontSize="18px" fontWeight="800">
-                            {signer.name}
-                          </Text>
-                        </Box>
-                      </Box>
-                      <Box
-                        onClick={() => removeSigner(signer.signerId)}
-                        position="absolute"
-                        width="40px"
-                        right={{ base: '-40px', md: '-40px' }}
-                        top="0"
-                        height="100%"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        cursor="pointer"
-                      >
-                        <Icon src={MinusIcon} />
-                      </Box>
+                      <DeleteIcon />
                     </Box>
-                  )
-                }
+                  </Box>
+                )
               })}
             </Box>
-            <Box
-              width="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              <Menu>
-                <MenuButton
-                  width="275px"
-                  maxWidth="100%"
-                >
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    border="1px solid #E4E4E4"
-                    borderRadius="50px"
-                    height="36px"
-                    width="200px"
-                    fontWeight="bold"
-                    fontSize="14px"
-                    fontFamily="Nunito"
-                  >
-                    <Box marginRight="8px"><PlusIcon color="black" /></Box>
-                    <Box>Add Signer</Box>
-                  </Box>
-                </MenuButton>
-                <MenuList padding="0">
-                  <MenuItem
-                    fontSize="14px"
-                    fontFamily="Nunito"
-                    fontWeight="600"
-                    onClick={() => addCredential()}
-                    height="48px"
-                  >
-                    <Box
-                      width="24px"
-                      height="24px"
-                      borderRadius="24px"
-                      marginRight="10px"
-                    >
-                      <PasskeySignerIcon />
-                    </Box>
-                    <Box>Passkey</Box>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+            <Box>
+              <Button
+                size="lg"
+                width="246px"
+                onClick={() => addCredential()}
+              >
+                + Add passkey
+              </Button>
             </Box>
-            <Box width="100%" display="flex" alignItems="center" justifyContent="center" marginTop="100px">
+            <Box color="rgba(0, 0, 0, 0.6)" fontSize="12px" marginTop="8px">
+              *Passkey will be used to sign every transaction in your wallet.
+            </Box>
+
+            <Box width="100%" display="flex" alignItems="center" justifyContent="center" marginTop="43px">
               <Button
                 width="80px"
                 type="white"
