@@ -112,6 +112,8 @@ export default function Auth() {
 
   const doLogin = async () => {
     const res = await loginWallet();
+    console.log('login', res)
+    navigate('/dashboard')
   }
 
   useEffect(() => {

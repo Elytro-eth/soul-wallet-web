@@ -63,7 +63,7 @@ export function AccountSelect({ labelType = 'title', wrapperProps, isInModal, ..
               px="3"
               py="10px"
               h="40px"
-              w={{ lg: '340px' }}
+              w={{ lg: '360px' }}
               fontSize={{ base: '12px', lg: '16px' }}
               bg={isInModal ? 'transparent' : '#f2f2f2'}
               roundedLeft={'full'}
@@ -108,7 +108,7 @@ export function AccountSelect({ labelType = 'title', wrapperProps, isInModal, ..
             </Flex>
           </MenuButton>
 
-          <MenuList w={{ lg: '340px' }} zIndex={'200'}>
+          <MenuList w={{ lg: '360px' }} zIndex={'200'}>
             {addressList.map((item: any, idx: number) => {
               const chainInfo = getChainItem(item.chainIdHex);
 

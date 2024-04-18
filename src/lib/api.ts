@@ -50,7 +50,7 @@ const balance = {
 };
 
 const price = {
-  token: (params: any) => axio.get('/token/ft-price', { params }),
+  token: (params: any) => axio.post('/token/ft-price', params),
 }
 
 const backup = {

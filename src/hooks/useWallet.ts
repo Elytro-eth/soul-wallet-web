@@ -60,7 +60,12 @@ export default function useWallet() {
       const item = res.data[0];
       setCredentials([credential as any]);
       setWalletName(item.name);
-      setSelectedAddress(item.address);
+      setAddressList([
+        {
+          address: item.address,
+          chainIdHex: selectedChainId,
+        },
+      ]);
       setSelectedChainId(item.chainID);
       setSlotInfo(item.initInfo);
     } catch (e: any) {

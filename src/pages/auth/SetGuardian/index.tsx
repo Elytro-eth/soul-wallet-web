@@ -22,11 +22,11 @@ export default function SetGuardian({ walletName, back, onCreate }: any) {
         salt: ZeroHash,
       },
     });
-    onCreate(guardianHash);
+    await onCreate(guardianHash);
   };
 
-  const onSkip = () => {
-    onCreate(ethers.ZeroHash);
+  const onSkip = async() => {
+    await onCreate(ethers.ZeroHash);
   };
 
   return (

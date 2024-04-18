@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import api from '@/lib/api';
 import { persist } from 'zustand/middleware';
-import { ethers } from 'ethers';
+import { ZeroAddress, ethers } from 'ethers';
 import IconDefaultToken from '@/assets/tokens/default.svg';
 import IconEth from '@/assets/tokens/eth.svg';
 import BN from 'bignumber.js';
@@ -107,16 +107,20 @@ export const useBalanceStore = create<IBalanceStore>()(
           chainID: chainId,
           reservedTokenAddresses: paymasterTokens,
         });
-        const resPrice = await api.price.token({});
-        const targetedItem = resPrice.data.filter((item: any) => item.chainID === chainId)[0];
+        const resPrice:any = await api.price.token({
+          chainID: chainId,
+          contractAddresses: [
+            ZeroAddress,
+          ]
+        });
         let totalUsdValue = BN('0');
         const tokenList = res.data.map((item: ITokenBalanceItem) => {
           let formattedItem = formatTokenBalance(item);
-          if(targetedItem){
-            const tokenPrice = targetedItem.prices.filter((price: any) => price.tokenAddress === item.contractAddress)[0];
+          if(item.contractAddress === ZeroAddress){
+            const tokenPrice = resPrice.data.filter((price: any) => price.address === item.contractAddress)[0];
             if (tokenPrice) {
-              item.tokenPrice = tokenPrice.priceUSD;
-              item.usdValue = BN(tokenPrice.priceUSD).times(item.tokenBalanceFormatted).toFixed(2);
+              item.tokenPrice = tokenPrice.price;
+              item.usdValue = BN(tokenPrice.price).times(item.tokenBalanceFormatted).toFixed(2);
               totalUsdValue = totalUsdValue.plus(item.usdValue);
             }
           }
