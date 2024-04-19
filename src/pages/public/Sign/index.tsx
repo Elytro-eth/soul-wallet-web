@@ -14,6 +14,7 @@ import SuccessIcon from '@/components/Icons/Success';
 import { useEthersSigner } from '@/hooks/useEthersSigner';
 import ConnectWalletModal from '@/pages/recover/ConnectWalletModal';
 import useWagmi from '@/hooks/useWagmi';
+import IconOp from '@/assets/chains/op.svg';
 
 const validateSigner = (recoveryRecord: any, address: any) => {
   if (!recoveryRecord) return;
@@ -34,12 +35,12 @@ export const SignHeader = ({ url }: { url?: string }) => {
       <Link
         display="inline-block"
         {...(url
-          ? {
-              href: url,
-            }
-          : {
-              cursor: 'default',
-            })}
+           ? {
+             href: url,
+           }
+           : {
+             cursor: 'default',
+        })}
       >
         <Image src={IconLogo} h="44px" />
       </Link>
@@ -68,7 +69,9 @@ export default function Sign() {
     chainId: connectedChainId,
   } = useWagmi();
 
-  const isValidSigner = validateSigner(recoveryRecord, address);
+  const isValidSigner = validateSigner(recoveryRecord, address)
+  const recoveryAddress = recoveryRecord && recoveryRecord.address
+  const targetChainName = 'Optimism Sepolia'
   console.log('recoverId', recoveryRecord, isSigned);
 
   const loadRecord = async (recoverId: any) => {
@@ -249,18 +252,6 @@ export default function Sign() {
                     Recover for: {recoveryRecord.address}
                   </Box>
                 </Box>
-                {/* <Box
-                    width="320px"
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    justifyContent="center"
-                    marginTop="30px"
-                    >
-                    <Button width="100%" type="black" color="white" marginBottom="18px" onClick={() => {}} size="xl">
-                    Close
-                    </Button>
-                    </Box> */}
               </Box>
             </Box>
           </RoundContainer>
@@ -349,6 +340,221 @@ export default function Sign() {
     );
   }
 
+  if (!!isConnected && connectedChainId !== targetChainId) {
+    return (
+      <Flex justify="center" align="center" width="100%" minHeight="100vh" background="#F2F4F7">
+        <SignHeader />
+        <Box
+          padding="20px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="calc(100vh - 58px)"
+          flexDirection="column"
+          width="100%"
+          paddingTop="60px"
+        >
+          <RoundContainer
+            width="1058px"
+            maxWidth="100%"
+            minHeight="544px"
+            maxHeight="100%"
+            display="flex"
+            padding="0"
+            overflow="hidden"
+            flexDirection={{ base: 'column', md: 'row' }}
+            background="#FFFFFF"
+          >
+            <Box width={{ base: '100%', md: '100%' }} flex="1" display="flex" padding="60px">
+              <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                <Box
+                  maxWidth="548px"
+                  textAlign="center"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Box
+                    marginBottom="22px"
+                    width="120px"
+                    height="120px"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <WarningIcon size="80" />
+                  </Box>
+                  <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+                    The network doesn’t match
+                  </Box>
+                  <Box
+                    fontSize="14px"
+                    fontWeight="400"
+                    fontFamily="Nunito"
+                    lineHeight={'normal'}
+                    color="black"
+                    marginTop="34px"
+                  >
+                    {`The wallet you connected is not on the {${targetChainName}} network, please switch network to continue sign`}
+                  </Box>
+                </Box>
+                <Box
+                  width="360px"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginTop="30px"
+                >
+                  <Button
+                    width="100%"
+                    type="black"
+                    color="white"
+                    marginBottom="18px"
+                    onClick={() => switchChain({ chainId: targetChainId })}
+                    size="xl"
+                  >
+                    {`Switch to {${targetChainName}} network`}
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          </RoundContainer>
+        </Box>
+        <ConnectWalletModal isOpen={isConnectOpen} connectEOA={connectEOA} onClose={closeConnect} />
+      </Flex>
+    );
+  }
+
+  if (isConnected) {
+    return (
+      <Flex justify="center" align="center" width="100%" minHeight="100vh" background="#F2F4F7">
+        <SignHeader />
+        <Box
+          padding="20px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="calc(100vh - 58px)"
+          flexDirection="column"
+          width="100%"
+          paddingTop="60px"
+        >
+          <RoundContainer
+            width="1058px"
+            maxWidth="100%"
+            minHeight="544px"
+            maxHeight="100%"
+            display="flex"
+            padding="0"
+            overflow="hidden"
+            flexDirection={{ base: 'column', md: 'row' }}
+            background="#FFFFFF"
+          >
+            <Box width={{ base: '100%', md: '100%' }} flex="1" display="flex" padding="60px">
+              <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                <Box
+                  maxWidth="548px"
+                  textAlign="center"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Box marginBottom="22px" width="120px" height="120px">
+                    <Image src={SignatureRequestImg} width="120px" height="120px" />
+                  </Box>
+                  <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+                    Signature request
+                  </Box>
+                  {address && (
+                    <Box
+                      fontSize="14px"
+                      fontWeight="500"
+                      fontFamily="Nunito"
+                      color="rgba(0, 0, 0, 0.80)"
+                      wordBreak="break-all"
+                    >
+                      From: {address}
+                    </Box>
+                  )}
+                  <Box
+                    fontSize="14px"
+                    fontWeight="400"
+                    fontFamily="Nunito"
+                    color="black"
+                    marginTop="34px"
+                    lineHeight={'normal'}
+                    wordBreak="break-all"
+                  >
+                    Your friend's wallet is lost. As their guardian, please connect your wallet and confirm request to
+                    assist with their wallet recovery.
+                  </Box>
+                  <Box
+                    marginTop="27px"
+                    display="flex"
+                  >
+                    <Box
+                      background="#F3F3F3"
+                      padding="4px 8px"
+                      borderRadius="4px"
+                      fontSize="14px"
+                      fontWeight="500"
+                      marginRight="8px"
+                      whiteSpace="pre"
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <Box as="span" fontWeight="700">Recovery wallet:</Box> {recoveryAddress}
+                    </Box>
+                    <Box
+                      background="#F3F3F3"
+                      padding="4px 8px"
+                      borderRadius="4px"
+                      display="flex"
+                      alignItems="center"
+                      width="max-content"
+                    >
+                      <Image src={IconOp} w="24px" h="24px" />
+                      <Box marginLeft="4px">
+                        <Box fontWeight="500" fontSize="12px" whiteSpace="pre">
+                          {targetChainName}
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box
+                  width="320px"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginTop="30px"
+                >
+                  <Button
+                    width="100%"
+                    type="black"
+                    color="white"
+                    marginBottom="18px"
+                    onClick={sign}
+                    loading={signing}
+                    disabled={signing}
+                    size="xl"
+                  >
+                    Confirm and Sign
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          </RoundContainer>
+        </Box>
+        <ConnectWalletModal isOpen={isConnectOpen} connectEOA={connectEOA} onClose={closeConnect} />
+      </Flex>
+    );
+  }
+
   return (
     <Flex justify="center" align="center" width="100%" minHeight="100vh" background="#F2F4F7">
       <SignHeader />
@@ -387,7 +593,7 @@ export default function Sign() {
                   <Image src={SignatureRequestImg} width="120px" height="120px" />
                 </Box>
                 <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
-                  Signature request
+                  Recovery request
                 </Box>
                 {address && (
                   <Box
@@ -412,6 +618,39 @@ export default function Sign() {
                   Your friend's wallet is lost. As their guardian, please connect your wallet and confirm request to
                   assist with their wallet recovery.
                 </Box>
+                <Box
+                  marginTop="27px"
+                  display="flex"
+                >
+                  <Box
+                    background="#F3F3F3"
+                    padding="4px 8px"
+                    borderRadius="4px"
+                    fontSize="14px"
+                    fontWeight="500"
+                    marginRight="8px"
+                    whiteSpace="pre"
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <Box as="span" fontWeight="700">Requestor:</Box> {recoveryAddress}
+                  </Box>
+                  <Box
+                    background="#F3F3F3"
+                    padding="4px 8px"
+                    borderRadius="4px"
+                    display="flex"
+                    alignItems="center"
+                    width="max-content"
+                  >
+                    <Image src={IconOp} w="24px" h="24px" />
+                    <Box marginLeft="4px">
+                      <Box fontWeight="500" fontSize="12px" whiteSpace="pre">
+                        {targetChainName}
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
               <Box
                 width="320px"
@@ -421,45 +660,17 @@ export default function Sign() {
                 justifyContent="center"
                 marginTop="30px"
               >
-                {isConnected ? (
-                  connectedChainId === targetChainId ? (
-                    <Button
-                      width="100%"
-                      type="black"
-                      color="white"
-                      marginBottom="18px"
-                      onClick={sign}
-                      loading={signing}
-                      disabled={signing}
-                      size="xl"
-                    >
-                      Sign typed data
-                    </Button>
-                  ) : (
-                    <Button
-                      width="100%"
-                      type="black"
-                      color="white"
-                      marginBottom="18px"
-                      onClick={() => switchChain({ chainId: targetChainId })}
-                      size="xl"
-                    >
-                      Switch chain
-                    </Button>
-                  )
-                ) : (
-                  <Button
-                    width="100%"
-                    type="black"
-                    color="white"
-                    marginBottom="18px"
-                    onClick={openConnect}
-                    disabled={isConnecting}
-                    size="xl"
-                  >
-                    {isConnecting ? 'Connecting' : 'Connect wallet'}
-                  </Button>
-                )}
+                <Button
+                  width="100%"
+                  type="black"
+                  color="white"
+                  marginBottom="18px"
+                  onClick={openConnect}
+                  disabled={isConnecting}
+                  size="xl"
+                >
+                  {isConnecting ? 'Connecting' : 'Connect wallet'}
+                </Button>
               </Box>
             </Box>
           </Box>

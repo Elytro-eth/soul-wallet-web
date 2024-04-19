@@ -20,6 +20,7 @@ import { paymentContractConfig } from '@/contracts/contracts';
 import { metaMask } from 'wagmi/connectors'
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useWagmi from '@/hooks/useWagmi'
+import RecoverCheckedIcon from '@/components/Icons/RecoverChecked'
 import StepProgress from '../StepProgress'
 import ConnectWalletModal from '../ConnectWalletModal'
 
@@ -32,6 +33,8 @@ export default function PayRecoveryFee({ next }: any) {
   const { generateQrCode } = useTools();
   const [paying, setPaying] = useState(false)
   const [isPaid, setIsPaid] = useState(false)
+  const [isRecovering, setIsRecovering] = useState(false)
+  const [isRecovered, setIsRecovered] = useState(false)
   const { doCopy } = useTools();
   const toast = useToast();
   const { switchChain } = useSwitchChain();
@@ -113,6 +116,71 @@ export default function PayRecoveryFee({ next }: any) {
   console.log('estimatedFee', estimatedFee)
   console.log('isConnected222', isConnected)
 
+  if (isRecovered) {
+    return (
+      <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
+        <SignHeader url="/auth" />
+        <Box
+          padding="20px"
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="center"
+          minHeight="calc(100% - 58px)"
+          width="100%"
+          paddingTop="60px"
+          flexDirection={{ base: 'column', 'md': 'row' }}
+        >
+          <RoundContainer
+            width="1058px"
+            maxWidth="100%"
+            maxHeight="100%"
+            display="flex"
+            padding="0"
+            overflow="hidden"
+            background="white"
+            marginBottom="20px"
+          >
+            <Box
+              width="100%"
+              height="100%"
+              padding={{ base: '20px', md: '50px' }}
+              display="flex"
+              alignItems="flex-start"
+              justifyContent="center"
+              flexDirection="column"
+            >
+              <Heading marginBottom="18px" type="h4" fontSize="24px" fontWeight="700">
+                Step 4/4: Recovery
+              </Heading>
+              <TextBody
+                fontWeight="500"
+                maxWidth="650px"
+                marginBottom="20px"
+                width="100%"
+                wordBreak="break-all"
+                fontSize="16px"
+                display="flex"
+                alignItems="center"
+              >
+                <RecoverCheckedIcon />
+                <Box>Your wallet has been recovered. Free to check it out!</Box>
+              </TextBody>
+              <Button
+                size="lg"
+                fontSize="18px"
+                width="260px"
+              >
+                Go to Wallet
+              </Button>
+            </Box>
+          </RoundContainer>
+          <StepProgress activeIndex={3} />
+          <ConnectWalletModal isOpen={isConnectOpen} connectEOA={connectEOA} onClose={closeConnect} />
+        </Box>
+      </Flex>
+    )
+  }
+
   return (
     <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
       <SignHeader url="/auth" />
@@ -146,101 +214,26 @@ export default function PayRecoveryFee({ next }: any) {
             flexDirection="column"
           >
             <Heading marginBottom="18px" type="h4" fontSize="24px" fontWeight="700">
-              Step 4/4: Pay recovery fee
+              Step 4/4: Recovery
             </Heading>
             <TextBody
-              fontWeight="600"
+              fontWeight="500"
               maxWidth="650px"
               marginBottom="20px"
               width="100%"
               wordBreak="break-all"
+              fontSize="16px"
             >
-              Pay the recovery fee to get the wallet back. This fee is used on the Ethereum network for wallet recovery. We don't charge fee from this transaction.
+              Soul Wallet is sponsored the recovery fee for you. Please click the button below to confirm the recovery.
             </TextBody>
-            <Box
-              background="#F9F9F9"
-              borderRadius="20px"
+            <Button
+              size="lg"
               fontSize="18px"
-              fontWeight="700"
-              padding="24px"
-              width={{ base: '100%', md: '260px' }}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flexDirection="column"
-              marginBottom="20px"
+              width="260px"
+              disabled={isRecovering}
             >
-              <Box width="150px" height="150px">
-                <Image src={imgSrc} width="150px" height="150px" />
-              </Box>
-              <Box width="100%" display="flex" fontSize="12px" alignItems="center" justifyContent="space-between" padding="10px 5px">
-                <Box>Network:</Box>
-                <Box color="#EC588D">Sepolia</Box>
-              </Box>
-              <Box width="100%" display="flex" fontSize="12px" alignItems="center" justifyContent="space-between" padding="5px">
-                <Box>Network fee:</Box>
-                <Box>{BN(ethers.formatEther(BN(estimatedFee || 0).toFixed())).toFixed(6)} ETH</Box>
-              </Box>
-            </Box>
-            <Box
-              width="100%"
-              display="flex"
-              alignItems="flex-start"
-              flexDirection="column"
-            >
-              {isConnected ? (
-                connectedChainId === mainnetChainId ?
-                <Button
-                  type="black"
-                  color="white"
-                  marginBottom="18px"
-                  onClick={!isPaid ? doPay : () => {}}
-                  size="xl"
-                  skipSignCheck
-                  loading={paying}
-                  disabled={paying || isPaid}
-                  width={{ base: '100%', md: '275px' }}
-                >
-                  {isPaid ? 'Proceeding' : 'Pay Fee'}
-                </Button>: <Button
-                             type="black"
-                             color="white"
-                             marginBottom="18px"
-                             onClick={() => switchChain({ chainId: mainnetChainId })}
-                             size="xl"
-                             skipSignCheck
-                             loading={paying}
-                             disabled={paying}
-                             width={{ base: '100%', md: '275px' }}
-                           >
-                  Switch Chain
-                </Button>
-              ) : (
-                <Button
-                  type="black"
-                  color="white"
-                  marginBottom="18px"
-                  onClick={openConnect}
-                  size="xl"
-                  skipSignCheck
-                  disabled={isConnecting}
-                  width={{ base: '100%', md: '275px' }}
-                >
-                  {isConnecting ? 'Connecting' : 'Connect wallet'}
-                </Button>
-              )}
-
-              <Button
-                width={{ base: '100%', md: '275px' }}
-                maxWidth="100%"
-                type="white"
-                onClick={() => doCopy(payUrl)}
-                size="xl"
-                skipSignCheck
-              >
-                Ask friend to pay
-              </Button>
-            </Box>
+              {isRecovering ? 'Recovering' : 'Confirm recovery'}
+            </Button>
           </Box>
         </RoundContainer>
         <StepProgress activeIndex={3} />
