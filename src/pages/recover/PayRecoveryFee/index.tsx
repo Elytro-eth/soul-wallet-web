@@ -23,6 +23,7 @@ import useWagmi from '@/hooks/useWagmi'
 import RecoverCheckedIcon from '@/components/Icons/RecoverChecked'
 import StepProgress from '../StepProgress'
 import ConnectWalletModal from '../ConnectWalletModal'
+import api from '@/lib/api';
 
 export default function PayRecoveryFee({ next }: any) {
   const { showConnectWallet } = useWalletContext();
@@ -108,6 +109,11 @@ export default function PayRecoveryFee({ next }: any) {
       console.log('error', error.message)
     }
   }, [recoveryID, estimatedFee])
+
+  const doRecover = async() => {
+    const res =await api.recovery.execute({ recoveryID })
+    console.log('111', res);
+  }
 
   useEffect(() => {
     generateQR(payUrl);

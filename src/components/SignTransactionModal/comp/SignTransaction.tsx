@@ -81,8 +81,8 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
   const [useSponsor, setUseSponsor] = useState(true);
   const { getPrefund } = useQuery();
   const { chainConfig, selectedAddressItem, selectedChainItem } = useConfig();
-  const { signAndSend, getActivateOp } = useWallet();
-  const { getUserOp } = useTransaction();
+  const { signAndSend, getActivateOp, getUserOp, } = useWallet();
+
   const [userOpFormatted, setUserOpFormatted] = useState('');
   const selectedToken = getTokenBalance(payToken);
   const [hintText, setHintText] = useState('');

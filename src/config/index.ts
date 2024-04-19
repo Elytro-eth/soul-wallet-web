@@ -75,7 +75,7 @@ export const chainMapping = {
 // This is an important store switch which will clear all users' data
 export const storeVersion = '26';
 
-export const defaultGuardianSafePeriod = 1;
+export const defaultGuardianSafePeriod = 0;
 
 // height of header
 export const headerHeight = 60;
@@ -119,7 +119,7 @@ export default {
   ],
   magicValue: '0x1626ba7e',
   backendURL: `${import.meta.env.VITE_BACKEND_URL}/walletapi`,
-  soulScanURL: `${import.meta.env.VITE_SCAN_URL}/opapi`,
+  soulScanURL: `${import.meta.env.VITE_BACKEND_URL}/opapi`,
   chainList: [
     OpSepolia,
   ],

@@ -96,8 +96,7 @@ export default function useWallet() {
     };
 
     // do time consuming jobs
-    const address = (await soulWallet.calcWalletAddress(createIndex, initialKeys, initialGuardianHash)).OK;
-
+    const address = (await soulWallet.calcWalletAddress(createIndex, initialKeys, initialGuardianHash,defaultGuardianSafePeriod)).OK;
     // const address2 = (
     //   await soulWallet.calcWalletAddress(
     //     createIndex,
@@ -154,6 +153,7 @@ export default function useWallet() {
       slotInfo.initialKeys,
       slotInfo.initialGuardianHash,
       '0x',
+      defaultGuardianSafePeriod,
     );
 
     if (userOpRet.isErr()) {
@@ -196,10 +196,11 @@ export default function useWallet() {
     return userOp;
   };
 
-  const getUserOp: any = async (txns: any) => {
+  const getUserOp: any = async (txns: any, payToken: string) => {
     try {
       const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
 
+      // todo, add noncekey and noncevalue
       const userOpRet = await soulWallet.fromTransaction(maxFeePerGas, maxPriorityFeePerGas, selectedAddress, txns);
 
       if (userOpRet.isErr()) {
@@ -208,10 +209,13 @@ export default function useWallet() {
 
       let userOp = userOpRet.OK;
 
-      userOp = await getSponsor(userOp);
+      userOp.preVerificationGas = `0x${BN(userOp.preVerificationGas.toString()).plus(15000).toString(16)}`;
+      userOp.verificationGasLimit = `0x${BN(userOp.verificationGasLimit.toString()).plus(30000).toString(16)}`;
+
+      userOp = await estimateGas(userOp, ZeroAddress);
 
       return userOp;
-    } catch (err: any) {
+    } catch (err:any) {
       throw new Error(err.message);
     }
   };
@@ -393,5 +397,6 @@ export default function useWallet() {
     logoutWallet,
     getSponsor,
     initWallet,
+    getUserOp,
   };
 }
