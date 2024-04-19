@@ -33,7 +33,7 @@ function ReceiveModal(_: any, ref: Ref<any>) {
 
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody pb={{ base: 4, lg: 12 }} px={{ base: 3, lg: 12 }}>
+        <ModalBody pb={{ base: 4, lg: 12 }} px={{ base: 3, lg: 12 }} overflow="hidden">
           <Receive />
         </ModalBody>
       </ModalContent>

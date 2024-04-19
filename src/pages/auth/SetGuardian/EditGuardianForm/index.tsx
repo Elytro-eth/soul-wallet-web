@@ -134,7 +134,9 @@ export default function GuardianForm({
   onBack,
   onSkip,
   canGoBack,
-  editType
+  editType,
+  isCreating,
+  isSkipping
 }: any) {
   const { getAddressName } = useSettingStore();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
@@ -193,7 +195,7 @@ export default function GuardianForm({
     },
   });
 
-  const disabled = invalid || !guardiansList.length || loading || !isGuardiansListFilled(guardiansList);
+  const disabled = invalid || !guardiansList.length || loading || isCreating || isSkipping || !isGuardiansListFilled(guardiansList);
 
   useEffect(() => {
     setGuardiansList(
@@ -325,6 +327,8 @@ export default function GuardianForm({
             type="text"
             padding="0 20px"
             onClick={onSkip}
+            disabled={!!isCreating || !!isSkipping}
+            loading={isSkipping}
             size="lg"
           >
             Skip
@@ -335,6 +339,7 @@ export default function GuardianForm({
             padding="0 20px"
             onClick={handleConfirm}
             disabled={disabled}
+            loading={isCreating}
             size="lg"
           >
             Done

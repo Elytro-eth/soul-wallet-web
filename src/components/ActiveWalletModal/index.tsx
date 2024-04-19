@@ -9,7 +9,8 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
-  ModalBody
+  ModalBody,
+  Tooltip
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
 import Button from '@/components/Button'
@@ -20,12 +21,15 @@ import ActivityEmptyIcon from '@/assets/icons/activity-empty.svg'
 import QrcodeIcon from '@/components/Icons/Qrcode'
 import { useAddressStore } from '@/store/address';
 import useWallet from '@/hooks/useWallet';
+import useTools from '@/hooks/useTools';
 
 const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [promiseInfo, setPromiseInfo] = useState<any>({});
   const { getActivateOp, signAndSend } = useWallet();
   const { selectedAddress } = useAddressStore();
+  const { generateQrCode, doCopy } = useTools();
+  const [imgSrc, setImgSrc] = useState<string>('');
 
   useImperativeHandle(ref, () => ({
     async show() {
@@ -49,6 +53,21 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
     console.log('user op', userOp)
     await signAndSend(userOp);
   }
+
+  const generateQR = async (text: string) => {
+    try {
+      setImgSrc(await generateQrCode(text));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (!selectedAddress) {
+      return;
+    }
+    generateQR(selectedAddress);
+  }, [selectedAddress]);
 
   return (
     <div ref={ref}>
@@ -155,12 +174,29 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           </TextBody>
                         </Box>
                         <Box marginLeft="8px">
-                          <Button size="sm" height="28px">Copy address</Button>
+                          <Button size="sm" height="28px" onClick={() => doCopy(selectedAddress)}>Copy address</Button>
                         </Box>
                         <Box marginLeft="8px">
-                          <Button size="sm" height="28px" type="white">
-                            <QrcodeIcon />
-                          </Button>
+                          <Tooltip
+                            label={
+                              <Box>
+                                <Image src={imgSrc} mx="auto" display={'block'} w="106px" mb="2" />
+                              </Box>
+                            }
+                            placement="top"
+                            background="white"
+                            boxShadow="none"
+                            border="1px solid rgba(0, 0, 0, 0.1)"
+                            width="138px"
+                            height="138px"
+                            padding="16px"
+                          >
+                            <Box>
+                              <Button size="sm" height="28px" type="white">
+                                <QrcodeIcon />
+                              </Button>
+                            </Box>
+                          </Tooltip>
                         </Box>
                       </Box>
                     </Box>
