@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import IconCopy from '@/assets/copy.svg';
 import useTools from '@/hooks/useTools';
-import { Flex, Text, Box, useToast, Image, BoxProps } from '@chakra-ui/react';
+import { Flex, Text, Box, useToast, Image, BoxProps, Checkbox } from '@chakra-ui/react';
 import { useChainStore } from '@/store/chain';
 import useConfig from '@/hooks/useConfig';
+import { useSettingStore } from '@/store/setting';
+import { useAddressStore } from '@/store/address';
 import Button from '../Button';
 
 interface IReceiveCode extends BoxProps {
@@ -12,10 +14,54 @@ interface IReceiveCode extends BoxProps {
   imgWidth?: string;
 }
 
+const DepositHint2 = () => {
+  const [active, setActive] = useState<any>(false)
+  const { getAddressDisplay, saveAddressDisplay } = useSettingStore();
+  const { selectedAddress } = useAddressStore();
+
+  return (
+    <Flex
+      align={'center'}
+      justify={'center'}
+      backdropFilter={'blur(12px)'}
+      pos="absolute"
+      pt={{ base: '40px', xl: '80px', '2xl': '100px' }}
+      pb="100px"
+      top="0"
+      right={'0'}
+      zIndex={'10'}
+      left={0}
+      // bottom={0}
+    >
+      <Box>
+        <Text mb="107px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
+
+        </Text>
+        <Checkbox
+          defaultChecked={active}
+          marginBottom="18px"
+          onChange={(e) => setActive(!!e.target.checked)}
+        >
+          <Text fontWeight="500" fontSize="16px">
+            I acknowledge the network is Ethereum, not any other chain
+          </Text>
+        </Checkbox>
+        <Flex gap="2" flexDir={'column'} align={'center'}>
+          <Button py="13px" disabled={!active} onClick={() => saveAddressDisplay(selectedAddress, true)}>
+            Show wallet address
+          </Button>
+        </Flex>
+      </Box>
+    </Flex>
+  );
+};
+
 export default function ReceiveCode({ address, showFullAddress, imgWidth = '90px', ...restProps }: IReceiveCode) {
   const [imgSrc, setImgSrc] = useState<string>('');
   const { chainConfig } = useConfig();
   const { generateQrCode, doCopy } = useTools();
+  const { getAddressDisplay } = useSettingStore();
+  const { selectedAddress } = useAddressStore();
   // const addressWithPrefix = `${chainConfig.addressPrefix}${address}`
   const generateQR = async (text: string) => {
     try {
@@ -33,31 +79,25 @@ export default function ReceiveCode({ address, showFullAddress, imgWidth = '90px
   }, [address]);
 
   return (
-    <Box textAlign={'center'} fontSize={'12px'} {...restProps}>
-      <Image src={imgSrc} mx="auto" display={'block'} w={imgWidth} mb="2" />
-      {/* {showFullAddress ? (
-        <Text  mt="2" px="10" fontWeight={'600'} fontSize={'14px'}>
-          <Text display="inline-block">{address.slice(0, 21)}</Text>
-          <Text display="inline-block">{address.slice(-21)}</Text>
-        </Text>
-      ) : ( */}
-      <Flex fontSize={{base: '12px', lg: '14px'}} mb="2" justify={'center'} flexDir={{base: 'column', md: 'row'}}>
-        <Text fontWeight={'700'}>{chainConfig.addressPrefix}</Text>
-        <Text fontWeight={'500'}>
-          {address}
-          {/* {address.slice(0, 22)}
-          <br />
-          {address.slice(-20)} */}
-        </Text>
-      </Flex>
-      <Button type="white" py="10px" px="15px" border="1px solid #e0e0e0" display={'block'} mx="auto" onClick={() => doCopy(address)} mb="14px">
-        Copy address
-      </Button>
-      <Flex flexDir={{base: 'column', md: 'row'}} display="inline-flex" align={'center'} py={{base: 2, lg: 1}} px="3" rounded={'12px'} bg="rgba(98, 126, 234, 0.10)">
-        <Image src={chainConfig.icon} w="5" mr="1" />
-        <Text fontWeight={'800'}>{chainConfig.chainName} network - &nbsp;</Text>
-        <Text fontWeight={'600'}>Only send {chainConfig.chainName} assets to this address</Text>
-      </Flex>
+    <Box position="relative" paddingTop="15px">
+      {(!getAddressDisplay(selectedAddress)) && <DepositHint2 />}
+      <Box textAlign={'center'} fontSize={'12px'} {...restProps}>
+        <Image src={imgSrc} mx="auto" display={'block'} w={imgWidth} mb="2" />
+        <Flex fontSize={{base: '12px', lg: '14px'}} mb="2" justify={'center'} flexDir={{base: 'column', md: 'row'}}>
+          <Text fontWeight={'700'}>{chainConfig.addressPrefix}</Text>
+          <Text fontWeight={'500'}>
+            {address}
+          </Text>
+        </Flex>
+        <Button type="white" py="10px" px="15px" border="1px solid #e0e0e0" display={'block'} mx="auto" onClick={() => doCopy(address)} mb="14px">
+          Copy address
+        </Button>
+        <Flex flexDir={{base: 'column', md: 'row'}} display="inline-flex" align={'center'} py={{base: 2, lg: 1}} px="3" rounded={'12px'} bg="rgba(98, 126, 234, 0.10)">
+          <Image src={chainConfig.icon} w="5" mr="1" />
+          <Text fontWeight={'800'}>{chainConfig.chainName} network - &nbsp;</Text>
+          <Text fontWeight={'600'}>Only send {chainConfig.chainName} assets to this address</Text>
+        </Flex>
+      </Box>
     </Box>
   );
 }

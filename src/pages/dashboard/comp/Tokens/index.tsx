@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import ReceiveCode from '@/components/ReceiveCode';
 import { useAddressStore } from '@/store/address';
 import { toFixed } from '@/lib/tools';
+import { useSettingStore } from '@/store/setting';
 
 const SetGuardianHint = ({ onShowSkip }: { onShowSkip: () => void }) => {
   return (
@@ -75,7 +76,10 @@ const DepositHint = () => {
 };
 
 const DepositHint2 = () => {
+  const [active, setActive] = useState<any>(false)
+  const { getAddressDisplay, saveAddressDisplay } = useSettingStore();
   const { selectedAddress } = useAddressStore();
+
   return (
     <Flex
       align={'center'}
@@ -94,13 +98,17 @@ const DepositHint2 = () => {
         <Text mb="107px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
           You are not holding any token yet.<br />Get your first deposit with your wallet address
         </Text>
-        <Checkbox defaultChecked={false} marginBottom="18px">
+        <Checkbox
+          defaultChecked={active}
+          marginBottom="18px"
+          onChange={(e) => setActive(!!e.target.checked)}
+        >
           <Text fontWeight="500">
             I acknowledge the network is Ethereum, not any other chain
           </Text>
         </Checkbox>
         <Flex gap="2" flexDir={'column'} align={'center'}>
-          <Button py="13px">
+          <Button py="13px" disabled={!active} onClick={() => saveAddressDisplay(selectedAddress, true)}>
             Show wallet address
           </Button>
         </Flex>
@@ -151,6 +159,8 @@ export default function Tokens() {
   const { tokenBalance } = useBalanceStore();
   const { slotInfo } = useSlotStore();
   const [isSkipOpen, setIsSkipOpen] = useState(false);
+  const { getAddressDisplay } = useSettingStore();
+  const { selectedAddress } = useAddressStore();
 
   const showSendAssets = (tokenAddress: string) => {
     showSend(tokenAddress);
@@ -158,6 +168,7 @@ export default function Tokens() {
 
   const isTokenBalanceEmpty = tokenBalance.every((item) => !Number(item.tokenBalance));
 
+  console.log('selectedAddress', selectedAddress, !!getAddressDisplay(selectedAddress))
   return (
     <HomeCard
       title={'Assets'}
@@ -165,7 +176,8 @@ export default function Tokens() {
       external={<ExternalLink title="View more" to="/asset" />}
       h="100%"
     >
-      {(!slotInfo.initialGuardianHash || isSkipOpen) && <DepositHint2 />}
+
+      {(!getAddressDisplay(selectedAddress)) && <DepositHint2 />}
       {isTokenBalanceEmpty ? (
         <DepositHint />
       ) : (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button as CButton, ButtonProps, Image } from '@chakra-ui/react';
 import IconLoading from '@/assets/loading.gif';
+import BlackIconLoading from '@/assets/loading.svg';
 import useConfig from '@/hooks/useConfig';
 import { useSlotStore } from '@/store/slot';
 
@@ -158,7 +159,7 @@ export default function Button({
       {...moreProps}
       {...restProps}
     >
-      {loading ? <Image src={IconLoading} w="18px" h="18px" /> : children}
+      {loading ? <Image src={(type === 'white' || type === 'text') ? BlackIconLoading: IconLoading} w="18px" h="18px" /> : children}
       {/* {children} */}
     </CButton>
   );

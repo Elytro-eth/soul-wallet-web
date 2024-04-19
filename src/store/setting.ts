@@ -25,6 +25,7 @@ export interface ISettingStore {
   finishedSteps: number[];
   // 1. guardian address -> name 2. slot address -> name
   addressName: { [address: string]: string };
+  addressDisplay: { [address: string]: string };
   recoverRecordIds: { [slot: string]: string };
   // signer id -> wallet address mapping
   signerIdAddress: ISignerIdAddress;
@@ -33,6 +34,10 @@ export interface ISettingStore {
   saveAddressName: (address: string, name: string, checkExists?: boolean) => void;
   removeAddressName: (address: string) => void;
   getAddressName: (address: string) => string;
+
+  saveAddressDisplay: (address: string, display: boolean, checkExists?: boolean) => void;
+  removeAddressDisplay: (address: string) => void;
+  getAddressDisplay: (address: string) => string;
 
   saveRecoverRecordId: (slot: string, id: string) => void;
   removeRecoverRecordId: (slot: string) => void;
@@ -45,6 +50,7 @@ const createSettingSlice = immer<ISettingStore>((set, get) => ({
   ignoreWebauthnOverride: false,
   finishedSteps: [],
   addressName: {},
+  addressDisplay: {},
   recoverRecordIds: {},
   signerIdAddress: {},
   setClaimableCount: (count: number) => {
@@ -101,6 +107,33 @@ const createSettingSlice = immer<ISettingStore>((set, get) => ({
         addressName: newState,
       };
       // state.addressName = newState;
+    });
+  },
+
+  getAddressDisplay: (address) => {
+    return get().addressDisplay[address] || '';
+  },
+  saveAddressDisplay: (address, name, checkExists = false) => {
+    if(checkExists && get().addressDisplay[address]){
+      return;
+    }
+    set((state) => ({
+      addressDisplay: {
+        ...state.addressDisplay,
+        [address]: name,
+      },
+    }));
+  },
+  removeAddressDisplay: (address) => {
+    set((state) => {
+      const newState = {
+        ...state.addressDisplay,
+      };
+      delete newState[address];
+      return {
+        addressDisplay: newState,
+      };
+      // state.addressDisplay = newState;
     });
   },
 

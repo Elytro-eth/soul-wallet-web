@@ -6,7 +6,7 @@ import Heading from '@/components/new/Heading';
 import TextBody from '@/components/new/TextBody';
 import Button from '@/components/Button';
 import { SignHeader } from '@/pages/public/Sign';
-import IconEth from '@/assets/chains/eth.svg';
+import IconOp from '@/assets/chains/op.svg';
 import IconChevron from '@/assets/icons/chevron-down-gray.svg';
 
 export default function SetWalletName({ onNext, walletName, setWalletName }: any) {
@@ -83,8 +83,8 @@ export default function SetWalletName({ onNext, walletName, setWalletName }: any
               >
                 <Box width="100%" maxWidth="548px" display="flex" gap="8px">
                   <Box>
-                    <Menu>
-                      <MenuButton>
+                    <Box>
+                      <Box>
                         <Box
                           height="52px"
                           border="1px solid rgb(226, 232, 240)"
@@ -96,17 +96,16 @@ export default function SetWalletName({ onNext, walletName, setWalletName }: any
                           width="192px"
                           padding="14px"
                         >
-                          <Image src={IconEth} w="24px" h="24px" />
+                          <Image src={IconOp} w="24px" h="24px" />
                           <Box marginLeft="4px">
                             <Box fontWeight="600" fontSize="16px">
-                              Ethereum
+                              Optimism Sepolia
                             </Box>
                           </Box>
-                          <Image src={IconChevron} marginLeft="auto" />
+                          {/* <Image src={IconChevron} marginLeft="auto" /> */}
                         </Box>
-                      </MenuButton>
-                      <MenuList w="260px"></MenuList>
-                    </Menu>
+                      </Box>
+                    </Box>
                   </Box>
                   <Input
                     height="52px"

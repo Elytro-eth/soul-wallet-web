@@ -1,4 +1,5 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Box, Flex, useToast } from '@chakra-ui/react';
 import RoundContainer from '@/components/new/RoundContainer';
 import Heading from '@/components/new/Heading';
 import TextBody from '@/components/new/TextBody';
@@ -9,24 +10,51 @@ import { SocialRecovery } from '@soulwallet/sdk';
 import api from '@/lib/api';
 
 export default function SetGuardian({ walletName, back, onCreate }: any) {
+  const [isCreating, setIsCreating] = useState(false);
+  const [isSkipping, setIsSkipping] = useState(false);
+  const toast = useToast();
+
   const onDone = async (guardianAddresses: any, guardianNames: any, threshold: any) => {
     console.log('onDone', guardianAddresses, guardianNames, threshold);
-    const guardianHash = SocialRecovery.calcGuardianHash(guardianAddresses, threshold);
 
-    // todo, backup guardians
-    await api.guardian.backupGuardians({
-      guardianHash,
-      guardianDetails: {
-        guardians: guardianAddresses,
-        threshold,
-        salt: ZeroHash,
-      },
-    });
-    await onCreate(guardianHash);
+    try {
+      setIsCreating(true)
+      const guardianHash = SocialRecovery.calcGuardianHash(guardianAddresses, threshold);
+
+      // todo, backup guardians
+      await api.guardian.backupGuardians({
+        guardianHash,
+        guardianDetails: {
+          guardians: guardianAddresses,
+          threshold,
+          salt: ZeroHash,
+        },
+      });
+      await onCreate(guardianHash);
+      setIsCreating(false)
+    } catch (error: any) {
+      const message = error.message
+      toast({
+        title: message,
+        status: 'error',
+      });
+      setIsCreating(false)
+    }
   };
 
   const onSkip = async() => {
-    await onCreate(ethers.ZeroHash);
+    try {
+      setIsSkipping(true)
+      await onCreate(ethers.ZeroHash);
+      setIsSkipping(false)
+    } catch (error: any) {
+      const message = error.message
+      toast({
+        title: message,
+        status: 'error',
+      });
+      setIsSkipping(false)
+    }
   };
 
   return (
@@ -95,8 +123,8 @@ export default function SetGuardian({ walletName, back, onCreate }: any) {
                   onConfirm={onDone}
                   onSkip={onSkip}
                   onBack={back}
-                  canGoBack={false}
-                  canConfirm={false}
+                  isCreating={isCreating}
+                  isSkipping={isSkipping}
                   editType={'add'}
                 />
               </Box>
