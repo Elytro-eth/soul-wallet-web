@@ -2,7 +2,7 @@
  * In-wallet Transactions
  */
 
-import { ethers } from 'ethers';
+import { ZeroAddress, ethers } from 'ethers';
 import BN from 'bignumber.js';
 import { erc20Abi } from 'viem'
 import { useAddressStore } from '@/store/address';

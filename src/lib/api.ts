@@ -18,6 +18,7 @@ axio.interceptors.response.use((res: any) => {
 const recovery = {
   create: (params: any) => axio.post(`/recovery-record`, params),
   get: (opHash: string) => axio.get(`/recovery-record/${opHash}`),
+  execute: (params: any) => axio.post(`/social-recovery/execute`, params),
   getOp: (opHash: string) => axio.get(`/recovery-record/guardian/${opHash}`),
   sig: (params: any) => axio.post(`/recovery-record/guardian/${params.opHash}`),
 };
