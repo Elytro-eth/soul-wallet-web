@@ -7,6 +7,7 @@ import SelectGuardianTypeModal from '@/pages/security/SelectGuardianTypeModal'
 import IntroGuardianModal from '@/pages/security/IntroGuardianModal'
 import RemoveGuardianModal from '@/pages/security/RemoveGuardianModal'
 import EditGuardianModal from '@/pages/security/EditGuardianModal'
+import PendingGuardianModal from '@/pages/security/PendingGuardianModal'
 import WalletConnectModal from '@/pages/security/WalletConnectModal'
 import useBrowser from '@/hooks/useBrowser';
 import { useTempStore } from '@/store/temp';
@@ -30,8 +31,9 @@ export default function Guardian() {
   const { navigate } = useBrowser();
   const [activeSection, setActiveSection] = useState<string>('guardian');
   const [keepPrivate, setKeepPrivate] = useState<any>(false);
-  const [isPending, setIsPending] = useState<any>(false);
+  const [isPending, setIsPending] = useState<any>(true);
   const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<any>(false);
+  const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<any>(false);
   const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
   const [isBackupGuardianOpen, setIsBackupGuardianOpen] = useState<any>(false);
   const [isWalletConnectOpen, setIsWalletConnectOpen] = useState<any>(false);
@@ -64,6 +66,14 @@ export default function Guardian() {
 
   const closeWalletConnectModal = useCallback(() => {
     setIsWalletConnectOpen(false)
+  }, [])
+
+  const openPendingGuardianModal = useCallback((editType: any) => {
+    setIsPendingGuardianOpen(true)
+  }, [])
+
+  const closePendingGuardianModal = useCallback(() => {
+    setIsPendingGuardianOpen(false)
   }, [])
 
   const openEditGuardianModal = useCallback((editType: any) => {
@@ -253,6 +263,7 @@ export default function Guardian() {
         {!isEditing && (
           <ListGuardian
             openEditGuardianModal={openEditGuardianModal}
+            openPendingGuardianModal={openPendingGuardianModal}
             startEditGuardian={startEditGuardian}
             enterEditGuardian={enterEditGuardian}
             startAddGuardian={startAddGuardian}
@@ -267,6 +278,10 @@ export default function Guardian() {
         setIsEditGuardianOpen={setIsEditGuardianOpen}
         onConfirm={onEditGuardianConfirm}
         editType={editType}
+      />
+      <PendingGuardianModal
+        isOpen={isPendingGuardianOpen}
+        onClose={closePendingGuardianModal}
       />
       <RemoveGuardianModal
         isOpen={isRemoveGuardianOpen}

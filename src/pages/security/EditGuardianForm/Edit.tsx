@@ -227,7 +227,7 @@ export default function Edit({
           ))}
         </Box>
       </Box>
-      <Box marginTop="30px" display="flex" justifyContent="flex-end">
+      <Box marginTop="30px" marginBottom="10px" display="flex" justifyContent="flex-end">
         <Box>
           {canGoBack && <Button type="white" padding="0 14px" marginRight="16px" onClick={handleBack} size="xl">Back</Button>}
           <Button type="black" onClick={handleConfirm} disabled={disabled} loading={loading} size="xl">Confirm</Button>
