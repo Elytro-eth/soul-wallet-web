@@ -31,10 +31,6 @@ export default function Guardian() {
   const [activeSection, setActiveSection] = useState<string>('guardian');
   const [keepPrivate, setKeepPrivate] = useState<any>(false);
   const [isPending, setIsPending] = useState<any>(false);
-  const [isSetDefaultOpen, setIsSetDefaultOpen] = useState<any>(false);
-  const [isChooseSignerOpen, setIsChooseSignerOpen] = useState<any>(false);
-  const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<any>(false);
-  const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<any>(false);
   const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<any>(false);
   const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
   const [isBackupGuardianOpen, setIsBackupGuardianOpen] = useState<any>(false);
@@ -62,44 +58,12 @@ export default function Guardian() {
   const guardiansInfo = (!tempStore.createInfo.creatingGuardianInfo ? guardianStore.guardiansInfo : tempStore.getCreatingGuardianInfo()) || defaultGuardianInfo
   console.log('guardiansInfo111', guardianStore.guardiansInfo, guardianStore.getGuardiansInfo())
 
-  const openSetDefaultModal = useCallback(() => {
-    setIsSetDefaultOpen(true)
-  }, [])
-
-  const closeSetDefaultModal = useCallback(() => {
-    setIsSetDefaultOpen(false)
-  }, [])
-
-  const openChooseSignerModal = useCallback(() => {
-    setIsChooseSignerOpen(true)
-  }, [])
-
-  const closeChooseSignerModal = useCallback(() => {
-    setIsChooseSignerOpen(false)
-  }, [])
-
   const openWalletConnectModal = useCallback(() => {
     setIsWalletConnectOpen(true)
   }, [])
 
   const closeWalletConnectModal = useCallback(() => {
     setIsWalletConnectOpen(false)
-  }, [])
-
-  const openSelectGuardianModal = useCallback(() => {
-    setIsSelectGuardianOpen(true)
-  }, [])
-
-  const closeSelectGuardianModal = useCallback(() => {
-    setIsSelectGuardianOpen(false)
-  }, [])
-
-  const openIntroGuardianModal = useCallback(() => {
-    setIsIntroGuardianOpen(true)
-  }, [])
-
-  const closeIntroGuardianModal = useCallback(() => {
-    setIsIntroGuardianOpen(false)
   }, [])
 
   const openEditGuardianModal = useCallback((editType: any) => {
@@ -118,7 +82,7 @@ export default function Guardian() {
 
     setEditType('add')
     setCanBackToSelectGuardianType(true)
-    setIsSelectGuardianOpen(true)
+    setIsEditGuardianOpen(true)
   }, [isEditing, guardiansInfo])
 
   const startRemoveGuardian = useCallback((i: any, address: any) => {
@@ -144,7 +108,7 @@ export default function Guardian() {
     setEditType('add')
     setIsEditing(true)
     setCanBackToSelectGuardianType(true)
-    setIsSelectGuardianOpen(true)
+    setIsEditGuardianOpen(true)
   }, [isEditing, guardiansInfo])
 
   const startEditSingleGuardian = useCallback((info: any) => {
@@ -297,35 +261,11 @@ export default function Guardian() {
           />
         )}
       </Box>
-      <SetSignerModal
-        isOpen={isSetDefaultOpen}
-        onClose={closeSetDefaultModal}
-      />
-      <SelectSignerTypeModal
-        isOpen={isChooseSignerOpen}
-        onClose={closeChooseSignerModal}
-        startWalletConnect={openWalletConnectModal}
-      />
-      <SelectGuardianTypeModal
-        isOpen={isSelectGuardianOpen}
-        onClose={closeSelectGuardianModal}
-        setIsIntroGuardianOpen={setIsIntroGuardianOpen}
-        setIsSelectGuardianOpen={setIsSelectGuardianOpen}
-        setIsEditGuardianOpen={setIsEditGuardianOpen}
-      />
-      <IntroGuardianModal
-        isOpen={isIntroGuardianOpen}
-        onClose={closeIntroGuardianModal}
-        setIsIntroGuardianOpen={setIsIntroGuardianOpen}
-        setIsSelectGuardianOpen={setIsSelectGuardianOpen}
-      />
       <EditGuardianModal
         isOpen={isEditGuardianOpen}
         onClose={closeEditGuardianModal}
-        setIsSelectGuardianOpen={setIsSelectGuardianOpen}
         setIsEditGuardianOpen={setIsEditGuardianOpen}
         onConfirm={onEditGuardianConfirm}
-        canGoBack={canBackToSelectGuardianType}
         editType={editType}
       />
       <RemoveGuardianModal

@@ -45,9 +45,9 @@ export default function EditGuardianModal({
             display="flex"
           >
             <Box width="100%" padding="0 20px">
-              <Title fontSize="20px" fontWeight="800">Ethereum wallet</Title>
+              <Title fontSize="20px" fontWeight="800">Add guardian</Title>
               <TextBody fontWeight="500" marginBottom="31px">
-                Use your own or your friends & family's wallet addresses.
+                Use wallet address from yourself or friends & family. Fully decentralized
               </TextBody>
               <Box>
                 <EditGuardianForm onConfirm={onConfirmLocal} onBack={onBack} canGoBack={canGoBack} editType={editType} />

@@ -124,11 +124,6 @@ const GuardianInput = ({
         leftOnChange={onChange(`name_${id}`)}
         leftOnBlur={onBlur(`name_${id}`)}
         leftErrorMsg={showErrors[`name_${id}`] && errors[`name_${id}`]}
-        leftComponent={
-          <Text color="#898989" fontWeight="600">
-            {import.meta.env.VITE_MAINNET_ADDRESS_PREFIX}
-          </Text>
-        }
         _leftContainerStyles={{
           width: { base: '100%', 'md': '240px' },
           marginBottom: { base: '20px', 'md': '0' },
@@ -230,14 +225,6 @@ export default function Edit({
               i={i}
             />
           ))}
-          {editType !== 'editSingle' && (
-            <TextButton onClick={() => addGuardian()} color="#FF2E79" _hover={{ color: '#FF2E79' }} padding="2px">
-              <PlusIcon color="#FF2E79" />
-              <Text fontSize="16px" fontWeight="800" marginLeft="5px" color="#FF2E79">
-                Add more guardians
-              </Text>
-            </TextButton>
-          )}
         </Box>
       </Box>
       <Box marginTop="30px" display="flex" justifyContent="flex-end">
