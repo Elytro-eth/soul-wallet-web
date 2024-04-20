@@ -238,12 +238,6 @@ export default function Guardian() {
       >
         <SectionMenu>
           <SectionMenuItem
-            isActive={activeSection == 'signer'}
-            onClick={() => navigate('/security/signer')}
-          >
-            Signer
-          </SectionMenuItem>
-          <SectionMenuItem
             isActive={activeSection == 'guardian'}
             onClick={() => navigate('/security/guardian')}
           >
