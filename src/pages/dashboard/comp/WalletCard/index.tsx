@@ -18,11 +18,11 @@ import { useBalanceStore } from '@/store/balance';
 import { toFixed } from '@/lib/tools';
 
 export default function WalletCard() {
-  const { showSend, showReceive } = useWalletContext();
+  const { showSend, showReceive ,showActiveWalletModal} = useWalletContext();
   const [hoverIndex, setHoverIndex] = useState(-1);
   const { selectedAddress } = useAddressStore();
   const { totalUsdValue } = useBalanceStore();
-  const { chainConfig } = useConfig();
+  const { chainConfig, selectedAddressItem } = useConfig();
   const { scanUrl } = chainConfig;
 
   const actions = [
@@ -32,7 +32,7 @@ export default function WalletCard() {
       iconActive: IconSendActive,
       isComing: false,
       onClick: () => {
-        showSend(ethers.ZeroAddress, 'send');
+        selectedAddressItem.activated ?  showSend(ethers.ZeroAddress, 'send') : showActiveWalletModal();
       },
     },
     {

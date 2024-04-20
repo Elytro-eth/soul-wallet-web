@@ -10,26 +10,32 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  Tooltip
-} from '@chakra-ui/react'
+  Tooltip,
+} from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import Button from '@/components/Button'
-import TextBody from '@/components/new/TextBody'
-import VideoIcon from '@/components/Icons/Video'
-import TokenEmptyIcon from '@/assets/icons/token-empty.svg'
-import ActivityEmptyIcon from '@/assets/icons/activity-empty.svg'
-import QrcodeIcon from '@/components/Icons/Qrcode'
+import Button from '@/components/Button';
+import BN from 'bignumber.js';
+import TextBody from '@/components/new/TextBody';
+import VideoIcon from '@/components/Icons/Video';
+import TokenEmptyIcon from '@/assets/icons/token-empty.svg';
+import ActivityEmptyIcon from '@/assets/icons/activity-empty.svg';
+import QrcodeIcon from '@/components/Icons/Qrcode';
 import { useAddressStore } from '@/store/address';
-import useWallet from '@/hooks/useWallet';
 import useTools from '@/hooks/useTools';
+import useWalletContext from '@/context/hooks/useWalletContext';
+import { useBalanceStore } from '@/store/balance';
+import { ZeroAddress } from 'ethers';
+import useConfig from '@/hooks/useConfig';
 
 const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [promiseInfo, setPromiseInfo] = useState<any>({});
-  const { getActivateOp, signAndSend } = useWallet();
-  const { selectedAddress } = useAddressStore();
+  const { selectedAddress, setActivated } = useAddressStore();
   const { generateQrCode, doCopy } = useTools();
+  const { showSignTransaction } = useWalletContext();
+  const { selectedAddressItem } = useConfig();
   const [imgSrc, setImgSrc] = useState<string>('');
+  const { getTokenBalance } = useBalanceStore();
 
   useImperativeHandle(ref, () => ({
     async show() {
@@ -48,11 +54,14 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
     promiseInfo.reject('User close');
   };
 
-  const doActivate = async() => {
-    const userOp = await getActivateOp()
-    console.log('user op', userOp)
-    await signAndSend(userOp);
-  }
+  const doActivate = async () => {
+    await showSignTransaction([]);
+    setActivated(selectedAddress, true);
+    // onClose();
+    // const userOp = await getActivateOp()
+    // console.log('user op', userOp)
+    // await signAndSend(userOp);
+  };
 
   const generateQR = async (text: string) => {
     try {
@@ -68,6 +77,9 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
     }
     generateQR(selectedAddress);
   }, [selectedAddress]);
+
+  const userDeposited = BN(getTokenBalance(ZeroAddress).tokenBalance).isGreaterThan(0);
+  const userActivated = selectedAddressItem ? selectedAddressItem.activated : false;
 
   return (
     <div ref={ref}>
@@ -86,11 +98,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
           </ModalHeader>
           <ModalCloseButton top="14px" />
           <ModalBody overflow="auto" padding="20px 32px">
-            <Box
-              height="100%"
-              roundedBottom="20px"
-              display="flex"
-            >
+            <Box height="100%" roundedBottom="20px" display="flex">
               <Box width="100%">
                 <Box width="100%" display="flex" flexWrap="wrap">
                   <Box
@@ -107,20 +115,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     overflow="hidden"
                     boxSizing="border-box"
                   >
-                    {true ? (
-                      <Box
-                        position="absolute"
-                        top="0"
-                        right="0"
-                        background="#F1F1F1"
-                        borderRadius="4px"
-                        padding="4px 8px 4px 8px"
-                        fontSize="10px"
-                        color="#4E4E4E"
-                      >
-                        Uncompleted
-                      </Box>
-                    ) : (
+                    {userDeposited ? (
                       <Box
                         position="absolute"
                         top="0"
@@ -133,6 +128,19 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       >
                         Completed
                       </Box>
+                    ) : (
+                      <Box
+                        position="absolute"
+                        top="0"
+                        right="0"
+                        background="#F1F1F1"
+                        borderRadius="4px"
+                        padding="4px 8px 4px 8px"
+                        fontSize="10px"
+                        color="#4E4E4E"
+                      >
+                        Uncompleted
+                      </Box>
                     )}
                     <Box
                       width="80px"
@@ -144,18 +152,11 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       justifyContent="center"
                       background="rgba(0, 0, 0, 0.05)"
                     >
-                      <Image
-                        src={TokenEmptyIcon}
-                        width="80px"
-                        height="80px"
-                      />
+                      <Image src={TokenEmptyIcon} width="80px" height="80px" />
                     </Box>
                     <Box>
                       <TextBody fontSize="20px">Step 1: Deposit ETH</TextBody>
-                      <Box
-                        display="flex"
-                        marginTop="4px"
-                      >
+                      <Box display="flex" marginTop="4px">
                         <Box
                           background="#F1F1F1"
                           padding="0px 12px 0px 12px"
@@ -165,16 +166,17 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           alignItems="center"
                           justifyContent="center"
                         >
-                          <TextBody
-                            type="t3"
-                            fontWeight="500"
-                            lineHeight="18px"
-                          >
-                            <Box as="span" fontWeight="700">ETH address:</Box> {selectedAddress}
+                          <TextBody type="t3" fontWeight="500" lineHeight="18px">
+                            <Box as="span" fontWeight="700">
+                              ETH address:
+                            </Box>{' '}
+                            {selectedAddress}
                           </TextBody>
                         </Box>
                         <Box marginLeft="8px">
-                          <Button size="sm" height="28px" onClick={() => doCopy(selectedAddress)}>Copy address</Button>
+                          <Button size="sm" height="28px" onClick={() => doCopy(selectedAddress)}>
+                            Copy address
+                          </Button>
                         </Box>
                         <Box marginLeft="8px">
                           <Tooltip
@@ -214,20 +216,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     overflow="hidden"
                     boxSizing="border-box"
                   >
-                    {true ? (
-                      <Box
-                        position="absolute"
-                        top="0"
-                        right="0"
-                        background="#F1F1F1"
-                        borderRadius="4px"
-                        padding="4px 8px 4px 8px"
-                        fontSize="10px"
-                        color="#4E4E4E"
-                      >
-                        Uncompleted
-                      </Box>
-                    ) : (
+                    {userActivated ? (
                       <Box
                         position="absolute"
                         top="0"
@@ -240,6 +229,19 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       >
                         Completed
                       </Box>
+                    ) : (
+                      <Box
+                        position="absolute"
+                        top="0"
+                        right="0"
+                        background="#F1F1F1"
+                        borderRadius="4px"
+                        padding="4px 8px 4px 8px"
+                        fontSize="10px"
+                        color="#4E4E4E"
+                      >
+                        Uncompleted
+                      </Box>
                     )}
                     <Box
                       width="80px"
@@ -251,29 +253,20 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       justifyContent="center"
                       background="rgba(0, 0, 0, 0.05)"
                     >
-                      <Image
-                        src={ActivityEmptyIcon}
-                        width="80px"
-                        height="80px"
-                      />
+                      <Image src={ActivityEmptyIcon} width="80px" height="80px" />
                     </Box>
                     <Box>
                       <TextBody fontSize="20px" display="flex" alignItems="center">
                         <Box>Step 2: Active wallet</Box>
                       </TextBody>
-                      <Box
-                        display="flex"
-                      >
-                        <Box
-                          minHeight="28px"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
+                      <Box display="flex">
+                        <Box minHeight="28px" display="flex" alignItems="center" justifyContent="center">
                           <TextBody type="t3">{`The activation fee will be covered by Soul Wallet. $0 cost on you.`}</TextBody>
                         </Box>
                         <Box marginLeft="63px">
-                          <Button size="sm" height="28px" onClick={doActivate}>Active now</Button>
+                          <Button size="sm" disabled={!userDeposited || userActivated} height="28px" onClick={doActivate}>
+                            Active now
+                          </Button>
                         </Box>
                       </Box>
                     </Box>

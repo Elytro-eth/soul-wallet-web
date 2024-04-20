@@ -4,9 +4,8 @@ import { persist } from 'zustand/middleware';
 
 export interface IAddressItem {
   address: string;
-  chainIdHex:string;
+  chainIdHex: string;
   activated?: boolean;
-  recovering?: boolean;
 }
 
 export interface IAddressStore {
@@ -18,13 +17,15 @@ export interface IAddressStore {
   setAddressList: (addressList: IAddressItem[]) => void;
   clearAddresses: () => void;
   addAddressItem: (addressItem: IAddressItem) => void;
+  getIsActivated: (address: string, chainId: string) => boolean | undefined;
+  setActivated: (address: string, activated: boolean) => void;
   updateAddressItem: (address: string, addressItem: Partial<IAddressItem>) => void;
   getSelectedAddressItem: () => IAddressItem;
   clearAddressList: () => void;
 }
 
 export const getIndexByAddress = (addressList: IAddressItem[], address: string) => {
-  if(!addressList || !addressList.length || !address) return -1;
+  if (!addressList || !addressList.length || !address) return -1;
   return addressList.findIndex((item: IAddressItem) => item.address.toLowerCase() === address.toLowerCase());
 };
 
@@ -45,6 +46,22 @@ const createAddressSlice = immer<IAddressStore>((set, get) => ({
     set({
       selectedAddress: address,
     }),
+
+  getIsActivated: (address: string) => {
+    const index = getIndexByAddress(get().addressList, address);
+    const addressInfo = get().addressList[index];
+    return addressInfo && addressInfo.activated;
+  },
+
+  setActivated: (address: string,  activated: boolean) => {
+    set((state) => {
+      const index = getIndexByAddress(state.addressList, address);
+      if (index === -1) {
+        return;
+      }
+      state.addressList[index].activated = activated;
+    });
+  },
 
   setAddressList: (addressList: IAddressItem[]) => {
     set((state) => {

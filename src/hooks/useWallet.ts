@@ -52,6 +52,7 @@ export default function useWallet() {
       {
         address: recoverInfo.recoveryRecord.address,
         chainIdHex: recoverInfo.recoveryRecord.chain_id,
+        activated: true,
       },
     ]);
     const credentialsInStore = recoverInfo.signers.filter((signer: any) => signer.type === 'passkey');
@@ -144,7 +145,6 @@ export default function useWallet() {
         address,
         chainIdHex: selectedChainId,
         activated: false,
-        recovering: false,
       },
     ]);
 

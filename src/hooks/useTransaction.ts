@@ -14,8 +14,6 @@ import { ABI_ReceivePayment } from '@soulwallet/abi';
 
 export default function useTransaction() {
   const { showSignTransaction } = useWalletContext();
-  const { soulWallet } = useSdk();
-  const { set1559Fee, getGasPrice } = useQuery();
   const { selectedAddress } = useAddressStore();
 
 
@@ -55,33 +53,9 @@ export default function useTransaction() {
     return showSignTransaction([tx], '', to);
   };
 
-  const getUserOp: any = async (txns: any, payToken: string) => {
-    try {
-      const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
-
-      // todo, add noncekey and noncevalue
-      const userOpRet = await soulWallet.fromTransaction(maxFeePerGas, maxPriorityFeePerGas, selectedAddress, txns);
-
-      if (userOpRet.isErr()) {
-        throw new Error(userOpRet.ERR.message);
-      }
-
-      let userOp = userOpRet.OK;
-      userOp = await set1559Fee(userOp, payToken);
-
-      userOp.preVerificationGas = `0x${BN(userOp.preVerificationGas.toString()).plus(15000).toString(16)}`;
-      userOp.verificationGasLimit = `0x${BN(userOp.verificationGasLimit.toString()).plus(30000).toString(16)}`;
-
-      return userOp;
-    } catch (err:any) {
-      throw new Error(err.message);
-    }
-  };
-
   return {
     sendErc20,
     sendEth,
-    getUserOp,
     payTask,
   };
 }

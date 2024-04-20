@@ -9,8 +9,8 @@ import SendModal from '@/components/SendModal';
 import ReceiveModal from '@/components/ReceiveModal';
 import ActiveWalletModal from '@/components/ActiveWalletModal';
 import useConfig from '@/hooks/useConfig';
-import { useTempStore } from '@/store/temp';
-import useWallet from '@/hooks/useWallet';
+import { useAddressStore } from '@/store/address';
+import { useChainStore } from '@/store/chain';
 
 interface IWalletContext {
   ethersProvider: any;
@@ -24,6 +24,7 @@ interface IWalletContext {
   showFeedback: () => Promise<void>;
   showLogout: (_redirectUrl?: string) => Promise<void>;
   showActiveWalletModal: () => Promise<void>;
+  checkActivated: () => Promise<boolean | undefined>;
 }
 
 export const WalletContext = createContext<IWalletContext>({
@@ -38,12 +39,14 @@ export const WalletContext = createContext<IWalletContext>({
   showFeedback: async () => {},
   showLogout: async (_redirectUrl?: any) => {},
   showActiveWalletModal: async () => {},
+  checkActivated: async () => false,
 });
 
 export const WalletContextProvider = ({ children }: any) => {
   console.log('Render WalletContext');
   const { selectedChainItem } = useConfig();
-  // const { checkRecoverStatus } = useWallet();
+  const { selectedAddress, getIsActivated, setActivated } = useAddressStore();
+  const { selectedChainId } = useChainStore();
   const signTransactionModal = useRef<any>();
   const connectWalletModal = useRef<any>();
   const confirmPaymentModal = useRef<any>();
@@ -76,7 +79,7 @@ export const WalletContextProvider = ({ children }: any) => {
   };
 
   const showSignMessage = async (messageToSign: string, signType?: string, guardianInfo?: any) => {
-    console.log('G', guardianInfo)
+    console.log('G', guardianInfo);
 
     return await signMessageModal.current.show(messageToSign, signType, guardianInfo);
   };
@@ -105,6 +108,25 @@ export const WalletContextProvider = ({ children }: any) => {
     return await activeWalletModal.current.show();
   };
 
+  const checkActivated = async () => {
+    const res = getIsActivated(selectedAddress, selectedChainId);
+    console.log('act', res);
+    if (res) {
+      return true;
+    } else {
+      const contractCode = await ethersProvider.getCode(selectedAddress);
+      console.log('check code result', contractCode);
+      // is already activated
+      if (contractCode !== '0x') {
+        setActivated(selectedAddress, true);
+        return true;
+      }else{
+        console.log('11111')
+        return false;
+      }
+    }
+  };
+
   return (
     <WalletContext.Provider
       value={{
@@ -118,15 +140,14 @@ export const WalletContextProvider = ({ children }: any) => {
         showClaimAssets,
         showLogout,
         showFeedback,
-        showActiveWalletModal
+        showActiveWalletModal,
+        checkActivated,
       }}
     >
       {children}
-      {/** todo, move to another component **/}
       <SignTransactionModal ref={signTransactionModal} />
       <ConfirmPaymentModal ref={confirmPaymentModal} />
       <SignMessageModal ref={signMessageModal} />
-      {/* <ClaimAssetsModal ref={claimAssetsModal} /> */}
       <ReceiveModal ref={receiveModal} />
       <SendModal ref={sendModal} />
       <FeedbackModal ref={feedbackModal} />

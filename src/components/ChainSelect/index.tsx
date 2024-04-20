@@ -39,13 +39,11 @@ export default function ChainSelect({ isInModal }: any) {
 
           <MenuList w="260px">
             {chainList.map((item: any, idx: number) => {
-              const isRecovering = addressList.filter(addressItem => addressItem.chainIdHex === item.chainIdHex)[0].recovering;
               return (
                 <React.Fragment key={idx}>
                   {idx ? <MenuDivider /> : ''}
                   <MenuItem
                     key={item.chainIdHex}
-                    filter={isRecovering ? 'grayscale(1)' : ''}
                     onClick={() => setSelectedChainId(item.chainIdHex)}
                   >
                     <Flex w="100%" align={'center'} justify={'space-between'}>
@@ -53,10 +51,10 @@ export default function ChainSelect({ isInModal }: any) {
                         <Image src={item.icon} w="5" h="5" />
                         <Text data-testid={`text-chainname-${idx}`}>{item.chainName}</Text>
                       </Flex>
-                      {isRecovering && <Text fontSize="12px">Recovering</Text>}
+                      {/* {isRecovering && <Text fontSize="12px">Recovering</Text>}
                       {item.chainIdHex === selectedChainId && !isRecovering && (
                         <Image src={IconChecked} w="5" h="5" />
-                      )}
+                      )} */}
                     </Flex>
                   </MenuItem>
                 </React.Fragment>

@@ -63,7 +63,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
   const [decodedData, setDecodedData] = useState<any>({});
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   const [signing, setSigning] = useState<boolean>(false);
-  const { ethersProvider } = useWalletContext();
+  const { ethersProvider, checkActivated, } = useWalletContext();
   const { getTokenBalance } = useBalanceStore();
   const [prechecked, setPrechecked] = useState(false);
   const { getSelectedKeyType } = useSignerStore();
@@ -183,8 +183,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
   const getFinalUserOp = async (txns: any, payTokenAddress: string) => {
     try {
       // IMPORTANT TODO
-      const isActivated = true;
-      console.log('is Activated?', isActivated);
+      const isActivated = await checkActivated();
       if (isActivated) {
         // if activated, get userOp directly
         return await getUserOp(txns, payTokenAddress);
@@ -225,7 +224,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
       );
       console.log('decoded data', callDataDecodes);
       setDecodedData(callDataDecodes);
-      checkSponser(userOp);
+      // checkSponser(userOp);
       getFinalPrefund(userOp, payTokenAddress);
       setUserOpFormatted(userOp);
       if (payTokenAddress === ethers.ZeroAddress) {
@@ -265,7 +264,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
 
   // IMPORTANT IMPORTANT TODO, rendered twice
   useEffect(() => {
-    if (!txns || !txns.length || !payToken) {
+    if (!payToken) {
       return;
     }
     console.log('do pre check', txns, payToken);
