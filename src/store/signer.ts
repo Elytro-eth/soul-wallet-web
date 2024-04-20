@@ -45,8 +45,6 @@ const createCredentialSlice = immer<ISignerStore>((set, get) => ({
   setCredentials: (credentials: ICredentialItem[]) => {
     set((state) => {
       state.credentials = credentials;
-      console.log('`````', credentials[0])
-      // set the first one as default
       state.signerId = credentials[0].id;
       state.selectedKeyType = credentials[0].algorithm === 'ES256' ? SignkeyType.P256 : SignkeyType.RS256;
     });

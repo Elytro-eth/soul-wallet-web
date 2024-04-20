@@ -25,11 +25,12 @@ import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import { useTempStore } from '@/store/temp';
+import { useGuardianStore } from '@/store/guardian';
 
 export default function useWallet() {
   const { signByPasskey, authenticate } = usePasskey();
   const { chainConfig } = useConfig();
-  const { ethersProvider } = useWalletContext();
   const { setSlotInfo, slotInfo } = useSlotStore();
   const { selectedChainId, setSelectedChainId } = useChainStore();
   const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
@@ -37,7 +38,35 @@ export default function useWallet() {
   const { navigate } = useBrowser();
   const toast = useToast();
   const { clearLogData } = useTools();
+  const { setGuardiansInfo } = useGuardianStore();
+  const { updateRecoverInfo, recoverInfo, clearTempStore } = useTempStore();
   const { selectedAddress, setSelectedAddress, setWalletName, setAddressList } = useAddressStore();
+
+  // will be executed only once after recover process finished
+  const boostAfterRecovered = async (_recoverInfo: any) => {
+    console.log('recover info is', _recoverInfo);
+    setSlotInfo({
+      ...recoverInfo.initInfo
+    });
+    setAddressList([
+      {
+        address: recoverInfo.recoveryRecord.address,
+        chainIdHex: recoverInfo.recoveryRecord.chain_id,
+      },
+    ]);
+    const credentialsInStore = recoverInfo.signers.filter((signer: any) => signer.type === 'passkey');
+    if (credentialsInStore.length) setCredentials(credentialsInStore);
+    setSelectedChainId(_recoverInfo.chain_id);
+
+    setGuardiansInfo({
+      guardianHash: recoverInfo.guardian_hash,
+      guardianDetails: recoverInfo.guardian_info,
+    });
+
+    clearTempStore();
+
+    navigate('/dashboard');
+  };
 
   const loginWallet = async () => {
     const { credential } = await authenticate();
@@ -96,7 +125,9 @@ export default function useWallet() {
     };
 
     // do time consuming jobs
-    const address = (await soulWallet.calcWalletAddress(createIndex, initialKeys, initialGuardianHash,defaultGuardianSafePeriod)).OK;
+    const address = (
+      await soulWallet.calcWalletAddress(createIndex, initialKeys, initialGuardianHash, defaultGuardianSafePeriod)
+    ).OK;
     // const address2 = (
     //   await soulWallet.calcWalletAddress(
     //     createIndex,
@@ -215,7 +246,7 @@ export default function useWallet() {
       userOp = await estimateGas(userOp, ZeroAddress);
 
       return userOp;
-    } catch (err:any) {
+    } catch (err: any) {
       throw new Error(err.message);
     }
   };
@@ -398,5 +429,6 @@ export default function useWallet() {
     getSponsor,
     initWallet,
     getUserOp,
+    boostAfterRecovered,
   };
 }

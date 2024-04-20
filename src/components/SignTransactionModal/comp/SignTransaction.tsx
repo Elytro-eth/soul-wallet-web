@@ -167,17 +167,6 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
     if (safeUrl.includes('staging.aave.com')) {
       steps = [4];
     }
-
-    if (steps.length > 0) {
-      if (slotInfo.slot) {
-        const res = await api.operation.finishStep({
-          slot: slotInfo.slot,
-          steps,
-        });
-
-        setFinishedSteps(res.data.finishedSteps);
-      }
-    }
   };
 
   const getFinalPrefund = async (userOp: any, payTokenAddress: string) => {

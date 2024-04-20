@@ -16,9 +16,11 @@ import useTools from '@/hooks/useTools';
 import StepProgress from '../StepProgress'
 import AddressIcon from '@/components/AddressIcon';
 import { SignHeader } from '@/pages/public/Sign';
+import useConfig from '@/hooks/useConfig';
 
 export default function GuardianApprovals() {
   const { recoverInfo } = useTempStore()
+  const { chainConfig } = useConfig();
   const { recoveryID, guardianInfo, recoveryRecord, signers } = recoverInfo
   const hasRecord = recoveryRecord && recoveryID
   const guardianSignatures = hasRecord ? recoveryRecord.guardianSignatures : []
@@ -26,7 +28,7 @@ export default function GuardianApprovals() {
   const guardianSignUrl = `${location.origin}/public/sign/${recoveryID}`
 
   const openScan = (address: string) => {
-    window.open(`https://sepolia.etherscan.io/address/${address}`, '_blank')
+    window.open(`${chainConfig.scanUrl}/address/${address}`, '_blank')
   }
 
   const signatures = hasRecord ? (guardianInfo.guardians || []).map((item: any) => {

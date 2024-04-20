@@ -7,6 +7,7 @@ import useBrowser from '../hooks/useBrowser';
 import { Box } from '@chakra-ui/react';
 import { useAddressStore } from '@/store/address';
 import storage from '@/lib/storage';
+import { useTempStore } from '@/store/temp';
 import { useLocation } from 'react-router-dom';
 import { storeVersion } from '@/config';
 import useTools from '@/hooks/useTools';
@@ -15,10 +16,16 @@ export default function FindRoute({ children }: { children: ReactNode }) {
   const { navigate } = useBrowser();
   const location = useLocation();
   const { addressList, selectedAddress } = useAddressStore();
+  const { recoverInfo } = useTempStore();
+
   const { clearLogData } = useTools();
 
   const findRoute = async () => {
     const storageVersion = storage.getItem('storeVersion');
+
+    if(recoverInfo.recoveryID){
+      navigate('/recover');
+    }
 
     const allowBypass =
       location.pathname.includes('recover') ||

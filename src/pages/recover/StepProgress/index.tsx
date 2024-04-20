@@ -7,9 +7,9 @@ import StepCheckedIcon from '@/components/Icons/StepChecked'
 
 const stepNames = [
   'Wallet address',
-  'Add signer',
+  'Wallet setup',
   'Guardian signature request',
-  'Pay recovery fee'
+  'Recovery'
 ]
 
 export default function StepProgress({ activeIndex }: any) {

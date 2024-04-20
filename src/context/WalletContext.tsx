@@ -10,6 +10,7 @@ import ReceiveModal from '@/components/ReceiveModal';
 import ActiveWalletModal from '@/components/ActiveWalletModal';
 import useConfig from '@/hooks/useConfig';
 import { useTempStore } from '@/store/temp';
+import useWallet from '@/hooks/useWallet';
 
 interface IWalletContext {
   ethersProvider: any;
@@ -42,7 +43,7 @@ export const WalletContext = createContext<IWalletContext>({
 export const WalletContextProvider = ({ children }: any) => {
   console.log('Render WalletContext');
   const { selectedChainItem } = useConfig();
-  const { recoverInfo } = useTempStore();
+  // const { checkRecoverStatus } = useWallet();
   const signTransactionModal = useRef<any>();
   const connectWalletModal = useRef<any>();
   const confirmPaymentModal = useRef<any>();
@@ -61,26 +62,6 @@ export const WalletContextProvider = ({ children }: any) => {
     }
     return new ethers.JsonRpcProvider(selectedChainItem.provider);
   }, [selectedChainItem]);
-
-  useEffect(() => {
-    const { recoverInfo } = useTempStore.getState();
-
-    console.log('set interval recover info', recoverInfo);
-
-    // const recoveryID = recoverInfo.recoveryID;
-
-    // if (!recoveryID) {
-    //   return;
-    // }
-
-    // checkRecoverStatus(recoverInfo);
-
-    // const interval = setInterval(() => checkRecoverStatus(recoverInfo), 5000);
-
-    // return () => {
-    //   clearInterval(interval);
-    // };
-  }, [recoverInfo.recoveryID]);
 
   const showSignTransaction = async (txns: any, origin?: string, sendTo?: string) => {
     return await signTransactionModal.current.show(txns, origin, sendTo);

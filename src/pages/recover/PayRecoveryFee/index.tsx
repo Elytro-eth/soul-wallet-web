@@ -1,126 +1,34 @@
 import { useState, useCallback, useEffect } from 'react';
-import {
-  Box,
-  Image,
-  Flex,
-  useToast
-} from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { SignHeader } from '@/pages/public/Sign';
-import RoundContainer from '@/components/new/RoundContainer'
-import Heading from '@/components/new/Heading'
-import TextBody from '@/components/new/TextBody'
-import Button from '@/components/Button'
+import RoundContainer from '@/components/new/RoundContainer';
+import Heading from '@/components/new/Heading';
+import TextBody from '@/components/new/TextBody';
+import Button from '@/components/Button';
 import { useTempStore } from '@/store/temp';
-import useTools from '@/hooks/useTools';
-import { ethers } from 'ethers';
-import BN from 'bignumber.js';
-import { useWriteContract, useWaitForTransactionReceipt, useSwitchChain } from 'wagmi';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { paymentContractConfig } from '@/contracts/contracts';
-import { metaMask } from 'wagmi/connectors'
-import useWalletContext from '@/context/hooks/useWalletContext';
-import useWagmi from '@/hooks/useWagmi'
-import RecoverCheckedIcon from '@/components/Icons/RecoverChecked'
-import StepProgress from '../StepProgress'
-import ConnectWalletModal from '../ConnectWalletModal'
+import RecoverCheckedIcon from '@/components/Icons/RecoverChecked';
+import StepProgress from '../StepProgress';
 import api from '@/lib/api';
+import useWallet from '@/hooks/useWallet';
 
 export default function PayRecoveryFee({ next }: any) {
-  const { showConnectWallet } = useWalletContext();
-  const { recoverInfo } = useTempStore()
-  const { recoveryID, recoveryRecord  } = recoverInfo
-  const { estimatedFee } = recoveryRecord
-  const [imgSrc, setImgSrc] = useState<string>('');
-  const { generateQrCode } = useTools();
-  const [paying, setPaying] = useState(false)
-  const [isPaid, setIsPaid] = useState(false)
-  const [isRecovering, setIsRecovering] = useState(false)
-  const [isRecovered, setIsRecovered] = useState(false)
-  const { doCopy } = useTools();
-  const toast = useToast();
-  const { switchChain } = useSwitchChain();
-  const {
-    connectEOA,
-    isConnected,
-    isConnectOpen,
-    openConnect,
-    closeConnect,
-    isConnecting,
-    chainId : connectedChainId
-  } = useWagmi()
-  const { writeContract: pay } = useWriteContract();
+  const { recoverInfo } = useTempStore();
+  const { recoveryID } = recoverInfo;
+  const { boostAfterRecovered } = useWallet();
+  const [isRecovering, setIsRecovering] = useState(false);
+  const [isRecovered, setIsRecovered] = useState(false);
 
-  const mainnetChainId = Number(import.meta.env.VITE_MAINNET_CHAIN_ID);
-
-  const payUrl = `${location.origin}/public/pay/${recoveryID}`
-
-  const generateQR = async (text: string) => {
-    try {
-      setImgSrc(await generateQrCode(text));
-    } catch (err) {
-      console.error(err);
+  const doRecover = async () => {
+    while (true) {
+      setIsRecovering(true);
+      const res:any = await api.recovery.execute({ recoveryID });
+      if (res.msg === 'executeRecovery tirggered' || res.msg === 'already executed') {
+        const res = (await api.guardian.getRecoverRecord({ recoveryID })).data;
+        await boostAfterRecovered(res);
+        break;
+      }
     }
   };
-
-  const doPay = useCallback(async () => {
-    try {
-      setPaying(true)
-      pay(
-        {
-          ...paymentContractConfig,
-          functionName: 'pay',
-          args: [recoveryID],
-          value: ethers.parseEther(ethers.formatEther(BN(estimatedFee).toFixed())),
-        },
-        {
-          onSuccess: (hash) => {
-            setPaying(false)
-            setIsPaid(true)
-            toast({
-              title: 'Pay request sent!',
-              status: 'success',
-            });
-            console.log('success', hash);
-          },
-          onSettled: () => {
-            console.log('settled');
-          },
-          onError: (error) => {
-            setPaying(false)
-            let message = error.message
-
-            if (message && message.indexOf('does not have enough funds') !== -1) {
-              message = 'Not enough balance in the wallet you connected'
-            }
-
-            if (message && message.indexOf('User rejected the request') !== -1) {
-              message = 'User rejected the request.'
-            }
-
-            toast({
-              title: message,
-              status: 'error',
-            });
-            console.log('error', error);
-          },
-        },
-      );
-    } catch (error: any) {
-      console.log('error', error.message)
-    }
-  }, [recoveryID, estimatedFee])
-
-  const doRecover = async() => {
-    const res =await api.recovery.execute({ recoveryID })
-    console.log('111', res);
-  }
-
-  useEffect(() => {
-    generateQR(payUrl);
-  }, []);
-
-  console.log('estimatedFee', estimatedFee)
-  console.log('isConnected222', isConnected)
 
   if (isRecovered) {
     return (
@@ -134,7 +42,7 @@ export default function PayRecoveryFee({ next }: any) {
           minHeight="calc(100% - 58px)"
           width="100%"
           paddingTop="60px"
-          flexDirection={{ base: 'column', 'md': 'row' }}
+          flexDirection={{ base: 'column', md: 'row' }}
         >
           <RoundContainer
             width="1058px"
@@ -171,20 +79,15 @@ export default function PayRecoveryFee({ next }: any) {
                 <RecoverCheckedIcon />
                 <Box>Your wallet has been recovered. Free to check it out!</Box>
               </TextBody>
-              <Button
-                size="lg"
-                fontSize="18px"
-                width="260px"
-              >
+              <Button size="lg" fontSize="18px" width="260px">
                 Go to Wallet
               </Button>
             </Box>
           </RoundContainer>
           <StepProgress activeIndex={3} />
-          <ConnectWalletModal isOpen={isConnectOpen} connectEOA={connectEOA} onClose={closeConnect} />
         </Box>
       </Flex>
-    )
+    );
   }
 
   return (
@@ -198,7 +101,7 @@ export default function PayRecoveryFee({ next }: any) {
         minHeight="calc(100% - 58px)"
         width="100%"
         paddingTop="60px"
-        flexDirection={{ base: 'column', 'md': 'row' }}
+        flexDirection={{ base: 'column', md: 'row' }}
       >
         <RoundContainer
           width="1058px"
@@ -232,19 +135,13 @@ export default function PayRecoveryFee({ next }: any) {
             >
               Soul Wallet is sponsored the recovery fee for you. Please click the button below to confirm the recovery.
             </TextBody>
-            <Button
-              size="lg"
-              fontSize="18px"
-              width="260px"
-              disabled={isRecovering}
-            >
+            <Button size="lg" fontSize="18px" width="260px" onClick={doRecover} disabled={isRecovering}>
               {isRecovering ? 'Recovering' : 'Confirm recovery'}
             </Button>
           </Box>
         </RoundContainer>
         <StepProgress activeIndex={3} />
-        <ConnectWalletModal isOpen={isConnectOpen} connectEOA={connectEOA} onClose={closeConnect} />
       </Box>
     </Flex>
-  )
+  );
 }

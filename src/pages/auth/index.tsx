@@ -118,7 +118,7 @@ export default function Auth() {
 
   useEffect(() => {
     // clear log data everytime visited
-    clearLogData();
+    // clearLogData();
   }, []);
 
   if (stepType === 'selectNetwork') {

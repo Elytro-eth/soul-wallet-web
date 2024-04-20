@@ -38,13 +38,11 @@ export default function Recover() {
   const next = useCallback(() => {
     setStep(step + 1)
   }, [step])
-  console.log('recoveryID', recoveryID)
 
   useEffect(() => {
     if (recoveryID) {
       const interval = setInterval(async () => {
         try {
-          console.log('recoveryID', recoveryID)
           const res2 = await api.guardian.getRecoverRecord({ recoveryID })
           const recoveryRecord = res2.data
 
@@ -79,9 +77,10 @@ export default function Recover() {
         setStep(3)
       } else if (status == 1) {
         setStep(4)
-      } else if (status >= 2) {
-        setStep(5)
       }
+      //  else if (status >= 2) {
+      //   setStep(5)
+      // }
     }
   }, [])
 
@@ -109,11 +108,11 @@ export default function Recover() {
     )
   }
 
-  if (step > 4) {
-    return (
-      <RecoverProgress />
-    )
-  }
+  // if (step > 4) {
+  //   return (
+  //     <RecoverProgress />
+  //   )
+  // }
 
   return (
     <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
