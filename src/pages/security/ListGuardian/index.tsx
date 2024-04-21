@@ -13,16 +13,17 @@ import { useTempStore } from '@/store/temp';
 import { useGuardianStore } from '@/store/guardian';
 import { useSettingStore } from '@/store/setting';
 import EmptyGuardianIcon from '@/assets/icons/empty-guardian.svg'
+import IconCheveronRight from '@/assets/icons/chevron-right.svg';
 
 export default function ListGuardian({
   startEditGuardian,
   enterEditGuardian,
+  openPendingGuardianModal,
   isPending
 }: any) {
   const { getAddressName } = useSettingStore();
   const guardianStore = useGuardianStore();
   const { guardiansInfo } = guardianStore;
-  const keepPrivate = guardiansInfo?.keepPrivate
 
   const guardianDetails = (guardiansInfo && guardiansInfo.guardianDetails) || {
     guardians: [],
@@ -75,24 +76,28 @@ export default function ListGuardian({
             </Box>
           </Box>
           {isPending && (
-            <Box background="#F3FBF2" borderRadius="8px" padding="8px 16px" fontFamily="Nunito" fontSize="14px" fontWeight="700" marginBottom="10px" width="fit-content">
-              You have a pending guardian update.
+            <Box
+              background="#F3FBF2"
+              borderRadius="8px"
+              padding="8px 16px"
+              fontFamily="Nunito"
+              fontSize="14px"
+              fontWeight="600"
+              width="fit-content"
+              whiteSpace="pre"
+              marginTop="35px"
+              marginBottom="18px"
+            >
+              You have a pending guardian update. New guardians updating in <Box color="#0CB700" as="span">12h : 56m : 03s</Box><Box fontWeight="700" as="span" marginLeft="24px" cursor="pointer" display="inline-flex" onClick={openPendingGuardianModal}>Details<Box display="flex" alignItems="center" justifyContent="center"><Image src={IconCheveronRight} w="16px" h="16px" /></Box></Box>
             </Box>
           )}
-          {!guardianList.length && !keepPrivate && (
+          {!guardianList.length && (
             <Box width="100%" display="flex" alignItems="center" justifyContent="center">
               <Box display="flex" flexDirection="column" alignItems="center"  justifyContent="center">
                 <Box width="85px" height="85px" borderRadius="85px">
                   <Image width="85px" height="85px" src={EmptyGuardianIcon} />
                 </Box>
                 <Box fontWeight="600" fontSize="14px" marginTop="10px">You currently have no guardians</Box>
-              </Box>
-            </Box>
-          )}
-          {!guardianList.length && keepPrivate && (
-            <Box width="100%" display="flex" alignItems="center" justifyContent="center">
-              <Box display="flex" flexDirection="column" alignItems="center"  justifyContent="center">
-                <Box fontWeight="600" fontSize="14px" marginTop="10px" width="391px" textAlign="center">Based on your privacy settings, the guardian list is encrypted, Please check backup file on your local device or email.</Box>
               </Box>
             </Box>
           )}
@@ -130,35 +135,10 @@ export default function ListGuardian({
             >
               Recovery settings
             </Title>
-            {!guardianList.length && !keepPrivate && (
+            {!guardianList.length && (
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Box fontWeight="600" fontSize="14px" marginTop="20px" marginBottom="20px">Setup recovery threshold after added guardians</Box>
               </Box>
-            )}
-            {!guardianList.length && keepPrivate && (
-              <Fragment>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="flex-start"
-                  marginTop="10px"
-                >
-                  <Box
-                    fontFamily="Nunito"
-                    fontWeight="700"
-                    fontSize="14px"
-                    marginRight="6px"
-                  >
-                    Advanced:
-                  </Box>
-                  <TextBody type="t2" display="flex" alignItems="center" justifyContent="flex-start">
-                    <Box marginRight="10px">Keep guardians private</Box>
-                    <Box width="42px" minWidth="42px" height="24px" background={keepPrivate ? '#1CD20F' : '#D9D9D9'} borderRadius="40px" padding="2px" cursor="pointer" transition="all 0.2s ease" paddingLeft={keepPrivate ? '20px' : '2px'}>
-                      <Box boxShadow={"0px 2.036px 0.679px 0px rgba(0, 0, 0, 0.06), 0px 2.036px 5.429px 0px rgba(0, 0, 0, 0.15), 0px 0px 0px 0.679px rgba(0, 0, 0, 0.04)"} width="20px" height="20px" background="white" borderRadius="30px" />
-                    </Box>
-                  </TextBody>
-                </Box>
-              </Fragment>
             )}
             {!!guardianList.length && (
               <Fragment>
@@ -210,27 +190,6 @@ export default function ListGuardian({
                       </Box>
                     </Box>
                     <Box>{`out of ${guardianDetails.guardians.length} guardian(s) confirmation.`}</Box>
-                  </TextBody>
-                </Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="flex-start"
-                  marginTop="10px"
-                >
-                  <Box
-                    fontFamily="Nunito"
-                    fontWeight="700"
-                    fontSize="14px"
-                    marginRight="6px"
-                  >
-                    Advanced:
-                  </Box>
-                  <TextBody type="t2" display="flex" alignItems="center" justifyContent="flex-start">
-                    <Box marginRight="10px">Keep guardians private</Box>
-                    <Box width="42px" minWidth="42px" height="24px" background={keepPrivate ? '#1CD20F' : '#D9D9D9'} borderRadius="40px" padding="2px" cursor="pointer" transition="all 0.2s ease" paddingLeft={keepPrivate ? '20px' : '2px'}>
-                      <Box boxShadow={"0px 2.036px 0.679px 0px rgba(0, 0, 0, 0.06), 0px 2.036px 5.429px 0px rgba(0, 0, 0, 0.15), 0px 0px 0px 0.679px rgba(0, 0, 0, 0.04)"} width="20px" height="20px" background="white" borderRadius="30px" />
-                    </Box>
                   </TextBody>
                 </Box>
               </Fragment>

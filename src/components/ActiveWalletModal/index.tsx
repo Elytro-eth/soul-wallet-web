@@ -169,7 +169,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           </TextBody>
                         </Box>
                         <Box marginLeft="8px">
-                          <Button size="sm" height="28px" onClick={() => doCopy(selectedAddress)}>
+                          <Button size="sm" height="28px" onClick={() => doCopy(selectedAddress)} width="104px">
                             Copy address
                           </Button>
                         </Box>
@@ -258,8 +258,8 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                         <Box minHeight="28px" display="flex" alignItems="center" justifyContent="center">
                           <TextBody type="t3">{`The activation fee will be covered by Soul Wallet. $0 cost on you.`}</TextBody>
                         </Box>
-                        <Box marginLeft="63px">
-                          <Button size="sm" disabled={!userDeposited || userActivated} height="28px" onClick={doActivate}>
+                        <Box marginLeft="54px">
+                          <Button size="sm" disabled={!userDeposited || userActivated} height="28px" onClick={doActivate} width="104px">
                             Active now
                           </Button>
                         </Box>

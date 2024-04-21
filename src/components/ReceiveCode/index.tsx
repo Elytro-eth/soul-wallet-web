@@ -34,7 +34,7 @@ const DepositHint2 = () => {
       // bottom={0}
     >
       <Box>
-        <Text mb="107px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
+        <Text mb="47px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
 
         </Text>
         <Checkbox
@@ -82,7 +82,7 @@ export default function ReceiveCode({ address, showFullAddress, imgWidth = '90px
     <Box position="relative" paddingTop="15px">
       {(!getAddressDisplay(selectedAddress)) && <DepositHint2 />}
       <Box textAlign={'center'} fontSize={'12px'} {...restProps}>
-        <Image src={imgSrc} mx="auto" display={'block'} w={imgWidth} mb="2" />
+        <Image src={imgSrc} mx="auto" display={'block'} w={148} mb="2" />
         <Flex fontSize={{base: '12px', lg: '14px'}} mb="2" justify={'center'} flexDir={{base: 'column', md: 'row'}}>
           <Text fontWeight={'700'}>{chainConfig.addressPrefix}</Text>
           <Text fontWeight={'500'}>
