@@ -84,9 +84,9 @@ export default function ListGuardian({
               fontSize="14px"
               fontWeight="600"
               width="fit-content"
-              whiteSpace="pre"
               marginTop="35px"
               marginBottom="18px"
+              maxWidth="100%"
             >
               You have a pending guardian update. New guardians updating in <Box color="#0CB700" as="span">12h : 56m : 03s</Box><Box fontWeight="700" as="span" marginLeft="24px" cursor="pointer" display="inline-flex" onClick={openPendingGuardianModal}>Details<Box display="flex" alignItems="center" justifyContent="center"><Image src={IconCheveronRight} w="16px" h="16px" /></Box></Box>
             </Box>

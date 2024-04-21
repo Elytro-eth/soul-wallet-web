@@ -6,6 +6,9 @@ import { useChainStore } from '@/store/chain';
 import useConfig from '@/hooks/useConfig';
 import { useSettingStore } from '@/store/setting';
 import { useAddressStore } from '@/store/address';
+import { useBalanceStore } from '@/store/balance';
+import { ZeroAddress } from 'ethers';
+import BN from 'bignumber.js';
 import Button from '../Button';
 
 interface IReceiveCode extends BoxProps {
@@ -62,6 +65,8 @@ export default function ReceiveCode({ address, showFullAddress, imgWidth = '90px
   const { generateQrCode, doCopy } = useTools();
   const { getAddressDisplay } = useSettingStore();
   const { selectedAddress } = useAddressStore();
+  const { getTokenBalance } = useBalanceStore();
+  const userDeposited = BN(getTokenBalance(ZeroAddress).tokenBalance).isGreaterThan(0);
   // const addressWithPrefix = `${chainConfig.addressPrefix}${address}`
   const generateQR = async (text: string) => {
     try {
@@ -80,7 +85,7 @@ export default function ReceiveCode({ address, showFullAddress, imgWidth = '90px
 
   return (
     <Box position="relative" paddingTop="15px">
-      {(!getAddressDisplay(selectedAddress)) && <DepositHint2 />}
+      {(!getAddressDisplay(selectedAddress) && !userDeposited) && <DepositHint2 />}
       <Box textAlign={'center'} fontSize={'12px'} {...restProps}>
         <Image src={imgSrc} mx="auto" display={'block'} w={148} mb="2" />
         <Flex fontSize={{base: '12px', lg: '14px'}} mb="2" justify={'center'} flexDir={{base: 'column', md: 'row'}}>

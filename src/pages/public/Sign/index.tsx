@@ -434,7 +434,7 @@ export default function Sign() {
     );
   }
 
-  if (isConnected) {
+  if (isConnected && false) {
     return (
       <Flex justify="center" align="center" width="100%" minHeight="100vh" background="#F2F4F7">
         <SignHeader />
@@ -462,7 +462,7 @@ export default function Sign() {
             <Box width={{ base: '100%', md: '100%' }} flex="1" display="flex" padding="60px">
               <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
                 <Box
-                  maxWidth="548px"
+                  maxWidth={{ base: '100%', md: '548px' }}
                   textAlign="center"
                   display="flex"
                   flexDirection="column"
@@ -501,6 +501,9 @@ export default function Sign() {
                   <Box
                     marginTop="27px"
                     display="flex"
+                    flexDirection={{ base: 'column', md: 'row' }}
+                    alignItems="center"
+                    width="max-content"
                   >
                     <Box
                       background="#F3F3F3"
@@ -508,12 +511,16 @@ export default function Sign() {
                       borderRadius="4px"
                       fontSize="14px"
                       fontWeight="500"
-                      marginRight="8px"
+                      marginRight={{ base: '0', md: '8px' }}
                       whiteSpace="pre"
                       display="flex"
                       alignItems="center"
+                      marginBottom={{ base: '10px', md: '0' }}
+                      flexDirection={{ base: 'column', md: 'row' }}
+                      minHeight="32px"
                     >
-                      <Box as="span" fontWeight="700">Recovery wallet:</Box> {recoveryAddress}
+                      <Box as="span" fontWeight="700">Recovery wallet:</Box>
+                      <Box as="span">{recoveryAddress}</Box>
                     </Box>
                     <Box
                       background="#F3F3F3"
@@ -628,6 +635,9 @@ export default function Sign() {
                 <Box
                   marginTop="27px"
                   display="flex"
+                  flexDirection={{ base: 'column', md: 'row' }}
+                  alignItems="center"
+                  width="max-content"
                 >
                   <Box
                     background="#F3F3F3"
@@ -635,10 +645,13 @@ export default function Sign() {
                     borderRadius="4px"
                     fontSize="14px"
                     fontWeight="500"
-                    marginRight="8px"
+                    marginRight={{ base: '0', md: '8px' }}
                     whiteSpace="pre"
                     display="flex"
                     alignItems="center"
+                    marginBottom={{ base: '10px', md: '0' }}
+                    flexDirection={{ base: 'column', md: 'row' }}
+                    minHeight="32px"
                   >
                     <Box as="span" fontWeight="700">Requestor:</Box> {recoveryAddress}
                   </Box>

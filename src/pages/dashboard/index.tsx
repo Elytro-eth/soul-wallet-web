@@ -7,7 +7,7 @@ import useConfig from '@/hooks/useConfig';
 
 export default function Dashboard() {
   const {selectedAddressItem} = useConfig();
- 
+
   return (
     <Flex
       gap={{ base: 6, lg: '50px' }}
@@ -17,7 +17,7 @@ export default function Dashboard() {
     >
       <Flex w={{ base: '100%', lg: '40%' }} h={{ lg: '100%' }} flexDir={'column'} justify={'center'} align={'center'}>
         <WalletCard />
-        {!selectedAddressItem.activated && <Guidance />}
+        {(selectedAddressItem && !selectedAddressItem.activated) && <Guidance />}
         <Activity />
       </Flex>
       <Flex

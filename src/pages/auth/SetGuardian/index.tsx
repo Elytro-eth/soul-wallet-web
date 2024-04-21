@@ -83,8 +83,16 @@ export default function SetGuardian({ walletName, back, onCreate }: any) {
           position="relative"
         >
           <Box position="absolute" height="4px" width="75%" background="#FF2E79" top="0" left="0" />
-          <Box width="100%" display="flex" justifyContent="flex-start">
-            <Box paddingLeft="68px" paddingTop="64px">
+          <Box
+            width="100%"
+            display="flex"
+            justifyContent={{ base: 'center', md: 'flex-start' }}
+            flexDirection={{ base: 'column', md: 'row' }}
+          >
+            <Box
+              paddingLeft={{ base: '0px', md: '68px' }}
+              paddingTop={{ base: '20px', md: '64px' }}
+            >
               <Box
                 width="40px"
                 height="40px"
@@ -96,6 +104,7 @@ export default function SetGuardian({ walletName, back, onCreate }: any) {
                 justifyContent="center"
                 fontSize="20px"
                 fontWeight="800"
+                margin={{ base: '0 auto', md: '0' }}
               >
                 3
               </Box>
@@ -103,10 +112,10 @@ export default function SetGuardian({ walletName, back, onCreate }: any) {
             <Box
               width="100%"
               height="100%"
-              paddingLeft="26px"
-              paddingTop="60px"
-              paddingBottom="60px"
-              paddingRight="98px"
+              paddingLeft={{ base: '20px', md: '26px' }}
+              paddingTop={{ base: '20px', md: '60px' }}
+              paddingBottom={{ base: '20px', md: '60px' }}
+              paddingRight={{ base: '20px', md: '98px' }}
               display="flex"
               alignItems="flex-start"
               justifyContent="center"
