@@ -12,6 +12,8 @@ import ReceiveCode from '@/components/ReceiveCode';
 import { useAddressStore } from '@/store/address';
 import { toFixed } from '@/lib/tools';
 import { useSettingStore } from '@/store/setting';
+import { ZeroAddress } from 'ethers';
+import BN from 'bignumber.js';
 
 const SetGuardianHint = ({ onShowSkip }: { onShowSkip: () => void }) => {
   return (
@@ -161,6 +163,8 @@ export default function Tokens() {
   const [isSkipOpen, setIsSkipOpen] = useState(false);
   const { getAddressDisplay } = useSettingStore();
   const { selectedAddress } = useAddressStore();
+  const { getTokenBalance } = useBalanceStore();
+  const userDeposited = BN(getTokenBalance(ZeroAddress).tokenBalance).isGreaterThan(0);
 
   const showSendAssets = (tokenAddress: string) => {
     showSend(tokenAddress);
@@ -177,7 +181,7 @@ export default function Tokens() {
       h="100%"
     >
 
-      {(!getAddressDisplay(selectedAddress)) && <DepositHint2 />}
+      {(!getAddressDisplay(selectedAddress) && !userDeposited) && <DepositHint2 />}
       {isTokenBalanceEmpty ? (
         <DepositHint />
       ) : (

@@ -142,7 +142,7 @@ export default function AddSigner({ next, back }: any) {
                     key={signer.signerId}
                     position="relative"
                     maxWidth={{ base: '550px', md: '550px' }}
-                    width={{ base: 'calc(100% - 30px)', md: '100%' }}
+                    width={{ base: 'calc(100%)', md: '100%' }}
                   >
                     <Box
                       display="flex"
@@ -174,10 +174,12 @@ export default function AddSigner({ next, back }: any) {
                 )
               })}
             </Box>
-            <Box>
+            <Box
+              width={{ base: '100%', md: '246px' }}
+            >
               <Button
                 size="lg"
-                width="246px"
+                width={{ base: '100%', md: '246px' }}
                 onClick={() => addCredential()}
               >
                 + Add passkey
