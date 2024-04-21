@@ -57,10 +57,6 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
   const doActivate = async () => {
     await showSignTransaction([]);
     setActivated(selectedAddress, true);
-    // onClose();
-    // const userOp = await getActivateOp()
-    // console.log('user op', userOp)
-    // await signAndSend(userOp);
   };
 
   const generateQR = async (text: string) => {
@@ -110,7 +106,6 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     marginBottom="24px"
                     width="100%"
                     cursor="pointer"
-                    onClick={() => {}}
                     position="relative"
                     overflow="hidden"
                     boxSizing="border-box"
