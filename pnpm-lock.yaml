@@ -50,6 +50,9 @@ dependencies:
   '@types/react-dom':
     specifier: 18.2.7
     version: 18.2.7
+  '@wagmi/core':
+    specifier: ^2.6.17
+    version: 2.6.17(@types/react@18.2.21)(immer@10.0.4)(react@18.2.0)(typescript@5.4.2)(viem@2.8.5)
   axios:
     specifier: ^1.5.0
     version: 1.6.7
@@ -4829,6 +4832,32 @@ packages:
       - rollup
       - supports-color
       - uWebSockets.js
+      - utf-8-validate
+      - zod
+    dev: false
+
+  /@wagmi/core@2.6.17(@types/react@18.2.21)(immer@10.0.4)(react@18.2.0)(typescript@5.4.2)(viem@2.8.5):
+    resolution: {integrity: sha512-Ghr7PlD5HO1YJrsaC52j/csgaigBAiTR7cFiwrY7WdwvWLsR5na4Dv6KfHTU3d3al0CKDLanQdRS5nB4mX1M+g==}
+    peerDependencies:
+      '@tanstack/query-core': '>=5.0.0'
+      typescript: '>=5.0.4'
+      viem: 2.x
+    peerDependenciesMeta:
+      '@tanstack/query-core':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      eventemitter3: 5.0.1
+      mipd: 0.0.5(typescript@5.4.2)
+      typescript: 5.4.2
+      viem: 2.8.5(typescript@5.4.2)
+      zustand: 4.4.1(@types/react@18.2.21)(immer@10.0.4)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - bufferutil
+      - immer
+      - react
       - utf-8-validate
       - zod
     dev: false

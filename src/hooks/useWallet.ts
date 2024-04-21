@@ -366,8 +366,6 @@ export default function useWallet() {
         params: [],
       });
 
-      console.log('pricessss', res);
-
       if (res.data.result.fast) {
         return res.data.result.fast;
       } else {

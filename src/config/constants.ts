@@ -38,13 +38,13 @@ export const sidebarLinks = [
   //   iconActive: IconDappsActive,
   //   isComing: true,
   // },
-  {
-    title: 'Settings',
-    href: "/security",
-    icon: IconSettings,
-    iconActive: IconSettingsActive,
-    isComing: false,
-  },
+  // {
+  //   title: 'Settings',
+  //   href: "/security",
+  //   icon: IconSettings,
+  //   iconActive: IconSettingsActive,
+  //   isComing: false,
+  // },
 ];
 
 

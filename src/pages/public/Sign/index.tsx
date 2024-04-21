@@ -3,7 +3,7 @@ import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, PopoverTrigg
 import IconLogo from '@/assets/logo-all-v3.svg';
 import RoundContainer from '@/components/new/RoundContainer';
 import Button from '@/components/Button';
-import { useSwitchChain } from 'wagmi';
+import { useSignTypedData, useSwitchChain } from 'wagmi';
 import { SocialRecovery } from '@soulwallet/sdk';
 import api from '@/lib/api';
 import useConfig from '@/hooks/useConfig';
@@ -56,6 +56,7 @@ export default function Sign() {
   const [loaded, setLoaded] = useState(false);
   const [isSigned, setIsSigned] = useState<any>(false);
   const toast = useToast();
+  const { signTypedDataAsync } = useSignTypedData();
   const { switchChain } = useSwitchChain();
   const ethersSigner = useEthersSigner();
   const {
@@ -111,8 +112,14 @@ export default function Sign() {
         recoveryRecord.new_owners,
       )
 
-      const signer = await ethersSigner;
-      const signature = await signer?.signTypedData(typedDataToSign.domain, typedDataToSign.types, typedDataToSign.message);
+      // const signature = await signTypedDataAsync({
+      //   domain: typedDataToSign.domain,
+      //   types: typedDataToSign.types,
+      //   message: typedDataToSign.message,
+      // } as any);
+      const signer:any = await ethersSigner;
+
+      const signature = await signer.signTypedData(typedDataToSign.domain, typedDataToSign.types, typedDataToSign.message);
 
       // SocialRecovery.packGuardianSignature(signature);
       const res: any = await api.guardian.guardianSign({
