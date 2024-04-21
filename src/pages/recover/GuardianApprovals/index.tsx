@@ -32,7 +32,7 @@ export default function GuardianApprovals() {
   }
 
   const signatures = hasRecord ? (guardianInfo.guardians || []).map((item: any) => {
-    const isValid = (guardianSignatures || []).filter((sig: any) => sig.guardian === item && sig.valid).length === 1;
+    const isValid = (guardianSignatures || []).filter((sig: any) => sig.guardian === item).length === 1;
     return { guardian: item, isValid };
   }) : [];
 

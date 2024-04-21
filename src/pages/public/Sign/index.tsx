@@ -3,7 +3,7 @@ import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, PopoverTrigg
 import IconLogo from '@/assets/logo-all-v3.svg';
 import RoundContainer from '@/components/new/RoundContainer';
 import Button from '@/components/Button';
-import { useSignTypedData, useSwitchChain } from 'wagmi';
+import { useSwitchChain } from 'wagmi';
 import { SocialRecovery } from '@soulwallet/sdk';
 import api from '@/lib/api';
 import useConfig from '@/hooks/useConfig';
@@ -56,7 +56,6 @@ export default function Sign() {
   const [loaded, setLoaded] = useState(false);
   const [isSigned, setIsSigned] = useState<any>(false);
   const toast = useToast();
-  const { signTypedDataAsync } = useSignTypedData();
   const { switchChain } = useSwitchChain();
   const ethersSigner = useEthersSigner();
   const {
@@ -434,7 +433,7 @@ export default function Sign() {
     );
   }
 
-  if (isConnected && false) {
+  if (isConnected) {
     return (
       <Flex justify="center" align="center" width="100%" minHeight="100vh" background="#F2F4F7">
         <SignHeader />

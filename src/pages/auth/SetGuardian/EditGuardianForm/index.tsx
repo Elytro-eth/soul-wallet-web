@@ -210,7 +210,7 @@ export default function GuardianForm({
     setAmountData({ guardiansCount: guardiansList.length });
   }, [guardiansList]);
 
-  const handleConfirm = useCallback(() => {
+  const handleConfirm = () => {
     if (onConfirm) {
       const guardiansList = guardianIds
         .map((id) => {
@@ -232,7 +232,7 @@ export default function GuardianForm({
 
       onConfirm(guardianAddresses, guardianNames, threshold)
     }
-  }, [editType, values])
+  }
 
   const handleBack = () => {
     if (onBack) {

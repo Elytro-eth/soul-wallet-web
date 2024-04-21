@@ -3,20 +3,14 @@ import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, PopoverTrigg
 import { Link } from 'react-router-dom';
 import { useWriteContract, useWaitForTransactionReceipt, useSwitchChain } from 'wagmi';
 import { paymentContractConfig } from '@/contracts/contracts';
-import Header from '@/components/Header';
-import IconLogo from '@/assets/logo-all-v3.svg';
-import IntroImg from '@/assets/Intro.jpg';
 import RoundContainer from '@/components/new/RoundContainer';
-import Heading from '@/components/new/Heading';
 import TextBody from '@/components/new/TextBody';
 import Button from '@/components/Button';
 import { SignHeader } from '../Sign';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import api from '@/lib/api';
 import { ethers } from 'ethers';
 import useTools from '@/hooks/useTools';
 import { useParams } from 'react-router-dom'
-import { metaMask } from 'wagmi/connectors'
 import SuccessIcon from '@/components/Icons/Success'
 import ConnectWalletModal from '@/pages/recover/ConnectWalletModal'
 import BN from 'bignumber.js';

@@ -8,23 +8,16 @@ import TextBody from '@/components/new/TextBody';
 import Button from '@/components/Button';
 import PasskeyIcon from '@/components/Icons/Intro/Passkey';
 import AccountIcon from '@/components/Icons/Intro/Account';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useTempStore } from '@/store/temp';
 import { useSettingStore } from '@/store/setting';
-import usePassKey from '@/hooks/usePasskey';
 import SetPasskey from './SetPasskey';
 import SetGuardian from './SetGuardian';
 import SelectNetwork from './SelectNetwork';
-import RegisterModal from './RegisterModal';
-import SelectAccountModal from './SelectAccountModal';
-import ImportAccountModal from './ImportAccountModal';
 import { SignHeader } from '../public/Sign';
-import useTools from '@/hooks/useTools';
 import useWallet from '@/hooks/useWallet';
 
 export default function Auth() {
   const [stepType, setStepType] = useState('auth');
-  const { clearLogData } = useTools();
   const [walletName, setWalletName] = useState('');
   const [credentials, setCredentials] = useState([]);
   const [isConnectAtive, setIsConnectAtive] = useState(false);
@@ -32,13 +25,10 @@ export default function Auth() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isSelectAccountOpen, setIsSelectAccountOpen] = useState(false);
   const [isImportAccountOpen, setIsImportAccountOpen] = useState(false);
-  const { connectAsync } = useConnect();
-  const { disconnectAsync } = useDisconnect();
-  const { updateCreateInfo, loginInfo } = useTempStore();
-  const account = useAccount();
-  const { address, isConnected, isConnecting } = account;
+  // const { connectAsync } = useConnect();
+  // const { disconnectAsync } = useDisconnect();
+  const { loginInfo } = useTempStore();
   const { getSignerIdAddress } = useSettingStore();
-  const [isImporting, setIsImporting] = useState(false);
   const { initWallet, loginWallet, } = useWallet();
   const { navigate } = useBrowser();
   const signerIdAddress = getSignerIdAddress();
@@ -66,17 +56,17 @@ export default function Auth() {
     setIsImportAccountOpen(false);
   }, []);
 
-  const connectEOA = useCallback(
-    async (connector: any) => {
-      setIsConnectAtive(true);
-      if (address) {
-        await disconnectAsync();
-      }
-      await connectAsync({ connector });
-      setActiveConnector(connector);
-    },
-    [address],
-  );
+  // const connectEOA = useCallback(
+  //   async (connector: any) => {
+  //     setIsConnectAtive(true);
+  //     if (address) {
+  //       await disconnectAsync();
+  //     }
+  //     await connectAsync({ connector });
+  //     setActiveConnector(connector);
+  //   },
+  //   [address],
+  // );
 
   const startRegisterWithPasskey = useCallback(() => {
     setIsConnectAtive(true);
@@ -84,16 +74,16 @@ export default function Auth() {
     setStepType('selectNetwork');
   }, []);
 
-  const disconnectEOA = useCallback(async () => {
-    if(!isConnected){
-      await disconnectAsync();
-    }
-    setIsConnectAtive(false);
-    updateCreateInfo({
-      eoaAddress: [],
-    });
-    // closeRegister()
-  }, [isConnected]);
+  // const disconnectEOA = useCallback(async () => {
+  //   if(!isConnected){
+  //     await disconnectAsync();
+  //   }
+  //   setIsConnectAtive(false);
+  //   updateCreateInfo({
+  //     eoaAddress: [],
+  //   });
+  //   // closeRegister()
+  // }, [isConnected]);
 
   const startImportAccount = useCallback(() => {
     setIsSelectAccountOpen(false);
@@ -277,7 +267,7 @@ export default function Auth() {
             ))}
           </Flex>
         </Box>
-        <RegisterModal
+        {/* <RegisterModal
           isOpen={isRegisterOpen}
           onClose={closeRegister}
           connectEOA={connectEOA}
@@ -301,7 +291,7 @@ export default function Auth() {
           onClose={closeImportAccount}
           openSelectAccount={openSelectAccount}
           isImporting={isImporting}
-        />
+        /> */}
       </Box>
     </Flex>
   );

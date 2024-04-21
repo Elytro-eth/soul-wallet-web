@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Flex, Box, Text, Image, useToast } from '@chakra-ui/react';
 import Button from '../../Button';
-import { useAccount, useSignTypedData, useSwitchChain, useConnect, useDisconnect } from 'wagmi';
+import { useSignTypedData, useSwitchChain } from 'wagmi';
 import useWallet from '@/hooks/useWallet';
 import { motion } from 'framer-motion';
 import IconZoom from '@/assets/icons/zoom.svg';
