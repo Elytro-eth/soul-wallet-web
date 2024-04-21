@@ -66,7 +66,7 @@ export default function useWallet() {
 
     clearTempStore();
 
-    navigate('/dashboard');
+    // navigate('/dashboard');
   };
 
   const loginWallet = async () => {

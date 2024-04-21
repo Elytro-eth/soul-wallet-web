@@ -10,6 +10,7 @@ import RecoverCheckedIcon from '@/components/Icons/RecoverChecked';
 import StepProgress from '../StepProgress';
 import api from '@/lib/api';
 import useWallet from '@/hooks/useWallet';
+import { Link } from 'react-router-dom';
 
 export default function PayRecoveryFee({ next }: any) {
   const { recoverInfo } = useTempStore();
@@ -25,10 +26,17 @@ export default function PayRecoveryFee({ next }: any) {
       if (res.msg === 'executeRecovery tirggered' || res.msg === 'already executed') {
         const res = (await api.guardian.getRecoverRecord({ recoveryID })).data;
         await boostAfterRecovered(res);
+        setIsRecovered(true);
         break;
       }
     }
   };
+
+  useEffect(()=>{
+    if(!recoverInfo || !recoverInfo.recoveryID){
+      setIsRecovered(true)
+    }
+  }, [recoverInfo.recoveryID])
 
   if (isRecovered) {
     return (
@@ -79,9 +87,11 @@ export default function PayRecoveryFee({ next }: any) {
                 <RecoverCheckedIcon />
                 <Box>Your wallet has been recovered. Free to check it out!</Box>
               </TextBody>
-              <Button size="lg" fontSize="18px" width="260px">
-                Go to Wallet
-              </Button>
+              <Link to="/dashboard">
+                <Button size="lg" fontSize="18px" width="260px">
+                  Go to Wallet
+                </Button>
+              </Link>
             </Box>
           </RoundContainer>
           <StepProgress activeIndex={3} />
