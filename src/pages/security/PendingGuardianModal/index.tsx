@@ -159,11 +159,14 @@ export default function PendingGuardianModal({
                   display="flex"
                   justifyContent="space-between"
                   alignItems="center"
+                  flexDirection={{ base: 'column', md: 'row' }}
                 >
                   <Box fontWeight="600" fontSize="14px">
                     New guardians updating in <Box as="span" color="#0CB700">12h : 56m : 03s</Box>
                   </Box>
-                  <Box>
+                  <Box
+                    marginTop={{ base: '20px', md: '0' }}
+                  >
                     <Button type="white" padding="0 14px" marginRight="16px" onClick={() => {}} size="xl">Discard changes</Button>
                     <Button type="black" onClick={() => {}} size="xl">Confirm</Button>
                   </Box>

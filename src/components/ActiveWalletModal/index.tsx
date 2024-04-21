@@ -114,6 +114,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     position="relative"
                     overflow="hidden"
                     boxSizing="border-box"
+                    flexDirection={{ base: 'column', md: 'row' }}
                   >
                     {userDeposited ? (
                       <Box
@@ -154,9 +155,16 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     >
                       <Image src={TokenEmptyIcon} width="80px" height="80px" />
                     </Box>
-                    <Box>
+                    <Box
+                      width={{ base: '100%', md: 'calc(100% - 92px)' }}
+
+                    >
                       <TextBody fontSize="20px">Step 1: Deposit ETH</TextBody>
-                      <Box display="flex" marginTop="4px">
+                      <Box
+                        display="flex"
+                        flexDirection={{ base: 'column', md: 'row' }}
+                        marginTop={{ base: '20px', md: '4px' }}
+                      >
                         <Box
                           background="#F1F1F1"
                           padding="0px 12px 0px 12px"
@@ -165,8 +173,14 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           display="flex"
                           alignItems="center"
                           justifyContent="center"
+                          marginBottom={{ base: '20px', md: '0' }}
                         >
-                          <TextBody type="t3" fontWeight="500" lineHeight="18px">
+                          <TextBody
+                            type="t3"
+                            fontWeight="500"
+                            lineHeight="18px"
+                            width="100%"
+                          >
                             <Box as="span" fontWeight="700">
                               ETH address:
                             </Box>{' '}
@@ -174,7 +188,13 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           </TextBody>
                         </Box>
                         <Box marginLeft="8px">
-                          <Button size="sm" height="28px" onClick={() => doCopy(selectedAddress)} width="104px">
+                          <Button
+                            size="sm"
+                            height="28px"
+                            onClick={() => doCopy(selectedAddress)}
+                            width={{ base: '100%', md: '104px' }}
+                            marginBottom={{ base: '20px', md: '0' }}
+                          >
                             Copy address
                           </Button>
                         </Box>
@@ -194,7 +214,12 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                             padding="16px"
                           >
                             <Box>
-                              <Button size="sm" height="28px" type="white">
+                              <Button
+                                size="sm"
+                                height="28px"
+                                type="white"
+                                width={{ base: '100%', md: 'auto' }}
+                              >
                                 <QrcodeIcon />
                               </Button>
                             </Box>
@@ -215,6 +240,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     position="relative"
                     overflow="hidden"
                     boxSizing="border-box"
+                    flexDirection={{ base: 'column', md: 'row' }}
                   >
                     {userActivated ? (
                       <Box
@@ -255,16 +281,36 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     >
                       <Image src={ActivityEmptyIcon} width="80px" height="80px" />
                     </Box>
-                    <Box>
+                    <Box
+                      width={{ base: '100%', md: 'calc(100% - 92px)' }}
+                    >
                       <TextBody fontSize="20px" display="flex" alignItems="center">
                         <Box>Step 2: Active wallet</Box>
                       </TextBody>
-                      <Box display="flex">
-                        <Box minHeight="28px" display="flex" alignItems="center" justifyContent="center">
+                      <Box
+                        display="flex"
+                        flexDirection={{ base: 'column', md: 'row' }}
+                        marginTop={{ base: '20px', md: '4px' }}
+                      >
+                        <Box
+                          minHeight="28px"
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          marginBottom={{ base: '20px', md: '0' }}
+                        >
                           <TextBody type="t3">{`The activation fee will be covered by Soul Wallet. $0 cost on you.`}</TextBody>
                         </Box>
-                        <Box marginLeft="54px">
-                          <Button size="sm" disabled={!userDeposited || userActivated} height="28px" onClick={doActivate} width="104px">
+                        <Box
+                          marginLeft={{ base: '0', md: '54px' }}
+                        >
+                          <Button
+                            size="sm"
+                            disabled={!userDeposited || userActivated}
+                            height="28px"
+                            onClick={doActivate}
+                            width={{ base: '100%', md: '104px' }}
+                          >
                             Active now
                           </Button>
                         </Box>

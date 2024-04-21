@@ -193,7 +193,7 @@ export default function Auth() {
           </Box>
           <Box width={{ base: '100%', md: '50%' }} background="#F8F8F8" flex="1" display="flex" padding="60px">
             <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-              <Box width="348px" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              <Box width="348px" display="flex" flexDirection="column" alignItems="center" justifyContent="center" padding={{ base: '0 20px', md: '0' }}>
                 <Box marginBottom="12px" width="100%">
                   <Input
                     height="52px"

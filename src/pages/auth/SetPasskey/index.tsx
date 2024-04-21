@@ -79,12 +79,14 @@ export default function SetPasskey({ back, walletName, next: nextStep, credentia
             left="0"
           />
           <Box
+            width="100%"
             display="flex"
-            justifyContent="flex-start"
+            justifyContent={{ base: 'center', md: 'flex-start' }}
+            flexDirection={{ base: 'column', md: 'row' }}
           >
             <Box
-              paddingLeft="68px"
-              paddingTop="64px"
+              paddingLeft={{ base: '0px', md: '68px' }}
+              paddingTop={{ base: '20px', md: '64px' }}
             >
               <Box
                 width="40px"
@@ -97,122 +99,122 @@ export default function SetPasskey({ back, walletName, next: nextStep, credentia
                 justifyContent="center"
                 fontSize="20px"
                 fontWeight="800"
+                margin={{ base: '0 auto', md: '0' }}
               >
                 2
               </Box>
             </Box>
-          </Box>
-          <Box
-            width="calc(100% - 108px)"
-            height="100%"
-            paddingLeft="26px"
-            paddingTop="60px"
-            paddingBottom="34px"
-            paddingRight="98px"
-            display="flex"
-            alignItems="flex-start"
-            justifyContent="center"
-            flexDirection="column"
-          >
-            <Heading
-              type="h3"
-              fontSize="26px"
-              textAlign="left"
-              width="100%"
-              marginBottom="2px"
+            <Box
+              width={{ base: '100%', md: 'calc(100% - 108px)' }}
+              height="100%"
+              paddingLeft={{ base: '20px', md: '26px' }}
+              paddingTop={{ base: '20px', md: '60px' }}
+              paddingBottom={{ base: '20px', md: '60px' }}
+              paddingRight={{ base: '20px', md: '98px' }}
+              display="flex"
+              alignItems="flex-start"
+              flexDirection="column"
             >
-              {`Set up passkey for < ${walletName} >`}
-            </Heading>
-            <TextBody
-              fontWeight="400"
-              fontSize="16px"
-            >
-              Passkey will be used to sign every transaction in your wallet
-            </TextBody>
-            {(!!credentials && !!credentials.length) && (
-              <Box
-                borderRadius="12px"
-                width="700px"
-                maxWidth="100%"
-                marginTop="40px"
+              <Heading
+                type="h3"
+                fontSize="26px"
+                textAlign="left"
+                width="100%"
+                marginBottom="2px"
               >
-                <Flex display="flex" alignItems="flex-start" justifyContent="center" flexDirection="column" width="100%" gap="2">
-                  {credentials.map((passKey: any, index: number) =>
-                    <Box
-                      key={index}
-                      background="white"
-                      borderRadius="16px"
-                      padding="12px"
-                      width="100%"
-                      marginBottom="4px"
-                      border="1px solid #F0F0F0"
-                    >
-                      <Box display="flex" alignItems="center">
-                        <Box width="50px" height="50px" background="#efefef" borderRadius="50px" marginRight="16px" display="flex" alignItems="center" justifyContent="center"><ComputerIcon /></Box>
-                        <Box>
-                          <Text color="rgb(7, 32, 39)" fontSize="18px" fontWeight="800">
-                            {passKey.name}
-                          </Text>
+                {`Set up passkey for < ${walletName} >`}
+              </Heading>
+              <TextBody
+                fontWeight="400"
+                fontSize="16px"
+              >
+                Passkey will be used to sign every transaction in your wallet
+              </TextBody>
+              {(!!credentials && !!credentials.length) && (
+                <Box
+                  borderRadius="12px"
+                  width="700px"
+                  maxWidth="100%"
+                  marginTop="40px"
+                >
+                  <Flex display="flex" alignItems="flex-start" justifyContent="center" flexDirection="column" width="100%" gap="2">
+                    {credentials.map((passKey: any, index: number) =>
+                      <Box
+                        key={index}
+                        background="white"
+                        borderRadius="16px"
+                        padding="12px"
+                        width="100%"
+                        marginBottom="4px"
+                        border="1px solid #F0F0F0"
+                      >
+                        <Box display="flex" alignItems="center">
+                          <Box width="50px" height="50px" background="#efefef" borderRadius="50px" marginRight="16px" display="flex" alignItems="center" justifyContent="center"><ComputerIcon /></Box>
+                          <Box>
+                            <Text color="rgb(7, 32, 39)" fontSize="18px" fontWeight="800">
+                              {passKey.name}
+                            </Text>
+                          </Box>
                         </Box>
                       </Box>
-                    </Box>
-                  )}
-                </Flex>
-              </Box>
-            )}
-            <Box
-              width="100%"
-              display="flex"
-              justifyContent="center"
-              marginTop="18px"
-              flexDirection={{ base: 'column', md: 'row' }}
-            >
-              <Button
-                maxWidth="100%"
+                    )}
+                  </Flex>
+                </Box>
+              )}
+              <Box
                 width="100%"
-                padding="0 20px"
-                type="white"
-                disabled={isCreating}
-                loading={isCreating}
-                onClick={createCredential}
-                size="lg"
-                height="48px"
-                borderWidth="0"
-                background="#F9F9F9"
-                borderRadius="12px"
+                display="flex"
+                justifyContent="center"
+                marginTop="18px"
+                flexDirection={{ base: 'column', md: 'row' }}
               >
-                <Box marginRight="8px"><PlusIcon color="black" /></Box>
-                {!credentials.length ? `Add a Passkey` : 'Add another Passkey'}
-              </Button>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="flex-end"
-              justifyContent="space-between"
-              width="100%"
-              marginTop="24px"
-            >
-              <Box>
                 <Button
-                  type="white"
+                  maxWidth="100%"
+                  width="100%"
                   padding="0 20px"
-                  onClick={back}
+                  type="white"
+                  disabled={isCreating}
+                  loading={isCreating}
+                  onClick={createCredential}
                   size="lg"
+                  height="48px"
+                  borderWidth="0"
+                  background="#F9F9F9"
+                  borderRadius="12px"
                 >
-                  Back
+                  <Box marginRight="8px"><PlusIcon color="black" /></Box>
+                  {!credentials.length ? `Add a Passkey` : 'Add another Passkey'}
                 </Button>
               </Box>
-              <Box>
-                <Button
-                  type="black"
-                  color="white"
-                  padding="0 20px"
-                  onClick={nextStep}
-                  size="lg"
-                  disabled={!credentials || !credentials.length}
-                >
-                  Next
-                </Button>
+              <Box
+                display="flex"
+                alignItems="flex-end"
+                justifyContent="space-between"
+                width="100%"
+                marginTop="24px"
+              >
+                <Box>
+                  <Button
+                    type="white"
+                    padding="0 20px"
+                    onClick={back}
+                    size="lg"
+                  >
+                    Back
+                  </Button>
+                </Box>
+                <Box>
+                  <Button
+                    type="black"
+                    color="white"
+                    padding="0 20px"
+                    onClick={nextStep}
+                    size="lg"
+                    disabled={!credentials || !credentials.length}
+                  >
+                    Next
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </Box>
