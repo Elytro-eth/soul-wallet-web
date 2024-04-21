@@ -56,7 +56,7 @@ export default function Recover() {
           if (status == 0) {
             setStep(3)
           } else if (status == 1) {
-            // setStep(4)
+            setStep(4)
           } else if (status >= 2) {
             setStep(5)
           }
@@ -76,7 +76,7 @@ export default function Recover() {
       if (status == 0) {
         setStep(3)
       } else if (status == 1) {
-        // setStep(4)
+        setStep(4)
       }
       //  else if (status >= 2) {
       //   setStep(5)
