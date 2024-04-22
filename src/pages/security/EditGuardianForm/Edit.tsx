@@ -116,6 +116,7 @@ const GuardianInput = ({
         }}
         _leftContainerStyles={{
           width: { base: 'calc(100%)', 'md': 'calc(100% - 240px)' },
+          marginBottom: { base: '16px', 'md': '0' },
           zIndex: 0
         }}
 
@@ -127,7 +128,6 @@ const GuardianInput = ({
         rightErrorMsg={showErrors[`name_${id}`] && errors[`name_${id}`]}
         _rightContainerStyles={{
           width: { base: '100%', 'md': '240px' },
-          marginBottom: { base: '20px', 'md': '0' },
         }}
         _rightInputStyles={{
           fontWeight: 600,

@@ -170,7 +170,8 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           alignItems="center"
                           justifyContent="center"
                           marginBottom={{ base: '20px', md: '0' }}
-                          marginRight="auto"
+                          marginRight={{ base: '0', md: 'auto' }}
+                          width={{ base: '100%', md: 'max-content' }}
                         >
                           <TextBody
                             type="t3"
@@ -188,9 +189,12 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           display="flex"
                           alignItems="center"
                           justifyContent="flex-start"
-                          width="180px"
+                          width={{ base: '100%', md: '180px' }}
+                          flexDirection={{ base: 'column', md: 'row' }}
                         >
-                          <Box>
+                          <Box
+                            width={{ base: '100%', md: 'max-content' }}
+                          >
                             <Button
                               size="sm"
                               height="28px"
@@ -201,7 +205,10 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                               Copy address
                             </Button>
                           </Box>
-                          <Box marginLeft="8px">
+                          <Box
+                            marginLeft={{ base: '0', md: '8px' }}
+                            width={{ base: '100%', md: 'max-content' }}
+                          >
                             <Tooltip
                               label={
                                 <Box>
@@ -307,7 +314,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           <TextBody type="t3">{`The activation fee will be covered by Soul Wallet. $0 cost on you.`}</TextBody>
                         </Box>
                         <Box
-                          width="180px"
+                          width={{ base: '100%', md: '180px' }}
                         >
                           <Button
                             size="sm"
