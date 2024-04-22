@@ -94,6 +94,8 @@ export default function useWallet() {
         {
           address: item.address,
           chainIdHex: selectedChainId,
+          // default set to true, will check later
+          activated: true,
         },
       ]);
       setSelectedChainId(item.chainID);

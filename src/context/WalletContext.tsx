@@ -121,11 +121,17 @@ export const WalletContextProvider = ({ children }: any) => {
         setActivated(selectedAddress, true);
         return true;
       }else{
-        console.log('11111')
         return false;
       }
     }
   };
+
+  useEffect(() => {
+    if (!selectedAddress || !selectedChainId) {
+      return;
+    }
+    checkActivated();
+  }, [selectedAddress, selectedChainId]);
 
   return (
     <WalletContext.Provider
