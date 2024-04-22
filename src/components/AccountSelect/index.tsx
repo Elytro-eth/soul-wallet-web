@@ -28,12 +28,7 @@ export function AccountSelectFull({ ...restProps }) {
         roundedRight={'full'}
         bg={'#f2f2f2'}
       >
-        <Image
-          src={IconCopy}
-          w="20px"
-          cursor={'pointer'}
-          onClick={() => doCopy(selectedAddress)}
-        />
+        <Image src={IconCopy} w="20px" cursor={'pointer'} onClick={() => doCopy(selectedAddress)} />
       </Flex>
     </Flex>
   );
@@ -51,6 +46,33 @@ export function AccountSelect({ labelType = 'title', wrapperProps, isInModal, ..
     setSelectedAddress(item.address);
     setSelectedChainId(item.chainIdHex);
   };
+
+  return (
+    <Flex
+      align="center"
+      justify={'space-between'}
+      px="3"
+      py="10px"
+      h="40px"
+      w={{ lg: '320px' }}
+      fontSize={{ base: '12px', lg: '16px' }}
+      bg={isInModal ? 'transparent' : '#f2f2f2'}
+      roundedLeft={'full'}
+      {...restProps}
+    >
+      <Flex mr="1" align={'center'}>
+        <Image display={{ base: 'none', lg: 'block' }} w="5" h="5" mr="2" src={selectedChainItem.iconSquare} />
+        <Text fontWeight={'700'}>{selectedChainItem.chainName}</Text>
+        &nbsp;
+        <Text fontWeight={'600'} display={{ base: 'none', lg: 'block' }}>
+          ({toShortAddress(selectedAddressItem.address)})
+        </Text>
+        <Text fontWeight={'600'} display={{ base: 'block', lg: 'none' }}>
+          ({toShortAddress(selectedAddressItem.address, 2, 2)})
+        </Text>
+      </Flex>
+    </Flex>
+  );
 
   return selectedAddressItem ? (
     <Menu>
@@ -88,13 +110,13 @@ export function AccountSelect({ labelType = 'title', wrapperProps, isInModal, ..
                       src={selectedChainItem.iconSquare}
                     />
                     <Text fontWeight={'700'}>{selectedChainItem.chainName}</Text>
-                  &nbsp;
-                  <Text fontWeight={'600'} display={{ base: 'none', lg: 'block' }}>
-                    ({toShortAddress(selectedAddressItem.address)})
-                  </Text>
-                  <Text fontWeight={'600'} display={{ base: 'block', lg: 'none' }}>
-                    ({toShortAddress(selectedAddressItem.address, 2, 2)})
-                  </Text>
+                    &nbsp;
+                    <Text fontWeight={'600'} display={{ base: 'none', lg: 'block' }}>
+                      ({toShortAddress(selectedAddressItem.address)})
+                    </Text>
+                    <Text fontWeight={'600'} display={{ base: 'block', lg: 'none' }}>
+                      ({toShortAddress(selectedAddressItem.address, 2, 2)})
+                    </Text>
                   </Flex>
                 )}
               </>
@@ -113,7 +135,7 @@ export function AccountSelect({ labelType = 'title', wrapperProps, isInModal, ..
               const chainInfo = getChainItem(item.chainIdHex);
 
               if (!chainInfo) {
-                return null
+                return null;
               }
 
               return (
@@ -122,11 +144,11 @@ export function AccountSelect({ labelType = 'title', wrapperProps, isInModal, ..
                   <MenuItem
                     key={item.address}
                     {...(item.recovering
-                       ? { cursor: 'not-allowed', filter: 'grayscale(100%)' }
-                       : {
-                         onClick: () => onAddressChange(item),
-                    })}
-                    >
+                      ? { cursor: 'not-allowed', filter: 'grayscale(100%)' }
+                      : {
+                          onClick: () => onAddressChange(item),
+                        })}
+                  >
                     <Flex w="100%" align={'center'} justify={'space-between'}>
                       <Flex align={'center'} gap="3">
                         <Image src={chainInfo.iconSquare} w="8" h="8" />
@@ -175,7 +197,7 @@ export function AccountSelect({ labelType = 'title', wrapperProps, isInModal, ..
       <Flex mr="1" align={'center'}>
         {/* <Image w="5" h="5" src={selectedChainItem.icon} /> */}
         <Text fontWeight={'700'}>{selectedChainItem.chainName}</Text>
-    &nbsp;
+        &nbsp;
         <Text fontWeight={'600'}>(******)</Text>
       </Flex>
     </Flex>

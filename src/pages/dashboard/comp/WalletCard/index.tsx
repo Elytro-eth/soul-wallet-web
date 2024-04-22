@@ -44,13 +44,13 @@ export default function WalletCard() {
         showReceive();
       },
     },
-    {
-      title: 'Swap',
-      icon: IconSwap,
-      iconActive: IconSwapActive,
-      isComing: true,
-      onClick: () => {},
-    },
+    // {
+    //   title: 'Swap',
+    //   icon: IconSwap,
+    //   iconActive: IconSwapActive,
+    //   isComing: true,
+    //   onClick: () => {},
+    // },
     {
       title: 'View',
       icon: IconView,

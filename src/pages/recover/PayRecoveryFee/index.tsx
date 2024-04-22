@@ -143,7 +143,7 @@ export default function PayRecoveryFee({ next }: any) {
               wordBreak="break-all"
               fontSize="16px"
             >
-              Soul Wallet is sponsored the recovery fee for you. Please click the button below to confirm the recovery.
+              Soul Wallet has sponsored the recovery fee for you. Please click the button below to confirm the recovery.
             </TextBody>
             <Button size="lg" fontSize="18px" width="260px" onClick={doRecover} disabled={isRecovering}>
               {isRecovering ? 'Recovering' : 'Confirm recovery'}

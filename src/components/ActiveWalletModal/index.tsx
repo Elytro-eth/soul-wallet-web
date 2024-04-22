@@ -30,10 +30,11 @@ import useConfig from '@/hooks/useConfig';
 const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [promiseInfo, setPromiseInfo] = useState<any>({});
+
   const { selectedAddress, setActivated } = useAddressStore();
   const { generateQrCode, doCopy } = useTools();
   const { showSignTransaction } = useWalletContext();
-  const { selectedAddressItem } = useConfig();
+  const { selectedAddressItem, chainConfig } = useConfig();
   const [imgSrc, setImgSrc] = useState<string>('');
   const { getTokenBalance } = useBalanceStore();
 
@@ -177,7 +178,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                             width="100%"
                           >
                             <Box as="span" fontWeight="700">
-                              ETH address:
+                              {chainConfig.addressPrefix}
                             </Box>{' '}
                             {selectedAddress}
                           </TextBody>
