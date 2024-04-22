@@ -59,7 +59,8 @@ export default function Sidebar() {
   // }, [selectedAddress, selectedChainId]);
   const goLink = async (link: any) => {
     console.log('go', link)
-    if (link.requireActivated && !(await checkActivated())) {
+    const isActived = await checkActivated()
+    if (link.requireActivated && !isActived) {
       showActiveWalletModal();
     } else {
       navigate(link.href);

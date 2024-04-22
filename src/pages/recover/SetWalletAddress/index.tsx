@@ -14,6 +14,7 @@ import StepProgress from '../StepProgress';
 import { SignHeader } from '@/pages/public/Sign';
 import WalletCheckedIcon from '@/components/Icons/WalletChecked';
 import { chainMapping } from '@/config';
+import useQuery from '@/hooks/useQuery';
 
 const validate = (values: any) => {
   const errors: any = {};
@@ -36,6 +37,7 @@ export default function SetWalletAddress({ next, back }: any) {
   const [loading, setLoading] = useState(false);
   const { updateRecoverInfo } = useTempStore();
   const [foundChainId, setFoundChainId] = useState('');
+  const { getGuardianDetails } = useQuery();
 
   const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
     fields: ['address'],
@@ -72,10 +74,9 @@ export default function SetWalletAddress({ next, back }: any) {
 
       setFoundChainId(info.chainID);
 
-      const res2 = await api.guardian.getGuardianDetails({ guardianHash: info.initInfo.initialGuardianHash });
-      const data = res2.data;
+      const guardiansInfo = await getGuardianDetails(info.address);
 
-      if (!data) {
+      if (!guardiansInfo) {
         toast({
           title: 'No guardians found!',
           status: 'error',
@@ -85,7 +86,7 @@ export default function SetWalletAddress({ next, back }: any) {
 
       updateRecoverInfo({
         ...info,
-        ...data,
+        ...guardiansInfo,
       });
 
       // setLoading(false);
@@ -157,7 +158,7 @@ export default function SetWalletAddress({ next, back }: any) {
                 onEnter={handleNext}
               />
             </Box>
-            {foundChainId && (
+            {foundChainId && !(showErrors.address && errors.address) && (
               <Box fontWeight="600" fontSize="14px" color="#0CB700" marginTop="6px" display="flex" alignItems="center">
                 <WalletCheckedIcon />
                 <Box marginLeft="6px">Wallet found on {(chainMapping as any)[foundChainId as any].name}</Box>

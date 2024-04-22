@@ -4,14 +4,25 @@
 
 import useWalletContext from '../context/hooks/useWalletContext';
 import BN from 'bignumber.js';
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import useSdk from './useSdk';
 import useConfig from './useConfig';
+import api from '@/lib/api';
+import { ABI_SocialRecoveryModule } from '@soulwallet/abi';
+import { useAddressStore } from '@/store/address';
 
 export default function useQuery() {
   const { ethersProvider } = useWalletContext();
   const { soulWallet } = useSdk();
   const { chainConfig } = useConfig();
+
+  const getGuardianDetails = async (walletAddress: string) => {
+    const contract = new Contract(chainConfig.contracts.socialRecoveryModule, ABI_SocialRecoveryModule, ethersProvider);
+    const recoveryInfo = await contract.getSocialRecoveryInfo(walletAddress);
+    const activeGuardianHash = recoveryInfo[0];
+    const res = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
+    return res.data;
+  }
 
   const getGasPrice = async () => {
     // if it's in the fixed price list, set fixed
@@ -69,5 +80,6 @@ export default function useQuery() {
   return {
     getGasPrice,
     getPrefund,
+    getGuardianDetails,
   };
 }

@@ -16,15 +16,11 @@ import { useSignerStore } from '@/store/signer';
 import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
 import { defaultGuardianSafePeriod } from '@/config';
-// import { fetchTokenBalanceApi } from '@/store/balance';
-// import useTransaction from './useTransaction';
 import useTools from './useTools';
 import BN from 'bignumber.js';
 import useBrowser from './useBrowser';
-import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
-import useWalletContext from '@/context/hooks/useWalletContext';
 import { useTempStore } from '@/store/temp';
 import { useGuardianStore } from '@/store/guardian';
 
@@ -35,6 +31,7 @@ export default function useWallet() {
   const { selectedChainId, setSelectedChainId } = useChainStore();
   const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
   const { soulWallet } = useSdk();
+  const { getGuardianDetails } = useQuery();
   const { navigate } = useBrowser();
   const toast = useToast();
   const { clearLogData } = useTools();
@@ -101,15 +98,12 @@ export default function useWallet() {
       setSelectedChainId(item.chainID);
       setSlotInfo(item.initInfo);
 
-      // get guardians info
-      // const res2:any = await api.guardian.getGuardianDetails({
-      //   guardianHash: item.initInfo.initialGuardianHash,
-      // });
+      const _guardiansInfo = await getGuardianDetails(item.address);
 
-      // setGuardiansInfo({
-      //   guardianHash: recoverInfo.guardian_hash,
-      //   guardianDetails: recoverInfo.guardian_info,
-      // });
+      setGuardiansInfo({
+        guardianHash: _guardiansInfo.guardian_hash,
+        guardianDetails: _guardiansInfo.guardianInfo,
+      });
 
     } catch (e: any) {
       toast({
