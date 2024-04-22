@@ -25,6 +25,7 @@ import api from '@/lib/api';
 import EmptyGuardianIcon from '@/assets/icons/empty-guardian.svg';
 import RemoveIcon from '@/components/Icons/Remove';
 import useWalletContract from '@/hooks/useWalletContract';
+import { SocialRecovery } from '@soulwallet/sdk';
 
 const getRecommandCount = (c: number) => {
   if (!c) {
@@ -68,13 +69,11 @@ export default function EditGuardian({
   const { getAddressName, saveAddressName } = useSettingStore();
   const { getEditingGuardiansInfo, updateEditingGuardiansInfo, clearCreateInfo } = useTempStore();
   const guardiansInfo = getEditingGuardiansInfo();
-  const { listOwner } = useWalletContract();
-  const [keepPrivate, setKeepPrivate] = useState(!!guardiansInfo?.keepPrivate);
+  const { changeGuardian } = useTransaction();
   const [isCreating, setIsCreating] = useState(false);
-  const guardianStore = useGuardianStore();
+  const { setGuardiansInfo } = useGuardianStore();
   const [showGuardianTip1, setShowGuardianTip1] = useState(true);
   const [showGuardianTip2, setShowGuardianTip2] = useState(true);
-  const { slotInfo, getSlotInfo } = useSlotStore();
   const toast = useToast();
 
   const guardianDetails = guardiansInfo?.guardianDetails || {
@@ -123,155 +122,51 @@ export default function EditGuardian({
     });
   }, [guardianList.length]);
 
-  console.log('guardianList', guardianList);
+  const next = async () => {
+    try {
+      setIsCreating(true);
+      const guardianAddresses = guardianList.map((item: any) => item.address);
+      const guardianNames = guardianList.map((item: any) => item.name);
+      const threshold = amountForm.values.amount || 0;
+      const newGuardianHash = SocialRecovery.calcGuardianHash(guardianAddresses, threshold);
+      const salt = ethers.ZeroHash;
 
-  const next = useCallback(async () => {
-    const initialGuardianHash = slotInfo && slotInfo.initialGuardianHash;
+      const guardiansInfo = {
+        guardianHash: newGuardianHash,
+        guardianNames,
+        guardianDetails: {
+          guardians: guardianAddresses,
+          threshold: Number(threshold),
+          salt,
+        },
+        requireBackup: true,
+      };
 
-    if (!initialGuardianHash) {
-      try {
-        setIsCreating(true);
-        const guardianAddresses = guardianList.map((item: any) => item.address);
-        const guardianNames = guardianList.map((item: any) => item.name);
-        const threshold = amountForm.values.amount || 0;
-        const newGuardianHash = '';
-        const salt = ethers.ZeroHash;
+      await api.guardian.backupGuardians(guardiansInfo);
 
-        const guardiansInfo = {
-          guardianHash: newGuardianHash,
-          guardianNames,
-          guardianDetails: {
-            guardians: guardianAddresses,
-            threshold: Number(threshold),
-            salt,
-          },
-          requireBackup: true,
-          keepPrivate,
-        };
-
-        if (!keepPrivate) await api.guardian.backupGuardians(guardiansInfo);
-
-        const initialGuardianSafePeriod = defaultGuardianSafePeriod;
-        // await createWallet({
-        //   initialGuardianHash: newGuardianHash,
-        //   initialGuardianSafePeriod,
-        // });
-
-        // guardianStore()
-        console.log('keepPrivate', keepPrivate);
-
-        guardianStore.setGuardiansInfo(guardiansInfo);
-
-        for (let i = 0; i < guardianAddresses.length; i++) {
-          const address = guardianAddresses[i];
-          const name = guardianNames[i];
-          if (address) saveAddressName(address.toLowerCase(), name);
-        }
-
-        setIsCreating(false);
-        clearCreateInfo();
-        cancelEditGuardian();
-        // navigate(`/dashboard`);
-      } catch (error: any) {
-        setIsCreating(false);
-
-        if (error.message) {
-          toast({
-            status: 'error',
-            title: error.message,
-          });
-        }
-
-        console.log('error', error.message);
+      for (let i = 0; i < guardianAddresses.length; i++) {
+        const address = guardianAddresses[i];
+        const name = guardianNames[i];
+        if (address) saveAddressName(address.toLowerCase(), name);
       }
-    } else {
-      try {
-        setIsCreating(true);
-        const guardianAddresses = guardianList.map((item: any) => item.address);
-        const guardianNames = guardianList.map((item: any) => item.name);
-        const threshold = amountForm.values.amount || 0;
-        const newGuardianHash = '';
-        const salt = ethers.ZeroHash;
 
-        const guardiansInfo = {
-          guardianHash: newGuardianHash,
-          guardianNames,
-          guardianDetails: {
-            guardians: guardianAddresses,
-            threshold: Number(threshold),
-            salt,
-          },
-          requireBackup: true,
-          keepPrivate,
-        };
+      await changeGuardian(newGuardianHash);
 
-        if (!keepPrivate) await api.guardian.backupGuardians(guardiansInfo);
-        const { initialKeys, initialKeyHash, initialGuardianHash, initialGuardianSafePeriod } = slotInfo;
+      setGuardiansInfo(guardiansInfo);
 
-        let rawKeys;
-        // if (await checkActivated()) {
-        //   const owners: any = await listOwner();
-        //   rawKeys = new ethers.AbiCoder().encode(
-        //     ['bytes32[]'],
-        //     [
-        //       Object.values(owners).sort((a: any, b: any) => {
-        //         return parseInt(a, 16) - parseInt(b, 16);
-        //       }),
-        //     ],
-        //   );
-        // } else {
-      
-        // }
-
-        /* const { keySignature } = await getReplaceGuardianInfo(newGuardianHash, guardiansInfo);
-
-         * const functionName = `setGuardian(bytes32,bytes32,uint256,bytes32,bytes,bytes)`;
-         * const parameters = [
-         *   initialKeyHash,
-         *   initialGuardianHash,
-         *   initialGuardianSafePeriod,
-         *   newGuardianHash,
-         *   rawKeys,
-         *   keySignature,
-         * ];
-
-         * const res1 = await api.guardian.createTask({
-         *   keystore,
-         *   functionName,
-         *   parameters,
-         * });
-
-         * const task = res1.data;
-         * const paymentContractAddress = chainConfig.contracts.paymentContractAddress;
-         * await showConfirmPayment(task.estiamtedFee);
-         * await payTask(paymentContractAddress, task.estiamtedFee, task.taskID);
-
-         * for (let i = 0; i < guardianAddresses.length; i++) {
-         *   const address = guardianAddresses[i];
-         *   const name = guardianNames[i];
-         *   if (address) saveAddressName(address.toLowerCase(), name);
-         * }
-
-         * setIsCreating(false);
-         * cancelEditGuardian(); */
-      } catch (error: any) {
-        setIsCreating(false);
-
-        if (error.message) {
-          toast({
-            status: 'error',
-            title: error.message,
-          });
-        }
-
-        console.log('error', error.message);
+      setIsCreating(false);
+    } catch (error: any) {
+      setIsCreating(false);
+      if (error.message) {
+        toast({
+          status: 'error',
+          title: error.message,
+        });
       }
+
+      console.log('error', error.message);
     }
-  }, [guardianList, keepPrivate, slotInfo]);
-
-  const onBackupFinished = useCallback(() => {
-    next();
-  }, [keepPrivate]);
+  }
 
   useEffect(() => {
     if (!amountForm.values.amount || Number(amountForm.values.amount) > guardianList.length) {
@@ -537,9 +432,7 @@ export default function EditGuardian({
         {!!guardianList.length && (
           <Button
             size="mid"
-            onClick={
-              () => next()
-            }
+            onClick={() => next()}
             isLoading={isCreating}
             disabled={isCreating || !guardianList.length}
           >

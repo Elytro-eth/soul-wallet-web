@@ -39,8 +39,8 @@ export default function useWallet() {
   const toast = useToast();
   const { clearLogData } = useTools();
   const { setGuardiansInfo } = useGuardianStore();
-  const { updateRecoverInfo, recoverInfo, clearTempStore } = useTempStore();
-  const { selectedAddress, setSelectedAddress, setWalletName, setAddressList } = useAddressStore();
+  const { recoverInfo, clearTempStore } = useTempStore();
+  const { selectedAddress, setWalletName, setAddressList } = useAddressStore();
 
   // will be executed only once after recover process finished
   const boostAfterRecovered = async (_recoverInfo: any) => {
@@ -100,6 +100,17 @@ export default function useWallet() {
       ]);
       setSelectedChainId(item.chainID);
       setSlotInfo(item.initInfo);
+
+      // get guardians info
+      // const res2:any = await api.guardian.getGuardianDetails({
+      //   guardianHash: item.initInfo.initialGuardianHash,
+      // });
+
+      // setGuardiansInfo({
+      //   guardianHash: recoverInfo.guardian_hash,
+      //   guardianDetails: recoverInfo.guardian_info,
+      // });
+
     } catch (e: any) {
       toast({
         title: 'Failed to login',
@@ -195,34 +206,9 @@ export default function useWallet() {
 
     let userOp = userOpRet.OK;
 
-    // approve paymaster to spend ERC-20
-    // const soulAbi = new ethers.Interface(ABI_SoulWallet);
-    // const erc20Interface = new ethers.Interface(erc20Abi);
-    // approve defi contract to spend token
-    // const approveTos = [import.meta.env.VITE_TOKEN_USDC];
-    // const approveCalldata = erc20Interface.encodeFunctionData('approve', [
-    //   import.meta.env.VITE_AaveUsdcSaveAutomation,
-    //   MaxUint256,
-    // ]);
-
-    // const approveCalldatas = [...new Array(approveTos.length)].map(() => approveCalldata);
-
-    // const finalValues = [...new Array(approveTos.length).fill('0x0')];
-
-    // const executions: string[][] = approveTos.map((to, index) => [to, finalValues[index], approveCalldatas[index]]);
-
-    // userOp.callData = soulAbi.encodeFunctionData('executeBatch((address,uint256,bytes)[])', [executions]);
-
     userOp.callData = '0x';
 
     userOp = await estimateGas(userOp, ZeroAddress);
-
-    // const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
-
-    // userOp.maxFeePerGas = maxFeePerGas;
-    // userOp.maxPriorityFeePerGas = maxPriorityFeePerGas;
-
-    // userOp = await getSponsor(userOp);
 
     console.log(userOp, 'userOp');
 

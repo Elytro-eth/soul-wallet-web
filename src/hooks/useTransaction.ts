@@ -7,25 +7,22 @@ import BN from 'bignumber.js';
 import { erc20Abi } from 'viem'
 import { useAddressStore } from '@/store/address';
 import { Transaction } from '@soulwallet/sdk';
-import useQuery from './useQuery';
-import useSdk from '@/hooks/useSdk';
 import useWalletContext from '@/context/hooks/useWalletContext';
-import { ABI_ReceivePayment } from '@soulwallet/abi';
+import { ABI_ReceivePayment, ABI_SocialRecoveryModule } from '@soulwallet/abi';
+import useConfig from './useConfig';
 
 export default function useTransaction() {
   const { showSignTransaction } = useWalletContext();
   const { selectedAddress } = useAddressStore();
+  const { chainConfig } =  useConfig();
 
-
-  const payTask = async (contractAddress: string, amount: string, paymentId: string) => {
-    const soulAbi = new ethers.Interface(ABI_ReceivePayment);
-    const callData = soulAbi.encodeFunctionData('pay(bytes32)', [paymentId]);
+  const changeGuardian = async (newGuardianHash: string) => {
+    const soulAbi = new ethers.Interface(ABI_SocialRecoveryModule);
+    const callData = soulAbi.encodeFunctionData('setGuardian(bytes32)', [newGuardianHash]);
     const tx: Transaction = {
-      to: contractAddress,
+      to: chainConfig.contracts.socialRecoveryModule,
       data: callData,
-      value: BN(amount).toString()
     };
-
     return showSignTransaction([tx], '', '');
   };
 
@@ -56,6 +53,6 @@ export default function useTransaction() {
   return {
     sendErc20,
     sendEth,
-    payTask,
+    changeGuardian,
   };
 }

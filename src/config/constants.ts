@@ -16,6 +16,7 @@ export const sidebarLinks = [
     icon: IconDashboard,
     iconActive: IconDashboardActive,
     isComing: false,
+    requireActivated: false,
   },
   {
     title: 'Assets',
@@ -23,6 +24,7 @@ export const sidebarLinks = [
     icon: IconAssets,
     iconActive: IconAssetsActive,
     isComing: false,
+    requireActivated: false,
   },
   {
     title: 'Activity',
@@ -30,6 +32,7 @@ export const sidebarLinks = [
     icon: IconActivity,
     iconActive: IconActivityActive,
     isComing: false,
+    requireActivated: false,
   },
   // {
   //   title: 'Dapps',
@@ -38,13 +41,14 @@ export const sidebarLinks = [
   //   iconActive: IconDappsActive,
   //   isComing: true,
   // },
-  // {
-  //   title: 'Settings',
-  //   href: "/security",
-  //   icon: IconSettings,
-  //   iconActive: IconSettingsActive,
-  //   isComing: false,
-  // },
+  {
+    title: 'Settings',
+    href: "/security",
+    icon: IconSettings,
+    iconActive: IconSettingsActive,
+    isComing: false,
+    requireActivated: true,
+  },
 ];
 
 

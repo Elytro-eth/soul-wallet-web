@@ -1,6 +1,6 @@
 import { Box, Flex, Image, Button, Text, FlexProps, Tooltip } from '@chakra-ui/react';
 import { sidebarLinks } from '@/config/constants';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import IconFeedback from '@/assets/icons/feedback.svg';
 import IconFeedbackActive from '@/assets/icons/feedback-active.svg';
@@ -8,7 +8,6 @@ import Footer from '../Footer';
 import api from '@/lib/api';
 import { useSettingStore } from '@/store/setting';
 import { useEffect, useState } from 'react';
-import useTools from '@/hooks/useTools';
 import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
 
@@ -30,33 +29,42 @@ const ExtraLink = ({ children, ...restProps }: FlexProps) => {
 
 export default function Sidebar() {
   const location = useLocation();
-  const { setClaimableCount } = useSettingStore();
-  const { selectedAddress } = useAddressStore();
-  const { selectedChainId } = useChainStore();
-  const { showFeedback } = useWalletContext();
+  // const { setClaimableCount } = useSettingStore();
+  // const { selectedAddress } = useAddressStore();
+  // const { selectedChainId } = useChainStore();
+  const { showFeedback, checkActivated, showActiveWalletModal } = useWalletContext();
   const [navHoverIndex, setNavHoverIndex] = useState(-1);
   const [externalHoverIndex, setExternalHoverIndex] = useState(-1);
   const pathname = location.pathname;
+  const navigate = useNavigate();
 
-  const checkClaimable = async () => {
-    try {
-      const res: any = await api.operation.requestTestToken({
-        address: selectedAddress,
-        chainID: selectedChainId,
-        dryRun: true,
-      });
-      if (res.code === 200) {
-        setClaimableCount(res.data.remaining);
-      }
-    } catch (err) {
-      setClaimableCount(0);
+  // const checkClaimable = async () => {
+  //   try {
+  //     const res: any = await api.operation.requestTestToken({
+  //       address: selectedAddress,
+  //       chainID: selectedChainId,
+  //       dryRun: true,
+  //     });
+  //     if (res.code === 200) {
+  //       setClaimableCount(res.data.remaining);
+  //     }
+  //   } catch (err) {
+  //     setClaimableCount(0);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (!selectedAddress || !selectedChainId) return;
+  //   checkClaimable();
+  // }, [selectedAddress, selectedChainId]);
+  const goLink = async (link: any) => {
+    console.log('go', link)
+    if (link.requireActivated && !(await checkActivated())) {
+      showActiveWalletModal();
+    } else {
+      navigate(link.href);
     }
   };
-
-  useEffect(() => {
-    if (!selectedAddress || !selectedChainId) return;
-    checkClaimable();
-  }, [selectedAddress, selectedChainId]);
 
   return (
     <Flex
@@ -76,7 +84,8 @@ export default function Sidebar() {
               <Flex
                 onMouseEnter={() => setNavHoverIndex(index)}
                 onMouseLeave={() => setNavHoverIndex(-1)}
-                {...(link.isComing ? {} : { as: Link, to: link.href, cursor: 'pointer' })}
+                onClick={() => goLink(link)}
+                cursor={link.isComing ? 'none': 'pointer'}
                 gap={{ base: 1, lg: 2 }}
                 align={'center'}
               >

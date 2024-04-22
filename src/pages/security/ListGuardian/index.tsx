@@ -52,7 +52,7 @@ export default function ListGuardian({
             flexDirection={{ base: 'column', md: 'row' }}
           >
             <Box>Guardian List</Box>
-            <Box
+            {/* <Box
               marginLeft={{ base: '0', md: 'auto' }}
               marginTop={{ base: '20px', md: '0' }}
               display="flex"
@@ -73,9 +73,9 @@ export default function ListGuardian({
                   Backup guardians
                 </Button>
               )}
-            </Box>
+            </Box> */}
           </Box>
-          {isPending && (
+          {/* {isPending && (
             <Box
               background="#F3FBF2"
               borderRadius="8px"
@@ -90,7 +90,7 @@ export default function ListGuardian({
             >
               You have a pending guardian update. New guardians updating in <Box color="#0CB700" as="span">12h : 56m : 03s</Box><Box fontWeight="700" as="span" marginLeft="24px" cursor="pointer" display="inline-flex" onClick={openPendingGuardianModal}>Details<Box display="flex" alignItems="center" justifyContent="center"><Image src={IconCheveronRight} w="16px" h="16px" /></Box></Box>
             </Box>
-          )}
+          )} */}
           {!guardianList.length && (
             <Box width="100%" display="flex" alignItems="center" justifyContent="center">
               <Box display="flex" flexDirection="column" alignItems="center"  justifyContent="center">
