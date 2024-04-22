@@ -65,6 +65,7 @@ export default function EditGuardian({
   startAddGuardian,
   startEditSingleGuardian,
   startRemoveGuardian,
+  onEdited,
 }: any) {
   const { getAddressName, saveAddressName } = useSettingStore();
   const { getEditingGuardiansInfo, updateEditingGuardiansInfo, clearCreateInfo } = useTempStore();
@@ -89,7 +90,6 @@ export default function EditGuardian({
         getAddressName(address && address.toLowerCase()),
       )) ||
     [];
-  console.log('getEditingGuardiansInfo', getEditingGuardiansInfo(), guardianNames);
 
   const guardianList = guardianDetails.guardians.map((guardian: any, i: number) => {
     return {
@@ -104,7 +104,7 @@ export default function EditGuardian({
     fields: ['amount'],
     validate: amountValidate,
     initialValues: {
-      amount: 0,
+      amount: guardianDetails.threshold
     },
   });
 
@@ -155,6 +155,8 @@ export default function EditGuardian({
       setGuardiansInfo(guardiansInfo);
 
       setIsCreating(false);
+
+      onEdited();
     } catch (error: any) {
       setIsCreating(false);
       if (error.message) {

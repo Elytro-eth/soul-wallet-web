@@ -143,7 +143,7 @@ const TokenBalanceTable = ({ tokenBalance, showSendAssets }: any) => {
             idx={idx}
             icon={item.logoURI}
             tokenPrice={toFixed(item.tokenPrice, 2)}
-            usdValue={toFixed(item.usdValue || 0, 2)}
+            usdValue={item.usdValue}
             totalUsdValue={totalUsdValue}
             title={item.name || 'Unknown'}
             lineColor={lineColors[idx] || 'brand.gray'}
@@ -159,8 +159,6 @@ const TokenBalanceTable = ({ tokenBalance, showSendAssets }: any) => {
 export default function Tokens() {
   const { showSend } = useWalletContext();
   const { tokenBalance } = useBalanceStore();
-  const { slotInfo } = useSlotStore();
-  const [isSkipOpen, setIsSkipOpen] = useState(false);
   const { getAddressDisplay } = useSettingStore();
   const { selectedAddress } = useAddressStore();
   const { getTokenBalance } = useBalanceStore();

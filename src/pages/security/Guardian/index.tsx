@@ -238,6 +238,7 @@ export default function Guardian() {
             startEditSingleGuardian={startEditSingleGuardian}
             startRemoveGuardian={startRemoveGuardian}
             count={count}
+            onEdited={()=> setIsEditing(false)}
           />
         )}
         {!isEditing && (

@@ -45,6 +45,8 @@ export default function ListItem({
     .div(totalUsdValue || '0')
     .times(100)
     .toFixed(2);
+
+    console.log('aaaa', usdValue, totalUsdValue)
   return (
     <Flex
       onClick={onClick}
@@ -69,7 +71,7 @@ export default function ListItem({
         <Text fontWeight={'800'} mb="2px" textTransform={'capitalize'}>
           {amount}
         </Text>
-        {usdValue && <Text fontSize={'12px'}>${usdValue}</Text>}
+        {usdValue && <Text fontSize={'12px'}>${toFixed(usdValue || 0, 2)}</Text>}
       </Box>
       <Flex w="33%" gap="3" align="center" display={{ base: 'none', lg: 'block' }}>
         <Box bg="#d9d9d9" rounded={'8px'} overflow={'hidden'} h="6px" pos="relative" w="150px" flex="0 0 150px">
