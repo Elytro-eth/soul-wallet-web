@@ -1,14 +1,9 @@
 import { useState, useCallback, Fragment, useRef, useEffect } from 'react';
 import { SectionMenu, SectionMenuItem } from '@/components/new/SectionMenu';
 import { Box } from '@chakra-ui/react'
-import SetSignerModal from '@/pages/security/SetSignerModal'
-import SelectSignerTypeModal from '@/pages/security/SelectSignerTypeModal'
-import SelectGuardianTypeModal from '@/pages/security/SelectGuardianTypeModal'
-import IntroGuardianModal from '@/pages/security/IntroGuardianModal'
 import RemoveGuardianModal from '@/pages/security/RemoveGuardianModal'
 import EditGuardianModal from '@/pages/security/EditGuardianModal'
 import PendingGuardianModal from '@/pages/security/PendingGuardianModal'
-import WalletConnectModal from '@/pages/security/WalletConnectModal'
 import useBrowser from '@/hooks/useBrowser';
 import { useTempStore } from '@/store/temp';
 import { useGuardianStore } from '@/store/guardian';
@@ -36,7 +31,6 @@ export default function Guardian() {
   const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<any>(false);
   const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
   const [isBackupGuardianOpen, setIsBackupGuardianOpen] = useState<any>(false);
-  const [isWalletConnectOpen, setIsWalletConnectOpen] = useState<any>(false);
   const [canBackToSelectGuardianType, setCanBackToSelectGuardianType] = useState<any>(false);
   const [editType, setEditType] = useState<any>('edit')
   const [count, setCount] = useState<any>(0)
@@ -59,14 +53,6 @@ export default function Guardian() {
   const guardianStore = useGuardianStore();
   const guardiansInfo = (!tempStore.createInfo.creatingGuardianInfo ? guardianStore.guardiansInfo : tempStore.getCreatingGuardianInfo()) || defaultGuardianInfo
   console.log('guardiansInfo111', guardianStore.guardiansInfo, guardianStore.getGuardiansInfo())
-
-  const openWalletConnectModal = useCallback(() => {
-    setIsWalletConnectOpen(true)
-  }, [])
-
-  const closeWalletConnectModal = useCallback(() => {
-    setIsWalletConnectOpen(false)
-  }, [])
 
   const openPendingGuardianModal = useCallback((editType: any) => {
     setIsPendingGuardianOpen(true)
@@ -283,10 +269,6 @@ export default function Guardian() {
         onConfirm={onRemoveGuardianConfirm}
         removeIndex={removeIndex}
         address={removeAddress}
-      />
-      <WalletConnectModal
-        isOpen={isWalletConnectOpen}
-        onClose={closeWalletConnectModal}
       />
     </Fragment>
   );

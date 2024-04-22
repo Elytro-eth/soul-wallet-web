@@ -8,6 +8,7 @@ export default function DoubleFormInput({
   leftErrorMsg,
   leftOnChange,
   leftOnBlur,
+  setLeftInput,
   rightLabel,
   rightValue,
   rightPlaceholder,
@@ -56,7 +57,7 @@ export default function DoubleFormInput({
       flexDirection={{ base: 'column', 'md': 'row' }}
       {..._styles}
     >
-      <Box display="flex" flexDirection="column" width="50%" {..._leftContainerStyles}>
+      <Box display="flex" flexDirection="column" width="50%" {..._leftContainerStyles} ref={setLeftInput}>
         {leftLabel && (
           <Box as="label" htmlFor="leftLabel">
             {leftLabel}
@@ -73,10 +74,11 @@ export default function DoubleFormInput({
               onChange={handleLeftChange}
               onBlur={handleLeftBlur}
               borderRadius="16px"
-              paddingLeft="24px"
-              paddingRight="24px"
+              paddingLeft="16px"
+              paddingRight="16px"
               height="48px"
               background="white"
+              autoFocus={true}
               onKeyDown={onKeyDown}
               {..._leftInputStyles}
             />
@@ -117,17 +119,17 @@ export default function DoubleFormInput({
               onBlur={handleRightBlur}
               onFocus={handleRightFocus}
               borderRadius="16px"
-              paddingLeft={leftComponent ? '40px' : '24px'}
-              paddingRight="24px"
+              paddingLeft={leftComponent ? '40px' : '16px'}
+              paddingRight="16px"
               height="48px"
               background="white"
               onKeyDown={onKeyDown}
               width="100%"
-              autoFocus={true}
+              placeholder={rightPlaceholder}
               {..._rightInputStyles}
             />
-            {(rightPlaceholder && !rightValue) && (
-              <Text
+            {/* {(rightPlaceholder && !rightValue) && (
+                <Text
                 position="absolute"
                 height="48px"
                 left={leftComponent ? '42px' : '24px'}
@@ -138,10 +140,12 @@ export default function DoubleFormInput({
                 pointerEvents="none"
                 color="#898989"
                 zIndex="2"
-              >
+                whiteSpace="pre"
+                overflow="hidden"
+                >
                 {rightPlaceholder}
-              </Text>
-            )}
+                </Text>
+                )} */}
           </Box>
         </Box>
         <Text color="#FF4343" padding="0 10px" fontSize="14px">

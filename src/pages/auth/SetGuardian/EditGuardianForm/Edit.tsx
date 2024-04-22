@@ -115,37 +115,39 @@ const GuardianInput = ({
   return (
     <Box position="relative" key={id} width="100%">
       <DoubleFormInput
-        rightPlaceholder={`Enter address or ENS`}
-        rightValue={values[`address_${id}`]}
-        rightOnChange={(value: any) => inputOnChange(id, value)}
-        rightOnFocus={(value: any,) => inputOnFocus(id, value)}
-        rightOnBlur={(value: any) => inputOnBlur(id, value)}
-        setRightInput={setInputRef}
-        rightErrorMsg={showErrors[`address_${id}`] && errors[`address_${id}`]}
-        _rightInputStyles={{
+        leftPlaceholder={`Enter address or ENS`}
+        leftValue={values[`address_${id}`]}
+        leftOnChange={(value: any) => inputOnChange(id, value)}
+        leftOnFocus={(value: any,) => inputOnFocus(id, value)}
+        leftOnBlur={(value: any) => inputOnBlur(id, value)}
+        setLeftInput={setInputRef}
+        leftErrorMsg={showErrors[`address_${id}`] && errors[`address_${id}`]}
+        _leftInputStyles={{
           fontWeight: 600,
           fontSize: '14px',
           fontFamily: 'Nunito'
         }}
-        _rightContainerStyles={{
-          width: { base: 'calc(100%)', 'md': 'calc(100% - 170px)' },
+        _leftContainerStyles={{
+          width: { base: 'calc(100%)', 'md': 'calc(100% - 196px)' },
+          marginBottom: { base: '18px', 'md': '0' },
           zIndex: 0
         }}
-        leftAutoFocus={id === guardianIds[0]}
-        leftPlaceholder="Guardian Name (optinal)"
-        leftValue={values[`name_${id}`]}
-        leftOnChange={onChange(`name_${id}`)}
-        leftOnBlur={onBlur(`name_${id}`)}
-        leftErrorMsg={showErrors[`name_${id}`] && errors[`name_${id}`]}
-        _leftContainerStyles={{
-          width: { base: '100%', 'md': '170px' },
-          marginBottom: { base: '20px', 'md': '0' }
+
+        rightAutoFocus={id === guardianIds[0]}
+        rightPlaceholder="Guardian Name (optinal)"
+        rightValue={values[`name_${id}`]}
+        rightOnChange={onChange(`name_${id}`)}
+        rightOnBlur={onBlur(`name_${id}`)}
+        rightErrorMsg={showErrors[`name_${id}`] && errors[`name_${id}`]}
+        _rightContainerStyles={{
+          width: { base: '100%', 'md': '196px' },
         }}
-        _leftInputStyles={{
+        _rightInputStyles={{
           fontWeight: 600,
           fontSize: '14px',
           fontFamily: 'Nunito',
         }}
+
         onEnter={handleSubmit}
         _styles={{ width: '100%', fontSize: '16px' }}
       />
@@ -167,9 +169,9 @@ const GuardianInput = ({
       )}
       <ENSResolver
         _styles={{
-          width: { base: "100%", lg: "calc(100% - 170px)" },
+          width: { base: "100%", lg: "calc(100% - 196px - 16px)" },
           top: { base: "120px", lg: "50px" },
-          left: { base: "0", lg: "170px" },
+          left: { base: "0", lg: "0" },
           right: "0",
         }}
         isENSOpen={isENSOpen}
