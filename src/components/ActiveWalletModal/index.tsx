@@ -170,6 +170,8 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           alignItems="center"
                           justifyContent="center"
                           marginBottom={{ base: '20px', md: '0' }}
+                          marginRight={{ base: '0', md: 'auto' }}
+                          width={{ base: '100%', md: 'max-content' }}
                         >
                           <TextBody
                             type="t3"
@@ -183,43 +185,56 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                             {selectedAddress}
                           </TextBody>
                         </Box>
-                        <Box marginLeft="8px">
-                          <Button
-                            size="sm"
-                            height="28px"
-                            onClick={() => doCopy(selectedAddress)}
-                            width={{ base: '100%', md: '104px' }}
-                            marginBottom={{ base: '20px', md: '0' }}
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="flex-start"
+                          width={{ base: '100%', md: '180px' }}
+                          flexDirection={{ base: 'column', md: 'row' }}
+                        >
+                          <Box
+                            width={{ base: '100%', md: 'max-content' }}
                           >
-                            Copy address
-                          </Button>
-                        </Box>
-                        <Box marginLeft="8px">
-                          <Tooltip
-                            label={
+                            <Button
+                              size="sm"
+                              height="28px"
+                              onClick={() => doCopy(selectedAddress)}
+                              width={{ base: '100%', md: '104px' }}
+                              marginBottom={{ base: '20px', md: '0' }}
+                            >
+                              Copy address
+                            </Button>
+                          </Box>
+                          <Box
+                            marginLeft={{ base: '0', md: '8px' }}
+                            width={{ base: '100%', md: 'max-content' }}
+                          >
+                            <Tooltip
+                              label={
+                                <Box>
+                                  <Image src={imgSrc} mx="auto" display={'block'} w="106px" mb="2" />
+                                </Box>
+                              }
+                              placement="top"
+                              background="white"
+                              boxShadow="none"
+                              border="1px solid rgba(0, 0, 0, 0.1)"
+                              width="138px"
+                              height="138px"
+                              padding="16px"
+                            >
                               <Box>
-                                <Image src={imgSrc} mx="auto" display={'block'} w="106px" mb="2" />
+                                <Button
+                                  size="sm"
+                                  height="28px"
+                                  type="white"
+                                  width={{ base: '100%', md: 'auto' }}
+                                >
+                                  <QrcodeIcon />
+                                </Button>
                               </Box>
-                            }
-                            placement="top"
-                            background="white"
-                            boxShadow="none"
-                            border="1px solid rgba(0, 0, 0, 0.1)"
-                            width="138px"
-                            height="138px"
-                            padding="16px"
-                          >
-                            <Box>
-                              <Button
-                                size="sm"
-                                height="28px"
-                                type="white"
-                                width={{ base: '100%', md: 'auto' }}
-                              >
-                                <QrcodeIcon />
-                              </Button>
-                            </Box>
-                          </Tooltip>
+                            </Tooltip>
+                          </Box>
                         </Box>
                       </Box>
                     </Box>
@@ -294,11 +309,12 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           alignItems="center"
                           justifyContent="center"
                           marginBottom={{ base: '20px', md: '0' }}
+                          marginRight="auto"
                         >
                           <TextBody type="t3">{`The activation fee will be covered by Soul Wallet. $0 cost on you.`}</TextBody>
                         </Box>
                         <Box
-                          marginLeft={{ base: '0', md: '54px' }}
+                          width={{ base: '100%', md: '180px' }}
                         >
                           <Button
                             size="sm"
