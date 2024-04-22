@@ -13,7 +13,7 @@ export default {
   iconSquare: IconOpSquare,
   cardBg: 'radial-gradient(52.03% 100% at 100% 100%, #FF9595 0%, #E2FC89 100%)',
   cardBgUnactivated: 'radial-gradient(52.03% 100% at 100% 100%, #FF9595 0%, #D7D7D7 100%)',
-  provider: `https://sepolia.optimism.io`,
+  provider: `https://opt-sepolia.g.alchemy.com/v2/9VgWMRNMVbH5--PKcnp4c5YXqLNcadcx`,
   scanUrl: 'https://sepolia-optimism.etherscan.io',
   scanName: 'Etherscan',
   bundlerUrl: `https://api-dev.soulwallet.io/walletapi/bundler/optimism-sepolia/rpc`,
