@@ -47,6 +47,10 @@ export function AccountSelect({ labelType = 'title', wrapperProps, isInModal, ..
     setSelectedChainId(item.chainIdHex);
   };
 
+  if(!selectedAddressItem || !selectedChainItem){
+    return <></>
+  }
+
   return (
     <Flex
       align="center"
