@@ -50,7 +50,13 @@ export const SignHeader = ({ url }: { url?: string }) => {
 
 function SignContainer({ children }: any) {
   return (
-    <Flex justify="center" align="center" width="100%" minHeight="100vh" background="#F2F4F7">
+    <Flex
+      justify="center"
+      align="center"
+      width="100%"
+      minHeight="100vh"
+      background="#F2F4F7"
+    >
       <SignHeader />
       <Box
         padding="20px"
@@ -59,6 +65,7 @@ function SignContainer({ children }: any) {
         justifyContent="center"
         height="calc(100vh - 58px)"
         flexDirection="column"
+        width="100%"
       >
         <RoundContainer
           width="1058px"
@@ -92,16 +99,19 @@ function RecoverInfo({ targetName, address, chainName }: any) {
         padding="4px 8px"
         borderRadius="4px"
         fontSize="14px"
-        fontWeight="600"
         marginRight={{ base: '0', md: '8px' }}
         whiteSpace="pre"
         display="flex"
         alignItems="center"
         marginBottom={{ base: '10px', md: '0' }}
         flexDirection={{ base: 'column', md: 'row' }}
+        maxWidth={{ base: '300px', md: 'max-content' }}
         minHeight="32px"
       >
-        <Box as="span" fontWeight="700">{targetName}:</Box> {address}
+        <Box as="span" fontWeight="700">{targetName}:</Box>
+        <Box as="span" fontWeight="600" maxWidth="100%" whiteSpace="pre-wrap">
+          {address}
+        </Box>
       </Box>
       <Box
         background="#F3F3F3"
