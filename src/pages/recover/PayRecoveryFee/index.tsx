@@ -11,6 +11,7 @@ import StepProgress from '../StepProgress';
 import api from '@/lib/api';
 import useWallet from '@/hooks/useWallet';
 import { Link } from 'react-router-dom';
+import { RecoveryContainer } from '@/pages/recover'
 
 export default function PayRecoveryFee({ next }: any) {
   const { recoverInfo } = useTempStore();
@@ -40,8 +41,7 @@ export default function PayRecoveryFee({ next }: any) {
 
   if (isRecovered) {
     return (
-      <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
-        <SignHeader url="/auth" />
+      <RecoveryContainer>
         <Box
           padding="20px"
           display="flex"
@@ -51,6 +51,7 @@ export default function PayRecoveryFee({ next }: any) {
           width="100%"
           paddingTop="60px"
           flexDirection={{ base: 'column', md: 'row' }}
+          marginTop="33px"
         >
           <RoundContainer
             width="1058px"
@@ -96,13 +97,12 @@ export default function PayRecoveryFee({ next }: any) {
           </RoundContainer>
           <StepProgress activeIndex={3} />
         </Box>
-      </Flex>
+      </RecoveryContainer>
     );
   }
 
   return (
-    <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
-      <SignHeader url="/auth" />
+    <RecoveryContainer>
       <Box
         padding="20px"
         display="flex"
@@ -112,6 +112,7 @@ export default function PayRecoveryFee({ next }: any) {
         width="100%"
         paddingTop="60px"
         flexDirection={{ base: 'column', md: 'row' }}
+        marginTop="33px"
       >
         <RoundContainer
           width="1058px"
@@ -152,6 +153,6 @@ export default function PayRecoveryFee({ next }: any) {
         </RoundContainer>
         <StepProgress activeIndex={3} />
       </Box>
-    </Flex>
+    </RecoveryContainer>
   );
 }

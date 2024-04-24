@@ -17,6 +17,7 @@ import StepProgress from '../StepProgress'
 import { SignHeader } from '@/pages/public/Sign';
 import { SocialRecovery } from '@soulwallet/sdk';
 import DeleteIcon from '@/components/Icons/Delete'
+import { RecoveryContainer } from '@/pages/recover'
 
 export default function AddSigner({ next, back }: any) {
   const [signers, setSigners] = useState<any>([])
@@ -90,8 +91,7 @@ export default function AddSigner({ next, back }: any) {
   console.log('signers', signers)
 
   return (
-    <Flex width="100%" align={'center'} justify={'center'} minHeight="100vh" background="#F2F4F7">
-      <SignHeader url="/auth" />
+    <RecoveryContainer>
       <Box
         padding="20px"
         display="flex"
@@ -101,6 +101,7 @@ export default function AddSigner({ next, back }: any) {
         width="100%"
         paddingTop="60px"
         flexDirection={{ base: 'column', 'md': 'row' }}
+        marginTop="33px"
       >
         <RoundContainer
           width="1058px"
@@ -182,7 +183,7 @@ export default function AddSigner({ next, back }: any) {
                 width={{ base: '100%', md: '246px' }}
                 onClick={() => addCredential()}
               >
-                + Add passkey
+                {(signers && signers.length) ? `+ Add another passkey` : `+ Add passkey`}
               </Button>
             </Box>
             <Box color="rgba(0, 0, 0, 0.6)" fontSize="12px" marginTop="8px">
@@ -215,6 +216,6 @@ export default function AddSigner({ next, back }: any) {
         </RoundContainer>
         <StepProgress activeIndex={1} />
       </Box>
-    </Flex>
+    </RecoveryContainer>
   )
 }

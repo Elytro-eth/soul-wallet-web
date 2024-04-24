@@ -20,6 +20,15 @@ import PayRecoveryFee from './PayRecoveryFee'
 import RecoverProgress from './RecoverProgress'
 import { SignHeader } from '../public/Sign';
 
+export function RecoveryContainer({ children }: any) {
+  return (
+    <Flex align={'flex-start'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
+      <SignHeader url="/auth" />
+      {children}
+    </Flex>
+  )
+}
+
 export default function Recover() {
   const [step, setStep] = useState(0)
   const { navigate } = useBrowser();
@@ -115,8 +124,7 @@ export default function Recover() {
   // }
 
   return (
-    <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
-      <SignHeader url="/auth" />
+    <RecoveryContainer>
       <Box
         padding="20px"
         display="flex"
@@ -126,6 +134,7 @@ export default function Recover() {
         flexDirection="column"
         paddingTop="60px"
         width="100%"
+        marginTop="60px"
       >
         <RoundContainer
           width="1058px"
@@ -196,6 +205,6 @@ export default function Recover() {
           </Box>
         </RoundContainer>
       </Box>
-    </Flex>
+    </RecoveryContainer>
   )
 }

@@ -15,6 +15,7 @@ import { SignHeader } from '@/pages/public/Sign';
 import WalletCheckedIcon from '@/components/Icons/WalletChecked';
 import { chainMapping } from '@/config';
 import useQuery from '@/hooks/useQuery';
+import { RecoveryContainer } from '@/pages/recover'
 
 const validate = (values: any) => {
   const errors: any = {};
@@ -108,8 +109,7 @@ export default function SetWalletAddress({ next, back }: any) {
   }, [values.address]);
 
   return (
-    <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
-      <SignHeader url="/auth" />
+    <RecoveryContainer>
       <Box
         padding="20px"
         display="flex"
@@ -119,6 +119,7 @@ export default function SetWalletAddress({ next, back }: any) {
         width="100%"
         paddingTop="60px"
         flexDirection={{ base: 'column', md: 'row' }}
+        marginTop="33px"
       >
         <RoundContainer
           width="1058px"
@@ -187,6 +188,6 @@ export default function SetWalletAddress({ next, back }: any) {
         </RoundContainer>
         <StepProgress activeIndex={0} />
       </Box>
-    </Flex>
+    </RecoveryContainer>
   );
 }

@@ -523,7 +523,7 @@ export default function Sign() {
                       alignItems="center"
                       width="max-content"
                     >
-                      <Image src={IconOp} w="24px" h="24px" />
+                      <Image src={IconOp} w="16px" h="16px" />
                       <Box marginLeft="4px">
                         <Box fontWeight="500" fontSize="12px" whiteSpace="pre">
                           {targetChainName}
@@ -656,7 +656,7 @@ export default function Sign() {
                     alignItems="center"
                     width="max-content"
                   >
-                    <Image src={IconOp} w="24px" h="24px" />
+                    <Image src={IconOp} w="16px" h="16px" />
                     <Box marginLeft="4px">
                       <Box fontWeight="500" fontSize="12px" whiteSpace="pre">
                         {targetChainName}

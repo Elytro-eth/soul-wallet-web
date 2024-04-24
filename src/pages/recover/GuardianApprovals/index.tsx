@@ -17,6 +17,7 @@ import StepProgress from '../StepProgress'
 import AddressIcon from '@/components/AddressIcon';
 import { SignHeader } from '@/pages/public/Sign';
 import useConfig from '@/hooks/useConfig';
+import { RecoveryContainer } from '@/pages/recover'
 
 export default function GuardianApprovals() {
   const { recoverInfo } = useTempStore()
@@ -43,8 +44,7 @@ export default function GuardianApprovals() {
   // const validNum = (!!signatures && !!signatures.length && signatures.filter((item: any) => !item.isValid).length)
 
   return (
-    <Box width="100%" minHeight="100vh" background="#F2F4F7">
-      <SignHeader url="/auth" />
+    <RecoveryContainer>
       <Box
         padding="20px"
         display="flex"
@@ -54,6 +54,7 @@ export default function GuardianApprovals() {
         width="100%"
         paddingTop="60px"
         flexDirection={{ base: 'column', 'md': 'row' }}
+        marginTop="33px"
       >
         <RoundContainer
           width="1058px"
@@ -167,6 +168,6 @@ export default function GuardianApprovals() {
         </RoundContainer>
         <StepProgress activeIndex={2} />
       </Box>
-    </Box>
+    </RecoveryContainer>
   )
 }
