@@ -22,15 +22,17 @@ const SignTransactionModal = (_: unknown, ref: Ref<any>) => {
   const [signing, setSigning] = useState<boolean>(false);
   const [activeTxns, setActiveTxns] = useState<any>(null);
   const [sendToAddress, setSendToAddress] = useState('');
+  const [guardianInfo, setGuardianInfo] = useState<any>(null);
 
   useImperativeHandle(ref, () => ({
-    async show(txns: any, origin: string, sendTo: string) {
+    async show(txns: any, origin: string, sendTo: string, guardianInfo: any) {
       setVisible(true);
       setOrigin(origin);
 
       setSendToAddress(sendTo);
       setActiveTxns(txns);
 
+      if (guardianInfo) setGuardianInfo(guardianInfo)
       // setShowSelectChain(showSelectChain);
       // setShowAmount(showAmount);
 
@@ -57,21 +59,21 @@ const SignTransactionModal = (_: unknown, ref: Ref<any>) => {
 
   return (
     <div ref={ref}>
-      <TxModal title="Confirm Transaction" visible={visible} onClose={onClose}>
-        <SignTransaction txns={activeTxns} origin={origin} sendToAddress={sendToAddress} onSuccess={onSuccess} />
-{/* 
-        <Text
-          color="danger"
-          fontSize="20px"
-          fontWeight={'800'}
-          textAlign={'center'}
-          cursor={'pointer'}
-          onClick={onClose}
-          mt="5"
-          lineHeight={'1'}
-        >
-          Cancel
-        </Text> */}
+      <TxModal title={guardianInfo ? 'Confirm Guardian Change' : 'Confirm Transaction'} visible={visible} onClose={onClose}>
+        <SignTransaction txns={activeTxns} origin={origin} sendToAddress={sendToAddress} onSuccess={onSuccess} guardianInfo={guardianInfo} />
+        {/* 
+            <Text
+            color="danger"
+            fontSize="20px"
+            fontWeight={'800'}
+            textAlign={'center'}
+            cursor={'pointer'}
+            onClick={onClose}
+            mt="5"
+            lineHeight={'1'}
+            >
+            Cancel
+            </Text> */}
       </TxModal>
     </div>
   );

@@ -16,14 +16,15 @@ export default function useTransaction() {
   const { selectedAddress } = useAddressStore();
   const { chainConfig } =  useConfig();
 
-  const changeGuardian = async (newGuardianHash: string) => {
+  const changeGuardian = async (newGuardianHash: string, guardianInfo: any) => {
     const soulAbi = new ethers.Interface(ABI_SocialRecoveryModule);
     const callData = soulAbi.encodeFunctionData('setGuardian(bytes32)', [newGuardianHash]);
     const tx: Transaction = {
       to: chainConfig.contracts.socialRecoveryModule,
       data: callData,
     };
-    return showSignTransaction([tx], '', '');
+
+    return showSignTransaction([tx], '', '', guardianInfo);
   };
 
   const sendEth = async (to: string, amount: string) => {

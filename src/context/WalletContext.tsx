@@ -14,7 +14,7 @@ import { useChainStore } from '@/store/chain';
 
 interface IWalletContext {
   ethersProvider: any;
-  showSignTransaction: (txns: any, origin?: string, sendTo?: string) => Promise<void>;
+  showSignTransaction: (txns: any, origin?: string, sendTo?: string, guardianInfo?: any) => Promise<void>;
   showConnectWallet: () => Promise<void>;
   showConfirmPayment: (fee: any, origin?: string, sendTo?: string) => Promise<void>;
   showClaimAssets: () => Promise<void>;
@@ -66,8 +66,8 @@ export const WalletContextProvider = ({ children }: any) => {
     return new ethers.JsonRpcProvider(selectedChainItem.provider);
   }, [selectedChainItem]);
 
-  const showSignTransaction = async (txns: any, origin?: string, sendTo?: string) => {
-    return await signTransactionModal.current.show(txns, origin, sendTo);
+  const showSignTransaction = async (txns: any, origin?: string, sendTo?: string, guardianInfo?: any) => {
+    return await signTransactionModal.current.show(txns, origin, sendTo, guardianInfo);
   };
 
   const showConnectWallet = async () => {

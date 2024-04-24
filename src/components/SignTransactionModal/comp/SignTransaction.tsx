@@ -6,7 +6,7 @@ import { InfoWrap, InfoItem } from '@/components/SignTransactionModal';
 import BN from 'bignumber.js';
 import { toFixed, toShortAddress } from '@/lib/tools';
 import useConfig from '@/hooks/useConfig';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Fragment } from 'react';
 import IconArrowDown from '@/assets/icons/arrow-down.svg';
 import SignerSelect from '@/components/SignerSelect';
 import IconQuestion from '@/assets/icons/question.svg';
@@ -54,7 +54,7 @@ export const LabelItem = ({ label, tooltip, chainName }: { label: string; toolti
   );
 };
 
-export default function SignTransaction({ onSuccess, txns, sendToAddress }: any) {
+export default function SignTransaction({ onSuccess, txns, sendToAddress, guardianInfo }: any) {
   const toast = useToast();
   const [loadingFee, setLoadingFee] = useState(true);
   const [promiseInfo, setPromiseInfo] = useState<any>({});
@@ -269,6 +269,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
     doPrecheck(payToken);
   }, [txns, payToken]);
 
+  console.log('guardianInfo sign', guardianInfo)
   useEffect(() => {
     if (!requiredAmount || !payToken || (sponsor && useSponsor)) {
       return;
@@ -284,60 +285,91 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
     }
   }, [requiredAmount, payToken, sponsor, useSponsor]);
 
+
   return (
     <Box pb={{ base: 6, lg: 0 }}>
       <Flex flexDir={'column'}>
-        <Flex flexDir={'column'} align={'center'} lineHeight={'1'}>
-          {decodedData && (
-            <Flex flexDir={'column'} align={'center'} fontSize={'20px'} fontWeight={'800'}>
-              {decodedData.length > 0
-                ? decodedData.map((item: any, index: number) => (
+        {!!guardianInfo && (
+          <Box
+            background="#F9F9F9"
+            borderRadius="20px"
+            padding="20px 16px 20px 16px"
+          >
+            <Box
+              borderBottom="1px solid #DCDCDC"
+              paddingBottom="16px"
+              fontSize="14px"
+              fontWeight="500"
+            >
+              Per your settings, <Box as="span" fontWeight="700">{guardianInfo.threshold}</Box> of the <Box as="span" fontWeight="700">{guardianInfo.guardians.length}</Box> guardian’s approve is required for recovery.
+            </Box>
+            <Box
+              paddingTop="16px"
+            >
+              {guardianInfo.guardians.map((item: any, i: any) =>
+                <Box
+                  marginBottom="14px"
+                >
+                  <Box fontWeight="800" fontSize="14px" marginBottom="6px">Guardian {i + 1}: {guardianInfo.guardianNames[i]}</Box>
+                  <Box fontSize="14px">{item}</Box>
+                </Box>
+              )}
+            </Box>
+          </Box>
+        )}
+        {!guardianInfo && (
+          <Fragment>
+            <Flex flexDir={'column'} align={'center'} lineHeight={'1'}>
+              {decodedData && (
+                <Flex flexDir={'column'} align={'center'} fontSize={'20px'} fontWeight={'800'}>
+                  {decodedData.length > 0 ? decodedData.map((item: any, index: number) => (
                     <Tooltip key={index} label={item.to ? `To: ${item.to}` : null}>
                       <Text my="1" textTransform="capitalize" key={index}>
                         {item.functionName ? item.functionName : item.method ? item.method.name : 'Unknown'}
                         {item.sendErc20Amount && ` ${toFixed(item.sendErc20Amount, 6)}`}
                       </Text>
                     </Tooltip>
-                  ))
-                : 'Send transaction'}
-            </Flex>
-          )}
-          {totalMsgValue && Number(totalMsgValue) > 0 && (
-            <>
-              <Text mt="7" fontSize={{ base: '20px', md: '24px', lg: '30px' }} mb="3" fontWeight={'700'}>
-                {toFixed(totalMsgValue, 6)} ETH
-              </Text>
-              {totalMsgValue && selectedTokenPrice && (
-                <Text fontWeight={'600'} mb="4">
-                  ≈${toFixed(BN(totalMsgValue).times(selectedTokenPrice).toString(), 2)}
-                </Text>
+                  )) : 'Send transaction'}
+                </Flex>
               )}
-            </>
-          )}
-        </Flex>
-        <Image src={IconArrowDown} mb="1" w="8" mx="auto" />
-        <Box mb="1" w="300px" mx="auto" textAlign={'center'}>
-          {sendToAddress && (
-            <Flex
-              py="3"
-              mb="2px"
-              bg="#F9F9F9"
-              roundedTop="20px"
-              fontSize={'18px'}
-              align={'center'}
-              justify={'center'}
-              gap="2"
-              fontWeight={'700'}
-            >
-              <AddressIcon address={sendToAddress} width={32} />
-              {toShortAddress(sendToAddress)}
+              {totalMsgValue && Number(totalMsgValue) > 0 && (
+                <>
+                  <Text mt="7" fontSize={{ base: '20px', md: '24px', lg: '30px' }} mb="3" fontWeight={'700'}>
+                    {toFixed(totalMsgValue, 6)} ETH
+                  </Text>
+                  {totalMsgValue && selectedTokenPrice && (
+                    <Text fontWeight={'600'} mb="4">
+                      ≈${toFixed(BN(totalMsgValue).times(selectedTokenPrice).toString(), 2)}
+                    </Text>
+                  )}
+                </>
+              )}
             </Flex>
-          )}
-          <Box py="1" bg="#F9F9F9" color="#818181" fontSize={'14px'} roundedBottom={'20px'}>
-            From {selectedChainItem.addressPrefix}
-            {toShortAddress(selectedAddress)}
-          </Box>
-        </Box>
+            <Image src={IconArrowDown} mb="1" w="8" mx="auto" />
+            <Box mb="1" w="300px" mx="auto" textAlign={'center'}>
+              {sendToAddress && (
+                <Flex
+                  py="3"
+                  mb="2px"
+                  bg="#F9F9F9"
+                  roundedTop="20px"
+                  fontSize={'18px'}
+                  align={'center'}
+                  justify={'center'}
+                  gap="2"
+                  fontWeight={'700'}
+                >
+                  <AddressIcon address={sendToAddress} width={32} />
+                  {toShortAddress(sendToAddress)}
+                </Flex>
+              )}
+              <Box py="1" bg="#F9F9F9" color="#818181" fontSize={'14px'} roundedBottom={'20px'}>
+                From {selectedChainItem.addressPrefix}
+                {toShortAddress(selectedAddress)}
+              </Box>
+            </Box>
+          </Fragment>
+        )}
         {/** Only show when interact with dapp */}
 
         {/* <Box textAlign={'center'} mb="9">
@@ -524,7 +556,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
             </Text>
             )} */}
         {/* {getSelectedKeyType() === SignkeyType.EOA && !isConnected ? (
-          <Button
+            <Button
             w="320px"
             display={'flex'}
             gap="2"
@@ -533,24 +565,24 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress }: any)
             fontWeight={'800'}
             mx="auto"
             onClick={openConnect}
-          >
+            >
             Connect Wallet
-          </Button>
-        ) : ( */}
-          <Button
-            w="320px"
-            display={'flex'}
-            gap="2"
-            fontSize={'20px'}
-            py="4"
-            fontWeight={'800'}
-            mx="auto"
-            onClick={onConfirm}
-            loading={signing}
-            disabled={(loadingFee || !balanceEnough) && (!sponsor || !useSponsor)}
-          >
-            Confirm
-          </Button>
+            </Button>
+            ) : ( */}
+        <Button
+        w="320px"
+        display={'flex'}
+        gap="2"
+        fontSize={'20px'}
+        py="4"
+        fontWeight={'800'}
+        mx="auto"
+        onClick={onConfirm}
+        loading={signing}
+        disabled={(loadingFee || !balanceEnough) && (!sponsor || !useSponsor)}
+        >
+        Confirm
+        </Button>
         {/* )} */}
       </Box>
       {/* <ConnectWalletModal isOpen={isConnectOpen} connectEOA={connectEOA} onClose={closeConnect} /> */}
