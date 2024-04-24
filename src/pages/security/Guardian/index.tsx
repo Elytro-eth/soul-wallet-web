@@ -36,6 +36,7 @@ export default function Guardian() {
   const [count, setCount] = useState<any>(0)
   const [removeIndex, setRemoveIndex] = useState<any>(0)
   const [removeAddress, setRemoveAddress] = useState<any>('')
+  const [editingAddressCount, setEditingAddressCount] = useState<any>(0)
   const { getSlotInfo } = useSlotStore();
 
   const [isEditing, setIsEditing] = useState<any>(false);
@@ -81,9 +82,10 @@ export default function Guardian() {
     setIsEditGuardianOpen(true)
   }, [isEditing, guardiansInfo])
 
-  const startRemoveGuardian = useCallback((i: any, address: any) => {
+  const startRemoveGuardian = useCallback((i: any, address: any, count: any) => {
     setRemoveIndex(i)
     setRemoveAddress(address)
+    setEditingAddressCount(count)
     setIsRemoveGuardianOpen(true)
   }, [])
 
@@ -270,6 +272,7 @@ export default function Guardian() {
         onConfirm={onRemoveGuardianConfirm}
         removeIndex={removeIndex}
         address={removeAddress}
+        editingAddressCount={editingAddressCount}
       />
     </Fragment>
   );

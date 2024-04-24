@@ -232,7 +232,7 @@ export default function EditGuardian({
                       address={address}
                       cursor="pointer"
                       allowDelete={true}
-                      onDelete={() => startRemoveGuardian(i, address)}
+                      onDelete={() => startRemoveGuardian(i, address, guardianDetails.guardians.length)}
                       allowEdit={true}
                       marginRight={{ base: '0px', md: '18px' }}
                       marginBottom="18px"
@@ -316,11 +316,11 @@ export default function EditGuardian({
                             </MenuItem>
                           )}
                           {!!(guardianList.length || 0) &&
-                            getNumberArray(guardianList.length || 0).map((i: any) => (
-                              <MenuItem key={nanoid(4)} onClick={selectAmount(i)}>
-                                {i}
-                              </MenuItem>
-                            ))}
+                           getNumberArray(guardianList.length || 0).map((i: any) => (
+                             <MenuItem key={nanoid(4)} onClick={selectAmount(i)}>
+                               {i}
+                             </MenuItem>
+                          ))}
                         </MenuList>
                       </Menu>
                     </Box>
