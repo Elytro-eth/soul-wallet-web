@@ -310,7 +310,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress, guardi
                 <Box
                   marginBottom="14px"
                 >
-                  <Box fontWeight="800" fontSize="14px" marginBottom="6px">Guardian {i + 1}: {guardianInfo.guardianNames[i]}</Box>
+                  <Box fontWeight="800" fontSize="14px" marginBottom="6px">Guardian {i + 1}: {guardianInfo.guardianNames[i] || 'no name'}</Box>
                   <Box fontSize="14px">{item}</Box>
                 </Box>
               )}
