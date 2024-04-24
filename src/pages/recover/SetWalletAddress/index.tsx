@@ -50,8 +50,8 @@ export default function SetWalletAddress({ next, back }: any) {
   };
 
   const handleAddressChange = async () => {
-    if(!isAddress(values.address)) {
-      return
+    if (!isAddress(values.address)) {
+      return;
     }
     try {
       // setLoading(true);
@@ -145,25 +145,35 @@ export default function SetWalletAddress({ next, back }: any) {
             <TextBody fontWeight="600" maxWidth="550px" marginBottom="20px">
               Enter any one of your wallet address on any chains, we'll be able to recover them all.
             </TextBody>
-            <Box width="550px" maxWidth="100%">
-              <FormInput
-                label=""
-                placeholder="Enter ENS or wallet adderss"
-                value={values.address}
-                onChange={onChange('address')}
-                onBlur={onBlur('address')}
-                errorMsg={showErrors.address && errors.address}
-                _styles={{ w: '100%' }}
-                autoFocus={true}
-                onEnter={handleNext}
-              />
-            </Box>
-            {foundChainId && !(showErrors.address && errors.address) && (
-              <Box fontWeight="600" fontSize="14px" color="#0CB700" marginTop="6px" display="flex" alignItems="center">
-                <WalletCheckedIcon />
-                <Box marginLeft="6px">Wallet found on {(chainMapping as any)[foundChainId as any].name}</Box>
+            <Box pos={'relative'}>
+              <Box width="550px" maxWidth="100%" pos={'relative'}>
+                <FormInput
+                  label=""
+                  placeholder="Enter ENS or wallet adderss"
+                  value={values.address}
+                  onChange={onChange('address')}
+                  onBlur={onBlur('address')}
+                  errorMsg={showErrors.address && errors.address}
+                  _styles={{ w: '100%' }}
+                  autoFocus={true}
+                  onEnter={handleNext}
+                />
               </Box>
-            )}
+              {foundChainId && !(showErrors.address && errors.address) && (
+                <Box
+                  fontWeight="600"
+                  fontSize="14px"
+                  color="#0CB700"
+                  pos="absolute"
+                  bottom="-28px"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <WalletCheckedIcon />
+                  <Box marginLeft="6px">Wallet found on {(chainMapping as any)[foundChainId as any].name}</Box>
+                </Box>
+              )}
+            </Box>
 
             <Box width="100%" display="flex" alignItems="center" justifyContent="center" marginTop="100px">
               <Button width="80px" type="white" marginRight="12px" size="lg" onClick={back}>

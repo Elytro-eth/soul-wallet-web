@@ -57,7 +57,7 @@ export default function Sign() {
   const [isSigned, setIsSigned] = useState<any>(false);
   const toast = useToast();
   const { switchChain } = useSwitchChain();
-  const ethersSigner = useEthersSigner();
+  const ethersSigner:any = useEthersSigner();
   const {
     connectEOA,
     isConnected,
@@ -111,16 +111,10 @@ export default function Sign() {
         recoveryRecord.new_owners,
       )
 
-      // const signature = await signTypedDataAsync({
-      //   domain: typedDataToSign.domain,
-      //   types: typedDataToSign.types,
-      //   message: typedDataToSign.message,
-      // } as any);
-      const signer:any = await ethersSigner;
+      // const signer:any = await ethersSigner;
 
-      const signature = await signer.signTypedData(typedDataToSign.domain, typedDataToSign.types, typedDataToSign.message);
+      const signature = await ethersSigner.signTypedData(typedDataToSign.domain, typedDataToSign.types, typedDataToSign.message);
 
-      // SocialRecovery.packGuardianSignature(signature);
       const res: any = await api.guardian.guardianSign({
         recoveryID: recoverId,
         guardian: address,

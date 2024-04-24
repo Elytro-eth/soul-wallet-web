@@ -21,9 +21,13 @@ import useConfig from '@/hooks/useConfig';
 export default function GuardianApprovals() {
   const { recoverInfo } = useTempStore()
   const { chainConfig } = useConfig();
-  const { recoveryID, guardianInfo, recoveryRecord, signers } = recoverInfo
+  const { recoveryID, guardianInfo, recoveryRecord } = recoverInfo
   const hasRecord = recoveryRecord && recoveryID
   const guardianSignatures = hasRecord ? recoveryRecord.guardianSignatures : []
+  const threshold = hasRecord ? recoveryRecord.guardian_info.threshold : 0
+
+  const pendingNum = threshold - (guardianSignatures || []).length
+
   const { doCopy, } = useTools();
   const guardianSignUrl = `${location.origin}/public/sign/${recoveryID}`
 
@@ -35,6 +39,8 @@ export default function GuardianApprovals() {
     const isValid = (guardianSignatures || []).filter((sig: any) => sig.guardian === item).length === 1;
     return { guardian: item, isValid };
   }) : [];
+
+  // const validNum = (!!signatures && !!signatures.length && signatures.filter((item: any) => !item.isValid).length)
 
   return (
     <Box width="100%" minHeight="100vh" background="#F2F4F7">
@@ -106,7 +112,7 @@ export default function GuardianApprovals() {
               fontWeight="800"
               marginBottom="16px"
             >
-              {(!!signatures && !!signatures.length && signatures.filter((item: any) => !item.isValid).length) || 0} more guardians approval needed
+              {pendingNum || 0} more guardians approval needed
             </Box>
             <Box
               display="flex"

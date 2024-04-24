@@ -136,17 +136,7 @@ export default function useWallet() {
     const address = (
       await soulWallet.calcWalletAddress(createIndex, initialKeys, initialGuardianHash, defaultGuardianSafePeriod)
     ).OK;
-    // const address2 = (
-    //   await soulWallet.calcWalletAddress(
-    //     createIndex,
-    //     initialKeys,
-    //     initialGuardianHash,
-    //     Number(defaultGuardianSafePeriod),
-    //     selectedChainId,
-    //   )
-    // ).OK;
-
-    // setSelectedAddress(address);
+   
     setAddressList([
       {
         address,

@@ -12,7 +12,7 @@ import {
   ModalBody,
   Tooltip,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import Button from '@/components/Button';
 import BN from 'bignumber.js';
 import TextBody from '@/components/new/TextBody';
@@ -26,10 +26,12 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 import { useBalanceStore } from '@/store/balance';
 import { ZeroAddress } from 'ethers';
 import useConfig from '@/hooks/useConfig';
+import useBrowser from '@/hooks/useBrowser';
 
 const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [promiseInfo, setPromiseInfo] = useState<any>({});
+  const { navigate } = useBrowser();
 
   const { selectedAddress, setActivated } = useAddressStore();
   const { generateQrCode, doCopy } = useTools();
@@ -58,6 +60,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
   const doActivate = async () => {
     await showSignTransaction([]);
     setActivated(selectedAddress, true);
+    onClose();
   };
 
   const generateQR = async (text: string) => {
@@ -151,10 +154,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     >
                       <Image src={TokenEmptyIcon} width="80px" height="80px" />
                     </Box>
-                    <Box
-                      width={{ base: '100%', md: 'calc(100% - 92px)' }}
-
-                    >
+                    <Box width={{ base: '100%', md: 'calc(100% - 92px)' }}>
                       <TextBody fontSize="20px">Step 1: Deposit ETH</TextBody>
                       <Box
                         display="flex"
@@ -173,12 +173,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           marginRight={{ base: '0', md: 'auto' }}
                           width={{ base: '100%', md: 'max-content' }}
                         >
-                          <TextBody
-                            type="t3"
-                            fontWeight="500"
-                            lineHeight="18px"
-                            width="100%"
-                          >
+                          <TextBody type="t3" fontWeight="500" lineHeight="18px" width="100%">
                             <Box as="span" fontWeight="700">
                               {chainConfig.addressPrefix}
                             </Box>{' '}
@@ -192,9 +187,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           width={{ base: '100%', md: '180px' }}
                           flexDirection={{ base: 'column', md: 'row' }}
                         >
-                          <Box
-                            width={{ base: '100%', md: 'max-content' }}
-                          >
+                          <Box width={{ base: '100%', md: 'max-content' }}>
                             <Button
                               size="sm"
                               height="28px"
@@ -205,10 +198,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                               Copy address
                             </Button>
                           </Box>
-                          <Box
-                            marginLeft={{ base: '0', md: '8px' }}
-                            width={{ base: '100%', md: 'max-content' }}
-                          >
+                          <Box marginLeft={{ base: '0', md: '8px' }} width={{ base: '100%', md: 'max-content' }}>
                             <Tooltip
                               label={
                                 <Box>
@@ -224,12 +214,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                               padding="16px"
                             >
                               <Box>
-                                <Button
-                                  size="sm"
-                                  height="28px"
-                                  type="white"
-                                  width={{ base: '100%', md: 'auto' }}
-                                >
+                                <Button size="sm" height="28px" type="white" width={{ base: '100%', md: 'auto' }}>
                                   <QrcodeIcon />
                                 </Button>
                               </Box>
@@ -292,9 +277,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     >
                       <Image src={ActivityEmptyIcon} width="80px" height="80px" />
                     </Box>
-                    <Box
-                      width={{ base: '100%', md: 'calc(100% - 92px)' }}
-                    >
+                    <Box width={{ base: '100%', md: 'calc(100% - 92px)' }}>
                       <TextBody fontSize="20px" display="flex" alignItems="center">
                         <Box>Step 2: Active wallet</Box>
                       </TextBody>
@@ -313,9 +296,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                         >
                           <TextBody type="t3">{`The activation fee will be covered by Soul Wallet. $0 cost on you.`}</TextBody>
                         </Box>
-                        <Box
-                          width={{ base: '100%', md: '180px' }}
-                        >
+                        <Box width={{ base: '100%', md: '180px' }}>
                           <Button
                             size="sm"
                             disabled={!userDeposited || userActivated}

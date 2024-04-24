@@ -129,17 +129,14 @@ export default function EditGuardian({
       const guardianNames = guardianList.map((item: any) => item.name);
       const threshold = amountForm.values.amount || 0;
       const newGuardianHash = SocialRecovery.calcGuardianHash(guardianAddresses, threshold);
-      const salt = ethers.ZeroHash;
 
       const guardiansInfo = {
         guardianHash: newGuardianHash,
-        guardianNames,
         guardianDetails: {
           guardians: guardianAddresses,
           threshold: Number(threshold),
-          salt,
+          salt: ethers.ZeroHash,
         },
-        requireBackup: true,
       };
 
       await api.guardian.backupGuardians(guardiansInfo);

@@ -20,13 +20,6 @@ export default function Auth() {
   const [stepType, setStepType] = useState('auth');
   const [walletName, setWalletName] = useState('');
   const [credentials, setCredentials] = useState([]);
-  const [isConnectAtive, setIsConnectAtive] = useState(false);
-  const [activeConnector, setActiveConnector] = useState();
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [isSelectAccountOpen, setIsSelectAccountOpen] = useState(false);
-  const [isImportAccountOpen, setIsImportAccountOpen] = useState(false);
-  // const { connectAsync } = useConnect();
-  // const { disconnectAsync } = useDisconnect();
   const { loginInfo } = useTempStore();
   const { getSignerIdAddress } = useSettingStore();
   const { initWallet, loginWallet, } = useWallet();
@@ -38,56 +31,6 @@ export default function Auth() {
 
   const openRecover = useCallback(() => {
     navigate('/recover');
-  }, []);
-
-  const closeRegister = useCallback(() => {
-    setIsRegisterOpen(false);
-  }, []);
-
-  const openSelectAccount = useCallback(() => {
-    setIsSelectAccountOpen(true);
-  }, []);
-
-  const closeSelectAccount = useCallback(() => {
-    setIsSelectAccountOpen(false);
-  }, []);
-
-  const closeImportAccount = useCallback(() => {
-    setIsImportAccountOpen(false);
-  }, []);
-
-  // const connectEOA = useCallback(
-  //   async (connector: any) => {
-  //     setIsConnectAtive(true);
-  //     if (address) {
-  //       await disconnectAsync();
-  //     }
-  //     await connectAsync({ connector });
-  //     setActiveConnector(connector);
-  //   },
-  //   [address],
-  // );
-
-  const startRegisterWithPasskey = useCallback(() => {
-    setIsConnectAtive(true);
-    closeRegister();
-    setStepType('selectNetwork');
-  }, []);
-
-  // const disconnectEOA = useCallback(async () => {
-  //   if(!isConnected){
-  //     await disconnectAsync();
-  //   }
-  //   setIsConnectAtive(false);
-  //   updateCreateInfo({
-  //     eoaAddress: [],
-  //   });
-  //   // closeRegister()
-  // }, [isConnected]);
-
-  const startImportAccount = useCallback(() => {
-    setIsSelectAccountOpen(false);
-    setIsImportAccountOpen(true);
   }, []);
 
   const startCreate = () => {
@@ -102,14 +45,8 @@ export default function Auth() {
 
   const doLogin = async () => {
     const res = await loginWallet();
-    console.log('login', res)
     navigate('/dashboard')
   }
-
-  useEffect(() => {
-    // clear log data everytime visited
-    // clearLogData();
-  }, []);
 
   if (stepType === 'selectNetwork') {
     return <SelectNetwork walletName={walletName} setWalletName={setWalletName} onNext={()=> setStepType('setPassKey')} back={() => setStepType('auth')} />;
@@ -267,31 +204,6 @@ export default function Auth() {
             ))}
           </Flex>
         </Box>
-        {/* <RegisterModal
-          isOpen={isRegisterOpen}
-          onClose={closeRegister}
-          connectEOA={connectEOA}
-          isConnecting={isConnecting}
-          isConnected={isConnected}
-          isConnectAtive={isConnectAtive}
-          startRegisterWithPasskey={startRegisterWithPasskey}
-          disconnectEOA={disconnectEOA}
-          activeConnector={activeConnector}
-          address={address}
-        />
-        <SelectAccountModal
-          isOpen={isSelectAccountOpen}
-          onClose={closeSelectAccount}
-          startImportAccount={startImportAccount}
-          activeLoginAccounts={activeLoginAccounts}
-          isImporting={isImporting}
-        />
-        <ImportAccountModal
-          isOpen={isImportAccountOpen}
-          onClose={closeImportAccount}
-          openSelectAccount={openSelectAccount}
-          isImporting={isImporting}
-        /> */}
       </Box>
     </Flex>
   );

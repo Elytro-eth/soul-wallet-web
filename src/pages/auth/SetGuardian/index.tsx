@@ -8,10 +8,14 @@ import EditGuardianForm from './EditGuardianForm';
 import { ZeroHash, ethers } from 'ethers';
 import { SocialRecovery } from '@soulwallet/sdk';
 import api from '@/lib/api';
+import { useSettingStore } from '@/store/setting';
+import { useGuardianStore } from '@/store/guardian';
 
 export default function SetGuardian({ walletName, back, onCreate }: any) {
   const [isCreating, setIsCreating] = useState(false);
   const [isSkipping, setIsSkipping] = useState(false);
+  const { saveAddressName } = useSettingStore();
+  const { setGuardiansInfo } = useGuardianStore();
   const toast = useToast();
 
   const onDone = async (guardianAddresses: any, guardianNames: any, threshold: any) => {
@@ -21,15 +25,26 @@ export default function SetGuardian({ walletName, back, onCreate }: any) {
       setIsCreating(true)
       const guardianHash = SocialRecovery.calcGuardianHash(guardianAddresses, threshold);
 
-      // todo, backup guardians
-      await api.guardian.backupGuardians({
-        guardianHash,
+      const guardiansInfo = {
+        guardianHash: guardianHash,
         guardianDetails: {
           guardians: guardianAddresses,
-          threshold,
+          threshold: Number(threshold),
           salt: ZeroHash,
         },
-      });
+      };
+
+      // todo, backup guardians
+      await api.guardian.backupGuardians(guardiansInfo);
+
+      for (let i = 0; i < guardianAddresses.length; i++) {
+        const address = guardianAddresses[i];
+        const name = guardianNames[i];
+        if (address) saveAddressName(address.toLowerCase(), name);
+      }
+
+      setGuardiansInfo(guardiansInfo);
+
       await onCreate(guardianHash);
       setIsCreating(false)
     } catch (error: any) {
