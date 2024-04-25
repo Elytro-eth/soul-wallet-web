@@ -10,7 +10,7 @@ interface IEmptyHint {
 export default function EmptyHint({ title = `There's nothing here`, icon }: IEmptyHint) {
   return (
     <Box textAlign={'center'} pb="10">
-      <Image src={icon ? icon : IconEmpty} mx="auto" mt="8" display={'block'} />
+      <Image src={icon ? icon : IconEmpty} mx="auto" mt="8" w="80px" h="80px" display={'block'} />
       <Text mt="2" fontWeight={'700'}>
         {title}
       </Text>
