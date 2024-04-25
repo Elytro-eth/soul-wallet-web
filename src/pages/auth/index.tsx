@@ -44,9 +44,13 @@ export default function Auth() {
   }
 
   const doLogin = async () => {
-    const res = await loginWallet();
+    await loginWallet();
     navigate('/dashboard')
   }
+
+  useEffect(()=>{
+
+  }, [])
 
   if (stepType === 'selectNetwork') {
     return <SelectNetwork walletName={walletName} setWalletName={setWalletName} onNext={()=> setStepType('setPassKey')} back={() => setStepType('auth')} />;
@@ -129,6 +133,7 @@ export default function Auth() {
                     background="white"
                     placeholder="Enter wallet name"
                     value={walletName}
+                    autoComplete='webauthn'
                     onChange={e => setWalletName(e.target.value)}
                   />
                 </Box>
