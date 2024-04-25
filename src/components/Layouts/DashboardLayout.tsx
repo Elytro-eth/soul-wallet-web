@@ -17,7 +17,7 @@ export default function DashboardLayout() {
       >
         <Sidebar />
         <Box w="100%">
-          <FadeSwitch key={location.pathname}>
+          <FadeSwitch key={location.pathname} style={{ height: '100%' }}>
             <Outlet />
           </FadeSwitch>
         </Box>

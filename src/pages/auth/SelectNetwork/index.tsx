@@ -23,6 +23,7 @@ export default function SetWalletName({ onNext, walletName, setWalletName }: any
         width="100%"
         maxWidth="780px"
         margin="0 auto"
+        marginTop="60px"
       >
         <RoundContainer
           width="1058px"

@@ -85,6 +85,7 @@ export default function SetGuardian({ walletName, back, onCreate }: any) {
         width="100%"
         maxWidth="780px"
         margin="0 auto"
+        marginTop="60px"
       >
         <RoundContainer
           width="1058px"

@@ -14,6 +14,7 @@ export default function Dashboard() {
       h={{ lg: '100%' }}
       flexDir={{ base: 'column', lg: 'row' }}
       justify={{ base: 'center', lg: 'unset' }}
+      alignItems="center"
     >
       <Flex w={{ base: '100%', lg: '40%' }} h={{ lg: '100%' }} flexDir={'column'} justify={'center'} align={'center'}>
         <WalletCard />
