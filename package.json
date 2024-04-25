@@ -57,6 +57,7 @@
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-plugin-checker": "^0.6.4",
+    "vite-plugin-pwa": "^0.19.8",
     "vite-plugin-remove-console": "^2.2.0"
   }
 }
