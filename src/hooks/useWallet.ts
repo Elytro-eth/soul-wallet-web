@@ -100,10 +100,12 @@ export default function useWallet() {
 
       const _guardiansInfo = await getGuardianDetails(item.address);
 
-      setGuardiansInfo({
-        guardianHash: _guardiansInfo.guardian_hash,
-        guardianDetails: _guardiansInfo.guardianInfo,
-      });
+      if(_guardiansInfo){
+        setGuardiansInfo({
+          guardianHash: _guardiansInfo.guardian_hash,
+          guardianDetails: _guardiansInfo.guardianInfo,
+        });
+      }
 
     } catch (e: any) {
       toast({

@@ -2,9 +2,11 @@ import { Flex, Box } from '@chakra-ui/react';
 import { headerHeight } from '@/config';
 import Header from '../Header';
 import Sidebar from '../Sidebar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import FadeSwitch from '../FadeSwitch';
 
 export default function DashboardLayout() {
+  const location = useLocation();
   return (
     <Box>
       <Header />
@@ -15,7 +17,9 @@ export default function DashboardLayout() {
       >
         <Sidebar />
         <Box w="100%">
-          <Outlet />
+          <FadeSwitch key={location.pathname}>
+            <Outlet />
+          </FadeSwitch>
         </Box>
       </Flex>
     </Box>

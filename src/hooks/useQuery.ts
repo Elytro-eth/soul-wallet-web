@@ -4,7 +4,7 @@
 
 import useWalletContext from '../context/hooks/useWalletContext';
 import BN from 'bignumber.js';
-import { Contract, ethers } from 'ethers';
+import { Contract, ZeroAddress, ZeroHash, ethers } from 'ethers';
 import useSdk from './useSdk';
 import useConfig from './useConfig';
 import api from '@/lib/api';
@@ -20,6 +20,9 @@ export default function useQuery() {
     const contract = new Contract(chainConfig.contracts.socialRecoveryModule, ABI_SocialRecoveryModule, ethersProvider);
     const recoveryInfo = await contract.getSocialRecoveryInfo(walletAddress);
     const activeGuardianHash = recoveryInfo[0];
+    if(activeGuardianHash === ZeroHash){
+      return null;
+    }
     const res = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
     return res.data;
   }

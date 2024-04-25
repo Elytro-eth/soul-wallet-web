@@ -1,16 +1,19 @@
 import { WalletContextProvider } from '@/context/WalletContext';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import FindRoute from '@/components/FindRoute';
 import Pooling from '../components/Pooling';
 import CommonWrapper from './CommonWrapper';
+import { AnimatePresence } from 'framer-motion';
 
 export default function Wrapper() {
   return (
     <CommonWrapper>
       <FindRoute>
         <WalletContextProvider>
-          <Outlet />
-          <Pooling />
+          <AnimatePresence>
+            <Outlet />
+            <Pooling />
+          </AnimatePresence>
         </WalletContextProvider>
       </FindRoute>
     </CommonWrapper>
