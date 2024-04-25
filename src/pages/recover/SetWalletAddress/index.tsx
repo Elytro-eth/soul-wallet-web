@@ -146,7 +146,7 @@ export default function SetWalletAddress({ next, back }: any) {
             <TextBody fontWeight="600" maxWidth="550px" marginBottom="20px">
               Enter any one of your wallet address on any chains, we'll be able to recover them all.
             </TextBody>
-            <Box pos={'relative'}>
+            <Box pos={'relative'} maxWidth="100%">
               <Box width="550px" maxWidth="100%" pos={'relative'}>
                 <FormInput
                   label=""
