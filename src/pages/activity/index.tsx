@@ -78,11 +78,11 @@ export default function Activity() {
           Activity
           </Text> */}
 
-      <Flex px="6" justify={'space-between'} mb="3">
+      {/* <Flex px="6" justify={'space-between'} mb="3">
         <Flex gap="8">
           <FilterMenu active={activeStatus} list={statusList} />
         </Flex>
-      </Flex>
+      </Flex> */}
 
       <Box rounded="20px" bg="#fff" py="6px" px={{base: "16px", lg: "26px"}}>
         <ActivityTable />

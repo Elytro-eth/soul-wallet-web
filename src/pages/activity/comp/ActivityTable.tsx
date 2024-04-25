@@ -49,7 +49,7 @@ const ActivityItem = ({ item }: any) => {
             <Text textTransform={'capitalize'} fontSize={{ base: '14px', lg: '18px' }} fontWeight={'800'}>
               {item.functionName || 'Unknown'}
             </Text>
-            <Image src={IconExternal} />
+            <Image src={IconExternal} w="8" h="8" />
           </Flex>
 
           <Text color="#898989">{new Date(item.timestamp * 1000).toLocaleString()}</Text>
@@ -59,8 +59,8 @@ const ActivityItem = ({ item }: any) => {
         <Image src={(chainMapping as any)[item.chainId].icon} />
       </Flex> */}
       {item.actualGasCost ? (
-        <Flex gap="2">
-          <Image src={IconEth} w={{ base: 4, lg: 8 }} />
+        <Flex gap="2" align={'center'}>
+          <Image src={IconEth} w="8" h="8" />
           <Box>
             <Text color="brand.black" fontSize={{ base: '14px', lg: '18px' }} fontWeight={'800'}>
               -{toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH
