@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(.*).svg",
+      "source": "/(.*).(svg|png|ttf)",
       "headers": [
         {
           "key": "Cache-Control",
