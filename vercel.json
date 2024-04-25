@@ -1,8 +1,7 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" },
     {
-      "source": "/:all*(svg|jpg|png)",
+      "source": "/(.*).svg",
       "headers": [
         {
           "key": "Cache-Control",
@@ -10,14 +9,6 @@
         }
       ]
     },
-    {
-      "source": "/*(svg|jpg|png)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=9999999999"
-        }
-      ]
-    }
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
