@@ -70,7 +70,7 @@ const FilterMenu = ({ active, list }: any) => {
 export default function Activity() {
   // const { chainList } = useChainStore();
   // const [activeChains, setActiveChains] = useState(chainList.map((item: any) => item.chainIdHex));
-  const [activeStatus, setActiveStatus] = useState(statusList[0].key);
+  // const [activeStatus, setActiveStatus] = useState(statusList[0].key);
 
   return (
     <Box pl={{ base: '24px', lg: '0' }} pr={{ base: '24px', lg: '48px' }} pt="6">

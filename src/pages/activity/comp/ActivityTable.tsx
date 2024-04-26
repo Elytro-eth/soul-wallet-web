@@ -65,15 +65,15 @@ const ActivityItem = ({ item }: any) => {
             <Text color="brand.black" fontSize={{ base: '14px', lg: '18px' }} fontWeight={'800'}>
               -{toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH
             </Text>
-            <Text color="#898989">${toFixed(BN(item.actualGasCost).shiftedBy(-18).times(ethPrice).toString(), 2)}</Text>
+            <Text color="#898989">${toFixed(BN(item.totalCost).shiftedBy(-18).times(ethPrice).toString(), 2)}</Text>
           </Box>
         </Flex>
       ) : (
         ''
       )}
-      <Box display={{ base: 'none', lg: 'block' }}>
+      {/* <Box display={{ base: 'none', lg: 'block' }}>
         {item.sender && <Text color="brand.black">Sender: {toShortAddress(item.sender)}</Text>}
-      </Box>
+      </Box> */}
     </Flex>
   );
 };
@@ -84,6 +84,8 @@ export default function ActivityTable() {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const { selectedChainId } = useChainStore();
+
+  console.log('render', list)
   const getList = async () => {
     setLoading(true);
     try {

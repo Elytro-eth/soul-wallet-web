@@ -73,6 +73,7 @@ export default function Auth() {
         display="flex"
         alignItems="center"
         justifyContent="center"
+        mt={{base: 8, lg: 0}}
         height={{ base: 'auto', md: 'calc(100vh - 58px)' }}
         flexDirection="column"
         width="100%"
