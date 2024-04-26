@@ -15,16 +15,18 @@ import PlusIcon from '@/components/Icons/Plus';
 import ComputerIcon from '@/components/Icons/Computer';
 import usePassKey from '@/hooks/usePasskey';
 import { SignHeader } from '@/pages/public/Sign';
+import useConfig from '@/hooks/useConfig';
 
 export default function SetPasskey({ back, walletName, next: nextStep, credentials, setCredentials  }: any) {
   const { register } = usePassKey()
   const toast = useToast();
+  const { selectedChainItem } = useConfig();
   const [isCreating, setIsCreating] = useState(false);
 
   const createCredential = async () => {
     try {
       setIsCreating(true);
-      const credentialKey = await register(walletName);
+      const credentialKey = await register(walletName, selectedChainItem.chainName);
       setCredentials([...credentials, credentialKey])
       setIsCreating(false);
     } catch (error: any) {

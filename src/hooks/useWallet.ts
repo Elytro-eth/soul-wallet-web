@@ -41,7 +41,6 @@ export default function useWallet() {
 
   // will be executed only once after recover process finished
   const boostAfterRecovered = async (_recoverInfo: any) => {
-    console.log('recover info is', _recoverInfo);
     setSlotInfo({
       ...recoverInfo.initInfo
     });
@@ -58,12 +57,10 @@ export default function useWallet() {
 
     setGuardiansInfo({
       guardianHash: recoverInfo.guardian_hash,
-      guardianDetails: recoverInfo.guardian_info,
+      guardianDetails: recoverInfo.guardianInfo,
     });
 
     clearTempStore();
-
-    // navigate('/dashboard');
   };
 
   const loginWallet = async () => {

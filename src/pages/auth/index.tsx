@@ -17,6 +17,7 @@ import { SignHeader } from '../public/Sign';
 import useWallet from '@/hooks/useWallet';
 
 export default function Auth() {
+  const [loading, setLoading] = useState(false);
   const [stepType, setStepType] = useState('auth');
   const [walletName, setWalletName] = useState('');
   const [credentials, setCredentials] = useState([]);
@@ -44,8 +45,13 @@ export default function Auth() {
   }
 
   const doLogin = async () => {
-    await loginWallet();
-    navigate('/dashboard')
+    try{
+      setLoading(true);
+      await loginWallet();
+      navigate('/dashboard')
+    }finally{
+      setLoading(false);
+    }
   }
 
   useEffect(()=>{
@@ -171,7 +177,7 @@ export default function Auth() {
                     or
                   </TextBody>
                 </Box>
-                <Button width="100%" type="white" marginBottom="24px" onClick={doLogin} size="xl">
+                <Button width="100%" type="white" loading={loading} marginBottom="24px" onClick={doLogin} size="xl">
                   Login with passkey
                 </Button>
                 <TextBody onClick={openRecover} cursor="pointer">
