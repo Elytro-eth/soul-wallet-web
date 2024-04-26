@@ -46,7 +46,6 @@ export default function ListItem({
     .times(100)
     .toFixed(2);
 
-    console.log('aaaa', usdValue, totalUsdValue)
   return (
     <Flex
       onClick={onClick}

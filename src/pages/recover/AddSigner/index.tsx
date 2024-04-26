@@ -28,7 +28,7 @@ export default function AddSigner({ next, back }: any) {
   const { recoverInfo } = useTempStore()
   const [newWalletName, setNewWalletName] = useState<any>(recoverInfo.name)
 
-  const addCredential = useCallback(async () => {
+  const addCredential = async () => {
     try {
       const credential = await register(newWalletName);
       setSigners([...signers, { type: 'passkey', signerId: credential.publicKey, ...credential }])
@@ -44,7 +44,8 @@ export default function AddSigner({ next, back }: any) {
         status: 'error',
       });
     }
-  }, [signers])
+  }
+
 
   const handleNext = async () => {
     updateRecoverInfo({

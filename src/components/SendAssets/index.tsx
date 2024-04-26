@@ -130,15 +130,6 @@ export default function SendAssets({ tokenAddress = '', onSent }: ISendAssets) {
       await sendErc20(sendToken, trimedAddress, amount, selectedToken.decimals);
     }
 
-    if (slotInfo.slot) {
-      const res = await api.operation.finishStep({
-        slot: slotInfo.slot,
-        steps: [1],
-      });
-
-      setFinishedSteps(res.data.finishedSteps);
-    }
-
     resetState();
 
     onSent();

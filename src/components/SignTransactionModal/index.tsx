@@ -48,6 +48,7 @@ const SignTransactionModal = (_: unknown, ref: Ref<any>) => {
   const onClose = async () => {
     setVisible(false);
     setSigning(false);
+    setGuardianInfo(null)
     // clearState();
     promiseInfo.reject('User reject');
   };
@@ -56,6 +57,8 @@ const SignTransactionModal = (_: unknown, ref: Ref<any>) => {
     setVisible(false);
     promiseInfo.resolve(receipt);
   };
+
+  console.log('G', guardianInfo)
 
   return (
     <div ref={ref}>
