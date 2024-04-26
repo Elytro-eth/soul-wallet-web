@@ -120,6 +120,7 @@ function RecoverInfo({ targetName, address, chainName }: any) {
         display="flex"
         alignItems="center"
         width="max-content"
+        minHeight="32px"
       >
         <Image src={IconOp} w="20px" h="20px" />
         <Box marginLeft="4px">
@@ -454,10 +455,9 @@ export default function Sign() {
                 color="black"
                 marginTop="34px"
                 lineHeight={'normal'}
-                wordBreak="break-all"
+                // wordBreak="break-all"
               >
-                Your friend's wallet is lost. As their guardian, please connect your wallet and confirm request to
-                assist with their wallet recovery.
+                Your friend's wallet is lost. As their guardian, please connect your wallet and confirm request to assist with their wallet recovery.
               </Box>
               <RecoverInfo
                 targetName="Recovery wallet"
@@ -529,10 +529,9 @@ export default function Sign() {
               color="black"
               marginTop="34px"
               lineHeight={'normal'}
-              wordBreak="break-all"
+              // wordBreak="break-all"
             >
-              Your friend's wallet is lost. As their guardian, please connect your wallet and confirm request to
-              assist with their wallet recovery.
+              Your friend's wallet is lost. As their guardian, please connect your wallet and confirm request to assist with their wallet recovery.
             </Box>
             <RecoverInfo
               targetName="Requestor"
