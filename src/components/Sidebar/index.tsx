@@ -98,7 +98,7 @@ export default function Sidebar() {
                 <Text
                   fontWeight={'600'}
                   color={isActive ? 'brand.purple' : 'brand.black'}
-                  fontSize={{ base: '12px', md: '14px', lg: '16px' }}
+                  fontSize={{ base: '14px', md: '14px', lg: '16px' }}
                   className="title"
                 >
                   {link.title}
@@ -112,7 +112,7 @@ export default function Sidebar() {
         <Flex
           flexDir={{ base: 'row', lg: 'column' }}
           gap={{ base: 2, md: 4, lg: 6 }}
-          fontSize={{ base: '12px', md: '14px' }}
+          fontSize={{ base: '14px', md: '14px' }}
           fontWeight={{ base: 600, lg: 400 }}
           color="#383838"
         >
