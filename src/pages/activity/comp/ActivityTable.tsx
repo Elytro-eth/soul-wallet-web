@@ -19,12 +19,11 @@ import { useBalanceStore } from '@/store/balance';
 
 const ActivityItem = ({ item }: any) => {
   const { chainConfig } = useConfig();
-  const { scanUrl } = chainConfig;
-
+  const { opScanUrl } = chainConfig;
   const { tokenBalance } = useBalanceStore();
-
   const ethPrice = tokenBalance.filter((item: any) => item.symbol === 'ETH')[0]?.tokenPrice || 0;
 
+  console.log('ac item', item)
   return (
     <Flex
       // flexDir={{ base: 'column', md: 'row' }}
@@ -38,7 +37,7 @@ const ActivityItem = ({ item }: any) => {
         display={'flex'}
         alignItems={'center'}
         target="_blank"
-        href={`${scanUrl}/tx/${item.trxHash}`}
+        href={`${opScanUrl}/tx/${item.opHash}`}
         gap="2"
       >
         <Box pos={'relative'}>
@@ -65,15 +64,15 @@ const ActivityItem = ({ item }: any) => {
             <Text color="brand.black" fontSize={{ base: '14px', lg: '18px' }} fontWeight={'800'}>
               -{toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH
             </Text>
-            <Text color="#898989">${toFixed(BN(item.actualGasCost).shiftedBy(-18).times(ethPrice).toString(), 2)}</Text>
+            <Text color="#898989">${toFixed(BN(item.totalCost).shiftedBy(-18).times(ethPrice).toString(), 2)}</Text>
           </Box>
         </Flex>
       ) : (
         ''
       )}
-      <Box display={{ base: 'none', lg: 'block' }}>
+      {/* <Box display={{ base: 'none', lg: 'block' }}>
         {item.sender && <Text color="brand.black">Sender: {toShortAddress(item.sender)}</Text>}
-      </Box>
+      </Box> */}
     </Flex>
   );
 };
@@ -84,6 +83,8 @@ export default function ActivityTable() {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const { selectedChainId } = useChainStore();
+
+  console.log('render', list)
   const getList = async () => {
     setLoading(true);
     try {

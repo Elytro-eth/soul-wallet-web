@@ -18,6 +18,7 @@ import { SignHeader } from '@/pages/public/Sign';
 import { SocialRecovery } from '@soulwallet/sdk';
 import DeleteIcon from '@/components/Icons/Delete'
 import { RecoveryContainer } from '@/pages/recover'
+import useConfig from '@/hooks/useConfig';
 
 export default function AddSigner({ next, back }: any) {
   const [signers, setSigners] = useState<any>([])
@@ -26,11 +27,12 @@ export default function AddSigner({ next, back }: any) {
   const { register } = usePassKey()
   const { updateRecoverInfo } = useTempStore()
   const { recoverInfo } = useTempStore()
+  const { selectedChainItem } = useConfig();
   const [newWalletName, setNewWalletName] = useState<any>(recoverInfo.name)
 
   const addCredential = async () => {
     try {
-      const credential = await register(newWalletName);
+      const credential = await register(newWalletName, selectedChainItem.chainName);
       setSigners([...signers, { type: 'passkey', signerId: credential.publicKey, ...credential }])
     } catch (error: any) {
       let message = error.message

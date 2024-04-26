@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import scanApi from '@/lib/scanApi';
 import { decodeCalldata } from '@/lib/tools';
+import BN from 'bignumber.js'
 import { ActivityStatusEn } from '@/pages/dashboard/comp/Activity/comp/ActivityItem';
 
 export interface IHistoryStore {
@@ -29,6 +30,7 @@ export const fetchHistoryApi = async (address: string, chainId: string[], ethers
       ...res.data.ops[i],
       functionName,
       to: callDataDecodes[0].to,
+      totalCost: BN(res.data.ops[i].totalGasCost || 0).plus(callDataDecodes[0].value || 0).toNumber(),
       status,
     };
   }

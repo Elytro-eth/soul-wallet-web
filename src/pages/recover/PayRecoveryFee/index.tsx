@@ -11,7 +11,7 @@ import StepProgress from '../StepProgress';
 import api from '@/lib/api';
 import useWallet from '@/hooks/useWallet';
 import { Link } from 'react-router-dom';
-import { RecoveryContainer } from '@/pages/recover'
+import { RecoveryContainer } from '@/pages/recover';
 
 export default function PayRecoveryFee({ next }: any) {
   const { recoverInfo } = useTempStore();
@@ -23,7 +23,7 @@ export default function PayRecoveryFee({ next }: any) {
   const doRecover = async () => {
     while (true) {
       setIsRecovering(true);
-      const res:any = await api.recovery.execute({ recoveryID });
+      const res: any = await api.recovery.execute({ recoveryID });
       if (res.msg === 'executeRecovery tirggered' || res.msg === 'already executed') {
         const res = (await api.guardian.getRecoverRecord({ recoveryID })).data;
         await boostAfterRecovered(res);
@@ -33,11 +33,11 @@ export default function PayRecoveryFee({ next }: any) {
     }
   };
 
-  useEffect(()=>{
-    if(!recoverInfo || !recoverInfo.recoveryID){
-      setIsRecovered(true)
+  useEffect(() => {
+    if (!recoverInfo || !recoverInfo.recoveryID) {
+      setIsRecovered(true);
     }
-  }, [recoverInfo.recoveryID])
+  }, [recoverInfo.recoveryID]);
 
   if (isRecovered) {
     return (
@@ -146,9 +146,22 @@ export default function PayRecoveryFee({ next }: any) {
             >
               Soul Wallet has sponsored the recovery fee for you. Please click the button below to confirm the recovery.
             </TextBody>
-            <Button size="lg" fontSize="18px" width="260px" onClick={doRecover} disabled={isRecovering}>
-              {isRecovering ? 'Recovering' : 'Confirm recovery'}
-            </Button>
+            {isRecovering ? (
+              <Button
+                loading={true}
+                size="lg"
+                fontSize="18px"
+                width="260px"
+                onClick={doRecover}
+                disabled={isRecovering}
+              >
+                Recovering
+              </Button>
+            ) : (
+              <Button size="lg" fontSize="18px" width="260px" onClick={doRecover} disabled={isRecovering}>
+                Confirm recovery
+              </Button>
+            )}
           </Box>
         </RoundContainer>
         <StepProgress activeIndex={3} />

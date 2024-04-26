@@ -104,10 +104,11 @@ export default function usePasskey() {
     }
   };
 
-  const register = async (walletName: string = 'Wallet') => {
+  const register = async (walletName: string = 'Wallet', chainName?: string) => {
+    const chainNameToSet = chainName ? chainName.replace(' ', '_') : null;
     const randomChallenge = btoa('1234567890');
     // const finalCredentialName = `${credentialName}_${getCurrentTimeFormatted()}`;
-    const finalCredentialName = `${walletName}_${getCurrentTimeFormatted()}`;
+    const finalCredentialName = `${walletName}_${chainNameToSet ? `${chainNameToSet}_` : '_'}${getCurrentTimeFormatted(true)}`;
     const registration = await client.register(finalCredentialName, randomChallenge, {
       authenticatorType: 'both',
     });

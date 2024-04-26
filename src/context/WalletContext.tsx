@@ -39,7 +39,7 @@ export const WalletContext = createContext<IWalletContext>({
   showFeedback: async () => {},
   showLogout: async (_redirectUrl?: any) => {},
   showActiveWalletModal: async () => {},
-  checkActivated: async () => false,
+  checkActivated: async () => undefined,
 });
 
 export const WalletContextProvider = ({ children }: any) => {
@@ -79,8 +79,6 @@ export const WalletContextProvider = ({ children }: any) => {
   };
 
   const showSignMessage = async (messageToSign: string, signType?: string, guardianInfo?: any) => {
-    console.log('G', guardianInfo);
-
     return await signMessageModal.current.show(messageToSign, signType, guardianInfo);
   };
 

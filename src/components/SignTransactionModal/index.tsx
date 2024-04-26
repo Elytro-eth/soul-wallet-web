@@ -58,8 +58,6 @@ const SignTransactionModal = (_: unknown, ref: Ref<any>) => {
     promiseInfo.resolve(receipt);
   };
 
-  console.log('G', guardianInfo)
-
   return (
     <div ref={ref}>
       <TxModal title={guardianInfo ? 'Confirm Guardian Change' : 'Confirm Transaction'} visible={visible} onClose={onClose}>
