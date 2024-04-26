@@ -170,7 +170,7 @@ const GuardianInput = ({
       <ENSResolver
         _styles={{
           width: { base: "100%", lg: "calc(100% - 196px - 16px)" },
-          top: { base: "120px", lg: "50px" },
+          top: { base: "50px", lg: "50px" },
           left: { base: "0", lg: "0" },
           right: "0",
         }}
