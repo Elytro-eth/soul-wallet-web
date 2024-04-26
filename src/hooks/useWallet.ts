@@ -71,9 +71,15 @@ export default function useWallet() {
       });
 
       if (!res || !res.data || !res.data.length || res.code !== 200) {
+        let message = res.msg
+
+        if (message === 'key not found') {
+          message = 'no wallet found'
+        }
+
         toast({
           title: 'Failed to login',
-          description: res.msg,
+          description: message,
           status: 'error',
           duration: 5000,
         });
@@ -135,7 +141,7 @@ export default function useWallet() {
     const address = (
       await soulWallet.calcWalletAddress(createIndex, initialKeys, initialGuardianHash, defaultGuardianSafePeriod)
     ).OK;
-   
+
     setAddressList([
       {
         address,
