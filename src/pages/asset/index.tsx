@@ -7,11 +7,7 @@ const tabList = [
   {
     title: 'Tokens',
     key: 'tokens',
-  },
-  {
-    title: 'NFTs',
-    key: 'nfts',
-  },
+  }
 ];
 
 export const Tabs = ({ tabList, activeTab, onChange }: any) => {
@@ -45,7 +41,6 @@ export default function Asset() {
       <Flex gap="5" mt="3" alignItems={'flex-start'}>
         <Box w="100%" rounded="20px" bg="#fff" p={{base: 3, md : 5, lg: 8}}>
           {activeTab === 0 && <TokensTable />}
-          {activeTab === 1 && <NftsTable />}
         </Box>
       </Flex>
     </Box>

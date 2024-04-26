@@ -38,7 +38,7 @@ export default function ActivityItem({ item, scanUrl }: any) {
         <Box>
           <Flex align={'center'} gap="2" mb="1" maxW={'90%'}>
             <Text fontSize={'14px'} fontWeight={'800'} textTransform={'capitalize'} whiteSpace={"nowrap"}>
-              {item.functionName}
+              {(item.functionName === 'setGuardian') ? 'Update Guardian' : item.functionName}
             </Text>
           </Flex>
         </Box>

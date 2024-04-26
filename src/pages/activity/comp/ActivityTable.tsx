@@ -47,7 +47,7 @@ const ActivityItem = ({ item }: any) => {
         <Box>
           <Flex align={'center'} gap="1">
             <Text textTransform={'capitalize'} fontSize={{ base: '14px', lg: '18px' }} fontWeight={'800'}>
-              {item.functionName || 'Unknown'}
+              {((item.functionName === 'setGuardian') ? 'Update Guardian' : item.functionName) || 'Unknown'}
             </Text>
             <Image src={IconExternal} w="8" h="8" />
           </Flex>
@@ -56,8 +56,8 @@ const ActivityItem = ({ item }: any) => {
         </Box>
       </Link>
       {/* <Flex w="12" h="12" bg="#f2f2f2" rounded={'full'} align={'center'} justify={'center'}>
-        <Image src={(chainMapping as any)[item.chainId].icon} />
-      </Flex> */}
+          <Image src={(chainMapping as any)[item.chainId].icon} />
+          </Flex> */}
       {item.actualGasCost ? (
         <Flex gap="2" align={'center'}>
           <Image src={IconEth} w="8" h="8" />
