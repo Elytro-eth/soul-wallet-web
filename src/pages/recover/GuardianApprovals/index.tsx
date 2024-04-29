@@ -1,8 +1,7 @@
 import { useState, useCallback } from 'react';
 import {
   Box,
-  useToast,
-  Input,
+  Tooltip,
 } from '@chakra-ui/react';
 import RoundContainer from '@/components/new/RoundContainer'
 import Heading from '@/components/new/Heading'
@@ -15,7 +14,6 @@ import { toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
 import StepProgress from '../StepProgress'
 import AddressIcon from '@/components/AddressIcon';
-import { SignHeader } from '@/pages/public/Sign';
 import useConfig from '@/hooks/useConfig';
 import { RecoveryContainer } from '@/pages/recover'
 
@@ -142,8 +140,12 @@ export default function GuardianApprovals() {
                     <Box fontSize="14px" fontWeight="700" fontFamily="Nunito" display="flex">
                       <Box>{toShortAddress(item.guardian)}</Box>
                       <Box height="100%" display="flex" alignItems="center" justifyContent="center" padding="0 10px">
-                        <Box cursor="pointer" marginRight="4px" onClick={() => doCopy(item.guardian)}><CopyIcon color="#898989" /></Box>
-                        <Box cursor="pointer" onClick={() => openScan(item.guardian)}><OpenScanIcon /></Box>
+                        <Tooltip label="Copy address">
+                          <Box cursor="pointer" marginRight="4px" onClick={() => doCopy(item.guardian)}><CopyIcon color="#898989" /></Box>
+                        </Tooltip>
+                        <Tooltip label="View on explorer">
+                          <Box cursor="pointer" onClick={() => openScan(item.guardian)}><OpenScanIcon /></Box>
+                        </Tooltip>
                       </Box>
                     </Box>
                     {item.isValid && (

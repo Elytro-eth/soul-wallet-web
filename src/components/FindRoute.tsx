@@ -17,7 +17,6 @@ export default function FindRoute({ children }: { children: ReactNode }) {
   const location = useLocation();
   const { addressList, selectedAddress } = useAddressStore();
   const { recoverInfo } = useTempStore();
-
   const { clearLogData } = useTools();
 
   const findRoute = async () => {
@@ -25,6 +24,7 @@ export default function FindRoute({ children }: { children: ReactNode }) {
 
     if(recoverInfo.recoveryID){
       navigate('/recover');
+      // window.location.href =" /recover"
     }
 
     const allowBypass =

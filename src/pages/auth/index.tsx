@@ -15,6 +15,7 @@ import SetGuardian from './SetGuardian';
 import SelectNetwork from './SelectNetwork';
 import { SignHeader } from '../public/Sign';
 import useWallet from '@/hooks/useWallet';
+import useTools from '@/hooks/useTools';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,7 @@ export default function Auth() {
   const { loginInfo } = useTempStore();
   const { getSignerIdAddress } = useSettingStore();
   const { initWallet, loginWallet, } = useWallet();
+  const { clearLogData } = useTools();
   const { navigate } = useBrowser();
   const signerIdAddress = getSignerIdAddress();
   const activeSignerId = loginInfo.signerId;
@@ -55,7 +57,7 @@ export default function Auth() {
   }
 
   useEffect(()=>{
-
+    clearLogData();
   }, [])
 
   if (stepType === 'selectNetwork') {

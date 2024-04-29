@@ -7,9 +7,7 @@ import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
 
 const createTempSlice = immer<any>((set, get) => ({
-  doneAuth: false,
   createInfo: {},
-  setDoneAuth: (value: boolean) => set({ doneAuth: value }),
   getCreatingGuardianInfo: () => {
     return get().createInfo && get().createInfo.creatingGuardianInfo
   },
@@ -60,13 +58,15 @@ const createTempSlice = immer<any>((set, get) => ({
     recoverInfo: value
   }),
 
-  clearTempStore: () => set({
-    loginInfo: {},
-    createInfo: {},
-    recoverInfo: {},
-    guardianInfo: {},
-    doneAuth: false,
-  }),
+  clearTempStore: () =>{
+    console.log('ready to clear')
+    set({
+      loginInfo: {},
+      createInfo: {},
+      recoverInfo: {},
+      guardianInfo: {},
+    })
+  },
 
   guardianInfo: {},
 

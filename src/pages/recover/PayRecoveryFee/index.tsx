@@ -10,15 +10,18 @@ import RecoverCheckedIcon from '@/components/Icons/RecoverChecked';
 import StepProgress from '../StepProgress';
 import api from '@/lib/api';
 import useWallet from '@/hooks/useWallet';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RecoveryContainer } from '@/pages/recover';
 
-export default function PayRecoveryFee({ next }: any) {
-  const { recoverInfo } = useTempStore();
+export default function PayRecoveryFee() {
+  const { recoverInfo, clearTempStore, } = useTempStore();
   const { recoveryID } = recoverInfo;
   const { boostAfterRecovered } = useWallet();
+  const navigate = useNavigate();
   const [isRecovering, setIsRecovering] = useState(false);
   const [isRecovered, setIsRecovered] = useState(false);
+
+  console.log('R info', recoverInfo)
 
   const doRecover = async () => {
     while (true) {
@@ -38,6 +41,11 @@ export default function PayRecoveryFee({ next }: any) {
       setIsRecovered(true);
     }
   }, [recoverInfo.recoveryID]);
+
+  const goWallet = () => {
+    clearTempStore();
+    navigate('/dashboard')
+  }
 
   if (isRecovered) {
     return (
@@ -88,11 +96,9 @@ export default function PayRecoveryFee({ next }: any) {
                 <RecoverCheckedIcon />
                 <Box>Your wallet has been recovered. Free to check it out!</Box>
               </TextBody>
-              <Link to="/dashboard">
-                <Button size="lg" fontSize="18px" width="260px">
+                <Button size="lg" fontSize="18px" width="260px" onClick={goWallet}>
                   Go to Wallet
                 </Button>
-              </Link>
             </Box>
           </RoundContainer>
           <StepProgress activeIndex={3} />

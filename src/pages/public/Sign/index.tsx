@@ -3,7 +3,7 @@ import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, PopoverTrigg
 import IconLogo from '@/assets/logo-all-v3.svg';
 import RoundContainer from '@/components/new/RoundContainer';
 import Button from '@/components/Button';
-import { useSwitchChain } from 'wagmi';
+import { useSignTypedData, useSwitchChain } from 'wagmi';
 import { SocialRecovery } from '@soulwallet/sdk';
 import api from '@/lib/api';
 import useConfig from '@/hooks/useConfig';
@@ -11,7 +11,6 @@ import SignatureRequestImg from '@/assets/icons/signature-request.svg';
 import { useParams } from 'react-router-dom';
 import WarningIcon from '@/components/Icons/Warning';
 import SuccessIcon from '@/components/Icons/Success';
-import { useEthersSigner } from '@/hooks/useEthersSigner';
 import ConnectWalletModal from '@/pages/recover/ConnectWalletModal';
 import useWagmi from '@/hooks/useWagmi';
 import IconOp from '@/assets/chains/op.svg';
@@ -142,7 +141,7 @@ export default function Sign() {
   const [isSigned, setIsSigned] = useState<any>(false);
   const toast = useToast();
   const { switchChain } = useSwitchChain();
-  const ethersSigner:any = useEthersSigner();
+  const { signTypedDataAsync } = useSignTypedData();
   const {
     connectEOA,
     isConnected,
@@ -188,7 +187,7 @@ export default function Sign() {
 
       setSigning(true);
 
-      const typedDataToSign = SocialRecovery.getSocialRecoveryTypedData(
+      const typedDataToSign:any = SocialRecovery.getSocialRecoveryTypedData(
         recoveryRecord.chain_id,
         chainConfig.contracts.socialRecoveryModule,
         recoveryRecord.address,
@@ -196,9 +195,10 @@ export default function Sign() {
         recoveryRecord.new_owners,
       )
 
-      // const signer:any = await ethersSigner;
+      typedDataToSign.domain.chainId = parseInt(typedDataToSign.domain.chainId)
 
-      const signature = await ethersSigner.signTypedData(typedDataToSign.domain, typedDataToSign.types, typedDataToSign.message);
+      // const signer:any = await ethersSigner;
+      const signature = await signTypedDataAsync(typedDataToSign);
 
       const res: any = await api.guardian.guardianSign({
         recoveryID: recoverId,
