@@ -17,7 +17,7 @@ export default function GuardianModal({ isOpen, onClose }: any) {
   const [showQuestion3, setShowQuestion3] = useState(false)
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} isCentered onClose={onClose}>
       <ModalOverlay />
       <ModalContent bg="#ededed" maxW={'800px'}>
         <ModalHeader

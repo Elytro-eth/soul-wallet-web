@@ -20,7 +20,7 @@ export const EditNameModal = ({
   const [name, setName] = useState(defaultValue);
 
   return (
-    <Modal visible={true} width={{ lg: '516px' }} hideClose={true}>
+    <Modal visible={true} width={{ lg: '516px' }} hideClose={true} isCentered>
       <Text fontSize="20px" fontWeight={'800'} lineHeight={'1.2'} mb="14px">
         Edit wallet name
       </Text>

@@ -1,7 +1,7 @@
 import { useState, useCallback, Fragment, useEffect } from 'react';
 import RoundSection from '@/components/new/RoundSection'
 import GuardianCard from '@/components/new/GuardianCard'
-import { Image, Box, Menu, MenuList, MenuButton, MenuItem } from '@chakra-ui/react'
+import { Image, Box, Menu, MenuList, MenuButton, MenuItem, Flex } from '@chakra-ui/react'
 import Button from '@/components/Button'
 import PlusIcon from '@/components/Icons/Plus';
 import HistoryIcon from '@/components/Icons/History';
@@ -126,7 +126,7 @@ export default function ListGuardian({
               )}
             </Box>
           )}
-          <Box borderTop="1px solid #F0F0F0" marginTop="30px" paddingTop="20px">
+          <Box borderTop="1px solid #F0F0F0" marginTop={{base: "12px", lg: "30px"}} paddingTop="20px">
             <Title
               fontFamily="Nunito"
               fontWeight="700"
@@ -142,12 +142,12 @@ export default function ListGuardian({
             )}
             {!!guardianList.length && (
               <Fragment>
-                <Box
-                  display="flex"
+                <Flex
                   justifyContent="flex-start"
                   marginTop="10px"
                   alignItems={{ base: 'flex-start', md: 'center' }}
                   flexDirection={{ base: 'column', md: 'row' }}
+                  gap={{base: 2, lg: 0}}
                 >
                   <Box
                     fontFamily="Nunito"
@@ -163,6 +163,7 @@ export default function ListGuardian({
                     display="flex"
                     flexDirection={{ base: 'column', md: 'row' }}
                     alignItems={{ base: 'flex-start', md: 'center' }}
+                    gap={{base: 2, lg: 0}}
                   >
                     <Box>Wallet recovery requires</Box>
                     <Box
@@ -191,7 +192,7 @@ export default function ListGuardian({
                     </Box>
                     <Box>{`out of ${guardianDetails.guardians.length} guardian(s) confirmation.`}</Box>
                   </TextBody>
-                </Box>
+                </Flex>
               </Fragment>
             )}
           </Box>

@@ -11,7 +11,7 @@ import {
 export default function Modal({ title, visible, onClose, width, hideClose, children }: any) {
   return (
     visible && (
-      <CModal isOpen={visible} onClose={onClose}>
+      <CModal isOpen={visible} isCentered onClose={onClose}>
         <ModalOverlay />
         <ModalContent maxW={{ base: '90%', lg: '640px', ...width }}>
           <ModalHeader px="8" py="5">

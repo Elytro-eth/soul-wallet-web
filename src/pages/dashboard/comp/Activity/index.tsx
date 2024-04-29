@@ -18,7 +18,7 @@ export default function Activity() {
       <Text fontWeight="800" fontSize={'18px'} lineHeight={'1.25'} mb={{base: 3, lg: "22px"}}>
         Recent Transactions
       </Text>
-      <Flex gap={{base: 3, lg: 5}} flexDir={"column"}>
+      <Flex gap={{base: 4, lg: 5}} flexDir={"column"}>
         {historyList.slice(0, 3).map((item: any, idx: number) => (
           <ActivityItem key={idx} idx={idx} item={item} scanUrl={chainConfig.scanUrl} />
         ))}

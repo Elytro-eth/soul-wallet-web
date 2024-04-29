@@ -30,7 +30,7 @@ import { bundlerErrMapping } from '@/config';
 import DropdownSelect from '@/components/DropdownSelect';
 import AddressIcon from '@/components/AddressIcon';
 import { useSignerStore } from '@/store/signer';
-import ConnectWalletModal from '@/pages/recover/ConnectWalletModal';
+// import ConnectWalletModal from '@/pages/recover/ConnectWalletModal';
 // import useWagmi from '@/hooks/useWagmi';
 
 export const LabelItem = ({ label, tooltip, chainName }: { label: string; tooltip?: string; chainName?: string }) => {

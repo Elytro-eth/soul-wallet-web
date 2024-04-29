@@ -29,7 +29,7 @@ export default function Dashboard() {
         h={{ lg: '100%' }}
         gap={{base: 8, lg: 0}}
         bg="brand.white"
-        py={{ base: '24px', lg: '30px' }}
+        py={{ base: '20px', lg: '30px' }}
         px={{ base: '24px', lg: '64px' }}
         mb={{ base: '64px', lg: 'unset' }}
         pb={{ base: '64px', lg: '30px' }}

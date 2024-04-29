@@ -14,14 +14,13 @@ import Title from '@/components/new/Title'
 import DropDownIcon from '@/components/Icons/DropDown';
 import GuardianCard from '@/components/new/GuardianCard'
 import Button from '@/components/Button'
-import EditGuardianForm from '../EditGuardianForm'
 
 export default function PendingGuardianModal({
   isOpen,
   onClose,
 }: any) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} isCentered onClose={onClose}>
       <ModalOverlay />
       <ModalContent maxW={{base: "95%", lg :"840px"}} my={{base: "120px"}} borderRadius="20px">
         <ModalCloseButton top="14px" />

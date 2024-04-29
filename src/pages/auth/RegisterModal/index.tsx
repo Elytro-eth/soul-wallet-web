@@ -37,9 +37,9 @@ export default function RegisterModal({
 
   if (isConnected && isConnectAtive && activeConnector) {
     return (
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent background="white" maxW="840px" borderRadius="20px">
+        <ModalContent background="white" maxW={{base:"95%", lg: "840px"}} borderRadius="20px">
           <ModalHeader
             display="flex"
             justifyContent="flex-start"
@@ -113,9 +113,9 @@ export default function RegisterModal({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent background="white" maxW="840px" borderRadius="20px">
+      <ModalContent background="white" maxW={{base:"95%", lg: "840px"}} borderRadius="20px">
         <ModalHeader
           display="flex"
           justifyContent="flex-start"

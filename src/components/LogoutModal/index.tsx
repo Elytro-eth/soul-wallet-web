@@ -41,7 +41,7 @@ const LogoutModal = (_: unknown, ref: Ref<any>) => {
     <div ref={ref}>
       <TxModal
         visible={visible}
-        width={{ base: '90%', lg: '404px' }}
+        width={{ base: '95%', lg: '404px' }}
         onClose={onClose}
         bodyStyle={{ py: '9', px: '42px' }}
       >

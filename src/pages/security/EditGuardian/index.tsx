@@ -254,7 +254,7 @@ export default function EditGuardian({
               )}
             </Box>
           )}
-          <Box borderTop="1px solid #F0F0F0" marginTop="30px" paddingTop="20px">
+          <Box borderTop="1px solid #F0F0F0"  marginTop={{base: "12px", lg: "30px"}} paddingTop="20px">
             <Title fontFamily="Nunito" fontWeight="700" fontSize="18px" display="flex">
               Recovery settings
             </Title>
@@ -273,6 +273,7 @@ export default function EditGuardian({
                   marginTop="10px"
                   alignItems={{ base: 'flex-start', md: 'center' }}
                   flexDirection={{ base: 'column', md: 'row' }}
+                  gap={{base: 2, lg: 0}}
                 >
                   <Box fontFamily="Nunito" fontWeight="700" fontSize="14px" marginRight="6px">
                     Threshold:
@@ -281,7 +282,8 @@ export default function EditGuardian({
                     type="t2"
                     justifyContent="flex-start"
                     display="flex"
-                    flexDirection={{ base: 'column', md: 'row' }}
+                    flexDirection={{ base: 'column', md: 'row' }}        
+                    gap={{base: 2, lg: 0}}
                     alignItems={{ base: 'flex-start', md: 'center' }}
                   >
                     <Box>Wallet recovery requires</Box>

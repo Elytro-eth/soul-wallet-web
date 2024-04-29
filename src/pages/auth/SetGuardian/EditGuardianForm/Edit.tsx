@@ -264,7 +264,7 @@ export default function Edit({
         alignItems="flex-start"
         marginTop="16px"
         borderTop="1px solid rgba(0, 0, 0, 0.1)"
-        paddingTop="24px"
+        paddingTop={{base: "16px", lg: "24px"}}
       >
         <Box
           display="flex"

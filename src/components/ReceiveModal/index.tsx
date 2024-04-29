@@ -23,7 +23,7 @@ function ReceiveModal(_: any, ref: Ref<any>) {
     },
   }));
   return (
-    <Modal isOpen={visible} onClose={onClose}>
+    <Modal isOpen={visible} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent maxW={{ base: '90%', lg: '640px' }}>
         <ModalHeader>

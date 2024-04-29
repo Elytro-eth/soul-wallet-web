@@ -21,8 +21,6 @@ export default function PayRecoveryFee() {
   const [isRecovering, setIsRecovering] = useState(false);
   const [isRecovered, setIsRecovered] = useState(false);
 
-  console.log('R info', recoverInfo)
-
   const doRecover = async () => {
     while (true) {
       setIsRecovering(true);

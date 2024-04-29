@@ -67,7 +67,7 @@ export default function WalletCard() {
       w={{ base: '400px', '2xl': '460px' }}
       maxW={'95%'}
       zIndex={'20'}
-      pt="14px"
+      pt={{base: "20px", lg: "14px"}}
       px="30px"
       pb="20px"
       rounded="20px"

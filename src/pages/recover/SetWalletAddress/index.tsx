@@ -11,7 +11,6 @@ import FormInput from '@/components/new/FormInput';
 import { ethers, isAddress } from 'ethers';
 import api from '@/lib/api';
 import StepProgress from '../StepProgress';
-import { SignHeader } from '@/pages/public/Sign';
 import WalletCheckedIcon from '@/components/Icons/WalletChecked';
 import { chainMapping } from '@/config';
 import useQuery from '@/hooks/useQuery';
@@ -51,12 +50,13 @@ export default function SetWalletAddress({ next, back }: any) {
   };
 
   const handleAddressChange = async () => {
+    setFoundChainId('');
+
     if (!isAddress(values.address)) {
       return;
     }
     try {
       // setLoading(true);
-      setFoundChainId('');
       let walletAddress = values.address;
       // if (walletAddress.includes(':')) {
       //   walletAddress = walletAddress.split(':')[1];

@@ -28,7 +28,7 @@ export default function EditGuardianModal({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent maxW="700px" borderRadius="20px">
         <ModalCloseButton top="14px" />

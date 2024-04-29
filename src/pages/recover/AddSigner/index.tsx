@@ -140,7 +140,7 @@ export default function AddSigner({ next, back }: any) {
                   <Box
                     background="white"
                     borderRadius="12px"
-                    padding="16px"
+                    padding={{base: "12px", lg: "16px"}}
                     border="1px solid #E4E4E4"
                     marginBottom="14px"
                     key={signer.signerId}
@@ -153,9 +153,9 @@ export default function AddSigner({ next, back }: any) {
                       alignItems="center"
                       width="100%"
                     >
-                      <Box width="50px" height="50px" background="#efefef" borderRadius="50px" marginRight="16px" display="flex" alignItems="center" justifyContent="center"><ComputerIcon /></Box>
+                      <Box width={{ base: "40px", lg: "50px"}} flex={{ base: "0 0 40px", lg: "0 0 50px"}} height={{base: "40px", lg: "50px"}} background="#efefef" borderRadius="50px" marginRight={{base: "12px", lg: "16px"}} display="flex" alignItems="center" justifyContent="center"><ComputerIcon /></Box>
                       <Box>
-                        <Text color="rgb(7, 32, 39)" fontSize="18px" fontWeight="800">
+                        <Text pr={{base: "18px", lg: 0}} color="rgb(7, 32, 39)" fontSize={{base: "14px", lg: "18px"}} fontWeight="800" wordBreak={"break-all"}>
                           {signer.name}
                         </Text>
                       </Box>

@@ -19,11 +19,10 @@ export default function ConnectWalletModal({
   isConnecting,
 }: any) {
   const { connectors } = useConnect();
-
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent background="white" maxW="840px" borderRadius="20px">
+      <ModalContent background="white" maxW={{base: "95%", lg: "840px"}} borderRadius="20px">
         <ModalHeader
           display="flex"
           justifyContent="flex-start"

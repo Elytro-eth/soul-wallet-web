@@ -25,7 +25,7 @@ const FeedbackModal = (_: unknown, ref: Ref<any>) => {
 
   return (
     <div ref={ref}>
-      <Modal title="Feedback" visible={visible} width={{ lg: '544px' }} onClose={onClose}>
+      <Modal title="Feedback" visible={visible} isCentered width={{ lg: '544px' }} onClose={onClose}>
         <Feedback onCancel={onClose} />
       </Modal>
     </div>

@@ -2,9 +2,9 @@ import { Modal, ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseBu
 
 export default function TxModal({ title, visible, onClose, children, width, bodyStyle }: any) {
   return (
-    <Modal isOpen={visible} onClose={onClose} scrollBehavior="inside">
+    <Modal isOpen={visible} isCentered onClose={onClose} scrollBehavior="inside">
       <ModalOverlay />
-      <ModalContent maxW={width || { base: '90%', lg: '624px' }}>
+      <ModalContent maxW={width || { base: '95%', lg: '624px' }}>
         {title && (
           <ModalHeader px={{ base: 4, lg: 8 }} py="22px" fontSize={'20px'} fontWeight={'700'}>
             {title}

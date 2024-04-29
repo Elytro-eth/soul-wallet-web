@@ -85,7 +85,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
     <div ref={ref}>
       <Modal isOpen={visible} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent maxW="840px" borderRadius="20px">
+        <ModalContent maxW={{base:"95%", lg: "840px"}} borderRadius="20px">
           <ModalHeader
             display="flex"
             justifyContent="flex-start"
@@ -106,7 +106,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     alignItems="center"
                     border="1px solid rgba(0, 0, 0, 0.1)"
                     borderRadius="12px"
-                    padding="35px 39px"
+                    padding={{base: "24px", lg: "35px 39px"}}
                     marginBottom="24px"
                     width="100%"
                     // cursor="pointer"
@@ -143,8 +143,8 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       </Box>
                     )}
                     <Box
-                      width="80px"
-                      height="80px"
+                      width={{base: "60px", lg: "80px"}}
+                      height={{base: "60px", lg: "80px"}}
                       borderRadius="80px"
                       marginRight="12px"
                       display="flex"
@@ -152,14 +152,14 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       justifyContent="center"
                       background="rgba(0, 0, 0, 0.05)"
                     >
-                      <Image src={TokenEmptyIcon} width="80px" height="80px" />
+                      <Image src={TokenEmptyIcon} width={{base: "60px", lg: "80px"}} height={{base: "60px", lg: "80px"}} />
                     </Box>
                     <Box width={{ base: '100%', md: 'calc(100% - 92px)' }}>
-                      <TextBody fontSize="20px">Step 1: Deposit ETH</TextBody>
+                      <TextBody fontSize={{base: "18px", lg: "20px"}}>Step 1: Deposit ETH</TextBody>
                       <Box
                         display="flex"
                         flexDirection={{ base: 'column', md: 'row' }}
-                        marginTop={{ base: '20px', md: '4px' }}
+                        marginTop={{ base: '12px', md: '4px' }}
                       >
                         <Box
                           background="#F1F1F1"
@@ -193,7 +193,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                               height="28px"
                               onClick={() => doCopy(selectedAddress)}
                               width={{ base: '100%', md: '104px' }}
-                              marginBottom={{ base: '20px', md: '0' }}
+                              marginBottom={{ base: '12px', md: '0' }}
                             >
                               Copy address
                             </Button>
@@ -229,7 +229,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                     alignItems="center"
                     border="1px solid rgba(0, 0, 0, 0.1)"
                     borderRadius="12px"
-                    padding="35px 39px"
+                    padding={{base: "24px", lg: "35px 39px"}}
                     marginBottom="14px"
                     width="100%"
                     // cursor="pointer"
@@ -266,8 +266,8 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       </Box>
                     )}
                     <Box
-                      width="80px"
-                      height="80px"
+                      width={{base: "60px", lg: "80px"}}
+                      height={{base: "60px", lg: "80px"}}
                       borderRadius="80px"
                       marginRight="12px"
                       display="flex"
@@ -275,16 +275,16 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       justifyContent="center"
                       background="rgba(0, 0, 0, 0.05)"
                     >
-                      <Image src={ActivityEmptyIcon} width="80px" height="80px" />
+                      <Image src={ActivityEmptyIcon} width={{base: "60px", lg: "80px"}} height={{base: "60px", lg: "80px"}} />
                     </Box>
                     <Box width={{ base: '100%', md: 'calc(100% - 92px)' }}>
-                      <TextBody fontSize="20px" display="flex" alignItems="center">
+                      <TextBody fontSize={{base: "18px", lg: "20px"}} display="flex" alignItems="center">
                         <Box>Step 2: Active wallet</Box>
                       </TextBody>
                       <Box
                         display="flex"
                         flexDirection={{ base: 'column', md: 'row' }}
-                        marginTop={{ base: '20px', md: '4px' }}
+                        marginTop={{ base: '12px', md: '4px' }}
                       >
                         <Box
                           minHeight="28px"

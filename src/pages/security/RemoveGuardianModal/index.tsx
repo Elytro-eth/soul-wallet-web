@@ -24,7 +24,7 @@ export default function RemoveGuardianModal({
 
   if (editingAddressCount === 1) {
     return (
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} isCentered onClose={onClose}>
         <ModalOverlay />
         <ModalContent background="white" w="360px" borderRadius="16px">
           <ModalBody overflow="auto" padding="24px 32px">
@@ -81,7 +81,7 @@ export default function RemoveGuardianModal({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent background="white" w="360px" borderRadius="16px">
         <ModalBody overflow="auto" padding="24px 32px">

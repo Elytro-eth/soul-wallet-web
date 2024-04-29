@@ -77,6 +77,7 @@ export default function DoubleFormInput({
               paddingLeft="16px"
               paddingRight="16px"
               height="48px"
+              spellCheck={false}
               background="white"
               autoFocus={true}
               onKeyDown={onKeyDown}
