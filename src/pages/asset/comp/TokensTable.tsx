@@ -128,7 +128,7 @@ export default function TokensTable() {
                     </Button> */}
                     </Td>
                     <Td w={'25%'} textAlign={'right'} fontWeight={'800'}>
-                      {toFixed(item.tokenPrice, 2)}
+                      ${toFixed(item.tokenPrice, 2)}
                     </Td>
                   </Tr>
                 );

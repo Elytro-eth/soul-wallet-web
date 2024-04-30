@@ -14,6 +14,7 @@ import { toFixed } from '@/lib/tools';
 import { useSettingStore } from '@/store/setting';
 import { ZeroAddress } from 'ethers';
 import BN from 'bignumber.js';
+import useConfig from '@/hooks/useConfig';
 
 const SetGuardianHint = ({ onShowSkip }: { onShowSkip: () => void }) => {
   return (
@@ -78,9 +79,10 @@ const DepositHint = () => {
 };
 
 const DepositHint2 = () => {
-  const [active, setActive] = useState<any>(false)
+  const [active, setActive] = useState<any>(false);
   const { getAddressDisplay, saveAddressDisplay } = useSettingStore();
   const { selectedAddress } = useAddressStore();
+  const { selectedChainItem } = useConfig();
 
   return (
     <Flex
@@ -97,16 +99,12 @@ const DepositHint2 = () => {
     >
       <Box>
         <Text mb="32px" fontSize={'18px'} fontWeight="700" lineHeight={1.5} textAlign={'center'}>
-          You are not holding any token yet.<br />Get your first deposit with your wallet address
+          You are not holding any token yet.
+          <br />
+          Get your first deposit with your wallet address
         </Text>
-        <Checkbox
-          defaultChecked={active}
-          marginBottom="18px"
-          onChange={(e) => setActive(!!e.target.checked)}
-        >
-          <Text fontWeight="500">
-            I acknowledge the network is Ethereum, not any other chain
-          </Text>
+        <Checkbox defaultChecked={active} marginBottom="18px" onChange={(e) => setActive(!!e.target.checked)}>
+          <Text fontWeight="500">I acknowledge the network is {selectedChainItem.chainName}, not any other chain</Text>
         </Checkbox>
         <Flex gap="2" flexDir={'column'} align={'center'}>
           <Button py="13px" disabled={!active} onClick={() => saveAddressDisplay(selectedAddress, true)}>
@@ -146,7 +144,7 @@ const TokenBalanceTable = ({ tokenBalance, showSendAssets }: any) => {
             totalUsdValue={totalUsdValue}
             title={item.name || 'Unknown'}
             lineColor={lineColors[idx] || 'brand.gray'}
-            amount={toFixed(item.tokenBalanceFormatted, 6) }
+            amount={toFixed(item.tokenBalanceFormatted, 6)}
             onClick={() => showSendAssets(item.contractAddress)}
           />
         </React.Fragment>
@@ -169,16 +167,10 @@ export default function Tokens() {
 
   const isTokenBalanceEmpty = tokenBalance.every((item) => !Number(item.tokenBalance));
 
-  console.log('selectedAddress', selectedAddress, !!getAddressDisplay(selectedAddress))
+  console.log('selectedAddress', selectedAddress, !!getAddressDisplay(selectedAddress));
   return (
-    <HomeCard
-      title={'Assets'}
-      pos="relative"
-      external={<ExternalLink title="View more" to="/asset" />}
-      h="100%"
-    >
-
-      {(!getAddressDisplay(selectedAddress) && !userDeposited) && <DepositHint2 />}
+    <HomeCard title={'Assets'} pos="relative" external={<ExternalLink title="View more" to="/asset" />} h="100%">
+      {!getAddressDisplay(selectedAddress) && !userDeposited && <DepositHint2 />}
       {isTokenBalanceEmpty ? (
         <DepositHint />
       ) : (

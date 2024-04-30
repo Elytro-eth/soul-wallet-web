@@ -7,6 +7,7 @@ import IconChecked from '@/assets/icons/signer-checked.svg';
 import IconUnchecked from '@/assets/icons/signer-unchecked.svg';
 import IconWallet from '@/assets/icons/signer-wallet.svg';
 import IconPasskey from '@/assets/icons/signer-passkey.svg';
+import useConfig from '@/hooks/useConfig';
 
 const SignerItem = ({
   title,
@@ -34,7 +35,8 @@ const SignerItem = ({
   );
 };
 export default function SignerSelect({ onChange }: { onChange?: () => void }) {
-  const { getSelectedKeyType, signerId, setSignerId, credentials } = useSignerStore();
+  const { signerId, setSignerId, credentials } = useSignerStore();
+  const { selectedCredential }: any = useConfig();
 
   const onSelect = (_signerId: string, _signerType: any) => {
     if (onChange) {
@@ -45,14 +47,17 @@ export default function SignerSelect({ onChange }: { onChange?: () => void }) {
 
   const availableCredentials = credentials.filter((item: ICredentialItem) => item.id);
 
-  return (
+  console.log('Ava', availableCredentials, availableCredentials.length);
+
+  return availableCredentials.length > 1 ? (
     <Menu>
       <MenuButton>
         <DropdownSelect>
           <Text>
-            {getSelectedKeyType() === SignkeyType.EOA
+            Passkey ({selectedCredential.name})
+            {/* {getSelectedKeyType() === SignkeyType.EOA
               ? `Wallet(${toShortAddress(signerId)})`
-              : `Passkey(${toShortAddress(signerId)})`}
+              : `Passkey(${toShortAddress(signerId)})`} */}
           </Text>
         </DropdownSelect>
       </MenuButton>
@@ -76,5 +81,9 @@ export default function SignerSelect({ onChange }: { onChange?: () => void }) {
         ) : null}
       </MenuList>
     </Menu>
+  ) : (
+    <DropdownSelect hideChevron={true}>
+      <Text>Passkey ({selectedCredential.name})</Text>
+    </DropdownSelect>
   );
 }

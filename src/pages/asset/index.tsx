@@ -1,7 +1,7 @@
 import {  useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import TokensTable from './comp/TokensTable';
-import NftsTable from './comp/NftsTable';
+// import NftsTable from './comp/NftsTable';
 
 const tabList = [
   {

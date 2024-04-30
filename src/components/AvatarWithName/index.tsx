@@ -46,10 +46,9 @@ export const EditNameModal = ({
 };
 
 export default function AvatarWithName({ editable = false }: { editable: boolean }) {
-  const { getWalletName, setWalletName} = useTools();
+  const { walletName, setWalletName } = useAddressStore();
   const [editNameModalVisible, setEditNameModalVisible] = useState(false);
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
-  const walletName = getWalletName();
   const { selectedAddress } = useAddressStore();
 
   const changeWalletName = (name: string) => {

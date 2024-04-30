@@ -19,8 +19,9 @@ interface IReceiveCode extends BoxProps {
 
 const DepositHint2 = () => {
   const [active, setActive] = useState<any>(false)
-  const { getAddressDisplay, saveAddressDisplay } = useSettingStore();
+  const { saveAddressDisplay } = useSettingStore();
   const { selectedAddress } = useAddressStore();
+  const { selectedChainItem } = useConfig();
 
   return (
     <Flex
@@ -47,7 +48,7 @@ const DepositHint2 = () => {
           onChange={(e) => setActive(!!e.target.checked)}
         >
           <Text fontWeight="500" fontSize="16px">
-            I acknowledge the network is Ethereum, not any other chain
+            I acknowledge the network is {selectedChainItem.chainName}, not any other chain
           </Text>
         </Checkbox>
         <Flex gap="2" flexDir={'column'} align={'center'}>
