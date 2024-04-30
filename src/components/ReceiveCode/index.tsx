@@ -38,7 +38,7 @@ const DepositHint2 = () => {
       // bottom={0}
     >
       <Box>
-        <Text mb="47px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
+        <Text mb="30px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
 
         </Text>
         <Checkbox

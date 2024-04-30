@@ -89,16 +89,14 @@ const DepositHint2 = () => {
       // backdropFilter={'blur(12px)'}
       background="white"
       pos="absolute"
-      pt={{ base: '100px', xl: '80px', '2xl': '100px' }}
-      pb="100px"
       top="0"
       right={'0'}
       zIndex={'10'}
       left={0}
-      // bottom={0}
+      bottom={0}
     >
       <Box>
-        <Text mb="107px" fontSize={'16px'} fontWeight="600" lineHeight={1.5} textAlign={'center'}>
+        <Text mb="32px" fontSize={'18px'} fontWeight="700" lineHeight={1.5} textAlign={'center'}>
           You are not holding any token yet.<br />Get your first deposit with your wallet address
         </Text>
         <Checkbox

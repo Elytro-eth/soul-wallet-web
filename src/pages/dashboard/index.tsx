@@ -32,7 +32,7 @@ export default function Dashboard() {
         py={{ base: '20px', lg: '30px' }}
         px={{ base: '24px', lg: '64px' }}
         mb={{ base: '64px', lg: 'unset' }}
-        pb={{ base: '64px', lg: '30px' }}
+        pb={{ base: '20px', lg: '30px' }}
         borderLeft={'1px solid #EAECF0'}
       >
         <Tokens />

@@ -26,14 +26,14 @@ const ActivityItem = ({ item }: any) => {
   console.log('ac item', item)
   return (
     <Flex
-      // flexDir={{ base: 'column', md: 'row' }}
-      // gap={{ base: 3, lg: 0 }}
+      flexDir={{ base: 'column', md: 'row' }}
+      gap={{ base: 3, lg: 0 }}
       justifyContent={'space-between'}
       alignItems={'center'}
       py="5"
     >
       <Link
-        w={{ base: '50%', lg: '30%' }}
+        w={{ base: '100%', lg: '30%' }}
         display={'flex'}
         alignItems={'center'}
         target="_blank"
@@ -58,7 +58,7 @@ const ActivityItem = ({ item }: any) => {
           <Image src={(chainMapping as any)[item.chainId].icon} />
           </Flex> */}
       {item.actualGasCost ? (
-        <Flex gap="2" align={'center'}>
+        <Flex gap="2" align={'center'} w={{ base: '100%', lg: 'max-content' }}>
           <Image src={IconEth} w="8" h="8" />
           <Box>
             <Text color="brand.black" fontSize={{ base: '14px', lg: '18px' }} fontWeight={'800'}>
@@ -71,8 +71,8 @@ const ActivityItem = ({ item }: any) => {
         ''
       )}
       {/* <Box display={{ base: 'none', lg: 'block' }}>
-        {item.sender && <Text color="brand.black">Sender: {toShortAddress(item.sender)}</Text>}
-      </Box> */}
+          {item.sender && <Text color="brand.black">Sender: {toShortAddress(item.sender)}</Text>}
+          </Box> */}
     </Flex>
   );
 };
