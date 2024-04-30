@@ -278,7 +278,7 @@ export default function Sign() {
               >
                 <SuccessIcon size="120" />
               </Box>
-              <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
                 Thank you, signature received!
               </Box>
               <Box
@@ -288,7 +288,7 @@ export default function Sign() {
                 lineHeight={'normal'}
                 color="black"
                 marginTop="34px"
-                maxWidth="500px"
+                maxWidth={{ base: '300px', md: '500px' }}
               >
                 Recover for: {recoveryRecord.address}
               </Box>
@@ -322,7 +322,7 @@ export default function Sign() {
               >
                 <WarningIcon size="80" />
               </Box>
-              <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
                 You’re not the guardian
               </Box>
               <Box
@@ -378,7 +378,7 @@ export default function Sign() {
               >
                 <WarningIcon size="80" />
               </Box>
-              <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
                 The network doesn’t match
               </Box>
               <Box
@@ -434,7 +434,7 @@ export default function Sign() {
               <Box marginBottom="22px" width="120px" height="120px">
                 <Image src={SignatureRequestImg} width="120px" height="120px" />
               </Box>
-              <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
                 Signature request
               </Box>
               {address && (
@@ -508,7 +508,7 @@ export default function Sign() {
             <Box marginBottom="22px" width="120px" height="120px">
               <Image src={SignatureRequestImg} width="120px" height="120px" />
             </Box>
-            <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+            <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
               Recovery request
             </Box>
             {address && (

@@ -48,7 +48,7 @@ const ActivityItem = ({ item }: any) => {
             <Text textTransform={'capitalize'} fontSize={{ base: '14px', lg: '18px' }} fontWeight={'800'}>
               {((item.functionName === 'setGuardian') ? 'Update Guardian' : item.functionName) || 'Unknown'}
             </Text>
-            <Image src={IconExternal} w="8" h="8" />
+            <Image src={IconExternal} w="24px" h="24px" />
           </Flex>
 
           <Text color="#898989">{new Date(item.timestamp * 1000).toLocaleString()}</Text>

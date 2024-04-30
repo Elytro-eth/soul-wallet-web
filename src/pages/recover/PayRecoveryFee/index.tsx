@@ -78,7 +78,7 @@ export default function PayRecoveryFee() {
               justifyContent="center"
               flexDirection="column"
             >
-              <Heading marginBottom="18px" type="h4" fontSize="24px" fontWeight="700">
+              <Heading marginBottom="18px" type="h4" fontSize={{ base: '20px', md: '24px' }} fontWeight="700">
                 Step 4/4: Recovery
               </Heading>
               <TextBody
@@ -94,9 +94,9 @@ export default function PayRecoveryFee() {
                 <RecoverCheckedIcon />
                 <Box>Your wallet has been recovered. Free to check it out!</Box>
               </TextBody>
-                <Button size="lg" fontSize="18px" width="260px" onClick={goWallet}>
-                  Go to Wallet
-                </Button>
+              <Button size="lg" fontSize="18px" width="260px" onClick={goWallet}>
+                Go to Wallet
+              </Button>
             </Box>
           </RoundContainer>
           <StepProgress activeIndex={3} />
@@ -137,12 +137,12 @@ export default function PayRecoveryFee() {
             justifyContent="center"
             flexDirection="column"
           >
-            <Heading marginBottom="18px" type="h4" fontSize="24px" fontWeight="700">
+            <Heading marginBottom="18px" type="h4" fontSize={{ base: '20px', md: '24px' }} fontWeight="700">
               Step 4/4: Recovery
             </Heading>
             <TextBody
               fontWeight="500"
-              maxWidth="650px"
+              maxWidth={{ base: '100%', md: '100%' }}
               marginBottom="20px"
               width="100%"
               wordBreak="break-all"

@@ -140,7 +140,7 @@ export default function SetWalletAddress({ next, back }: any) {
             justifyContent="center"
             flexDirection="column"
           >
-            <Heading marginBottom="18px" type="h4" fontSize="24px" fontWeight="700">
+            <Heading marginBottom="18px" type="h4" fontSize={{ base: '20px', md: '24px' }} fontWeight="700">
               Step 1/4: Wallet address
             </Heading>
             <TextBody fontWeight="600" maxWidth="550px" marginBottom="20px">

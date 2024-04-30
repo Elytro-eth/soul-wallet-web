@@ -137,7 +137,7 @@ export default function SetGuardian({ walletName, back, onCreate }: any) {
               justifyContent="center"
               flexDirection="column"
             >
-              <Heading type="h3" fontSize="26px" textAlign="left" width="100%" marginBottom="2px">
+              <Heading type="h3" fontSize={{ base: '20px', md: '26px' }} textAlign="left" width="100%" marginBottom="2px">
                 {`Setup guardians for < ${walletName} >`}
               </Heading>
               <TextBody fontWeight="400" fontSize="16px">

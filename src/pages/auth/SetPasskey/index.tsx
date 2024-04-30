@@ -120,7 +120,7 @@ export default function SetPasskey({ back, walletName, next: nextStep, credentia
             >
               <Heading
                 type="h3"
-                fontSize="26px"
+                fontSize={{ base: '20px', md: '26px' }}
                 textAlign="left"
                 width="100%"
                 marginBottom="2px"
@@ -138,7 +138,7 @@ export default function SetPasskey({ back, walletName, next: nextStep, credentia
                   borderRadius="12px"
                   width="700px"
                   maxWidth="100%"
-                  marginTop="40px"
+                  marginTop={{ base: '20px', md: '40px' }}
                 >
                   <Flex display="flex" alignItems="flex-start" justifyContent="center" flexDirection="column" width="100%" gap="2">
                     {credentials.map((passKey: any, index: number) =>

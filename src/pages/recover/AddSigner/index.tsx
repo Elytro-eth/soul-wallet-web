@@ -125,7 +125,7 @@ export default function AddSigner({ next, back }: any) {
             justifyContent="center"
             flexDirection="column"
           >
-            <Heading marginBottom="18px" type="h4" fontSize="24px" fontWeight="700">
+            <Heading marginBottom="18px" type="h4" fontSize={{ base: '20px', md: '24px' }} fontWeight="700">
               Step 2/4: Wallet setup
             </Heading>
             <Box fontSize="14px" fontWeight="400">

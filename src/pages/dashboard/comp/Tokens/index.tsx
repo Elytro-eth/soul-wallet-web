@@ -86,7 +86,8 @@ const DepositHint2 = () => {
     <Flex
       align={'center'}
       justify={'center'}
-      backdropFilter={'blur(12px)'}
+      // backdropFilter={'blur(12px)'}
+      background="white"
       pos="absolute"
       pt={{ base: '100px', xl: '80px', '2xl': '100px' }}
       pb="100px"

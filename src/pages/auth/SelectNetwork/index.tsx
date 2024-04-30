@@ -76,7 +76,7 @@ export default function SetWalletName({ onNext, walletName, setWalletName }: any
               justifyContent="center"
               flexDirection="column"
             >
-              <Heading type="h3" fontSize="26px" textAlign="left" width="100%" marginBottom="2px">
+              <Heading type="h3" fontSize={{ base: '20px', md: '26px' }} textAlign="left" width="100%" marginBottom="2px">
                 Select network
               </Heading>
               <TextBody fontWeight="400" fontSize="16px">
@@ -90,7 +90,7 @@ export default function SetWalletName({ onNext, walletName, setWalletName }: any
                 display="flex"
                 flexDirection="column"
                 alignItems="center"
-                marginTop="40px"
+                marginTop={{ base: '20px', md: '40px' }}
               >
                 <Box
                   width="100%"
