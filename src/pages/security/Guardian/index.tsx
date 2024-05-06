@@ -3,7 +3,10 @@ import { SectionMenu, SectionMenuItem } from '@/components/new/SectionMenu';
 import { Box } from '@chakra-ui/react'
 import RemoveGuardianModal from '@/pages/security/RemoveGuardianModal'
 import EditGuardianModal from '@/pages/security/EditGuardianModal'
+import AddEmailGuardianModal from '@/pages/security/AddEmailGuardianModal'
 import PendingGuardianModal from '@/pages/security/PendingGuardianModal'
+import SelectGuardianTypeModal from '@/pages/security/SelectGuardianTypeModal'
+import IntroGuardianModal from '@/pages/security/IntroGuardianModal'
 import useBrowser from '@/hooks/useBrowser';
 import { useTempStore } from '@/store/temp';
 import { useGuardianStore } from '@/store/guardian';
@@ -28,9 +31,13 @@ export default function Guardian() {
   const [keepPrivate, setKeepPrivate] = useState<any>(false);
   const [isPending, setIsPending] = useState<any>(true);
   const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<any>(false);
+  const [isAddEmailGuardianOpen, setIsAddEmailGuardianOpen] = useState<any>(false);
   const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<any>(false);
   const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
   const [isBackupGuardianOpen, setIsBackupGuardianOpen] = useState<any>(false);
+  const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<any>(false);
+  const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<any>(false);
+
   const [canBackToSelectGuardianType, setCanBackToSelectGuardianType] = useState<any>(false);
   const [editType, setEditType] = useState<any>('edit')
   const [count, setCount] = useState<any>(0)
@@ -55,6 +62,14 @@ export default function Guardian() {
   const guardiansInfo = (!tempStore.createInfo.creatingGuardianInfo ? guardianStore.guardiansInfo : tempStore.getCreatingGuardianInfo()) || defaultGuardianInfo
   console.log('guardiansInfo111', guardianStore.guardiansInfo, guardianStore.getGuardiansInfo())
 
+  const closeSelectGuardianModal = useCallback(() => {
+    setIsSelectGuardianOpen(false)
+  }, [])
+
+  const closeIntroGuardianModal = useCallback(() => {
+    setIsIntroGuardianOpen(false)
+  }, [])
+
   const openPendingGuardianModal = useCallback((editType: any) => {
     setIsPendingGuardianOpen(true)
   }, [])
@@ -72,6 +87,10 @@ export default function Guardian() {
     setIsEditGuardianOpen(false)
   }, [])
 
+  const closeAddEmailGuardianModal = useCallback(() => {
+    setIsAddEmailGuardianOpen(false)
+  }, [])
+
   const startAddGuardian = useCallback(() => {
     if (!isEditing) {
       setEditingGuardiansInfo(guardiansInfo)
@@ -79,7 +98,8 @@ export default function Guardian() {
 
     setEditType('add')
     setCanBackToSelectGuardianType(true)
-    setIsEditGuardianOpen(true)
+    // setIsEditGuardianOpen(true)
+    setIsSelectGuardianOpen(true)
   }, [isEditing, guardiansInfo])
 
   const startRemoveGuardian = useCallback((i: any, address: any, count: any) => {
@@ -94,7 +114,7 @@ export default function Guardian() {
       setEditingGuardiansInfo(guardiansInfo)
     }
 
-    setCanBackToSelectGuardianType(false)
+    setCanBackToSelectGuardianType(true)
     setIsEditing(true)
   }, [isEditing, guardiansInfo])
 
@@ -255,6 +275,13 @@ export default function Guardian() {
           />
         )}
       </Box>
+      <AddEmailGuardianModal
+        isOpen={isAddEmailGuardianOpen}
+        onClose={closeAddEmailGuardianModal}
+        setIsAddEmailGuardianOpen={setIsAddEmailGuardianOpen}
+        onConfirm={() => {}}
+        editType={editType}
+      />
       <EditGuardianModal
         isOpen={isEditGuardianOpen}
         onClose={closeEditGuardianModal}
@@ -273,6 +300,20 @@ export default function Guardian() {
         removeIndex={removeIndex}
         address={removeAddress}
         editingAddressCount={editingAddressCount}
+      />
+      <SelectGuardianTypeModal
+        isOpen={isSelectGuardianOpen}
+        onClose={closeSelectGuardianModal}
+        setIsIntroGuardianOpen={setIsIntroGuardianOpen}
+        setIsSelectGuardianOpen={setIsSelectGuardianOpen}
+        setIsEditGuardianOpen={setIsEditGuardianOpen}
+        setIsAddEmailGuardianOpen={setIsAddEmailGuardianOpen}
+      />
+      <IntroGuardianModal
+        isOpen={isIntroGuardianOpen}
+        onClose={closeIntroGuardianModal}
+        setIsIntroGuardianOpen={setIsIntroGuardianOpen}
+        setIsSelectGuardianOpen={setIsSelectGuardianOpen}
       />
     </Fragment>
   );
