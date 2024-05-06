@@ -16,6 +16,7 @@ import StepProgress from '../StepProgress'
 import AddressIcon from '@/components/AddressIcon';
 import useConfig from '@/hooks/useConfig';
 import { RecoveryContainer } from '@/pages/recover'
+import VerifyEmailGuardianModal from '@/pages/recover/VerifyEmailModal'
 
 export default function GuardianApprovals() {
   const { recoverInfo } = useTempStore()
@@ -24,6 +25,7 @@ export default function GuardianApprovals() {
   const hasRecord = recoveryRecord && recoveryID
   const guardianSignatures = hasRecord ? recoveryRecord.guardianSignatures : []
   const threshold = hasRecord ? recoveryRecord.guardian_info.threshold : 0
+  const [isVerifyEmailGuardianOpen, setIsVerifyEmailGuardianOpen] = useState<any>(false);
 
   const pendingNum = threshold - (guardianSignatures || []).length
 
@@ -104,6 +106,37 @@ export default function GuardianApprovals() {
             <Box width="100%" marginTop="40px" marginBottom="40px">
               <Box width="100%" height="1px" background="rgba(0, 0, 0, 0.10)" />
             </Box>
+            {false && (
+              <Box>
+                <Box
+                  border="1px solid rgba(0, 0, 0, 0.10)"
+                  borderRadius="12px"
+                  padding="14px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-start"
+                  minWidth={{ base: '0', md: '400px' }}
+                  marginRight={{ base: '0', md: '20px' }}
+                  marginBottom="14px"
+                  gap="8px"
+                  width={{ base: '100%', md: 'auto' }}
+                >
+                  <Box width="32px" height="32px" borderRadius="32px" background="#D9D9D9"></Box>
+                  <Box fontSize="14px" fontWeight="700" fontFamily="Nunito" display="flex">
+                    <Box>{`******@gmail.com`}</Box>
+                  </Box>
+                  <Box
+                    fontSize="14px"
+                    fontWeight="700"
+                    fontFamily="Nunito"
+                    color="#848488"
+                    marginLeft={{ base: '0', md: 'auto' }}
+                  >
+                    <Button size="mid" onClick={() => setIsVerifyEmailGuardianOpen(true)}>Verify Email</Button>
+                  </Box>
+                </Box>
+              </Box>
+            )}
             <Box
               color="black"
               fontFamily="Nunito"
@@ -167,6 +200,10 @@ export default function GuardianApprovals() {
               })}
             </Box>
           </Box>
+          <VerifyEmailGuardianModal
+            isOpen={isVerifyEmailGuardianOpen}
+            onClose={() => setIsVerifyEmailGuardianOpen(false)}
+          />
         </RoundContainer>
         <StepProgress activeIndex={2} />
       </Box>
