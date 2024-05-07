@@ -37,7 +37,7 @@ const ActivityItem = ({ item }: any) => {
         display={'flex'}
         alignItems={'center'}
         target="_blank"
-        href={`${opScanUrl}/tx/${item.opHash}`}
+        href={`${opScanUrl}/tx/${item.trxHash}`}
         gap="2"
       >
         <Box pos={'relative'}>

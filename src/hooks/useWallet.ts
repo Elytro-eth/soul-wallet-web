@@ -106,7 +106,7 @@ export default function useWallet() {
       if(_guardiansInfo){
         setGuardiansInfo({
           guardianHash: _guardiansInfo.guardian_hash,
-          guardianDetails: _guardiansInfo.guardianInfo,
+          guardianDetails: _guardiansInfo.guardian_info,
         });
       }
 

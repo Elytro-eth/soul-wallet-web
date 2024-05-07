@@ -15,7 +15,7 @@ export default {
   cardBgUnactivated: 'radial-gradient(52.03% 100% at 100% 100%, #FF9595 0%, #D7D7D7 100%)',
   provider: `https://opt-sepolia.g.alchemy.com/v2/9VgWMRNMVbH5--PKcnp4c5YXqLNcadcx`,
   scanUrl: 'https://sepolia-optimism.etherscan.io',
-  opScanUrl: 'https://optimism-sepolia.blockscout.com/op',
+  opScanUrl: 'https://optimism-sepolia.blockscout.com',
   scanName: 'Etherscan',
   bundlerUrl: `https://api-dev.soulwallet.io/walletapi/bundler/optimism-sepolia/rpc`,
   maxCostMultiplier: 120,
