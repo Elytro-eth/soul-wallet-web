@@ -57,7 +57,7 @@ export default function useWallet() {
 
     setGuardiansInfo({
       guardianHash: recoverInfo.guardian_hash,
-      guardianDetails: recoverInfo.guardianInfo,
+      guardianDetails: recoverInfo.guardian_info,
     });
 
     clearTempStore();

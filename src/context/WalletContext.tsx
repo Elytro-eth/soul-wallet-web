@@ -108,7 +108,6 @@ export const WalletContextProvider = ({ children }: any) => {
 
   const checkActivated = async () => {
     const res = getIsActivated(selectedAddress, selectedChainId);
-    console.log('act', res);
     if (res) {
       return true;
     } else {
@@ -118,7 +117,7 @@ export const WalletContextProvider = ({ children }: any) => {
       if (contractCode !== '0x') {
         setActivated(selectedAddress, true);
         return true;
-      }else{
+      } else {
         return false;
       }
     }

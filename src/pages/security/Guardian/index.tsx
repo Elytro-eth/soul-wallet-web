@@ -28,13 +28,11 @@ const defaultGuardianInfo = {
 export default function Guardian() {
   const { navigate } = useBrowser();
   const [activeSection, setActiveSection] = useState<string>('guardian');
-  const [keepPrivate, setKeepPrivate] = useState<any>(false);
   const [isPending, setIsPending] = useState<any>(true);
   const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<any>(false);
   const [isAddEmailGuardianOpen, setIsAddEmailGuardianOpen] = useState<any>(false);
   const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<any>(false);
   const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
-  const [isBackupGuardianOpen, setIsBackupGuardianOpen] = useState<any>(false);
   const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<any>(false);
   const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<any>(false);
 
@@ -44,8 +42,6 @@ export default function Guardian() {
   const [removeIndex, setRemoveIndex] = useState<any>(0)
   const [removeAddress, setRemoveAddress] = useState<any>('')
   const [editingAddressCount, setEditingAddressCount] = useState<any>(0)
-  const { getSlotInfo } = useSlotStore();
-
   const [isEditing, setIsEditing] = useState<any>(false);
   const { getAddressName, saveAddressName } = useSettingStore();
   const backupFinishedRef = useRef<any>()
@@ -228,11 +224,17 @@ export default function Guardian() {
     }
   }, [editType, count])
 
-  const onBackupFinished = useCallback(() => {
-    const callback = backupFinishedRef.current as any
+  const refreshGuardianInfo = async() => {
 
-    if (callback) {
-      callback()
+  }
+
+  useEffect(()=>{
+    refreshGuardianInfo()
+    const interval  =setInterval(()=>{
+      refreshGuardianInfo();
+    }, 300000)
+    return () => {
+      clearInterval(interval)
     }
   }, [])
 

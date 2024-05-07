@@ -63,8 +63,7 @@ export const getWalletAddress = (chainId: any, list: any) => {
 
 export default function RecoverProgress() {
   const { recoverInfo } = useTempStore()
-  const { recoveryID, recoveryRecord  } = recoverInfo
-  const {chainConfig} = useConfig();
+  const { recoveryRecord  } = recoverInfo
   const { addresses, statusData } = recoveryRecord
   const { chainRecoveryStatus } = statusData
   const { navigate } = useBrowser();
