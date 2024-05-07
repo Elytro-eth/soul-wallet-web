@@ -28,7 +28,7 @@ export default function Recover() {
   const [step, setStep] = useState(0);
   const { navigate } = useBrowser();
   const { recoverInfo, updateRecoverInfo } = useTempStore();
-  const { recoveryID, recoveryRecord } = recoverInfo;
+  const { recoveryID } = recoverInfo;
 
   const back = useCallback(() => {
     console.log('step', step);

@@ -21,7 +21,7 @@ import VerifyEmailGuardianModal from '@/pages/recover/VerifyEmailModal'
 export default function GuardianApprovals() {
   const { recoverInfo } = useTempStore()
   const { chainConfig } = useConfig();
-  const { recoveryID, guardianInfo, recoveryRecord } = recoverInfo
+  const { recoveryID, guardian_info, recoveryRecord } = recoverInfo
   const hasRecord = recoveryRecord && recoveryID
   const guardianSignatures = hasRecord ? recoveryRecord.guardianSignatures : []
   const threshold = hasRecord ? recoveryRecord.guardian_info.threshold : 0
@@ -36,7 +36,7 @@ export default function GuardianApprovals() {
     window.open(`${chainConfig.scanUrl}/address/${address}`, '_blank')
   }
 
-  const signatures = hasRecord ? (guardianInfo.guardians || []).map((item: any) => {
+  const signatures = hasRecord ? (guardian_info.guardians || []).map((item: any) => {
     const isValid = (guardianSignatures || []).filter((sig: any) => sig.guardian === item).length === 1;
     return { guardian: item, isValid };
   }) : [];
