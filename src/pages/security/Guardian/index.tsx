@@ -93,6 +93,7 @@ export default function Guardian() {
     }
 
     setEditType('add')
+    setIsEditing(true)
     setCanBackToSelectGuardianType(true)
     // setIsEditGuardianOpen(true)
     setIsSelectGuardianOpen(true)
@@ -270,9 +271,8 @@ export default function Guardian() {
           <ListGuardian
             openEditGuardianModal={openEditGuardianModal}
             openPendingGuardianModal={openPendingGuardianModal}
-            startEditGuardian={startEditGuardian}
-            enterEditGuardian={enterEditGuardian}
             startAddGuardian={startAddGuardian}
+            enterEditGuardian={enterEditGuardian}
             cancelEditGuardian={cancelEditGuardian}
             isPending={isPending}
           />

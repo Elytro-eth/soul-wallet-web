@@ -10,6 +10,9 @@ import { useSettingStore } from '@/store/setting';
 import { useEffect, useState } from 'react';
 import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
+import { useBalanceStore } from '@/store/balance';
+import { ZeroAddress } from 'ethers';
+import BN from 'bignumber.js';
 
 const ExtraLink = ({ children, ...restProps }: FlexProps) => {
   return (
@@ -37,6 +40,7 @@ export default function Sidebar() {
   const [externalHoverIndex, setExternalHoverIndex] = useState(-1);
   const pathname = location.pathname;
   const navigate = useNavigate();
+  const { getTokenBalance } = useBalanceStore();
 
   // const checkClaimable = async () => {
   //   try {
@@ -59,8 +63,9 @@ export default function Sidebar() {
   // }, [selectedAddress, selectedChainId]);
   const goLink = async (link: any) => {
     console.log('go', link)
-    const isActived = await checkActivated()
-    if (link.requireActivated && !isActived) {
+    // const isActived = await checkActivated()
+    const userDeposited = BN(getTokenBalance(ZeroAddress).tokenBalance).isGreaterThan(0);
+    if (link.requireActivated && !userDeposited) {
       showActiveWalletModal();
     } else {
       navigate(link.href);
