@@ -154,7 +154,7 @@ export default function Guardian() {
     })
   }, [])
 
-  const onEditGuardianConfirm = useCallback((addresses: any, names: any, i: any) => {
+  const onEditGuardianConfirm = useCallback((addresses: any, names: any) => {
     if (editType === 'edit') {
       setIsEditGuardianOpen(false)
       setIsEditing(true)
@@ -197,6 +197,7 @@ export default function Guardian() {
       })
     } else if (editType === 'add') {
       setIsEditGuardianOpen(false)
+      setIsAddEmailGuardianOpen(false);
       const editingGuardianInfo = getEditingGuardiansInfo()
       const currentAddresses = editingGuardianInfo.guardianDetails ? (editingGuardianInfo.guardianDetails.guardians || []) : []
       const currentNames = editingGuardianInfo.guardianNames || []
@@ -281,7 +282,7 @@ export default function Guardian() {
         isOpen={isAddEmailGuardianOpen}
         onClose={closeAddEmailGuardianModal}
         setIsAddEmailGuardianOpen={setIsAddEmailGuardianOpen}
-        onConfirm={() => {}}
+        onConfirm={onEditGuardianConfirm}
         editType={editType}
       />
       <EditGuardianModal

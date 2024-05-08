@@ -47,7 +47,7 @@ export const SignHeader = ({ url }: { url?: string }) => {
   );
 };
 
-function SignContainer({ children }: any) {
+export const SignContainer = ({ children }: any) => {
   return (
     <Flex
       justify="center"
