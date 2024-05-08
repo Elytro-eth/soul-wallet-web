@@ -75,6 +75,7 @@ export default function EditGuardian({
   const { setGuardiansInfo } = useGuardianStore();
   const [showGuardianTip1, setShowGuardianTip1] = useState(true);
   const [showGuardianTip2, setShowGuardianTip2] = useState(true);
+  const { checkActivated } = useWalletContext();
   const toast = useToast();
 
   const guardianDetails = guardiansInfo?.guardianDetails || {
@@ -84,11 +85,11 @@ export default function EditGuardian({
 
   const guardianNames =
     (guardiansInfo &&
-      guardiansInfo?.guardianDetails &&
-      guardiansInfo?.guardianDetails.guardians &&
-      guardiansInfo?.guardianDetails.guardians.map((address: any) =>
-        getAddressName(address && address.toLowerCase()),
-      )) ||
+     guardiansInfo?.guardianDetails &&
+     guardiansInfo?.guardianDetails.guardians &&
+     guardiansInfo?.guardianDetails.guardians.map((address: any) =>
+       getAddressName(address && address.toLowerCase()),
+    )) ||
     [];
 
   const guardianList = guardianDetails.guardians.map((guardian: any, i: number) => {
@@ -153,7 +154,7 @@ export default function EditGuardian({
       setGuardiansInfo(guardiansInfo);
 
       setIsCreating(false);
-
+      checkActivated()
       onEdited();
     } catch (error: any) {
       setIsCreating(false);
