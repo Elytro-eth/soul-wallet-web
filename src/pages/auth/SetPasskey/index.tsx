@@ -16,12 +16,14 @@ import ComputerIcon from '@/components/Icons/Computer';
 import usePassKey from '@/hooks/usePasskey';
 import { SignHeader } from '@/pages/public/Sign';
 import useConfig from '@/hooks/useConfig';
+import { ZeroHash, ethers } from 'ethers';
 
-export default function SetPasskey({ back, walletName, next: nextStep, credentials, setCredentials  }: any) {
+export default function SetPasskey({ back, walletName, next: nextStep, credentials, setCredentials, onCreate }: any) {
   const { register } = usePassKey()
   const toast = useToast();
   const { selectedChainItem } = useConfig();
   const [isCreating, setIsCreating] = useState(false);
+  const [isSkipping, setIsSkipping] = useState(false);
 
   const createCredential = async () => {
     try {
@@ -46,6 +48,20 @@ export default function SetPasskey({ back, walletName, next: nextStep, credentia
     }
   }
 
+  const onSkip = async() => {
+    try {
+      setIsSkipping(true)
+      await onCreate(ethers.ZeroHash);
+      setIsSkipping(false)
+    } catch (error: any) {
+      const message = error.message
+      toast({
+        title: message,
+        status: 'error',
+      });
+      setIsSkipping(false)
+    }
+  };
 
   return (
     <Flex align={'center'} justify={'center'} width="100%" minHeight="100vh" background="#F2F4F7">
@@ -211,9 +227,10 @@ export default function SetPasskey({ back, walletName, next: nextStep, credentia
                     type="black"
                     color="white"
                     padding="0 20px"
-                    onClick={nextStep}
+                    onClick={onSkip}
                     size="lg"
-                    disabled={!credentials || !credentials.length}
+                    disabled={!credentials || !credentials.length || isSkipping}
+                    loading={isSkipping}
                   >
                     Next
                   </Button>
