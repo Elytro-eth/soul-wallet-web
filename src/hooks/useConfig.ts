@@ -7,7 +7,7 @@ import { useSignerStore } from '@/store/signer';
 
 export default function useConfig() {
   const { getSelectedChainItem } = useChainStore();
-  const { getSelectedAddressItem } = useAddressStore();
+  const { getSelectedAddressItem, getSelectedAddressItemActivated } = useAddressStore();
   const { getSelectedCredential } = useSignerStore();
 
   const selectedChainItem = getSelectedChainItem();
@@ -20,5 +20,6 @@ export default function useConfig() {
     // alias
     chainConfig: selectedChainItem,
     selectedAddressItem,
+    getSelectedAddressItemActivated,
   };
 }

@@ -1,12 +1,25 @@
+import { useEffect } from 'react'
 import { Box, Flex  } from '@chakra-ui/react';
 import Tokens from './comp/Tokens';
 import Activity from './comp/Activity';
 import WalletCard from './comp/WalletCard';
 import Guidance from './comp/Guidance';
 import useConfig from '@/hooks/useConfig';
+import useWalletContext from '@/context/hooks/useWalletContext';
+import { useAddressStore } from '@/store/address';
 
 export default function Dashboard() {
-  const {selectedAddressItem} = useConfig();
+  const {selectedAddressItem, getSelectedAddressItemActivated} = useConfig();
+  const { checkActivated } = useWalletContext();
+  const { selectedAddress } = useAddressStore();
+  const isActivated = getSelectedAddressItemActivated()
+
+  console.log('isActivated', isActivated)
+  useEffect(() => {
+    if (!isActivated) {
+      checkActivated()
+    }
+  }, [isActivated, selectedAddress])
 
   return (
     <Flex

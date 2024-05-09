@@ -61,16 +61,32 @@ export default function Auth() {
   }, [])
 
   if (stepType === 'selectNetwork') {
-    return <SelectNetwork walletName={walletName} setWalletName={setWalletName} onNext={()=> setStepType('setPassKey')} back={() => setStepType('auth')} />;
+    return (
+      <SelectNetwork
+        walletName={walletName}
+        setWalletName={setWalletName}
+        onNext={()=> setStepType('setPassKey')}
+        back={() => setStepType('auth')}
+      />
+    )
   }
 
   if (stepType === 'setPassKey') {
-    return <SetPasskey walletName={walletName} credentials={credentials} setCredentials={setCredentials} back={() => setStepType('selectNetwork')} next={() => setStepType('setGuardian')} />;
+    return (
+      <SetPasskey
+        walletName={walletName}
+        credentials={credentials}
+        setCredentials={setCredentials}
+        back={() => setStepType('selectNetwork')}
+        // next={() => setStepType('setGuardian')}
+        onCreate={onCreate}
+      />
+    )
   }
 
-  if (stepType === 'setGuardian') {
-    return <SetGuardian walletName={walletName} back={() => setStepType('setPassKey')} onCreate={onCreate} />;
-  }
+  /* if (stepType === 'setGuardian') {
+   *   return <SetGuardian walletName={walletName} back={() => setStepType('setPassKey')} onCreate={onCreate} />;
+   * } */
 
   return (
     <Flex width="100%" align={'center'} justify={'center'} minHeight="100vh" background="#F2F4F7">
