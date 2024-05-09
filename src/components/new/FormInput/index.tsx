@@ -123,7 +123,7 @@ export default function FormInput({
           )}
         </Box>
       </Box>
-      <Text color="#FF4343" padding="5px 10px" fontSize="14px">
+      <Text color="#E83D26" padding="5px 10px" fontSize="14px">
         {errorMsg}
       </Text>
     </Box>
