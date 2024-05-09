@@ -14,6 +14,7 @@ import GuardianApprovals from './GuardianApprovals';
 import PayRecoveryFee from './PayRecoveryFee';
 import RecoverProgress from './RecoverProgress';
 import { SignHeader } from '../public/Sign';
+import useQuery from '@/hooks/useQuery';
 
 export function RecoveryContainer({ children }: any) {
   return (
@@ -27,6 +28,7 @@ export function RecoveryContainer({ children }: any) {
 export default function Recover() {
   const [step, setStep] = useState(0);
   const { navigate } = useBrowser();
+  const {getRecoverRecord} = useQuery();
   const { recoverInfo, updateRecoverInfo } = useTempStore();
   const { recoveryID } = recoverInfo;
 
@@ -45,8 +47,7 @@ export default function Recover() {
 
   const getPreviousRecord = async () => {
     try {
-      const res2 = await api.guardian.getRecoverRecord({ recoveryID });
-      const recoveryRecord = res2.data;
+      const recoveryRecord = await getRecoverRecord(recoveryID);
 
       updateRecoverInfo({
         recoveryRecord,
@@ -54,8 +55,6 @@ export default function Recover() {
       });
 
       const status = recoveryRecord.status;
-
-
 
       if (status == 0) {
         // record submitted

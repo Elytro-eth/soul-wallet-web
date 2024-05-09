@@ -12,10 +12,12 @@ import api from '@/lib/api';
 import useWallet from '@/hooks/useWallet';
 import { Link, useNavigate } from 'react-router-dom';
 import { RecoveryContainer } from '@/pages/recover';
+import useQuery from '@/hooks/useQuery';
 
 export default function PayRecoveryFee() {
-  const { recoverInfo, clearTempStore, } = useTempStore();
+  const { recoverInfo, clearTempStore } = useTempStore();
   const { recoveryID } = recoverInfo;
+  const { getRecoverRecord } = useQuery();
   const { boostAfterRecovered } = useWallet();
   const navigate = useNavigate();
   const [isRecovering, setIsRecovering] = useState(false);
@@ -26,8 +28,8 @@ export default function PayRecoveryFee() {
       setIsRecovering(true);
       const res: any = await api.recovery.execute({ recoveryID });
       if (res.msg === 'executeRecovery tirggered' || res.msg === 'already executed') {
-        const res = (await api.guardian.getRecoverRecord({ recoveryID })).data;
-        await boostAfterRecovered(res);
+        const recoverRecord = await getRecoverRecord(recoveryID);
+        await boostAfterRecovered(recoverRecord);
         setIsRecovered(true);
         break;
       }
@@ -42,8 +44,8 @@ export default function PayRecoveryFee() {
 
   const goWallet = () => {
     clearTempStore();
-    navigate('/dashboard')
-  }
+    navigate('/dashboard');
+  };
 
   if (isRecovered) {
     return (

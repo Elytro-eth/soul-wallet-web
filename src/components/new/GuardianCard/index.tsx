@@ -53,6 +53,7 @@ export default function GuardianCard({
         fontWeight="400"
         fontSize="12px"
         color="#868686"
+        height="36px"
       >
         {address}
       </Box>

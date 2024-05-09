@@ -18,10 +18,8 @@ import IconCheveronRight from '@/assets/icons/chevron-right.svg';
 export default function ListGuardian({
   startAddGuardian,
   enterEditGuardian,
-  openPendingGuardianModal,
-  isPending
 }: any) {
-  const { getAddressName } = useSettingStore();
+  const { getAddressName, guardianAddressEmail } = useSettingStore();
   const guardianStore = useGuardianStore();
   const { guardiansInfo } = guardianStore;
 
@@ -115,7 +113,7 @@ export default function ListGuardian({
                     <GuardianCard
                       key={i}
                       name={guardianNames[i] || 'No Name'}
-                      address={address}
+                      address={guardianAddressEmail[address] ? guardianAddressEmail[address] : address}
                       marginRight={{ base: '0px', md: '18px' }}
                       marginBottom="18px"
                       width={{ base: '100%', md: '272px' }}

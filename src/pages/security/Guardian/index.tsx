@@ -11,9 +11,10 @@ import useBrowser from '@/hooks/useBrowser';
 import { useTempStore } from '@/store/temp';
 import { useGuardianStore } from '@/store/guardian';
 import { useSettingStore } from '@/store/setting';
-import { useSlotStore } from '@/store/slot';
 import EditGuardian from '../EditGuardian'
 import ListGuardian from '../ListGuardian'
+import useQuery from '@/hooks/useQuery';
+import { useAddressStore } from '@/store/address';
 
 const defaultGuardianDetails = {
   guardians: [],
@@ -27,6 +28,7 @@ const defaultGuardianInfo = {
 
 export default function Guardian() {
   const { navigate } = useBrowser();
+  const { getGuardianDetails } = useQuery();
   const [activeSection, setActiveSection] = useState<string>('guardian');
   const [isPending, setIsPending] = useState<any>(true);
   const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<any>(false);
@@ -35,7 +37,7 @@ export default function Guardian() {
   const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
   const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<any>(false);
   const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<any>(false);
-
+  const { selectedAddress } = useAddressStore();
   const [canBackToSelectGuardianType, setCanBackToSelectGuardianType] = useState<any>(false);
   const [editType, setEditType] = useState<any>('edit')
   const [count, setCount] = useState<any>(0)
@@ -43,8 +45,7 @@ export default function Guardian() {
   const [removeAddress, setRemoveAddress] = useState<any>('')
   const [editingAddressCount, setEditingAddressCount] = useState<any>(0)
   const [isEditing, setIsEditing] = useState<any>(false);
-  const { getAddressName, saveAddressName } = useSettingStore();
-  const backupFinishedRef = useRef<any>()
+  const { saveAddressName } = useSettingStore();
 
   const tempStore = useTempStore();
   const {
@@ -226,19 +227,22 @@ export default function Guardian() {
     }
   }, [editType, count])
 
-  const refreshGuardianInfo = async() => {
+  // const refreshGuardianInfo = async() => {
+  //   getGuardianDetails(selectedAddress)
+  // }
 
-  }
-
-  useEffect(()=>{
-    refreshGuardianInfo()
-    const interval  =setInterval(()=>{
-      refreshGuardianInfo();
-    }, 300000)
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
+  // useEffect(()=>{
+  //   if(!selectedAddress){
+  //     return
+  //   }
+  //   refreshGuardianInfo()
+  //   const interval = setInterval(()=>{
+  //     refreshGuardianInfo();
+  //   }, 10000)
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  // }, [selectedAddress])
 
   return (
     <Fragment>

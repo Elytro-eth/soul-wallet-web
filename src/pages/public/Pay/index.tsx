@@ -15,6 +15,7 @@ import SuccessIcon from '@/components/Icons/Success'
 import ConnectWalletModal from '@/pages/recover/ConnectWalletModal'
 import BN from 'bignumber.js';
 import useWagmi from '@/hooks/useWagmi'
+import useQuery from '@/hooks/useQuery';
 
 export default function Pay() {
   const { recoverId } = useParams()
@@ -24,6 +25,7 @@ export default function Pay() {
   const [paying, setPaying] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [isPaid, setIsPaid] = useState(false)
+  const { getRecoverRecord } = useQuery();
   const [estimatedFee, setEstimatedFee] = useState(0)
   const toast = useToast();
   const { switchChain } = useSwitchChain();
@@ -107,8 +109,7 @@ export default function Pay() {
 
   const loadRecord = async (recoverId: any) => {
     try {
-      const res = await api.guardian.getRecoverRecord({ recoveryID: recoverId })
-      const recoveryRecord = res.data
+      const recoveryRecord = await getRecoverRecord(recoverId)
       setLoaded(true)
       setRecoveryRecord(recoveryRecord)
     } catch (error: any) {

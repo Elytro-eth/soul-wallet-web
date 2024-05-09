@@ -34,6 +34,7 @@ export default function FindRoute({ children }: { children: ReactNode }) {
       location.pathname.includes('dashboard')
 
     if (storeVersion !== storageVersion) {
+      alert('version changed')
       storage.setItem('storeVersion', storeVersion);
       clearLogData();
       navigate('/auth', { replace: true });
@@ -43,6 +44,7 @@ export default function FindRoute({ children }: { children: ReactNode }) {
       !selectedAddress &&
       !allowBypass
     ) {
+      alert('no selected address')
       navigate({
         pathname: '/auth',
         search: location.search,
