@@ -18,6 +18,12 @@ const validate = (values: any) => {
 
   if (!emailReg.test(email)) {
     errors.email = 'Please enter valid email address';
+  } else {
+    const address = email.split('@')[1]
+
+    if (address.split('.').indexOf('qq') !== -1) {
+      errors.email = 'The email provider is not supported. Please try another';
+    }
   }
 
   return errors;
