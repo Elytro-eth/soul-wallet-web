@@ -73,7 +73,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
       email,
       verifyToken,
       address: selectedAddress,
-      chainId: selectedChainId,
+      chainID: selectedChainId,
     });
 
     if (res.code === 200) {
