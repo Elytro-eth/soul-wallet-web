@@ -47,8 +47,6 @@ export default function SignerSelect({ onChange }: { onChange?: () => void }) {
 
   const availableCredentials = credentials.filter((item: ICredentialItem) => item.id);
 
-  console.log('Ava', availableCredentials, availableCredentials.length);
-
   return availableCredentials.length > 1 ? (
     <Menu>
       <MenuButton>

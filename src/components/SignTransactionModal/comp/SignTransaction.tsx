@@ -187,7 +187,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress, guardi
         return await getUserOp(txns, payTokenAddress);
       } else {
         // if not activated, prepend activate txns
-        return await getActivateOp();
+        return await getActivateOp(txns);
       }
     } catch (err: any) {
       console.log('Get final userOp err:', err.message);
@@ -269,7 +269,6 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress, guardi
     doPrecheck(payToken);
   }, [txns, payToken]);
 
-  console.log('guardianInfo sign', guardianInfo)
   useEffect(() => {
     if (!requiredAmount || !payToken || (sponsor && useSponsor)) {
       return;
