@@ -282,13 +282,13 @@ export default function Guardian() {
           />
         )}
       </Box>
-      <AddEmailGuardianModal
-        isOpen={isAddEmailGuardianOpen}
+      {isAddEmailGuardianOpen && <AddEmailGuardianModal
+        isOpen={true}
         onClose={closeAddEmailGuardianModal}
         setIsAddEmailGuardianOpen={setIsAddEmailGuardianOpen}
         onConfirm={onEditGuardianConfirm}
         editType={editType}
-      />
+      />}
       <EditGuardianModal
         isOpen={isEditGuardianOpen}
         onClose={closeEditGuardianModal}

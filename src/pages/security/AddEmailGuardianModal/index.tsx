@@ -29,16 +29,14 @@ const validate = (values: any, props: any, callbackRef: any) => {
   }
 
   if (callbackRef) {
-    const externalErrors = callbackRef(values) || {}
-    errors = { ...errors, ...externalErrors }
+    const externalErrors = callbackRef(values) || {};
+    errors = { ...errors, ...externalErrors };
   }
 
   return errors;
 };
 
 export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: any) {
-  const [email, setEmail] = useState('');
-  const [emailValid, setEmailValid] = useState(false);
   const [verifyToken, setVerifyToken] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
@@ -58,51 +56,53 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
     guardians: [],
     threshold: 0,
   };
-  // const onBack = () => {
-  //   setIsAddEmailGuardianOpen(false)
-  //   if (setIsSelectGuardianOpen) setIsSelectGuardianOpen(true)
-  // }
 
-  // const onConfirmLocal = (addresses: any, names: any, i: any) => {
-  //   if (onConfirm) onConfirm(addresses, names, i)
-  // }
+  const onCloseModal = () => {
+    setCountDown(0);
+    setVerifyToken('');
+    setVerifyStatus(0);
+    onClose();
+  };
 
-  const externalValidate = useCallback((values: any) => {
-    const errors: any = {}
-    const email = values.email
-    const guardians = guardianDetails.guardians
+  const externalValidate = useCallback(
+    (values: any) => {
+      const errors: any = {};
+      const email = values.email;
+      const guardians = guardianDetails.guardians;
 
-    for (let i = 0; i < guardians.length; i++) {
-      const guardian = guardians[i]
-      const guardianEmail = getGuardianAddressEmail(guardian)
+      for (let i = 0; i < guardians.length; i++) {
+        const guardian = guardians[i];
+        const guardianEmail = getGuardianAddressEmail(guardian);
 
-      if (guardianEmail && guardianEmail === email) {
-        errors.email = 'Email is already added.'
+        if (guardianEmail && guardianEmail === email) {
+          errors.email = 'Email is already added.';
+        }
       }
-    }
 
-    return errors
-  }, [guardianDetails.guardians])
+      return errors;
+    },
+    [guardianDetails.guardians],
+  );
 
   const { values, errors, invalid, onChange, onBlur, showErrors, clearErrors } = useForm({
     fields: ['email'],
     validate,
-    callbackRef: externalValidate
+    callbackRef: externalValidate,
   });
 
   const disabled = invalid;
 
   const reset = useCallback(() => {
-    setVerifyToken('')
-    setVerifyStatus(0)
-    onChange('email')('')
-    clearErrors()
+    setVerifyToken('');
+    setVerifyStatus(0);
+    onChange('email')('');
+    clearErrors();
     clearInterval(countInterval);
-  }, [countInterval])
+  }, [countInterval]);
 
   useEffect(() => {
-    reset()
-  }, [])
+    reset();
+  }, []);
 
   const doSend = async () => {
     setVerifyStatus(0);
@@ -167,7 +167,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
         const guardianAddress = res.data.guardianAddress;
         saveGuardianAddressEmail(guardianAddress, email);
         onConfirm([guardianAddress], ['Email']);
-        reset()
+        reset();
       } else {
         toast({
           title: 'Failed to generate guardian',
@@ -198,20 +198,16 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
       }
     }, 1000);
 
-    setCountInterval(interval)
+    setCountInterval(interval);
   }, []);
 
-  const checkEmailValid = () => {
-    const emailReg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
-    setEmailValid(emailReg.test(email));
-  };
 
-  useEffect(() => {
-    if (!email) {
-      return;
-    }
-    checkEmailValid();
-  }, [email]);
+  // useEffect(() => {
+  //   if (!email) {
+  //     return;
+  //   }
+  //   checkEmailValid();
+  // }, [email]);
 
   useEffect(() => {
     if (verifyToken) {
@@ -225,7 +221,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
   }, [verifyToken]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={onCloseModal} isCentered>
       <ModalOverlay />
       <ModalContent maxW={{ base: '95%', lg: '840px' }} my={{ base: '120px' }} borderRadius="20px">
         <ModalCloseButton top="14px" />
@@ -327,7 +323,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                 </Box>
                 <Box marginTop="68px" marginBottom="10px" display="flex" justifyContent="flex-end">
                   <Box>
-                    <Button type="black" disabled={isConfirming} onClick={doGenerateAddress} size="xl">
+                    <Button type="black" disabled={isConfirming || verifyStatus !== 2} onClick={doGenerateAddress} size="xl">
                       {isConfirming ? 'Confirming' : 'Confirm'}
                     </Button>
                   </Box>
