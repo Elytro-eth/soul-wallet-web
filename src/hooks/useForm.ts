@@ -78,6 +78,11 @@ export default function useForm(props: any) {
     setValues(newValues);
   };
 
+  const clearErrors = () => {
+    setErrors({})
+    setShowErrors({})
+  };
+
   return {
     values,
     errors,
@@ -89,6 +94,7 @@ export default function useForm(props: any) {
     addFields,
     removeFields,
     clearFields,
-    onChangeValues
+    onChangeValues,
+    clearErrors
   };
 }

@@ -67,7 +67,7 @@ export default function EditGuardian({
   startRemoveGuardian,
   onEdited,
 }: any) {
-  const { getAddressName, saveAddressName } = useSettingStore();
+  const { getAddressName, saveAddressName, getGuardianAddressEmail } = useSettingStore();
   const { getEditingGuardiansInfo, updateEditingGuardiansInfo, clearCreateInfo } = useTempStore();
   const guardiansInfo = getEditingGuardiansInfo();
   const { changeGuardian } = useTransaction();
@@ -235,7 +235,7 @@ export default function EditGuardian({
                       cursor="pointer"
                       allowDelete={true}
                       onDelete={() => startRemoveGuardian(i, address, guardianDetails.guardians.length)}
-                      allowEdit={true}
+                      allowEdit={!getGuardianAddressEmail(address)}
                       marginRight={{ base: '0px', md: '18px' }}
                       marginBottom="18px"
                       width={{ base: '100%', md: '272px' }}

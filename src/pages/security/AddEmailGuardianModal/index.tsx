@@ -10,10 +10,11 @@ import useForm from '@/hooks/useForm';
 import FormInput from '@/components/new/FormInput';
 import { useSettingStore } from '@/store/setting';
 import { validEmailDomains } from '@/config/constants';
+import { useTempStore } from '@/store/temp';
 // import EditGuardianForm from '../EditGuardianForm'
 
-const validate = (values: any) => {
-  const errors: any = {};
+const validate = (values: any, props: any, callbackRef: any) => {
+  let errors: any = {};
   const { email } = values;
 
   const emailReg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
@@ -25,6 +26,11 @@ const validate = (values: any) => {
     if (!validEmailDomains.includes(address)) {
       errors.email = 'The email provider is not supported. Please try another';
     }
+  }
+
+  if (callbackRef) {
+    const externalErrors = callbackRef(values) || {}
+    errors = { ...errors, ...externalErrors }
   }
 
   return errors;
@@ -39,11 +45,19 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
   // 1 for sent, 2 for verified
   const [verifyStatus, setVerifyStatus] = useState(0);
   const { selectedAddress } = useAddressStore();
-  const { saveGuardianAddressEmail } = useSettingStore();
+  const { saveGuardianAddressEmail, getGuardianAddressEmail } = useSettingStore();
   const { selectedChainId } = useChainStore();
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
   const [countDown, setCountDown] = useState(0);
+  const [countInterval, setCountInterval] = useState<any>();
   const toast = useToast();
+  const { getEditingGuardiansInfo } = useTempStore();
+  const guardiansInfo = getEditingGuardiansInfo();
+  const guardianNames = guardiansInfo?.guardianNames || [];
+  const guardianDetails = guardiansInfo?.guardianDetails || {
+    guardians: [],
+    threshold: 0,
+  };
   // const onBack = () => {
   //   setIsAddEmailGuardianOpen(false)
   //   if (setIsSelectGuardianOpen) setIsSelectGuardianOpen(true)
@@ -53,12 +67,42 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
   //   if (onConfirm) onConfirm(addresses, names, i)
   // }
 
-  const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
+  const externalValidate = useCallback((values: any) => {
+    const errors: any = {}
+    const email = values.email
+    const guardians = guardianDetails.guardians
+
+    for (let i = 0; i < guardians.length; i++) {
+      const guardian = guardians[i]
+      const guardianEmail = getGuardianAddressEmail(guardian)
+
+      if (guardianEmail && guardianEmail === email) {
+        errors.email = 'Email is already added.'
+      }
+    }
+
+    return errors
+  }, [guardianDetails.guardians])
+
+  const { values, errors, invalid, onChange, onBlur, showErrors, clearErrors } = useForm({
     fields: ['email'],
     validate,
+    callbackRef: externalValidate
   });
 
   const disabled = invalid;
+
+  const reset = useCallback(() => {
+    setVerifyToken('')
+    setVerifyStatus(0)
+    onChange('email')('')
+    clearErrors()
+    clearInterval(countInterval);
+  }, [countInterval])
+
+  useEffect(() => {
+    reset()
+  }, [])
 
   const doSend = async () => {
     setVerifyStatus(0);
@@ -123,6 +167,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
         const guardianAddress = res.data.guardianAddress;
         saveGuardianAddressEmail(guardianAddress, email);
         onConfirm([guardianAddress], ['Email']);
+        reset()
       } else {
         toast({
           title: 'Failed to generate guardian',
@@ -152,6 +197,8 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
         setCountDown(count--);
       }
     }, 1000);
+
+    setCountInterval(interval)
   }, []);
 
   const checkEmailValid = () => {
@@ -177,7 +224,6 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
     }
   }, [verifyToken]);
 
-  console.log('disabled', disabled, values, errors);
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
