@@ -129,7 +129,8 @@ export default function SelectGuardianTypeModal({
                     <TextBody fontSize="18px" display="flex" alignItems="center">
                       <Box>Email</Box>
                     </TextBody>
-                    <TextBody type="t2">Use email address for wallet recovery. Powered by <Box as="span" fontWeight="700" textDecoration="underline">ZKemail</Box>.</TextBody>
+                    <TextBody type="t2">Use email address for wallet recovery.</TextBody>
+                    {/* <TextBody type="t2">Use email address for wallet recovery. Powered by <Box as="span" fontWeight="700" textDecoration="underline" onClick={(e: any) => { e.stopPropagation(); window.open('https://github.com/zkemail', '_blank') }}>ZKemail</Box>.</TextBody> */}
                   </Box>
                 </Box>
                 <Box display="flex" justifyContent="space-between" width="100%">

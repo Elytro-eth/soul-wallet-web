@@ -84,7 +84,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
     [guardianDetails.guardians],
   );
 
-  const { values, errors, invalid, onChange, onBlur, showErrors, clearErrors } = useForm({
+  const { values, errors, invalid, onChange, onBlur, showErrors, resetForm } = useForm({
     fields: ['email'],
     validate,
     callbackRef: externalValidate,
@@ -93,16 +93,15 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
   const disabled = invalid;
 
   const reset = useCallback(() => {
-    setVerifyToken('');
-    setVerifyStatus(0);
-    onChange('email')('');
-    clearErrors();
+    setVerifyToken('')
+    setVerifyStatus(0)
+    resetForm()
     clearInterval(countInterval);
   }, [countInterval]);
 
   useEffect(() => {
-    reset();
-  }, []);
+    reset()
+  }, [isOpen])
 
   const doSend = async () => {
     setVerifyStatus(0);
@@ -249,7 +248,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                     errorMsg={showErrors.email && errors.email}
                     _styles={{ w: '100%' }}
                     _inputStyles={{ paddingRight: '110px' }}
-                    // onEnter={handleNext}
+                  // onEnter={handleNext}
                   />
                   {!verifyToken && (
                     <Box
@@ -265,10 +264,10 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                       cursor={!disabled && !isSending ? 'pointer' : 'not-allowed'}
                       zIndex="1"
                       {...(!disabled && !isSending
-                        ? { onClick: doSend, color: 'brand.red' }
-                        : {
-                            color: 'rgba(0, 0, 0, 0.3)',
-                          })}
+                         ? { onClick: doSend, color: 'brand.red' }
+                         : {
+                           color: 'rgba(0, 0, 0, 0.3)',
+                      })}
                     >
                       {isSending ? 'Sending' : 'Verify email'}
                     </Box>
