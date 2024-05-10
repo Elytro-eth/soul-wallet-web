@@ -1,4 +1,4 @@
-import { Box, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, Input } from '@chakra-ui/react';
+import { Box, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, Input, Link } from '@chakra-ui/react';
 import TextBody from '@/components/new/TextBody';
 import Title from '@/components/new/Title';
 import Button from '@/components/Button';
@@ -11,6 +11,7 @@ import useTools from '@/hooks/useTools';
 export default function VerifyEmailGuardianModal({ guardianEmail, guardianAddress, recoveryId, isOpen, onClose }: any) {
   const [templateInfo, setTemplateInfo] = useState<any>({});
   const { doCopy } = useTools();
+  const [mailToLink, setMailToLink] = useState('');
 
   const getEmailTemplate = async () => {
     const res = await api.emailGuardian.emailTemplate({
@@ -19,6 +20,7 @@ export default function VerifyEmailGuardianModal({ guardianEmail, guardianAddres
       recoveryID: recoveryId,
     });
     setTemplateInfo(res.data);
+    setMailToLink(`mailto:${res.data.to}?subject=${res.data.subject}&body=${res.data.body}`);
   };
 
   useEffect(() => {
@@ -57,12 +59,12 @@ export default function VerifyEmailGuardianModal({ guardianEmail, guardianAddres
                 <Box padding="10px 24px" fontSize="14px" display="flex" flexDirection="column" width="100%">
                   <Box width="100%" display="flex" alignItems="center" justifyContent="flex-start" marginBottom="18px">
                     <Box width="65px">From</Box>
-                    <Box fontWeight="600">{templateInfo.from}</Box>
+                    <Box fontWeight="600">{templateInfo.from || '...'}</Box>
                   </Box>
                   <Box width="100%" display="flex" alignItems="center" justifyContent="flex-start" marginBottom="18px">
                     <Box width="65px">To</Box>
                     <Box fontWeight="600" display="flex" alignItems="center">
-                      <Box>{templateInfo.to}</Box>
+                      <Box>{templateInfo.to || '...'}</Box>
                       <Box
                         marginLeft="4px"
                         onClick={() => {
@@ -81,8 +83,13 @@ export default function VerifyEmailGuardianModal({ guardianEmail, guardianAddres
                       Subject
                     </Box>
                     <Box width="calc(100% - 65px)" fontWeight="600" display="flex" alignItems="center">
-                      <Box wordBreak={'break-all'}>{templateInfo.subject}</Box>
-                      <Box marginLeft="4px" cursor="pointer" marginRight="4px"  onClick={() => doCopy(templateInfo.subject)}>
+                      <Box wordBreak={'break-all'}>{templateInfo.subject || '...'}</Box>
+                      <Box
+                        marginLeft="4px"
+                        cursor="pointer"
+                        marginRight="4px"
+                        onClick={() => doCopy(templateInfo.subject)}
+                      >
                         <CopyIcon color="#898989" />
                       </Box>
                     </Box>
@@ -93,8 +100,13 @@ export default function VerifyEmailGuardianModal({ guardianEmail, guardianAddres
                       Body
                     </Box>
                     <Box width="calc(100% - 65px)" fontWeight="600" display="flex" alignItems="center">
-                      <Box>{templateInfo.body}</Box>
-                      <Box marginLeft="4px" cursor="pointer" marginRight="4px" onClick={() => doCopy(templateInfo.body)}>
+                      <Box>{templateInfo.body || '...'}</Box>
+                      <Box
+                        marginLeft="4px"
+                        cursor="pointer"
+                        marginRight="4px"
+                        onClick={() => doCopy(templateInfo.body)}
+                      >
                         <CopyIcon color="#898989" />
                       </Box>
                     </Box>
@@ -102,7 +114,9 @@ export default function VerifyEmailGuardianModal({ guardianEmail, guardianAddres
                 </Box>
               </Box>
               <Box width="100%" display="flex" alignItems="center" justifyContent="center" marginTop="24px">
+               <Link href={mailToLink} target='_blank'>
                 <Button size="lg">Send via default email app</Button>
+               </Link>
               </Box>
             </Box>
           </Box>

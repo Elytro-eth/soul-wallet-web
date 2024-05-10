@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, PopoverTrigger, Link } from '@chakra-ui/react';
-import IconLogo from '@/assets/logo-all-v3.svg';
 import RoundContainer from '@/components/new/RoundContainer';
 import api from '@/lib/api';
 import { useParams } from 'react-router-dom';
 import SuccessIcon from '@/components/Icons/Success';
+import ErrorIcon from '@/components/Icons/Error';
 import { SignHeader } from '../Sign';
 
 function SignContainer({ children }: any) {
@@ -143,9 +143,30 @@ export default function VerifySecret() {
               alignItems="center"
               justifyContent="center"
             >
-              <Box fontSize="32px" color="red" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
-                Verify Secret Failed
+              <Box
+                marginBottom="22px"
+                width="120px"
+                height="120px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <ErrorIcon size="120" />
               </Box>
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+                Failed to verify secret.
+              </Box>
+              {/* <Box
+                fontSize="14px"
+                fontWeight="400"
+                fontFamily="Nunito"
+                lineHeight={'normal'}
+                color="black"
+                marginTop="34px"
+                maxWidth={{ base: '300px', md: '500px' }}
+              >
+                Your email has been verified. Please continue guardian setup.
+              </Box> */}
             </Box>
           </Box>
         </Box>

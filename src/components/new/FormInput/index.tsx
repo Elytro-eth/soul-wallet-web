@@ -50,7 +50,7 @@ export default function FormInput({
   };
 
   return (
-    <Box display="flex" flexDirection="column" {..._styles}>
+    <Box pos={"relative"} display="flex" flexDirection="column" {..._styles}>
       {label && (
         <Box as="label" htmlFor={label}>
           {label}
@@ -123,7 +123,7 @@ export default function FormInput({
           )}
         </Box>
       </Box>
-      <Text color="#E83D26" padding="5px 10px" fontSize="14px">
+      <Text pos="absolute" bottom="-32px" color="#E83D26" padding="5px 10px" fontSize="14px">
         {errorMsg}
       </Text>
     </Box>

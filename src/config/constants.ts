@@ -53,3 +53,14 @@ export const sidebarLinks = [
 
 
 export const passkeyTooltipText = "A passkey is a FIDO credential stored on your computer or phone, and it is used to unlock your online accounts. The passkey makes signing in more secure."
+
+export const forbiddenEmailProviders = ['qq.com', '163.com', '126.com'];
+
+export const validEmailDomains = [
+  'gmail.com',
+  'outlook.com',
+  'yahoo.com',
+  'icloud.com',
+  'proton.me',
+  'protonmail.com'
+]

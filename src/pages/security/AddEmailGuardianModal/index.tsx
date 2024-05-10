@@ -8,6 +8,8 @@ import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
 import useForm from '@/hooks/useForm';
 import FormInput from '@/components/new/FormInput';
+import { useSettingStore } from '@/store/setting';
+import { validEmailDomains } from '@/config/constants';
 // import EditGuardianForm from '../EditGuardianForm'
 
 const validate = (values: any) => {
@@ -19,9 +21,8 @@ const validate = (values: any) => {
   if (!emailReg.test(email)) {
     errors.email = 'Please enter valid email address';
   } else {
-    const address = email.split('@')[1]
-
-    if (address.split('.').indexOf('qq') !== -1) {
+    const address = email.split('@')[1];
+    if (!validEmailDomains.includes(address)) {
       errors.email = 'The email provider is not supported. Please try another';
     }
   }
@@ -38,6 +39,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
   // 1 for sent, 2 for verified
   const [verifyStatus, setVerifyStatus] = useState(0);
   const { selectedAddress } = useAddressStore();
+  const { saveGuardianAddressEmail } = useSettingStore();
   const { selectedChainId } = useChainStore();
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
   const [countDown, setCountDown] = useState(0);
@@ -62,10 +64,10 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
     setVerifyStatus(0);
     setVerifyExpireTime(0);
     setVerifyToken('');
-    setIsSending(true)
+    setIsSending(true);
 
     try {
-      const email = values.email
+      const email = values.email;
       const res: any = await api.emailVerify.requestVerifyEmail({
         email,
         // 1 for binding guardian.
@@ -88,10 +90,10 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
         });
       }
 
-      setIsSending(false)
-      startCountDown()
+      setIsSending(false);
+      startCountDown();
     } catch (err: any) {
-      setIsSending(false)
+      setIsSending(false);
       toast({
         title: err.response.data.message || 'Failed to send email',
         status: 'error',
@@ -108,8 +110,8 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
 
   const doGenerateAddress = async () => {
     try {
-      setIsConfirming(true)
-      const email = values.email
+      setIsConfirming(true);
+      const email = values.email;
       const res: any = await api.emailGuardian.allocateGuardian({
         email,
         verifyToken,
@@ -119,6 +121,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
 
       if (res.code === 200) {
         const guardianAddress = res.data.guardianAddress;
+        saveGuardianAddressEmail(guardianAddress, email);
         onConfirm([guardianAddress], ['Email']);
       } else {
         toast({
@@ -126,30 +129,30 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
           status: 'error',
         });
       }
-      setIsConfirming(false)
+      setIsConfirming(false);
     } catch (error: any) {
-      setIsConfirming(false)
+      setIsConfirming(false);
       toast({
         title: 'Failed to generate guardian',
         status: 'error',
       });
-      console.log('error', error.message)
+      console.log('error', error.message);
     }
   };
 
   const startCountDown = useCallback(() => {
-    let count = 60
-    setCountDown(count)
+    let count = 60;
+    setCountDown(count);
 
     const interval = setInterval(() => {
       if (!count) {
-        setCountDown(0)
-        clearInterval(interval)
+        setCountDown(0);
+        clearInterval(interval);
       } else {
-        setCountDown(count--)
+        setCountDown(count--);
       }
-    }, 1000)
-  }, [])
+    }, 1000);
+  }, []);
 
   const checkEmailValid = () => {
     const emailReg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
@@ -174,7 +177,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
     }
   }, [verifyToken]);
 
-  console.log('disabled', disabled, values, errors)
+  console.log('disabled', disabled, values, errors);
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
@@ -204,7 +207,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                     errorMsg={showErrors.email && errors.email}
                     _styles={{ w: '100%' }}
                     _inputStyles={{ paddingRight: '110px' }}
-                  // onEnter={handleNext}
+                    // onEnter={handleNext}
                   />
                   {!verifyToken && (
                     <Box
@@ -217,18 +220,18 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                       justifyContent="center"
                       fontWeight="800"
                       fontFamily="Nunito"
-                      cursor={(!disabled && !isSending) ? 'pointer' : 'not-allowed'}
+                      cursor={!disabled && !isSending ? 'pointer' : 'not-allowed'}
                       zIndex="1"
-                      {...((!disabled && !isSending)
-                         ? { onClick: doSend, color: 'brand.red' }
-                         : {
-                           color: 'rgba(0, 0, 0, 0.3)',
-                      })}
+                      {...(!disabled && !isSending
+                        ? { onClick: doSend, color: 'brand.red' }
+                        : {
+                            color: 'rgba(0, 0, 0, 0.3)',
+                          })}
                     >
                       {isSending ? 'Sending' : 'Verify email'}
                     </Box>
                   )}
-                  {(verifyToken && verifyStatus === 1) && (
+                  {verifyToken && verifyStatus === 1 && (
                     <Box
                       position="absolute"
                       top="0"
@@ -242,12 +245,12 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                       color={countDown ? 'rgba(0, 0, 0, 0.4)' : '#FF2E79'}
                       cursor={!countDown ? 'pointer' : 'not-allowed'}
                       zIndex="1"
-                      onClick={countDown ? (() => {}) : doSend}
+                      onClick={countDown ? () => {} : doSend}
                     >
                       {!countDown ? 'Resend' : `Resend in ${countDown}s`}
                     </Box>
                   )}
-                  {(verifyToken && verifyStatus === 2) && (
+                  {verifyToken && verifyStatus === 2 && (
                     <Box
                       position="absolute"
                       top="0"
@@ -276,16 +279,6 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                     </Box>
                   )}
                 </Box>
-                {/* <Box
-                    width="100%"
-                    color="#E83D26"
-                    fontWeight="600"
-                    fontSize="14px"
-                    marginTop="4px"
-                    paddingLeft="16px"
-                    >
-                    The email provider is not supported. Please try another
-                    </Box> */}
                 <Box marginTop="68px" marginBottom="10px" display="flex" justifyContent="flex-end">
                   <Box>
                     <Button type="black" disabled={isConfirming} onClick={doGenerateAddress} size="xl">

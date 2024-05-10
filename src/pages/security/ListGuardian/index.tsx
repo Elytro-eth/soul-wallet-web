@@ -38,6 +38,8 @@ export default function ListGuardian({
     }
   })
 
+  console.log('G', guardianAddressEmail)
+
   return (
     <Fragment>
       <RoundSection marginTop="10px" background="white">
@@ -113,7 +115,7 @@ export default function ListGuardian({
                     <GuardianCard
                       key={i}
                       name={guardianNames[i] || 'No Name'}
-                      address={guardianAddressEmail[address] ? guardianAddressEmail[address] : address}
+                      address={address}
                       marginRight={{ base: '0px', md: '18px' }}
                       marginBottom="18px"
                       width={{ base: '100%', md: '272px' }}

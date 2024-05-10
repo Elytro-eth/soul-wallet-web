@@ -64,7 +64,6 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress, guardi
   const { ethersProvider, checkActivated, } = useWalletContext();
   const { getTokenBalance } = useBalanceStore();
   const [prechecked, setPrechecked] = useState(false);
-  const { getSelectedKeyType } = useSignerStore();
   const [totalMsgValue, setTotalMsgValue] = useState('');
   const [payToken, setPayToken] = useState(ethers.ZeroAddress);
   const [payTokenSymbol, setPayTokenSymbol] = useState('');
@@ -74,7 +73,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress, guardi
   const [sponsor, setSponsor] = useState<any>(null);
   const { selectedChainId } = useChainStore();
   const { selectedAddress } = useAddressStore();
-  const { setFinishedSteps } = useSettingStore();
+  const { guardianAddressEmail } = useSettingStore();
   const { slotInfo } = useSlotStore();
   const [useSponsor, setUseSponsor] = useState(true);
   const { getPrefund } = useQuery();
@@ -310,7 +309,7 @@ export default function SignTransaction({ onSuccess, txns, sendToAddress, guardi
                   marginBottom="14px"
                 >
                   <Box fontWeight="800" fontSize="14px" marginBottom="6px">Guardian {i + 1}: {guardianInfo.guardianNames[i] || 'no name'}</Box>
-                  <Box fontSize="14px">{item}</Box>
+                  <Box fontSize="14px">{guardianAddressEmail[item] ? guardianAddressEmail[item] : item}</Box>
                 </Box>
               )}
             </Box>
