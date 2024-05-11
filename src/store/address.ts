@@ -42,7 +42,6 @@ const createAddressSlice = immer<IAddressStore>((set, get) => ({
     const index = getIndexByAddress(get().addressList, get().selectedAddress);
     return get().addressList[index];
   },
-
   getSelectedAddressItemActivated: () => {
     const index = getIndexByAddress(get().addressList, get().selectedAddress);
     const item = get().addressList[index];

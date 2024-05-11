@@ -43,7 +43,6 @@ export default function FindRoute({ children }: { children: ReactNode }) {
       !selectedAddress &&
       !allowBypass
     ) {
-      alert('no selected address')
       navigate({
         pathname: '/auth',
         search: location.search,
