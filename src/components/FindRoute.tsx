@@ -34,7 +34,6 @@ export default function FindRoute({ children }: { children: ReactNode }) {
       location.pathname.includes('dashboard')
 
     if (storeVersion !== storageVersion) {
-      alert('version changed')
       storage.setItem('storeVersion', storeVersion);
       clearLogData();
       navigate('/auth', { replace: true });

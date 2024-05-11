@@ -47,12 +47,14 @@ export default function SignerSelect({ onChange }: { onChange?: () => void }) {
 
   const availableCredentials = credentials.filter((item: ICredentialItem) => item.id);
 
+  const passkeyTitle = selectedCredential.name || toShortAddress(selectedCredential.id, 3, 3);
+
   return availableCredentials.length > 1 ? (
     <Menu>
       <MenuButton>
         <DropdownSelect>
           <Text>
-            Passkey ({selectedCredential.name})
+            Passkey ({passkeyTitle})
             {/* {getSelectedKeyType() === SignkeyType.EOA
               ? `Wallet(${toShortAddress(signerId)})`
               : `Passkey(${toShortAddress(signerId)})`} */}
@@ -81,7 +83,7 @@ export default function SignerSelect({ onChange }: { onChange?: () => void }) {
     </Menu>
   ) : (
     <DropdownSelect hideChevron={true}>
-      <Text>Passkey ({selectedCredential.name})</Text>
+      <Text>Passkey ({passkeyTitle})</Text>
     </DropdownSelect>
   );
 }

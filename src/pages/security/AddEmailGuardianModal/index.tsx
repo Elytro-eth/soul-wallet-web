@@ -93,15 +93,15 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
   const disabled = invalid;
 
   const reset = useCallback(() => {
-    setVerifyToken('')
-    setVerifyStatus(0)
-    resetForm()
+    setVerifyToken('');
+    setVerifyStatus(0);
+    resetForm();
     clearInterval(countInterval);
   }, [countInterval]);
 
   useEffect(() => {
-    reset()
-  }, [isOpen])
+    reset();
+  }, [isOpen]);
 
   const doSend = async () => {
     setVerifyStatus(0);
@@ -163,6 +163,14 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
       });
 
       if (res.code === 200) {
+        if (res.msg === 'already allocated') {
+          toast({
+            title: 'Email is already added.',
+            status: 'error',
+          });
+          setIsConfirming(false);
+          return;
+        }
         const guardianAddress = res.data.guardianAddress;
         saveGuardianAddressEmail(guardianAddress, email);
         onConfirm([guardianAddress], ['Email']);
@@ -199,7 +207,6 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
 
     setCountInterval(interval);
   }, []);
-
 
   // useEffect(() => {
   //   if (!email) {
@@ -248,7 +255,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                     errorMsg={showErrors.email && errors.email}
                     _styles={{ w: '100%' }}
                     _inputStyles={{ paddingRight: '110px' }}
-                  // onEnter={handleNext}
+                    // onEnter={handleNext}
                   />
                   {!verifyToken && (
                     <Box
@@ -264,10 +271,10 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                       cursor={!disabled && !isSending ? 'pointer' : 'not-allowed'}
                       zIndex="1"
                       {...(!disabled && !isSending
-                         ? { onClick: doSend, color: 'brand.red' }
-                         : {
-                           color: 'rgba(0, 0, 0, 0.3)',
-                      })}
+                        ? { onClick: doSend, color: 'brand.red' }
+                        : {
+                            color: 'rgba(0, 0, 0, 0.3)',
+                          })}
                     >
                       {isSending ? 'Sending' : 'Verify email'}
                     </Box>
@@ -322,7 +329,12 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                 </Box>
                 <Box marginTop="68px" marginBottom="10px" display="flex" justifyContent="flex-end">
                   <Box>
-                    <Button type="black" disabled={isConfirming || verifyStatus !== 2} onClick={doGenerateAddress} size="xl">
+                    <Button
+                      type="black"
+                      disabled={isConfirming || verifyStatus !== 2}
+                      onClick={doGenerateAddress}
+                      size="xl"
+                    >
                       {isConfirming ? 'Confirming' : 'Confirm'}
                     </Button>
                   </Box>

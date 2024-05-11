@@ -38,8 +38,6 @@ export default function ListGuardian({
     }
   })
 
-  console.log('G', guardianAddressEmail)
-
   return (
     <Fragment>
       <RoundSection marginTop="10px" background="white">
