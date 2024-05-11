@@ -250,7 +250,7 @@ export default function Guardian() {
     refreshGuardianInfo();
     const interval = setInterval(() => {
       refreshGuardianInfo();
-    }, 10000);
+    }, 5000);
     return () => {
       clearInterval(interval);
     };
