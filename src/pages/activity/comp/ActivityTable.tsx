@@ -22,8 +22,6 @@ const ActivityItem = ({ item }: any) => {
   const { opScanUrl } = chainConfig;
   const { tokenBalance } = useBalanceStore();
   const ethPrice = tokenBalance.filter((item: any) => item.symbol === 'ETH')[0]?.tokenPrice || 0;
-
-  console.log('ac item', item)
   return (
     <Flex
       flexDir={{ base: 'column', md: 'row' }}
@@ -37,7 +35,7 @@ const ActivityItem = ({ item }: any) => {
         display={'flex'}
         alignItems={'center'}
         target="_blank"
-        href={`${opScanUrl}/tx/${item.opHash}`}
+        href={`${opScanUrl}/tx/${item.trxHash}`}
         gap="2"
       >
         <Box pos={'relative'}>

@@ -1,6 +1,6 @@
 import { Box, Flex, Text, Image, Tooltip } from '@chakra-ui/react';
 import { ethers } from 'ethers';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import IconSend from '@/assets/icons/wallet/send.svg';
 import IconReceive from '@/assets/icons/wallet/receive.svg';
@@ -22,7 +22,7 @@ export default function WalletCard() {
   const [hoverIndex, setHoverIndex] = useState(-1);
   const { selectedAddress } = useAddressStore();
   const { totalUsdValue } = useBalanceStore();
-  const { chainConfig, selectedAddressItem } = useConfig();
+  const { chainConfig, selectedAddressItem, getSelectedAddressItemActivated } = useConfig();
   const { scanUrl } = chainConfig;
 
   const actions = [
@@ -32,7 +32,7 @@ export default function WalletCard() {
       iconActive: IconSendActive,
       isComing: false,
       onClick: () => {
-        selectedAddressItem.activated ?  showSend(ethers.ZeroAddress, 'send') : showActiveWalletModal();
+        getSelectedAddressItemActivated() ?  showSend(ethers.ZeroAddress, 'send') : showActiveWalletModal();
       },
     },
     {

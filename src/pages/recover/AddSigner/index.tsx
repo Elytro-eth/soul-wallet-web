@@ -19,11 +19,13 @@ import { SocialRecovery } from '@soulwallet/sdk';
 import DeleteIcon from '@/components/Icons/Delete'
 import { RecoveryContainer } from '@/pages/recover'
 import useConfig from '@/hooks/useConfig';
+import useQuery from '@/hooks/useQuery';
 
 export default function AddSigner({ next, back }: any) {
   const [signers, setSigners] = useState<any>([])
   const [isConfirming, setIsConfirming] = useState<any>(false)
   const toast = useToast();
+  const { getRecoverRecord } = useQuery();
   const { register } = usePassKey()
   const { updateRecoverInfo } = useTempStore()
   const { recoverInfo } = useTempStore()
@@ -67,13 +69,11 @@ export default function AddSigner({ next, back }: any) {
 
       const res1 = await api.guardian.createRecoverRecord(params)
       const recoveryID = res1.data.recoveryID
-      const res2 = await api.guardian.getRecoverRecord({ recoveryID })
-      const recoveryRecord = res2.data
+      const recoveryRecord = await getRecoverRecord(recoveryID)
 
       updateRecoverInfo({
         recoveryID,
         recoveryRecord,
-        // enabled: false,
       });
 
       setIsConfirming(false)

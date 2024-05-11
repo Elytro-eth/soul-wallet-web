@@ -25,6 +25,7 @@ export interface ISettingStore {
   finishedSteps: number[];
   // 1. guardian address -> name 2. slot address -> name
   addressName: { [address: string]: string };
+  guardianAddressEmail: { [address: string]: string };
   addressDisplay: { [address: string]: string };
   recoverRecordIds: { [slot: string]: string };
   // signer id -> wallet address mapping
@@ -34,7 +35,9 @@ export interface ISettingStore {
   saveAddressName: (address: string, name: string, checkExists?: boolean) => void;
   removeAddressName: (address: string) => void;
   getAddressName: (address: string) => string;
-
+  saveGuardianAddressEmail: (address: string, email: string) => void;
+  removeGuardianAddressEmail: (address: string) => void;
+  getGuardianAddressEmail: (address: string) => string;
   saveAddressDisplay: (address: string, display: boolean, checkExists?: boolean) => void;
   removeAddressDisplay: (address: string) => void;
   getAddressDisplay: (address: string) => string;
@@ -50,6 +53,7 @@ const createSettingSlice = immer<ISettingStore>((set, get) => ({
   ignoreWebauthnOverride: false,
   finishedSteps: [],
   addressName: {},
+  guardianAddressEmail: {},
   addressDisplay: {},
   recoverRecordIds: {},
   signerIdAddress: {},
@@ -109,7 +113,29 @@ const createSettingSlice = immer<ISettingStore>((set, get) => ({
       // state.addressName = newState;
     });
   },
-
+  getGuardianAddressEmail: (address) => {
+    return get().guardianAddressEmail[address] || '';
+  },
+  saveGuardianAddressEmail: (address, email) => {
+    set((state) => ({
+      guardianAddressEmail: {
+        ...state.guardianAddressEmail,
+        [address]: email,
+      },
+    }));
+  },
+  removeGuardianAddressEmail: (address) => {
+    set((state) => {
+      const newState = {
+        ...state.guardianAddressEmail,
+      };
+      delete newState[address];
+      return {
+        guardianAddressEmail: newState,
+      };
+      // state.guardianAddressEmail = newState;
+    });
+  },
   getAddressDisplay: (address) => {
     return get().addressDisplay[address] || '';
   },

@@ -12,8 +12,8 @@ export default function Wrapper() {
         <WalletContextProvider>
           <AnimatePresence>
             <Outlet />
-            <Pooling />
           </AnimatePresence>
+          <Pooling />
         </WalletContextProvider>
       </FindRoute>
     </CommonWrapper>

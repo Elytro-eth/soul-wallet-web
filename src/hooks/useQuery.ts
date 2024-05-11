@@ -10,22 +10,47 @@ import useConfig from './useConfig';
 import api from '@/lib/api';
 import { ABI_SocialRecoveryModule } from '@soulwallet/abi';
 import { useAddressStore } from '@/store/address';
+import { useChainStore } from '@/store/chain';
+import { useSettingStore } from '@/store/setting';
 
 export default function useQuery() {
   const { ethersProvider } = useWalletContext();
   const { soulWallet } = useSdk();
   const { chainConfig } = useConfig();
+  const { selectedChainId } = useChainStore();
+  const { saveGuardianAddressEmail } = useSettingStore();
+
+  const checkEmailGuardians = async (guardians: []) => {
+    // check if there's email guardian
+    const res2: any = await api.emailGuardian.guardianInfo({
+      guardians: guardians,
+      chainID: selectedChainId,
+    });
+
+    if (res2 && res2.data && res2.data.guardians && res2.data.guardians.length) {
+      res2.data.guardians.forEach((item: any) => {
+        saveGuardianAddressEmail(item.guardianAddress, item.email);
+      });
+    }
+  };
 
   const getGuardianDetails = async (walletAddress: string) => {
     const contract = new Contract(chainConfig.contracts.socialRecoveryModule, ABI_SocialRecoveryModule, ethersProvider);
     const recoveryInfo = await contract.getSocialRecoveryInfo(walletAddress);
     const activeGuardianHash = recoveryInfo[0];
-    if(activeGuardianHash === ZeroHash){
+    if (activeGuardianHash === ZeroHash) {
       return null;
     }
     const res = await api.guardian.getGuardianDetails({ guardianHash: activeGuardianHash });
+    await checkEmailGuardians(res.data.guardian_info.guardians);
     return res.data;
-  }
+  };
+
+  const getRecoverRecord = async (recoveryId: string) => {
+    const res = await api.guardian.getRecoverRecord({ recoveryID: recoveryId });
+    await checkEmailGuardians(res.data.guardian_info.guardians);
+    return res.data;
+  };
 
   const getGasPrice = async () => {
     // if it's in the fixed price list, set fixed
@@ -84,5 +109,6 @@ export default function useQuery() {
     getGasPrice,
     getPrefund,
     getGuardianDetails,
+    getRecoverRecord,
   };
 }

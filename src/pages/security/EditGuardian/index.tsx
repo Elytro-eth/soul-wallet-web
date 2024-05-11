@@ -67,7 +67,7 @@ export default function EditGuardian({
   startRemoveGuardian,
   onEdited,
 }: any) {
-  const { getAddressName, saveAddressName } = useSettingStore();
+  const { getAddressName, saveAddressName, getGuardianAddressEmail } = useSettingStore();
   const { getEditingGuardiansInfo, updateEditingGuardiansInfo, clearCreateInfo } = useTempStore();
   const guardiansInfo = getEditingGuardiansInfo();
   const { changeGuardian } = useTransaction();
@@ -75,6 +75,7 @@ export default function EditGuardian({
   const { setGuardiansInfo } = useGuardianStore();
   const [showGuardianTip1, setShowGuardianTip1] = useState(true);
   const [showGuardianTip2, setShowGuardianTip2] = useState(true);
+  const { checkActivated } = useWalletContext();
   const toast = useToast();
 
   const guardianDetails = guardiansInfo?.guardianDetails || {
@@ -84,11 +85,11 @@ export default function EditGuardian({
 
   const guardianNames =
     (guardiansInfo &&
-      guardiansInfo?.guardianDetails &&
-      guardiansInfo?.guardianDetails.guardians &&
-      guardiansInfo?.guardianDetails.guardians.map((address: any) =>
-        getAddressName(address && address.toLowerCase()),
-      )) ||
+     guardiansInfo?.guardianDetails &&
+     guardiansInfo?.guardianDetails.guardians &&
+     guardiansInfo?.guardianDetails.guardians.map((address: any) =>
+       getAddressName(address && address.toLowerCase()),
+    )) ||
     [];
 
   const guardianList = guardianDetails.guardians.map((guardian: any, i: number) => {
@@ -153,7 +154,7 @@ export default function EditGuardian({
       setGuardiansInfo(guardiansInfo);
 
       setIsCreating(false);
-
+      checkActivated()
       onEdited();
     } catch (error: any) {
       setIsCreating(false);
@@ -234,7 +235,7 @@ export default function EditGuardian({
                       cursor="pointer"
                       allowDelete={true}
                       onDelete={() => startRemoveGuardian(i, address, guardianDetails.guardians.length)}
-                      allowEdit={true}
+                      allowEdit={!getGuardianAddressEmail(address)}
                       marginRight={{ base: '0px', md: '18px' }}
                       marginBottom="18px"
                       width={{ base: '100%', md: '272px' }}

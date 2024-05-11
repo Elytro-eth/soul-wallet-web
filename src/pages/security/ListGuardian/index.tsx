@@ -16,12 +16,10 @@ import EmptyGuardianIcon from '@/assets/icons/empty-guardian.svg'
 import IconCheveronRight from '@/assets/icons/chevron-right.svg';
 
 export default function ListGuardian({
-  startEditGuardian,
+  startAddGuardian,
   enterEditGuardian,
-  openPendingGuardianModal,
-  isPending
 }: any) {
-  const { getAddressName } = useSettingStore();
+  const { getAddressName, guardianAddressEmail } = useSettingStore();
   const guardianStore = useGuardianStore();
   const { guardiansInfo } = guardianStore;
 
@@ -206,7 +204,7 @@ export default function ListGuardian({
         justifyContent="center"
       >
         {(!guardianList || !guardianList.length) && (
-          <Button size="mid" onClick={startEditGuardian}>
+          <Button size="mid" onClick={startAddGuardian}>
             <Box marginRight="6px"><PlusIcon color="white" /></Box>
             Add Guardian
           </Button>

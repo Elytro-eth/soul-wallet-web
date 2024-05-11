@@ -8,6 +8,7 @@ import {
 
 import Button from '@/components/Button'
 import WarningIcon from '@/components/Icons/Warning';
+import { useSettingStore } from '@/store/setting';
 
 export default function RemoveGuardianModal({
   isOpen,
@@ -17,6 +18,7 @@ export default function RemoveGuardianModal({
   editingAddressCount,
   onConfirm
 }: any) {
+  const { guardianAddressEmail } = useSettingStore();
   const confirmLocal = () => {
     onConfirm(removeIndex)
     onClose();
@@ -116,7 +118,7 @@ export default function RemoveGuardianModal({
                 textAlign="center"
                 marginBottom="24px"
               >
-                {`Are you sure to remove ${address} as guardian?`}
+                {`Are you sure to remove ${guardianAddressEmail[address] ? guardianAddressEmail[address] : address} as guardian?`}
               </Box>
               <Box>
                 <Button

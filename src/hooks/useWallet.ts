@@ -42,7 +42,7 @@ export default function useWallet() {
   // will be executed only once after recover process finished
   const boostAfterRecovered = async (_recoverInfo: any) => {
     setSlotInfo({
-      ...recoverInfo.initInfo
+      ...recoverInfo.initInfo,
     });
     setAddressList([
       {
@@ -57,7 +57,7 @@ export default function useWallet() {
 
     setGuardiansInfo({
       guardianHash: recoverInfo.guardian_hash,
-      guardianDetails: recoverInfo.guardianInfo,
+      guardianDetails: recoverInfo.guardian_info,
     });
 
     clearTempStore();
@@ -71,10 +71,10 @@ export default function useWallet() {
       });
 
       if (!res || !res.data || !res.data.length || res.code !== 200) {
-        let message = res.msg
+        let message = res.msg;
 
         if (message === 'key not found') {
-          message = 'no wallet found'
+          message = 'no wallet found';
         }
 
         toast({
@@ -103,13 +103,12 @@ export default function useWallet() {
 
       const _guardiansInfo = await getGuardianDetails(item.address);
 
-      if(_guardiansInfo){
+      if (_guardiansInfo) {
         setGuardiansInfo({
           guardianHash: _guardiansInfo.guardian_hash,
-          guardianDetails: _guardiansInfo.guardianInfo,
+          guardianDetails: _guardiansInfo.guardian_info,
         });
       }
-
     } catch (e: any) {
       toast({
         title: 'Failed to login',
@@ -179,7 +178,7 @@ export default function useWallet() {
     };
   };
 
-  const getActivateOp = async () => {
+  const getActivateOp = async (extraTxs: any = []) => {
     const createIndex = 0;
     const userOpRet = await soulWallet.createUnsignedDeployWalletUserOp(
       createIndex,
@@ -195,11 +194,24 @@ export default function useWallet() {
 
     let userOp = userOpRet.OK;
 
-    userOp.callData = '0x';
+    if (extraTxs.length) {
+      const soulAbi = new ethers.Interface(ABI_SoulWallet);
 
-    userOp = await estimateGas(userOp, ZeroAddress);
+      const finalTos = [...extraTxs.map((tx: any) => tx.to)];
 
-    console.log(userOp, 'userOp');
+      const finalCalldatas = [...extraTxs.map((tx: any) => tx.data)];
+
+      const finalValues = [...extraTxs.map((tx: any) => tx.value || '0x0')];
+
+      const executions: string[][] = finalTos.map((to, index) => [to, finalValues[index], finalCalldatas[index]]);
+
+      userOp.callData = soulAbi.encodeFunctionData('executeBatch((address,uint256,bytes)[])', [executions]);
+
+      userOp = await estimateGas(userOp, ZeroAddress);
+
+      userOp.preVerificationGas = `0x${BN(userOp.preVerificationGas.toString()).plus(10000).toString(16)}`;
+      userOp.verificationGasLimit = `0x${BN(userOp.verificationGasLimit.toString()).plus(30000).toString(16)}`;
+    }
 
     return userOp;
   };

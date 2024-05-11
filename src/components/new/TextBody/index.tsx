@@ -1,4 +1,4 @@
-import { Text, TextProps } from '@chakra-ui/react';
+import { Text, TextProps, Box } from '@chakra-ui/react';
 
 const getStyles = (type: string = 't1') => {
   if (type === 't1') {
@@ -21,13 +21,13 @@ const getStyles = (type: string = 't1') => {
 
 export default function TextBody({ children, type, ...restProps }: {type?: string} & TextProps) {
   return (
-    <Text
+    <Box
       fontFamily="Nunito"
       color="black"
       {...getStyles(type)}
       {...restProps}
     >
       {children}
-    </Text>
+    </Box>
   );
 }

@@ -10,6 +10,7 @@ import Security from '@/pages/security';
 import Guardian from '@/pages/security/Guardian';
 import Pay from '@/pages/public/Pay';
 import Sign from '@/pages/public/Sign';
+import VerifySecret from './pages/public/VerifySecret';
 import Auth from '@/pages/auth';
 import DashboardLayout from './components/Layouts/DashboardLayout';
 
@@ -58,6 +59,7 @@ export const router = createBrowserRouter([
     element: <PublicWrapper />,
     children: [
       { path: 'sign', element: <Sign /> },
+      { path: 'verify-secret/:secret', element: <VerifySecret /> },
       { path: 'sign/:recoverId', element: <Sign /> },
       { path: 'pay', element: <Pay /> },
       { path: 'pay/:recoverId', element: <Pay /> },

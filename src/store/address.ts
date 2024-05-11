@@ -21,6 +21,7 @@ export interface IAddressStore {
   setActivated: (address: string, activated: boolean) => void;
   updateAddressItem: (address: string, addressItem: Partial<IAddressItem>) => void;
   getSelectedAddressItem: () => IAddressItem;
+  getSelectedAddressItemActivated: () => any;
   clearAddressList: () => void;
 }
 
@@ -40,6 +41,11 @@ const createAddressSlice = immer<IAddressStore>((set, get) => ({
   getSelectedAddressItem: () => {
     const index = getIndexByAddress(get().addressList, get().selectedAddress);
     return get().addressList[index];
+  },
+  getSelectedAddressItemActivated: () => {
+    const index = getIndexByAddress(get().addressList, get().selectedAddress);
+    const item = get().addressList[index];
+    return item && item.activated
   },
 
   setSelectedAddress: (address: string) =>

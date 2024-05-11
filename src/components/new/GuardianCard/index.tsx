@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import DeleteIcon from '@/components/Icons/Delete'
 import EditIcon from '@/components/Icons/Edit2'
+import { useSettingStore } from '@/store/setting';
 
 export default function GuardianCard({
   name,
@@ -14,6 +15,8 @@ export default function GuardianCard({
   onEdit,
   ...props
 }: any) {
+  const { guardianAddressEmail } = useSettingStore();
+  const valueToShow = guardianAddressEmail[address] ? guardianAddressEmail[address] : address;
   return (
     <Box
       border="1px solid #DFDFDF"
@@ -53,8 +56,9 @@ export default function GuardianCard({
         fontWeight="400"
         fontSize="12px"
         color="#868686"
+        height="36px"
       >
-        {address}
+        {valueToShow}
       </Box>
       <Box
         fontFamily="Nunito"

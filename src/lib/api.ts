@@ -78,6 +78,18 @@ const operation = {
     }),
 };
 
+const emailVerify = {
+  requestVerifyEmail: (params: any) => axio.post('/email-verify/request-verify-email', params),
+  confirmVerification: (params: any) => axio.post('/email-verify/confirm-verification', params),
+  verificationStatus: (params: any) => axio.post('/email-verify/verification-status', params),
+}
+
+const emailGuardian = {
+  allocateGuardian: (params: any) => axio.post('/email-guardian/allocate-guardian', params),
+  guardianInfo: (params: any) => axio.post('/email-guardian/guardian-info', params),
+  emailTemplate: (params: any) => axio.post('/email-guardian/email-template', params),
+}
+
 export default {
   balance,
   recovery,
@@ -88,4 +100,6 @@ export default {
   operation,
   backup,
   price,
+  emailVerify,
+  emailGuardian,
 };

@@ -18,7 +18,7 @@ import BN from 'bignumber.js';
 import TextBody from '@/components/new/TextBody';
 import VideoIcon from '@/components/Icons/Video';
 import TokenEmptyIcon from '@/assets/icons/token-empty.svg';
-import ActivityEmptyIcon from '@/assets/icons/activity-empty.svg';
+import SetupIcon from '@/assets/icons/setup-icon.svg';
 import QrcodeIcon from '@/components/Icons/Qrcode';
 import { useAddressStore } from '@/store/address';
 import useTools from '@/hooks/useTools';
@@ -31,7 +31,7 @@ import useBrowser from '@/hooks/useBrowser';
 const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [promiseInfo, setPromiseInfo] = useState<any>({});
-  const { navigate } = useBrowser();
+  const navigate = useNavigate();
 
   const { selectedAddress, setActivated } = useAddressStore();
   const { generateQrCode, doCopy } = useTools();
@@ -57,10 +57,11 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
     promiseInfo.reject('User close');
   };
 
-  const doActivate = async () => {
-    await showSignTransaction([]);
-    setActivated(selectedAddress, true);
+  const doSetup = async () => {
+    // await showSignTransaction([]);
+    // setActivated(selectedAddress, true);
     onClose();
+    navigate('security/guardian')
   };
 
   const generateQR = async (text: string) => {
@@ -275,11 +276,11 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       justifyContent="center"
                       background="rgba(0, 0, 0, 0.05)"
                     >
-                      <Image src={ActivityEmptyIcon} width={{base: "60px", lg: "80px"}} height={{base: "60px", lg: "80px"}} />
+                      <Image src={SetupIcon} width={{base: "60px", lg: "80px"}} height={{base: "60px", lg: "80px"}} />
                     </Box>
                     <Box width={{ base: '100%', md: 'calc(100% - 92px)' }}>
                       <TextBody fontSize={{base: "18px", lg: "20px"}} display="flex" alignItems="center">
-                        <Box>Step 2: Active wallet</Box>
+                        <Box>Step 2: Set up guardians</Box>
                       </TextBody>
                       <Box
                         display="flex"
@@ -294,17 +295,17 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                           marginBottom={{ base: '20px', md: '0' }}
                           marginRight="auto"
                         >
-                          <TextBody type="t3">{`The activation fee will be covered by Soul Wallet. $0 cost on you.`}</TextBody>
+                          <TextBody type="t3">{`To secure your account, please set up guardians for wallet recovery.`}</TextBody>
                         </Box>
                         <Box width={{ base: '100%', md: '180px' }}>
                           <Button
                             size="sm"
                             disabled={!userDeposited || userActivated}
                             height="28px"
-                            onClick={doActivate}
+                            onClick={doSetup}
                             width={{ base: '100%', md: '104px' }}
                           >
-                            Active now
+                            Set up
                           </Button>
                         </Box>
                       </Box>

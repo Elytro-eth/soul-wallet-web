@@ -10,7 +10,6 @@ import { useGuardianStore } from '@/store/guardian';
 import { useBalanceStore } from '@/store/balance';
 import { useHistoryStore } from '@/store/history';
 import { useChainStore } from '@/store/chain';
-import { useSlotStore } from '@/store/slot';
 import { useSettingStore } from '@/store/setting';
 import { useTempStore } from '@/store/temp';
 
