@@ -9,6 +9,8 @@ export interface IAddressItem {
 }
 
 export interface IAddressStore {
+  activateFee: string;
+  setActivateFee: (fee: string) => void;
   walletName: string;
   setWalletName: (walletName: string) => void;
   selectedAddress: string;
@@ -45,12 +47,17 @@ const createAddressSlice = immer<IAddressStore>((set, get) => ({
   getSelectedAddressItemActivated: () => {
     const index = getIndexByAddress(get().addressList, get().selectedAddress);
     const item = get().addressList[index];
-    return item && item.activated
+    return item && item.activated;
   },
 
   setSelectedAddress: (address: string) =>
     set({
       selectedAddress: address,
+    }),
+  activateFee: '',
+  setActivateFee: (fee: string) =>
+    set({
+      activateFee: fee,
     }),
 
   getIsActivated: (address: string) => {
@@ -59,7 +66,7 @@ const createAddressSlice = immer<IAddressStore>((set, get) => ({
     return addressInfo && addressInfo.activated;
   },
 
-  setActivated: (address: string,  activated: boolean) => {
+  setActivated: (address: string, activated: boolean) => {
     set((state) => {
       const index = getIndexByAddress(state.addressList, address);
       if (index === -1) {

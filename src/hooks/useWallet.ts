@@ -31,7 +31,7 @@ export default function useWallet() {
   const { selectedChainId, setSelectedChainId } = useChainStore();
   const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
   const { soulWallet } = useSdk();
-  const { getGuardianDetails } = useQuery();
+  const { getGuardianDetails, getPrefund } = useQuery();
   const { navigate } = useBrowser();
   const toast = useToast();
   const { clearLogData } = useTools();
@@ -405,6 +405,20 @@ export default function useWallet() {
     return await signByPasskey(selectedCredential, hash);
   };
 
+  const getActivateFee = async () => {
+    // 1. get user op with set guardians
+    const mockSetGuardianTx = [
+      {
+        to: '0x3Cc36538cf53A13AF5C28BB693091e23CF5BB567',
+        data: '0xd28a426199906d01f2675f126415f03e75adc7995e62da2279edffb5ddd67dab0dbf763a',
+      },
+    ];
+    const userOp = await getActivateOp(mockSetGuardianTx);
+    const { requiredAmount } = await getPrefund(userOp, ZeroAddress);
+
+    return requiredAmount;
+  };
+
   return {
     loginWallet,
     addPaymasterData,
@@ -417,5 +431,6 @@ export default function useWallet() {
     initWallet,
     getUserOp,
     boostAfterRecovered,
+    getActivateFee,
   };
 }

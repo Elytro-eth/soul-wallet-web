@@ -1,4 +1,20 @@
-import { Box, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, Input, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  Input,
+  Image,
+  useToast,
+  Flex,
+  Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from '@chakra-ui/react';
 import TextBody from '@/components/new/TextBody';
 import Title from '@/components/new/Title';
 import Button from '@/components/Button';
@@ -9,8 +25,9 @@ import { useChainStore } from '@/store/chain';
 import useForm from '@/hooks/useForm';
 import FormInput from '@/components/new/FormInput';
 import { useSettingStore } from '@/store/setting';
-import { validEmailDomains } from '@/config/constants';
+import { validEmailDomains, validEmailProviders } from '@/config/constants';
 import { useTempStore } from '@/store/temp';
+import SupportedEmails from '@/components/SupportedEmails';
 // import EditGuardianForm from '../EditGuardianForm'
 
 const validate = (values: any, props: any, callbackRef: any) => {
@@ -45,6 +62,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
   const { selectedAddress } = useAddressStore();
   const { saveGuardianAddressEmail, getGuardianAddressEmail } = useSettingStore();
   const { selectedChainId } = useChainStore();
+  const [isEmailProviderSupported, setIsEmailProviderSupported] = useState(true);
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
   const [countDown, setCountDown] = useState(0);
   const [countInterval, setCountInterval] = useState<any>();
@@ -232,7 +250,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
       <ModalContent maxW={{ base: '95%', lg: '840px' }} my={{ base: '120px' }} borderRadius="20px">
         <ModalCloseButton top="14px" />
         <ModalBody
-          overflow="auto"
+          // overflow="auto"
           padding={{ base: '20px 10px', md: '20px 32px' }}
           marginTop={{ base: '30px', md: '60px' }}
         >
@@ -246,17 +264,24 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
               </TextBody>
               <Box>
                 <Box width="100%" position="relative">
-                  <FormInput
-                    label=""
-                    placeholder="Email address"
-                    value={values.email}
-                    onChange={onChange('email')}
-                    onBlur={onBlur('email')}
-                    errorMsg={showErrors.email && errors.email}
-                    _styles={{ w: '100%' }}
-                    _inputStyles={{ paddingRight: '110px' }}
-                    // onEnter={handleNext}
-                  />
+                  <Box pos={'relative'}>
+                    <FormInput
+                      label=""
+                      placeholder="Email address"
+                      value={values.email}
+                      onChange={onChange('email')}
+                      onBlur={onBlur('email')}
+                      errorMsg={showErrors.email && errors.email}
+                      _styles={{ w: '100%' }}
+                      _inputStyles={{ paddingRight: '110px' }}
+                      // onEnter={handleNext}
+                    />
+                    <Flex pos="absolute" fontSize={'14px'} fontWeight={'600'} bottom="-40px">
+                      <Text color="danger">This email provider is not supported.</Text>
+                      <SupportedEmails />
+                    </Flex>
+                  </Box>
+
                   {!verifyToken && (
                     <Box
                       position="absolute"

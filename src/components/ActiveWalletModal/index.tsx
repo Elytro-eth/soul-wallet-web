@@ -33,9 +33,8 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
   const [promiseInfo, setPromiseInfo] = useState<any>({});
   const navigate = useNavigate();
 
-  const { selectedAddress, setActivated } = useAddressStore();
+  const { selectedAddress, activateFee, } = useAddressStore();
   const { generateQrCode, doCopy } = useTools();
-  const { showSignTransaction } = useWalletContext();
   const { selectedAddressItem, chainConfig } = useConfig();
   const [imgSrc, setImgSrc] = useState<string>('');
   const { getTokenBalance } = useBalanceStore();
@@ -156,7 +155,7 @@ const ActiveWalletModal = (_: unknown, ref: Ref<any>) => {
                       <Image src={TokenEmptyIcon} width={{base: "60px", lg: "80px"}} height={{base: "60px", lg: "80px"}} />
                     </Box>
                     <Box width={{ base: '100%', md: 'calc(100% - 92px)' }}>
-                      <TextBody fontSize={{base: "18px", lg: "20px"}}>Step 1: Deposit ETH</TextBody>
+                      <TextBody fontSize={{base: "18px", lg: "20px"}}>Step 1: Deposit ETH <Text as={"span"} fontWeight={"400"}>({activateFee} ETH)</Text></TextBody>
                       <Box
                         display="flex"
                         flexDirection={{ base: 'column', md: 'row' }}
