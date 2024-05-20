@@ -27,23 +27,23 @@ const defaultGuardianInfo = {
 };
 
 export default function Guardian() {
-  const [isPending, setIsPending] = useState<any>(true);
-  const [isEditing, setIsEditing] = useState<any>(false);
+  const [isPending, setIsPending] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<any>(false);
-  const [isAddEmailGuardianOpen, setIsAddEmailGuardianOpen] = useState<any>(false);
-  const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<any>(false);
-  const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
-  const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<any>(false);
-  const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<any>(false);
+  const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<boolean>(false);
+  const [isAddEmailGuardianOpen, setIsAddEmailGuardianOpen] = useState<boolean>(false);
+  const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<boolean>(false);
+  const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<boolean>(false);
+  const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<boolean>(false);
+  const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<boolean>(false);
 
   const { navigate } = useBrowser();
   const { getGuardianDetails } = useQuery();
   const { selectedAddress } = useAddressStore();
   const [editType, setEditType] = useState<any>('edit');
-  const [removeIndex, setRemoveIndex] = useState<any>(0);
-  const [removeAddress, setRemoveAddress] = useState<any>('');
-  const [editingAddressCount, setEditingAddressCount] = useState<any>(0);
+  const [removeIndex, setRemoveIndex] = useState<number>(0);
+  const [removeAddress, setRemoveAddress] = useState<string>('');
+  const [editingAddressCount, setEditingAddressCount] = useState<number>(0);
   const { saveAddressName } = useSettingStore();
 
   const tempStore = useTempStore();
@@ -128,7 +128,7 @@ export default function Guardian() {
     setIsEditing(false);
   }, []);
 
-  const onRemoveGuardianConfirm = useCallback((i: any) => {
+  const onRemoveGuardianConfirm = useCallback((i: number) => {
     closeModal('removeGuardian')
     const editingGuardianInfo = getEditingGuardiansInfo();
     let currentAddresses = editingGuardianInfo.guardianDetails.guardians || [];
@@ -146,7 +146,7 @@ export default function Guardian() {
   }, []);
 
   const onEditGuardianConfirm = useCallback(
-    (addresses: any, names: any) => {
+    (addresses: string[], names: string[]) => {
       if (editType === 'edit') {
         closeModal('editGuardian')
         setIsEditing(true);
