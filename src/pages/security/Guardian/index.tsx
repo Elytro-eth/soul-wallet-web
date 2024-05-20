@@ -27,25 +27,27 @@ const defaultGuardianInfo = {
 };
 
 export default function Guardian() {
-  const { navigate } = useBrowser();
-  const { getGuardianDetails } = useQuery();
-  const [activeSection, setActiveSection] = useState<string>('guardian');
   const [isPending, setIsPending] = useState<any>(true);
+  const [isEditing, setIsEditing] = useState<any>(false);
+
   const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<any>(false);
   const [isAddEmailGuardianOpen, setIsAddEmailGuardianOpen] = useState<any>(false);
   const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<any>(false);
   const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
   const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<any>(false);
   const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<any>(false);
+
+  const { navigate } = useBrowser();
+  const { getGuardianDetails } = useQuery();
   const { selectedAddress } = useAddressStore();
   const [canBackToSelectGuardianType, setCanBackToSelectGuardianType] = useState<any>(false);
   const [editType, setEditType] = useState<any>('edit');
-  const [count, setCount] = useState<any>(0);
   const [removeIndex, setRemoveIndex] = useState<any>(0);
   const [removeAddress, setRemoveAddress] = useState<any>('');
   const [editingAddressCount, setEditingAddressCount] = useState<any>(0);
-  const [isEditing, setIsEditing] = useState<any>(false);
   const { saveAddressName } = useSettingStore();
+
+  // const [editingGuardiansInfo, setEditingGuardiansInfo] = useState<any>({});
 
   const tempStore = useTempStore();
   const {
@@ -56,9 +58,7 @@ export default function Guardian() {
     getEditingSingleGuardiansInfo,
   } = tempStore;
   const guardianStore = useGuardianStore();
-  const guardiansInfo =
-    (!tempStore.createInfo.creatingGuardianInfo ? guardianStore.guardiansInfo : tempStore.getCreatingGuardianInfo()) ||
-    defaultGuardianInfo;
+  const guardiansInfo = guardianStore.guardiansInfo || defaultGuardianInfo;
 
   const closeSelectGuardianModal = useCallback(() => {
     setIsSelectGuardianOpen(false);
@@ -68,7 +68,7 @@ export default function Guardian() {
     setIsIntroGuardianOpen(false);
   }, []);
 
-  const openPendingGuardianModal = useCallback((editType: any) => {
+  const openPendingGuardianModal = useCallback(() => {
     setIsPendingGuardianOpen(true);
   }, []);
 
@@ -97,7 +97,6 @@ export default function Guardian() {
     setEditType('add');
     setIsEditing(true);
     setCanBackToSelectGuardianType(true);
-    // setIsEditGuardianOpen(true)
     setIsSelectGuardianOpen(true);
   }, [isEditing, guardiansInfo]);
 
@@ -136,12 +135,12 @@ export default function Guardian() {
       setIsEditing(true);
       setIsEditGuardianOpen(true);
     },
-    [isEditing, guardiansInfo],
+    [],
   );
 
   const cancelEditGuardian = useCallback(() => {
     setIsEditing(false);
-  }, [isEditing, guardiansInfo]);
+  }, []);
 
   const onRemoveGuardianConfirm = useCallback((i: any) => {
     setIsRemoveGuardianOpen(false);
@@ -228,7 +227,7 @@ export default function Guardian() {
         });
       }
     },
-    [editType, count],
+    [editType],
   );
 
   const refreshGuardianInfo = async () => {
@@ -260,7 +259,7 @@ export default function Guardian() {
     <Fragment>
       <Box display="flex" flexDirection="column" padding={{ base: '0 24px', lg: 'auto' }} pt="6">
         <SectionMenu>
-          <SectionMenuItem isActive={activeSection == 'guardian'} onClick={() => navigate('/security/guardian')}>
+          <SectionMenuItem isActive={true} onClick={() => navigate('/security/guardian')}>
             Guardian
           </SectionMenuItem>
         </SectionMenu>
@@ -271,7 +270,6 @@ export default function Guardian() {
             startAddGuardian={startAddGuardian}
             startEditSingleGuardian={startEditSingleGuardian}
             startRemoveGuardian={startRemoveGuardian}
-            count={count}
             onEdited={() => setIsEditing(false)}
           />
         )}
@@ -286,15 +284,13 @@ export default function Guardian() {
           />
         )}
       </Box>
-      {isAddEmailGuardianOpen && (
-        <AddEmailGuardianModal
-          isOpen={true}
-          onClose={closeAddEmailGuardianModal}
-          setIsAddEmailGuardianOpen={setIsAddEmailGuardianOpen}
-          onConfirm={onEditGuardianConfirm}
-          editType={editType}
-        />
-      )}
+      <AddEmailGuardianModal
+        isOpen={isAddEmailGuardianOpen}
+        onClose={closeAddEmailGuardianModal}
+        setIsAddEmailGuardianOpen={setIsAddEmailGuardianOpen}
+        onConfirm={onEditGuardianConfirm}
+        editType={editType}
+      />
       <EditGuardianModal
         isOpen={isEditGuardianOpen}
         onClose={closeEditGuardianModal}
@@ -302,7 +298,10 @@ export default function Guardian() {
         onConfirm={onEditGuardianConfirm}
         editType={editType}
       />
-      <PendingGuardianModal isOpen={isPendingGuardianOpen} onClose={closePendingGuardianModal} />
+      <PendingGuardianModal
+        isOpen={isPendingGuardianOpen}
+        onClose={closePendingGuardianModal}
+      />
       <RemoveGuardianModal
         isOpen={isRemoveGuardianOpen}
         onClose={() => setIsRemoveGuardianOpen(false)}
