@@ -18,10 +18,10 @@ import RecoverThreshold from '@/components/Guardian/RecoverThreshold'
 
 export default function PendingGuardianModal({
   isOpen,
-  onClose,
+  closeModal,
 }: any) {
   return (
-    <Modal isOpen={isOpen} isCentered onClose={onClose}>
+    <Modal isOpen={isOpen} isCentered onClose={() => closeModal('pendingGuardian')}>
       <ModalOverlay />
       <ModalContent maxW={{base: "95%", lg :"840px"}} my={{base: "120px"}} borderRadius="20px">
         <ModalCloseButton top="14px" />

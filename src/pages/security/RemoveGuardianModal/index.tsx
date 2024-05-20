@@ -13,7 +13,7 @@ import { useSettingStore } from '@/store/setting';
 export default function RemoveGuardianModal({
   isOpen,
   address,
-  onClose,
+  closeModal,
   removeIndex,
   editingAddressCount,
   onConfirm
@@ -21,12 +21,12 @@ export default function RemoveGuardianModal({
   const { guardianAddressEmail } = useSettingStore();
   const confirmLocal = () => {
     onConfirm(removeIndex)
-    onClose();
+    closeModal('removeGuardian')
   }
 
   if (editingAddressCount === 1) {
     return (
-      <Modal isOpen={isOpen} isCentered onClose={onClose}>
+      <Modal isOpen={isOpen} isCentered onClose={() => closeModal('removeGuardian')}>
         <ModalOverlay />
         <ModalContent background="white" w="360px" borderRadius="16px">
           <ModalBody overflow="auto" padding="24px 32px">
@@ -69,7 +69,7 @@ export default function RemoveGuardianModal({
                     height="40px"
                     fontSize="16px"
                     type="black"
-                    onClick={onClose}
+                    onClick={() => closeModal('removeGuardian')}
                   >
                     Confirm
                   </Button>
@@ -83,7 +83,7 @@ export default function RemoveGuardianModal({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={() => closeModal('removeGuardian')} isCentered>
       <ModalOverlay />
       <ModalContent background="white" w="360px" borderRadius="16px">
         <ModalBody overflow="auto" padding="24px 32px">
@@ -127,7 +127,7 @@ export default function RemoveGuardianModal({
                   fontSize="16px"
                   type="white"
                   marginRight="16px"
-                  onClick={onClose}
+                  onClick={() => closeModal('removeGuardian')}
                 >
                   Cancel
                 </Button>

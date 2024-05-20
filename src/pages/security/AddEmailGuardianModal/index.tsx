@@ -53,7 +53,7 @@ const validate = (values: any, props: any, callbackRef: any) => {
   return errors;
 };
 
-export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: any) {
+export default function AddEmailGuardianModal({ isOpen, closeModal, onConfirm }: any) {
   const [verifyToken, setVerifyToken] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
@@ -79,7 +79,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
     setCountDown(0);
     setVerifyToken('');
     setVerifyStatus(0);
-    onClose();
+    closeModal('addEmailGuardian');
   };
 
   const externalValidate = useCallback(
@@ -274,7 +274,7 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                       errorMsg={showErrors.email && errors.email}
                       _styles={{ w: '100%' }}
                       _inputStyles={{ paddingRight: '110px' }}
-                      // onEnter={handleNext}
+                    // onEnter={handleNext}
                     />
                     <Flex pos="absolute" fontSize={'14px'} fontWeight={'600'} bottom="-40px">
                       <Text color="danger">This email provider is not supported.</Text>
@@ -296,10 +296,10 @@ export default function AddEmailGuardianModal({ isOpen, onClose, onConfirm }: an
                       cursor={!disabled && !isSending ? 'pointer' : 'not-allowed'}
                       zIndex="1"
                       {...(!disabled && !isSending
-                        ? { onClick: doSend, color: 'brand.red' }
-                        : {
-                            color: 'rgba(0, 0, 0, 0.3)',
-                          })}
+                         ? { onClick: doSend, color: 'brand.red' }
+                         : {
+                           color: 'rgba(0, 0, 0, 0.3)',
+                      })}
                     >
                       {isSending ? 'Sending' : 'Verify email'}
                     </Box>
