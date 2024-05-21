@@ -93,7 +93,7 @@ export default function EditGuardian({
     )) ||
     [];
 
-  const guardianList = guardianDetails.guardians.map((guardian: any, i: number) => {
+  const guardianList = guardianDetails.guardians.map((guardian: string, i: number) => {
     return {
       address: guardian,
       name: guardianNames[i],

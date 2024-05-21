@@ -93,4 +93,4 @@ export const validEmailProviders = [
 
 const extraEmailProviders = ['protonmail.com'];
 
-export const validEmailDomains = [validEmailProviders.map((provider) => provider.domain), ...extraEmailProviders];
+export const validEmailDomains = [...validEmailProviders.map((provider) => provider.domain), ...extraEmailProviders];

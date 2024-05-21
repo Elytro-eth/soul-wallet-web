@@ -18,7 +18,7 @@ import {
 import TextBody from '@/components/new/TextBody';
 import Title from '@/components/new/Title';
 import Button from '@/components/Button';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, Fragment } from 'react';
 import api from '@/lib/api';
 import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
@@ -40,8 +40,13 @@ const validate = (values: any, props: any, callbackRef: any) => {
     errors.email = 'Please enter valid email address';
   } else {
     const address = email.split('@')[1];
+    console.log('validEmailDomains', validEmailDomains, address)
     if (!validEmailDomains.includes(address)) {
-      errors.email = 'The email provider is not supported. Please try another';
+      errors.email = (
+        <Box as="p" display="flex">
+          <Text color="danger" marginRight="4px">This email provider is not supported.</Text><SupportedEmails />
+        </Box>
+      );
     }
   }
 
@@ -244,6 +249,8 @@ export default function AddEmailGuardianModal({ isOpen, closeModal, onConfirm }:
     }
   }, [verifyToken]);
 
+  console.log('errors', errors)
+
   return (
     <Modal isOpen={isOpen} onClose={onCloseModal} isCentered>
       <ModalOverlay />
@@ -276,10 +283,10 @@ export default function AddEmailGuardianModal({ isOpen, closeModal, onConfirm }:
                       _inputStyles={{ paddingRight: '110px' }}
                     // onEnter={handleNext}
                     />
-                    <Flex pos="absolute" fontSize={'14px'} fontWeight={'600'} bottom="-40px">
-                      <Text color="danger">This email provider is not supported.</Text>
-                      <SupportedEmails />
-                    </Flex>
+                    {/* <Flex pos="absolute" fontSize={'14px'} fontWeight={'600'} bottom="-40px">
+                        <Text color="danger">This email provider is not supported.</Text>
+                        <SupportedEmails />
+                        </Flex> */}
                   </Box>
 
                   {!verifyToken && (
