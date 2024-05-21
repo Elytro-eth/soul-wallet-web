@@ -19,32 +19,29 @@ import EmailGuardianIcon from '@/assets/icons/email-guardian.svg'
 
 export default function SelectGuardianTypeModal({
   isOpen,
-  onClose,
-  setIsIntroGuardianOpen,
-  setIsSelectGuardianOpen,
-  setIsEditGuardianOpen,
-  setIsAddEmailGuardianOpen,
+  openModal,
+  closeModal,
 }: any) {
   const startIntroGuardian = useCallback(() => {
     console.log('startIntroGuardian')
-    setIsSelectGuardianOpen(false)
-    setIsIntroGuardianOpen(true)
+    closeModal('selectGuardian')
+    openModal('introGuardian')
   }, [])
 
   const startEditGuardian = useCallback(() => {
     console.log('startEditGuardian')
-    setIsSelectGuardianOpen(false)
-    setIsEditGuardianOpen(true)
+    closeModal('selectGuardian')
+    openModal('editGuardian')
   }, [])
 
   const startAddEmailGuardian = useCallback(() => {
     console.log('startAddEmailGuardian')
-    setIsSelectGuardianOpen(false)
-    setIsAddEmailGuardianOpen(true)
+    closeModal('selectGuardian')
+    openModal('addEmailGuardian')
   }, [])
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={() => closeModal('selectGuardian')} isCentered>
       <ModalOverlay />
       <ModalContent maxW={{base: "95%", lg :"840px"}} my={{base: "120px"}} borderRadius="20px">
         <ModalHeader

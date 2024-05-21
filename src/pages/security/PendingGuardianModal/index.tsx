@@ -14,13 +14,14 @@ import Title from '@/components/new/Title'
 import DropDownIcon from '@/components/Icons/DropDown';
 import GuardianCard from '@/components/new/GuardianCard'
 import Button from '@/components/Button'
+import RecoverThreshold from '@/components/Guardian/RecoverThreshold'
 
 export default function PendingGuardianModal({
   isOpen,
-  onClose,
+  closeModal,
 }: any) {
   return (
-    <Modal isOpen={isOpen} isCentered onClose={onClose}>
+    <Modal isOpen={isOpen} isCentered onClose={() => closeModal('pendingGuardian')}>
       <ModalOverlay />
       <ModalContent maxW={{base: "95%", lg :"840px"}} my={{base: "120px"}} borderRadius="20px">
         <ModalCloseButton top="14px" />
@@ -98,58 +99,10 @@ export default function PendingGuardianModal({
                     Recovery settings
                   </Title>
                   {true && (
-                    <Fragment>
-                      <Box
-                        display="flex"
-                        justifyContent="flex-start"
-                        marginTop="10px"
-                        alignItems={{ base: 'flex-start', md: 'center' }}
-                        flexDirection={{ base: 'column', md: 'row' }}
-                      >
-                        <Box
-                          fontFamily="Nunito"
-                          fontWeight="700"
-                          fontSize="14px"
-                          marginRight="6px"
-                        >
-                          Threshold:
-                        </Box>
-                        <TextBody
-                          type="t2"
-                          justifyContent="flex-start"
-                          display="flex"
-                          flexDirection={{ base: 'column', md: 'row' }}
-                          alignItems={{ base: 'flex-start', md: 'center' }}
-                        >
-                          <Box>Wallet recovery requires</Box>
-                          <Box
-                            width="80px"
-                            margin={{ base: '0', md: '0 10px' }}
-                          >
-                            <Box
-                              px={2}
-                              py={2}
-                              width="80px"
-                              transition="all 0.2s"
-                              borderRadius="16px"
-                              borderWidth="1px"
-                              padding="12px"
-                              background="white"
-                              _expanded={{
-                                borderColor: '#3182ce',
-                                boxShadow: '0 0 0 1px #3182ce',
-                              }}
-                            >
-                              <Box display="flex" alignItems="center" justifyContent="space-between">
-                                {0}
-                                <DropDownIcon />
-                              </Box>
-                            </Box>
-                          </Box>
-                          <Box>{`out of ${1} guardian(s) confirmation.`}</Box>
-                        </TextBody>
-                      </Box>
-                    </Fragment>
+                    <RecoverThreshold
+                      threshold={0}
+                      count={1}
+                    />
                   )}
                 </Box>
                 <Box

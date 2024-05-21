@@ -16,16 +16,16 @@ import ArrowRightIcon from '@/components/Icons/ArrowRight'
 
 export default function IntroGuardianModal({
   isOpen,
-  setIsIntroGuardianOpen,
-  setIsSelectGuardianOpen
+  openModal,
+  closeModal,
 }: any) {
   const [showQuestion1, setShowQuestion1] = useState(false)
   const [showQuestion2, setShowQuestion2] = useState(false)
   const [showQuestion3, setShowQuestion3] = useState(false)
 
   const handleClose = useCallback(() => {
-    setIsIntroGuardianOpen(false)
-    setIsSelectGuardianOpen(true)
+    closeModal('introGuardian')
+    openModal('selectGuardian')
   }, [])
 
   return (

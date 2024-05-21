@@ -1,5 +1,5 @@
 import { SoulWallet, Bundler } from '@soulwallet/sdk';
-import { printUserOp } from '@/lib/tools';
+import { notifyUser, printUserOp } from '@/lib/tools';
 
 let soulWallet: any = null;
 let currentChainId: any = null;
@@ -69,6 +69,7 @@ export const executeTransaction = async (userOp: any, chainConfig: any) => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
       } else {
         if (receipt.OK.success) {
+          notifyUser('Transaction Success', 'Your transaction was successful');
           resolve(receipt.OK.receipt);
         } else {
           reject('tx failed');

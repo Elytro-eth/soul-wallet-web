@@ -111,25 +111,6 @@ const createTempSlice = immer<any>((set, get) => ({
     }
   }),
 
-  getAddingGuardiansInfo: () => {
-    return get().guardianInfo && get().guardianInfo.addingGuardiansInfo
-  },
-  setAddingGuardiansInfo: (value: any) => set({
-    guardianInfo: {
-      ...get().guardianInfo,
-      addingGuardiansInfo: value
-    }
-  }),
-  updateAddingGuardiansInfo: (value: any) => set({
-    guardianInfo: {
-      ...get().guardianInfo,
-      addingGuardiansInfo: {
-        ...(get().getAddingGuardiansInfo() || {}),
-        ...value
-      }
-    }
-  }),
-
   clearGuardianInfo: () => set({
     guardianInfo: {},
   }),

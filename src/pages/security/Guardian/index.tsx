@@ -27,24 +27,23 @@ const defaultGuardianInfo = {
 };
 
 export default function Guardian() {
+  const [isPending, setIsPending] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<boolean>(false);
+  const [isAddEmailGuardianOpen, setIsAddEmailGuardianOpen] = useState<boolean>(false);
+  const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<boolean>(false);
+  const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<boolean>(false);
+  const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<boolean>(false);
+  const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<boolean>(false);
+
   const { navigate } = useBrowser();
   const { getGuardianDetails } = useQuery();
-  const [activeSection, setActiveSection] = useState<string>('guardian');
-  const [isPending, setIsPending] = useState<any>(true);
-  const [isEditGuardianOpen, setIsEditGuardianOpen] = useState<any>(false);
-  const [isAddEmailGuardianOpen, setIsAddEmailGuardianOpen] = useState<any>(false);
-  const [isPendingGuardianOpen, setIsPendingGuardianOpen] = useState<any>(false);
-  const [isRemoveGuardianOpen, setIsRemoveGuardianOpen] = useState<any>(false);
-  const [isSelectGuardianOpen, setIsSelectGuardianOpen] = useState<any>(false);
-  const [isIntroGuardianOpen, setIsIntroGuardianOpen] = useState<any>(false);
   const { selectedAddress } = useAddressStore();
-  const [canBackToSelectGuardianType, setCanBackToSelectGuardianType] = useState<any>(false);
   const [editType, setEditType] = useState<any>('edit');
-  const [count, setCount] = useState<any>(0);
-  const [removeIndex, setRemoveIndex] = useState<any>(0);
-  const [removeAddress, setRemoveAddress] = useState<any>('');
-  const [editingAddressCount, setEditingAddressCount] = useState<any>(0);
-  const [isEditing, setIsEditing] = useState<any>(false);
+  const [removeIndex, setRemoveIndex] = useState<number>(0);
+  const [removeAddress, setRemoveAddress] = useState<string>('');
+  const [editingAddressCount, setEditingAddressCount] = useState<number>(0);
   const { saveAddressName } = useSettingStore();
 
   const tempStore = useTempStore();
@@ -56,38 +55,39 @@ export default function Guardian() {
     getEditingSingleGuardiansInfo,
   } = tempStore;
   const guardianStore = useGuardianStore();
-  const guardiansInfo =
-    (!tempStore.createInfo.creatingGuardianInfo ? guardianStore.guardiansInfo : tempStore.getCreatingGuardianInfo()) ||
-    defaultGuardianInfo;
+  const guardiansInfo = guardianStore.guardiansInfo || defaultGuardianInfo;
 
-  const closeSelectGuardianModal = useCallback(() => {
-    setIsSelectGuardianOpen(false);
-  }, []);
+  const openModal = useCallback((name: string) => {
+    if (name === 'editGuardian') {
+      setIsEditGuardianOpen(true)
+    } else if (name === 'addEmailGuardian') {
+      setIsAddEmailGuardianOpen(true)
+    } else if (name === 'pendingGuardian') {
+      setIsPendingGuardianOpen(true)
+    } else if (name === 'removeGuardian') {
+      setIsRemoveGuardianOpen(true)
+    } else if (name === 'selectGuardian') {
+      setIsSelectGuardianOpen(true)
+    } else if (name === 'introGuardian') {
+      setIsIntroGuardianOpen(true)
+    }
+  }, [])
 
-  const closeIntroGuardianModal = useCallback(() => {
-    setIsIntroGuardianOpen(false);
-  }, []);
-
-  const openPendingGuardianModal = useCallback((editType: any) => {
-    setIsPendingGuardianOpen(true);
-  }, []);
-
-  const closePendingGuardianModal = useCallback(() => {
-    setIsPendingGuardianOpen(false);
-  }, []);
-
-  const openEditGuardianModal = useCallback((editType: any) => {
-    setEditType(editType);
-    setIsEditGuardianOpen(true);
-  }, []);
-
-  const closeEditGuardianModal = useCallback(() => {
-    setIsEditGuardianOpen(false);
-  }, []);
-
-  const closeAddEmailGuardianModal = useCallback(() => {
-    setIsAddEmailGuardianOpen(false);
-  }, []);
+  const closeModal = useCallback((name: string) => {
+    if (name === 'editGuardian') {
+      setIsEditGuardianOpen(false)
+    } else if (name === 'addEmailGuardian') {
+      setIsAddEmailGuardianOpen(false)
+    } else if (name === 'pendingGuardian') {
+      setIsPendingGuardianOpen(false)
+    } else if (name === 'removeGuardian') {
+      setIsRemoveGuardianOpen(false)
+    } else if (name === 'selectGuardian') {
+      setIsSelectGuardianOpen(false)
+    } else if (name === 'introGuardian') {
+      setIsIntroGuardianOpen(false)
+    }
+  }, [])
 
   const startAddGuardian = useCallback(() => {
     if (!isEditing) {
@@ -96,16 +96,14 @@ export default function Guardian() {
 
     setEditType('add');
     setIsEditing(true);
-    setCanBackToSelectGuardianType(true);
-    // setIsEditGuardianOpen(true)
-    setIsSelectGuardianOpen(true);
+    openModal('selectGuardian')
   }, [isEditing, guardiansInfo]);
 
   const startRemoveGuardian = useCallback((i: any, address: any, count: any) => {
     setRemoveIndex(i);
     setRemoveAddress(address);
     setEditingAddressCount(count);
-    setIsRemoveGuardianOpen(true);
+    openModal('removeGuardian')
   }, []);
 
   const enterEditGuardian = useCallback(() => {
@@ -113,38 +111,25 @@ export default function Guardian() {
       setEditingGuardiansInfo(guardiansInfo);
     }
 
-    setCanBackToSelectGuardianType(true);
     setIsEditing(true);
-  }, [isEditing, guardiansInfo]);
-
-  const startEditGuardian = useCallback(() => {
-    if (!isEditing) {
-      setEditingGuardiansInfo(guardiansInfo);
-    }
-
-    setEditType('add');
-    setIsEditing(true);
-    setCanBackToSelectGuardianType(true);
-    setIsEditGuardianOpen(true);
   }, [isEditing, guardiansInfo]);
 
   const startEditSingleGuardian = useCallback(
     (info: any) => {
       setEditingSingleGuardiansInfo(info);
       setEditType('editSingle');
-      setCanBackToSelectGuardianType(false);
       setIsEditing(true);
-      setIsEditGuardianOpen(true);
+      openModal('editGuardian')
     },
-    [isEditing, guardiansInfo],
+    [],
   );
 
   const cancelEditGuardian = useCallback(() => {
     setIsEditing(false);
-  }, [isEditing, guardiansInfo]);
+  }, []);
 
-  const onRemoveGuardianConfirm = useCallback((i: any) => {
-    setIsRemoveGuardianOpen(false);
+  const onRemoveGuardianConfirm = useCallback((i: number) => {
+    closeModal('removeGuardian')
     const editingGuardianInfo = getEditingGuardiansInfo();
     let currentAddresses = editingGuardianInfo.guardianDetails.guardians || [];
     let currentNames = editingGuardianInfo.guardianNames || [];
@@ -161,9 +146,9 @@ export default function Guardian() {
   }, []);
 
   const onEditGuardianConfirm = useCallback(
-    (addresses: any, names: any) => {
+    (addresses: string[], names: string[]) => {
       if (editType === 'edit') {
-        setIsEditGuardianOpen(false);
+        closeModal('editGuardian')
         setIsEditing(true);
 
         for (let i = 0; i < addresses.length; i++) {
@@ -180,15 +165,15 @@ export default function Guardian() {
           },
         });
       } else if (editType === 'editSingle') {
-        setIsEditGuardianOpen(false);
+        closeModal('editGuardian')
 
         const info = getEditingSingleGuardiansInfo();
         const i = info.i;
 
         const editingGuardianInfo = getEditingGuardiansInfo();
         const currentAddresses = editingGuardianInfo.guardianDetails
-          ? editingGuardianInfo.guardianDetails.guardians || []
-          : [];
+                               ? editingGuardianInfo.guardianDetails.guardians || []
+                               : [];
         const currentNames = editingGuardianInfo.guardianNames || [];
         currentAddresses[i] = addresses[0];
         currentNames[i] = names[0];
@@ -205,12 +190,12 @@ export default function Guardian() {
           },
         });
       } else if (editType === 'add') {
-        setIsEditGuardianOpen(false);
-        setIsAddEmailGuardianOpen(false);
+        closeModal('editGuardian')
+        closeModal('addEmailGuardian')
         const editingGuardianInfo = getEditingGuardiansInfo();
         const currentAddresses = editingGuardianInfo.guardianDetails
-          ? editingGuardianInfo.guardianDetails.guardians || []
-          : [];
+                               ? editingGuardianInfo.guardianDetails.guardians || []
+                               : [];
         const currentNames = editingGuardianInfo.guardianNames || [];
 
         for (let i = 0; i < addresses.length; i++) {
@@ -228,7 +213,7 @@ export default function Guardian() {
         });
       }
     },
-    [editType, count],
+    [editType],
   );
 
   const refreshGuardianInfo = async () => {
@@ -260,25 +245,22 @@ export default function Guardian() {
     <Fragment>
       <Box display="flex" flexDirection="column" padding={{ base: '0 24px', lg: 'auto' }} pt="6">
         <SectionMenu>
-          <SectionMenuItem isActive={activeSection == 'guardian'} onClick={() => navigate('/security/guardian')}>
+          <SectionMenuItem isActive={true} onClick={() => navigate('/security/guardian')}>
             Guardian
           </SectionMenuItem>
         </SectionMenu>
         {!!isEditing && (
           <EditGuardian
-            startEditGuardian={startEditGuardian}
             cancelEditGuardian={cancelEditGuardian}
             startAddGuardian={startAddGuardian}
             startEditSingleGuardian={startEditSingleGuardian}
             startRemoveGuardian={startRemoveGuardian}
-            count={count}
             onEdited={() => setIsEditing(false)}
           />
         )}
         {!isEditing && (
           <ListGuardian
-            openEditGuardianModal={openEditGuardianModal}
-            openPendingGuardianModal={openPendingGuardianModal}
+            openModal={openModal}
             startAddGuardian={startAddGuardian}
             enterEditGuardian={enterEditGuardian}
             cancelEditGuardian={cancelEditGuardian}
@@ -286,26 +268,25 @@ export default function Guardian() {
           />
         )}
       </Box>
-      {isAddEmailGuardianOpen && (
-        <AddEmailGuardianModal
-          isOpen={true}
-          onClose={closeAddEmailGuardianModal}
-          setIsAddEmailGuardianOpen={setIsAddEmailGuardianOpen}
-          onConfirm={onEditGuardianConfirm}
-          editType={editType}
-        />
-      )}
+      <AddEmailGuardianModal
+        isOpen={isAddEmailGuardianOpen}
+        closeModal={closeModal}
+        onConfirm={onEditGuardianConfirm}
+      />
       <EditGuardianModal
         isOpen={isEditGuardianOpen}
-        onClose={closeEditGuardianModal}
-        setIsEditGuardianOpen={setIsEditGuardianOpen}
+        closeModal={closeModal}
+        openModal={openModal}
         onConfirm={onEditGuardianConfirm}
         editType={editType}
       />
-      <PendingGuardianModal isOpen={isPendingGuardianOpen} onClose={closePendingGuardianModal} />
+      <PendingGuardianModal
+        isOpen={isPendingGuardianOpen}
+        closeModal={closeModal}
+      />
       <RemoveGuardianModal
         isOpen={isRemoveGuardianOpen}
-        onClose={() => setIsRemoveGuardianOpen(false)}
+        closeModal={closeModal}
         onConfirm={onRemoveGuardianConfirm}
         removeIndex={removeIndex}
         address={removeAddress}
@@ -313,17 +294,13 @@ export default function Guardian() {
       />
       <SelectGuardianTypeModal
         isOpen={isSelectGuardianOpen}
-        onClose={closeSelectGuardianModal}
-        setIsIntroGuardianOpen={setIsIntroGuardianOpen}
-        setIsSelectGuardianOpen={setIsSelectGuardianOpen}
-        setIsEditGuardianOpen={setIsEditGuardianOpen}
-        setIsAddEmailGuardianOpen={setIsAddEmailGuardianOpen}
+        openModal={openModal}
+        closeModal={closeModal}
       />
       <IntroGuardianModal
         isOpen={isIntroGuardianOpen}
-        onClose={closeIntroGuardianModal}
-        setIsIntroGuardianOpen={setIsIntroGuardianOpen}
-        setIsSelectGuardianOpen={setIsSelectGuardianOpen}
+        openModal={openModal}
+        closeModal={closeModal}
       />
     </Fragment>
   );

@@ -14,6 +14,7 @@ import { useGuardianStore } from '@/store/guardian';
 import { useSettingStore } from '@/store/setting';
 import EmptyGuardianIcon from '@/assets/icons/empty-guardian.svg'
 import IconCheveronRight from '@/assets/icons/chevron-right.svg';
+import RecoverThreshold from '@/components/Guardian/RecoverThreshold'
 
 export default function ListGuardian({
   startAddGuardian,
@@ -73,7 +74,7 @@ export default function ListGuardian({
                 )}
                 </Box> */}
           </Box>
-          {/* {isPending && (
+          {/* {true && (
               <Box
               background="#F3FBF2"
               borderRadius="8px"
@@ -139,59 +140,10 @@ export default function ListGuardian({
               </Box>
             )}
             {!!guardianList.length && (
-              <Fragment>
-                <Flex
-                  justifyContent="flex-start"
-                  marginTop="10px"
-                  alignItems={{ base: 'flex-start', md: 'center' }}
-                  flexDirection={{ base: 'column', md: 'row' }}
-                  gap={{base: 2, lg: 0}}
-                >
-                  <Box
-                    fontFamily="Nunito"
-                    fontWeight="700"
-                    fontSize="14px"
-                    marginRight="6px"
-                  >
-                    Threshold:
-                  </Box>
-                  <TextBody
-                    type="t2"
-                    justifyContent="flex-start"
-                    display="flex"
-                    flexDirection={{ base: 'column', md: 'row' }}
-                    alignItems={{ base: 'flex-start', md: 'center' }}
-                    gap={{base: 2, lg: 0}}
-                  >
-                    <Box>Wallet recovery requires</Box>
-                    <Box
-                      width="80px"
-                      margin={{ base: '0', md: '0 10px' }}
-                    >
-                      <Box
-                        px={2}
-                        py={2}
-                        width="80px"
-                        transition="all 0.2s"
-                        borderRadius="16px"
-                        borderWidth="1px"
-                        padding="12px"
-                        background="#F6F6F6"
-                        _expanded={{
-                          borderColor: '#3182ce',
-                          boxShadow: '0 0 0 1px #3182ce',
-                        }}
-                      >
-                        <Box display="flex" alignItems="center" justifyContent="space-between">
-                          {guardianDetails.threshold || 0}
-                          <DropDownIcon />
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Box>{`out of ${guardianDetails.guardians.length} guardian(s) confirmation.`}</Box>
-                  </TextBody>
-                </Flex>
-              </Fragment>
+              <RecoverThreshold
+                threshold={guardianDetails.threshold || 0}
+                count={guardianDetails.guardians.length}
+              />
             )}
           </Box>
         </Fragment>

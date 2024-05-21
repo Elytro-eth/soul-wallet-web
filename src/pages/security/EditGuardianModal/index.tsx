@@ -9,20 +9,18 @@ import {
 } from '@chakra-ui/react'
 import TextBody from '@/components/new/TextBody'
 import Title from '@/components/new/Title'
-import EditGuardianForm from '../EditGuardianForm'
+import EditGuardianForm from './EditGuardianForm'
 
 export default function EditGuardianModal({
   isOpen,
-  onClose,
+  closeModal,
+  openModal,
   onConfirm,
-  setIsEditGuardianOpen,
-  setIsSelectGuardianOpen,
   canGoBack,
   editType
 }: any) {
   const onBack = () => {
-    setIsEditGuardianOpen(false)
-    if (setIsSelectGuardianOpen) setIsSelectGuardianOpen(true)
+    closeModal('editGuardian')
   }
 
   const onConfirmLocal = (addresses: any, names: any, i: any) => {
@@ -30,7 +28,7 @@ export default function EditGuardianModal({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={() => closeModal('editGuardian')} isCentered>
       <ModalOverlay />
       <ModalContent maxW={{base: "95%", lg :"840px"}} my={{base: "120px"}} borderRadius="20px">
         <ModalCloseButton top="14px" />

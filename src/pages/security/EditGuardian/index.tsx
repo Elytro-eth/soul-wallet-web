@@ -26,6 +26,7 @@ import EmptyGuardianIcon from '@/assets/icons/empty-guardian.svg';
 import RemoveIcon from '@/components/Icons/Remove';
 import useWalletContract from '@/hooks/useWalletContract';
 import { SocialRecovery } from '@soulwallet/sdk';
+import RecoverThreshold from '@/components/Guardian/RecoverThreshold'
 
 const getRecommandCount = (c: number) => {
   if (!c) {
@@ -92,7 +93,7 @@ export default function EditGuardian({
     )) ||
     [];
 
-  const guardianList = guardianDetails.guardians.map((guardian: any, i: number) => {
+  const guardianList = guardianDetails.guardians.map((guardian: string, i: number) => {
     return {
       address: guardian,
       name: guardianNames[i],
@@ -267,71 +268,12 @@ export default function EditGuardian({
               </Box>
             )}
             {!!guardianList.length && (
-              <Fragment>
-                <Box
-                  display="flex"
-                  justifyContent="flex-start"
-                  marginTop="10px"
-                  alignItems={{ base: 'flex-start', md: 'center' }}
-                  flexDirection={{ base: 'column', md: 'row' }}
-                  gap={{base: 2, lg: 0}}
-                >
-                  <Box fontFamily="Nunito" fontWeight="700" fontSize="14px" marginRight="6px">
-                    Threshold:
-                  </Box>
-                  <TextBody
-                    type="t2"
-                    justifyContent="flex-start"
-                    display="flex"
-                    flexDirection={{ base: 'column', md: 'row' }}        
-                    gap={{base: 2, lg: 0}}
-                    alignItems={{ base: 'flex-start', md: 'center' }}
-                  >
-                    <Box>Wallet recovery requires</Box>
-                    <Box width="80px" margin={{ base: '0', md: '0 10px' }}>
-                      <Menu>
-                        <MenuButton
-                          px={2}
-                          py={2}
-                          width="80px"
-                          transition="all 0.2s"
-                          borderRadius="16px"
-                          borderWidth="1px"
-                          padding="12px"
-                          background="white"
-                          _hover={{
-                            borderColor: '#3182ce',
-                            boxShadow: '0 0 0 1px #3182ce',
-                          }}
-                          _expanded={{
-                            borderColor: '#3182ce',
-                            boxShadow: '0 0 0 1px #3182ce',
-                          }}
-                        >
-                          <Box display="flex" alignItems="center" justifyContent="space-between">
-                            {amountForm.values.amount || 0}
-                            <DropDownIcon />
-                          </Box>
-                        </MenuButton>
-                        <MenuList>
-                          {!(guardianList.length || 0) && (
-                            <MenuItem key={nanoid(4)} onClick={selectAmount(0)}>
-                              0
-                            </MenuItem>
-                          )}
-                          {!!(guardianList.length || 0) &&
-                           getNumberArray(guardianList.length || 0).map((i: any) => (
-                             <MenuItem key={nanoid(4)} onClick={selectAmount(i)}>
-                               {i}
-                             </MenuItem>
-                          ))}
-                        </MenuList>
-                      </Menu>
-                    </Box>
-                    <Box>{`out of ${guardianList.length || 0} guardian(s) confirmation.`}</Box>
-                  </TextBody>
-                </Box>
-              </Fragment>
+              <RecoverThreshold
+                threshold={amountForm.values.amount || 0}
+                count={guardianList.length || 0}
+                isEditing={true}
+                selectAmount={selectAmount}
+              />
             )}
           </Box>
         </Fragment>
