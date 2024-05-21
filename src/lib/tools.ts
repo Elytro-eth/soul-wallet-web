@@ -162,9 +162,9 @@ export const getCurrentTimeFormatted = (hideYear = false) => {
   const hour = String(now.getHours()).padStart(2, '0');
   const minute = String(now.getMinutes()).padStart(2, '0');
   const second = String(now.getSeconds()).padStart(2, '0');
-  if(hideYear){
+  if (hideYear) {
     return `${month}-${day} ${hour}:${minute}:${second}`;
-  }else{
+  } else {
     return `${year}-${month}-${day}-${hour}:${minute}:${second}`;
   }
 };
@@ -382,3 +382,19 @@ export const getIconMapping = (name: string) => {
       return IconContract;
   }
 };
+
+export function notifyUser(title: string, message: string) {
+  if (Notification.permission === 'granted') {
+    new Notification(title, { body: message });
+  } else if (Notification.permission !== 'denied') {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        new Notification(title, { body: message });
+      }
+    });
+  }
+}
+
+export function isPWA() {
+  return window.matchMedia('(display-mode: standalone)').matches || /Mobi|Android/i.test(navigator.userAgent);
+}
