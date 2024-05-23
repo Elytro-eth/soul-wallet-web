@@ -8,10 +8,8 @@ import TextBody from '@/components/new/TextBody';
 import Button from '@/components/Button';
 import PasskeyIcon from '@/components/Icons/Intro/Passkey';
 import AccountIcon from '@/components/Icons/Intro/Account';
-import { useTempStore } from '@/store/temp';
 import { useSettingStore } from '@/store/setting';
 import SetPasskey from './SetPasskey';
-import SetGuardian from './SetGuardian';
 import SelectNetwork from './SelectNetwork';
 import { SignHeader } from '../public/Sign';
 import useWallet from '@/hooks/useWallet';
@@ -80,10 +78,6 @@ export default function Auth() {
       />
     )
   }
-
-  /* if (stepType === 'setGuardian') {
-   *   return <SetGuardian walletName={walletName} back={() => setStepType('setPassKey')} onCreate={onCreate} />;
-   * } */
 
   return (
     <Flex width="100%" align={'center'} justify={'center'} minHeight="100vh" background="#F2F4F7">

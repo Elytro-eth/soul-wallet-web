@@ -36,16 +36,6 @@ const getRecommandCount = (c: number) => {
   return Math.ceil(c / 2);
 };
 
-const getNumberArray = (count: number) => {
-  const arr = [];
-
-  for (let i = 1; i <= count; i++) {
-    arr.push(i);
-  }
-
-  return arr;
-};
-
 const amountValidate = (values: any, props: any) => {
   const errors: any = {};
 
@@ -99,8 +89,6 @@ export default function EditGuardian({
       name: guardianNames[i],
     };
   });
-
-  // const [amountData, setAmountData] = useState<any>({ guardiansCount: guardianList.length });
 
   const amountForm = useForm({
     fields: ['amount'],

@@ -13,7 +13,6 @@ import TextBody from '@/components/new/TextBody'
 import Button from '@/components/Button'
 import { useSignerStore } from '@/store/signer';
 import { ethers } from 'ethers';
-import { useTempStore } from '@/store/temp';
 import NoWalletIcon from '@/assets/icons/no-wallet.svg'
 import { SignHeader } from '@/pages/public/Sign';
 import { trimPrefix } from '@/lib/tools'

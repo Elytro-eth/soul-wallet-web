@@ -61,15 +61,6 @@ const createTempSlice = immer<any>((set, get) => ({
       editingSingleGuardiansInfo: value
     }
   }),
-  updateEditingSingleGuardiansInfo: (value: any) => set({
-    guardianInfo: {
-      ...get().guardianInfo,
-      editingSingleGuardiansInfo: {
-        ...(get().getEditingSingleGuardiansInfo() || {}),
-        ...value
-      }
-    }
-  }),
 
   clearGuardianInfo: () => set({
     guardianInfo: {},
