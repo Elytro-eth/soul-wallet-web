@@ -51,9 +51,16 @@ export default function Guardian() {
     getEditingGuardiansInfo,
     setEditingGuardiansInfo,
     updateEditingGuardiansInfo,
-    setEditingSingleGuardiansInfo,
-    getEditingSingleGuardiansInfo,
   } = tempStore;
+
+  const [editingSingleGuardiansInfo, setEditingSingleGuardiansInfo] = useState<any>({
+    guardianDetails: {
+      guardians: [],
+    },
+    guardianNames: [],
+    i: -1,
+  })
+
   const guardianStore = useGuardianStore();
   const guardiansInfo = guardianStore.guardiansInfo || defaultGuardianInfo;
 
@@ -167,7 +174,7 @@ export default function Guardian() {
       } else if (editType === 'editSingle') {
         closeModal('editGuardian')
 
-        const info = getEditingSingleGuardiansInfo();
+        const info = editingSingleGuardiansInfo;
         const i = info.i;
 
         const editingGuardianInfo = getEditingGuardiansInfo();
@@ -213,7 +220,7 @@ export default function Guardian() {
         });
       }
     },
-    [editType],
+    [editType, editingSingleGuardiansInfo],
   );
 
   const refreshGuardianInfo = async () => {
@@ -279,6 +286,7 @@ export default function Guardian() {
         openModal={openModal}
         onConfirm={onEditGuardianConfirm}
         editType={editType}
+        editingSingleGuardiansInfo={editingSingleGuardiansInfo}
       />
       <PendingGuardianModal
         isOpen={isPendingGuardianOpen}

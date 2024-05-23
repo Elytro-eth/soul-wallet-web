@@ -125,17 +125,17 @@ export default function GuardianForm({
   onConfirm,
   onBack,
   canGoBack,
-  editType
+  editType,
+  editingSingleGuardiansInfo
 }: any) {
   const { getAddressName } = useSettingStore();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const tempStore = useTempStore()
   const {
     getEditingGuardiansInfo,
-    getEditingSingleGuardiansInfo,
   } = tempStore;
   const guardiansInfo = (editType === 'edit') ? getEditingGuardiansInfo() : (
-    editType === 'add' ? defaultGuardianInfo : getEditingSingleGuardiansInfo()
+    editType === 'add' ? defaultGuardianInfo : editingSingleGuardiansInfo
   );
   const guardianDetails = (guardiansInfo && guardiansInfo?.guardianDetails) || {
     guardians: [],
@@ -149,7 +149,6 @@ export default function GuardianForm({
   const [amountData, setAmountData] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [showAdvance, setShowAdvance] = useState(false)
-  const [keepPrivate, setKeepPrivate] = useState(!!guardiansInfo?.keepPrivate)
   const [status, setStatus] = useState<string>('editing');
 
   const externalValidate = useCallback((values: any) => {
@@ -223,13 +222,13 @@ export default function GuardianForm({
       const guardianNames = guardiansList.map((item: any) => item.name);
 
       if (editType === 'editSingle') {
-        const info = getEditingSingleGuardiansInfo()
+        const info = editingSingleGuardiansInfo
         onConfirm(guardianAddresses, guardianNames, info.i)
       } else {
         onConfirm(guardianAddresses, guardianNames)
       }
     }
-  }, [editType, values])
+  }, [editType, values, editingSingleGuardiansInfo])
 
   const handleBack = () => {
     if (onBack) {
@@ -290,8 +289,6 @@ export default function GuardianForm({
       hasGuardians={hasGuardians}
       cancelEdit={cancelEdit}
       selectAmount={selectAmount}
-      keepPrivate={keepPrivate}
-      setKeepPrivate={setKeepPrivate}
       canGoBack={canGoBack}
       editType={editType}
     />

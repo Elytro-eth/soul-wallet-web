@@ -64,8 +64,6 @@ export default function EditGuardian({
   const { changeGuardian } = useTransaction();
   const [isCreating, setIsCreating] = useState(false);
   const { setGuardiansInfo } = useGuardianStore();
-  const [showGuardianTip1, setShowGuardianTip1] = useState(true);
-  const [showGuardianTip2, setShowGuardianTip2] = useState(true);
   const { checkActivated } = useWalletContext();
   const toast = useToast();
 

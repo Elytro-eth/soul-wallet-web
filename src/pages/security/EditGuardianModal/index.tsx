@@ -17,7 +17,8 @@ export default function EditGuardianModal({
   openModal,
   onConfirm,
   canGoBack,
-  editType
+  editType,
+  editingSingleGuardiansInfo
 }: any) {
   const onBack = () => {
     closeModal('editGuardian')
@@ -48,7 +49,7 @@ export default function EditGuardianModal({
                 Use wallet address from yourself or friends & family. Fully decentralized
               </TextBody>
               <Box>
-                <EditGuardianForm onConfirm={onConfirmLocal} onBack={onBack} canGoBack={canGoBack} editType={editType} />
+                <EditGuardianForm onConfirm={onConfirmLocal} onBack={onBack} canGoBack={canGoBack} editType={editType} editingSingleGuardiansInfo={editingSingleGuardiansInfo} />
               </Box>
             </Box>
           </Box>
