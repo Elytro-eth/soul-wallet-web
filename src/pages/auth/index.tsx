@@ -22,15 +22,12 @@ export default function Auth() {
   const [stepType, setStepType] = useState('auth');
   const [walletName, setWalletName] = useState('');
   const [credentials, setCredentials] = useState([]);
-  const { loginInfo } = useTempStore();
   const { getSignerIdAddress } = useSettingStore();
   const { initWallet, loginWallet, } = useWallet();
   const { clearLogData } = useTools();
   const { navigate } = useBrowser();
   const signerIdAddress = getSignerIdAddress();
-  const activeSignerId = loginInfo.signerId;
-  const activeLoginAccounts = signerIdAddress[loginInfo.signerId];
-  console.log('signerIdAddress', activeSignerId, activeLoginAccounts, signerIdAddress, stepType);
+  console.log('signerIdAddress', signerIdAddress, stepType);
 
   const openRecover = useCallback(() => {
     navigate('/recover');

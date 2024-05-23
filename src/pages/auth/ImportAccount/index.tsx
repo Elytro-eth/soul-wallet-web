@@ -20,7 +20,6 @@ import { trimPrefix } from '@/lib/tools'
 
 export default function ImportAccount({ importWallet, isImporting, back }: any) {
   const [address, setAddress] = useState('')
-  const { updateCreateInfo } = useTempStore()
   const {
     credentials,
   } = useSignerStore();
@@ -38,10 +37,6 @@ export default function ImportAccount({ importWallet, isImporting, back }: any) 
   }, [])
 
   const next = useCallback(() => {
-    updateCreateInfo({
-      credentials
-    })
-
     navigate(`/dashboard`);
   }, [credentials])
 

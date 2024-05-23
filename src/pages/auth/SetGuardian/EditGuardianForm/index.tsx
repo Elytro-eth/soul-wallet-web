@@ -144,7 +144,6 @@ export default function GuardianForm({
   const {
     getEditingGuardiansInfo,
     getEditingSingleGuardiansInfo,
-    createInfo
   } = tempStore;
   const guardiansInfo = (editType === 'edit') ? getEditingGuardiansInfo() : (
     editType === 'add' ? defaultGuardianInfo : getEditingSingleGuardiansInfo()
@@ -164,26 +163,10 @@ export default function GuardianForm({
   const [keepPrivate, setKeepPrivate] = useState(!!guardiansInfo?.keepPrivate)
   const [status, setStatus] = useState<string>('editing');
 
-  const externalValidate = useCallback((values: any) => {
-    const errors: any = {}
-    const addressKeys = Object.keys(values).filter((key) => key.indexOf('address') === 0);
-
-    for (const addressKey of addressKeys) {
-      const address = values[addressKey];
-
-      if (createInfo && createInfo.eoaAddress && createInfo.eoaAddress.map((address: any) => toLowerCase(address)).filter((address: any) => !!address).indexOf(toLowerCase(address)) !== -1) {
-        errors[addressKey] = 'This address is already been used as signer.';
-      }
-    }
-
-    return errors
-  }, [editType, createInfo.eoaAddress])
-
   const { values, errors, invalid, onChange, onBlur, showErrors, addFields, removeFields, onChangeValues } = useForm({
     fields,
     validate,
-    initialValues: getInitialValues(defaultGuardianIds, guardianDetails.guardians, guardianNames),
-    callbackRef: externalValidate
+    initialValues: getInitialValues(defaultGuardianIds, guardianDetails.guardians, guardianNames)
   });
 
   const amountForm = useForm({

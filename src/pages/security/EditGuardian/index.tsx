@@ -69,7 +69,7 @@ export default function EditGuardian({
   onEdited,
 }: any) {
   const { getAddressName, saveAddressName, getGuardianAddressEmail } = useSettingStore();
-  const { getEditingGuardiansInfo, updateEditingGuardiansInfo, clearCreateInfo } = useTempStore();
+  const { getEditingGuardiansInfo, updateEditingGuardiansInfo } = useTempStore();
   const guardiansInfo = getEditingGuardiansInfo();
   const { changeGuardian } = useTransaction();
   const [isCreating, setIsCreating] = useState(false);

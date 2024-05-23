@@ -133,7 +133,6 @@ export default function GuardianForm({
   const {
     getEditingGuardiansInfo,
     getEditingSingleGuardiansInfo,
-    createInfo
   } = tempStore;
   const guardiansInfo = (editType === 'edit') ? getEditingGuardiansInfo() : (
     editType === 'add' ? defaultGuardianInfo : getEditingSingleGuardiansInfo()
@@ -168,14 +167,10 @@ export default function GuardianForm({
           errors[addressKey] = 'Address already in use';
         }
       }
-
-      if (createInfo && createInfo.eoaAddress && createInfo.eoaAddress.map((address: any) => toLowerCase(address)).filter((address: any) => !!address).indexOf(toLowerCase(address)) !== -1) {
-        errors[addressKey] = 'This address is already been used as signer.';
-      }
     }
 
     return errors
-  }, [editType, createInfo.eoaAddress])
+  }, [editType])
 
   const { values, errors, invalid, onChange, onBlur, showErrors, addFields, removeFields, onChangeValues } = useForm({
     fields,
