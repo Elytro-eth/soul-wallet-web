@@ -7,6 +7,7 @@ import SetupPasskey from './SetupPasskey';
 import CreateSuccess from './CreateSuccess';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
+import ProgressBar from '@/components/ProgressBar'
 import api from '@/lib/api';
 
 export default function Create() {
@@ -147,6 +148,7 @@ export default function Create() {
   return (
     <Box width="100%" height="100%">
       <Header title="Create account" showBackButton onBack={onPrev} />
+      <ProgressBar percentage={40} />
       {renderStep()}
     </Box>
   );
