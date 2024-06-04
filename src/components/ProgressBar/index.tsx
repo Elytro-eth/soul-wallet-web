@@ -6,7 +6,7 @@ export default function ProgressBar({ percentage }: { percentage: number }) {
       width="100%"
       height="2px"
     >
-      <Box width={`${percentage}%`} height="100%" background="#6B8AFF" />
+      <Box width={`${percentage}%`} height="100%" background="#6B8AFF" transition="all 0.2s ease" />
     </Box>
   );
 }

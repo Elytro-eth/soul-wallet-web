@@ -4,6 +4,7 @@ import Header from '@/components/mobile/Header';
 import InputInviteCode from './InputInviteCode';
 import SetupUsername from './SetupUsername';
 import SetupPasskey from './SetupPasskey';
+import AddPasskey from './AddPasskey';
 import CreateSuccess from './CreateSuccess';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
@@ -139,8 +140,10 @@ export default function Create() {
         />
       );
     } else if (step == 2) {
-      return <SetupPasskey addingPasskey={addingPasskey} onNext={onCreatePasskey} />;
+      return <AddPasskey onNext={onNext} />;
     } else if (step == 3) {
+      return <SetupPasskey addingPasskey={addingPasskey} onNext={onNext} />;
+    } else if (step == 4) {
       return <CreateSuccess credential={credential} username={username} invitationCode={invitationCode} />;
     }
   };
@@ -148,7 +151,7 @@ export default function Create() {
   return (
     <Box width="100%" height="100%">
       <Header title="Create account" showBackButton onBack={onPrev} />
-      <ProgressBar percentage={40} />
+      <ProgressBar percentage={step >= 3 ? 100 : (((step + 1) / 3) * 100)} />
       {renderStep()}
     </Box>
   );

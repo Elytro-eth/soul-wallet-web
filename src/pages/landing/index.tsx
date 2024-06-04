@@ -11,6 +11,7 @@ import IconLoading from '@/assets/mobile/loading.gif';
 import IntroIMG from '@/assets/landing-intro.png';
 import Toolbar1 from '@/assets/toolbar1.png';
 import Toolbar2 from '@/assets/toolbar2.png';
+import AddHomeIMG from '@/assets/add-home.svg';
 import config from '@/config';
 import useWallet from '@/hooks/useWallet';
 import { useBalanceStore } from '@/store/balance';
@@ -27,7 +28,7 @@ export default function Landing() {
   const [logging, setLogging] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const innerHeight = window.innerHeight
-  const marginHeight = innerHeight - 620
+  const marginHeight = innerHeight - 740
 
   const navigate = useNavigate();
   const doSignIn = async () => {
@@ -430,21 +431,11 @@ export default function Landing() {
             sm: `${marginHeight}px`,
             md: 'calc(50vh - 125px)'
           }}
-          height="620px"
+          height="740px"
           overflow="visible"
           mb="0"
           position="relative"
         >
-          <Box
-            background="#D9D9D9"
-            height="100px"
-            width="100px"
-            borderRadius="100px"
-            position="absolute"
-            top="-50px"
-            left="calc(50vw - 50px)"
-            zIndex="1"
-          />
           <ModalCloseButton />
           <ModalBody
             display="flex"
@@ -454,27 +445,28 @@ export default function Landing() {
             width="100%"
             paddingLeft="0"
             paddingRight="0"
-            paddingTop="60px"
+            paddingTop="20px"
           >
+            <Box
+              background="#D9D9D9"
+              height="120px"
+              width="120px"
+              borderRadius="120px"
+              marginBottom="30px"
+            >
+              <Image src={AddHomeIMG} />
+            </Box>
             <Box fontSize="24px" fontWeight="700" marginBottom="14px" textAlign="center" letterSpacing="-2px">
               Add to home screen to continue...
-            </Box>
-            <Box
-              fontSize="16px"
-              textAlign="center"
-              marginBottom="40px"
-              letterSpacing="-1px"
-            >
-              To install Soul wallet, you need to add this website to home screen. Here’s the how-to guide.
             </Box>
             <Box width="100%">
               <Image src={Toolbar1} />
             </Box>
-            <Box fontWeight="700" fontSize="16px" padding="14px 0">1. Click this at toolbar</Box>
+            <Box fontWeight="700" fontSize="16px" paddingBottom="14px">1. Click this at toolbar</Box>
             <Box width="100%">
               <Image src={Toolbar2} />
             </Box>
-            <Box fontWeight="700" fontSize="16px" padding="14px 0">2. Click “Add to Home Screen</Box>
+            <Box fontWeight="700" fontSize="16px" paddingBottom="14px">{`2. Click "Add to Home Screen"`}</Box>
           </ModalBody>
         </ModalContent>
       </Modal>

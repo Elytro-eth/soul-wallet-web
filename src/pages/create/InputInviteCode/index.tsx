@@ -57,7 +57,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           }
         </Box>
       </Box>
-      <Button disabled={disabled} size="xl" type="black" width="100%" onClick={onNext}>Continue</Button>
+      <Button disabled={false} size="xl" type="black" width="100%" onClick={onNext}>Continue</Button>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
