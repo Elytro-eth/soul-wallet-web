@@ -98,7 +98,7 @@ const buttonStyles = {
     color: 'white',
     bg: '#324174',
     boxShadow: '0px 4px 20px 0px #223C9C33',
-    _hover: { bg: '#497EE6' },
+    _hover: { bg: '#324174' },
     _disabled: {
       cursor: 'not-allowed',
       opacity: '0.4'
