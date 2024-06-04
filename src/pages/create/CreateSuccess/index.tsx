@@ -112,7 +112,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       width="100%"
       height="100%"
       padding="30px"
-      paddingTop="138px"
+      paddingTop="200px"
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -130,8 +130,8 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
           Thanks for setting up your Stable.cash account. Start saving from now on!
         </Box>
       </Box>
-      <Button onClick={onCreate} size="xl" type="black" minWidth="195px">
-        Go to Wallet
+      <Button width="100%" onClick={onCreate} size="xl" type="blue" minWidth="195px">
+        Let’s go
       </Button>
     </Box>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, Fragment } from 'react';
 import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import InputInviteCode from './InputInviteCode';
@@ -140,18 +140,20 @@ export default function Create() {
         />
       );
     } else if (step == 2) {
-      return <AddPasskey onNext={onNext} />;
+      return <AddPasskey addingPasskey={addingPasskey} onNext={onNext} />;
     } else if (step == 3) {
-      return <SetupPasskey addingPasskey={addingPasskey} onNext={onNext} />;
-    } else if (step == 4) {
       return <CreateSuccess credential={credential} username={username} invitationCode={invitationCode} />;
     }
   };
 
   return (
     <Box width="100%" height="100%">
-      <Header title="Create account" showBackButton onBack={onPrev} />
-      <ProgressBar percentage={step >= 3 ? 100 : (((step + 1) / 3) * 100)} />
+      {step < 3 && (
+        <Fragment>
+          <Header title="Create account" showBackButton onBack={onPrev} />
+          <ProgressBar percentage={step >= 3 ? 100 : (((step + 1) / 3) * 100)} />
+        </Fragment>
+      )}
       {renderStep()}
     </Box>
   );

@@ -1,7 +1,8 @@
-import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link } from '@chakra-ui/react';
+import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import InputLoading from '@/components/InputLoading';
 import { xLink } from '@/config';
+import XIcon from '@/assets/x.svg';
 
 export default function InputInviteCode({value, onChange, codeStatus, checking, onNext}: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -9,7 +10,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
 
   console.log('code status', codeStatus);
   const innerHeight = window.innerHeight
-  const marginHeight = innerHeight - 428
+  const marginHeight = innerHeight - 468
   console.log('innerHeight', innerHeight)
 
 
@@ -57,7 +58,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           }
         </Box>
       </Box>
-      <Button disabled={false} size="xl" type="black" width="100%" onClick={onNext}>Continue</Button>
+      <Button disabled={false} size="xl" type="blue" width="100%" onClick={onNext}>Continue</Button>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -78,7 +79,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
             sm: `${marginHeight}px`,
             md: 'calc(50vh - 125px)'
           }}
-          height="428px"
+          height="468px"
           overflow="auto"
           mb="0"
         >
@@ -96,7 +97,9 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
               width="120px"
               borderRadius="120px"
               marginBottom="30px"
-            />
+            >
+              <Image src={XIcon} />
+            </Box>
             <Box fontSize="24px" fontWeight="700" marginBottom="14px">
               Thanks for your interest
             </Box>
@@ -109,7 +112,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
             </Box>
             <Box width="100%">
               <Link target='_blank' href={xLink}>
-                <Button size="xl" type="black" width="100%">Follow Stable.cash on X</Button>
+                <Button size="xl" type="blue" width="100%">Follow Stable.cash on X</Button>
               </Link>
             </Box>
           </ModalBody>

@@ -61,9 +61,10 @@ const buttonStyles = {
     _disabled: { cursor: 'not-allowed', bg: '#B2B2B2', _hover: { bg: '#B2B2B2' } },
   },
   white: {
-    color: '#000',
+    color: '#101828',
     bg: '#fff',
-    border: '1px solid #D0D5DD',
+    border: '1px solid #E4E4E4',
+    boxShadow: '0px 4px 20px 0px #223C9C1A',
     _hover: { bg: '#eee' },
     _disabled: { cursor: 'not-allowed', color: '#B2B2B2', _hover: { bg: "#fff" } },
   },
@@ -95,7 +96,7 @@ const buttonStyles = {
   },
   blue: {
     color: 'white',
-    bg: '#497EE6',
+    bg: '#324174',
     boxShadow: '0px 4px 20px 0px #223C9C33',
     _hover: { bg: '#497EE6' },
     _disabled: {
