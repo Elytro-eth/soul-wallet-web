@@ -311,6 +311,7 @@ export default function Dashboard() {
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
+                  onClick={() => openFullScreenModal('activity')}
                 >
                   <Box><ActivitiesIcon /></Box>
                   <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Activity</Box>
