@@ -14,7 +14,7 @@ export default {
   provider: `https://optimism.drpc.org`,
   scanUrl: 'https://optimistic.etherscan.io',
   scanName: 'Etherscan',
-  bundlerUrl: `${import.meta.env.VITE_BACKEND_URL}/appapi/bundler/optimism/rpc`,
+  bundlerUrl: `${import.meta.env.VITE_BACKEND_URL}/walletapi/bundler/optimism/rpc`,
   maxCostMultiplier: 120,
   chainId,
   chainIdHex: `0x${(chainId).toString(16)}`,

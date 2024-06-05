@@ -8,9 +8,79 @@ import { erc20Abi } from 'viem';
 import { useAddressStore } from '@/store/address';
 import { Transaction } from '@soulwallet/sdk';
 import { ABI_ReceivePayment } from '@soulwallet/abi';
+import { noGuardian } from './useWallet';
+import { toHex } from '@/lib/tools';
+import { useSlotStore } from '@/store/slot';
+import { useSignerStore } from '@/store/signer';
+import { useChainStore } from '@/store/chain';
+import api from '@/lib/api';
+import { useToast } from '@chakra-ui/react';
+import useSdk from './useSdk';
 
 export default function useTransaction() {
-  const { selectedAddress } = useAddressStore();
+  const { selectedAddress, setSelectedAddress, setWalletName } = useAddressStore();
+  const { selectedChainId } = useChainStore();
+  const { setSlotInfo } = useSlotStore();
+  const { setCredentials } = useSignerStore();
+  const { soulWallet } = useSdk();
+
+  const toast = useToast();
+
+  const initWallet = async (credential: any, walletName: string, invitationCode: string) => {
+    const createIndex = 0;
+
+    const initialKeys = [credential.onchainPublicKey as string];
+
+    const createSlotInfo = {
+      initialKeys,
+      initialGuardianHash: noGuardian.initialGuardianHash,
+      initialGuardianSafePeriod: toHex(noGuardian.initialGuardianSafePeriod),
+    };
+
+    // do time consuming jobs
+    const calcRes = await soulWallet.calcWalletAddress(
+      createIndex,
+      initialKeys,
+      noGuardian.initialGuardianHash,
+      Number(noGuardian.initialGuardianSafePeriod),
+      selectedChainId,
+    )
+
+    const address = calcRes.OK;
+
+    setSelectedAddress(address);
+    setWalletName(walletName);
+    const res: any = await api.account.create({
+      address,
+      chainID: selectedChainId,
+      name: walletName,
+      initInfo: {
+        index: createIndex,
+        ...createSlotInfo,
+      },
+      invitationCode,
+    });
+    if (res.code !== 200) {
+      toast({
+        title: 'Create wallet failed',
+        description: res.msg,
+        status: 'error',
+      });
+      throw new Error('Create wallet failed');
+    }
+
+    // private backup key
+
+    setSlotInfo(createSlotInfo);
+
+    setCredentials([credential as any]);
+
+    return {
+      initialKeys,
+      address,
+      selectedChainId,
+    };
+  };
 
   const payTask = async (contractAddress: string, amount: string, paymentId: string) => {
     const soulAbi = new ethers.Interface(ABI_ReceivePayment);
@@ -51,5 +121,6 @@ export default function useTransaction() {
     sendErc20,
     sendEth,
     payTask,
+    initWallet,
   };
 }

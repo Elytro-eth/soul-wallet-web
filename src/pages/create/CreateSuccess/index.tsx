@@ -8,7 +8,7 @@ import useWallet from '@/hooks/useWallet';
 import { useNavigate } from 'react-router-dom';
 
 export default function CreateSuccess({ credential, username, invitationCode }: any) {
-  const { getActivateOp, signAndSend, initWallet } = useWallet();
+  const { getActivateOp, signAndSend } = useWallet();
   const userOpRef = useRef<any>();
   const initialKeysRef = useRef<any>();
   const creatingRef = useRef(false);
@@ -27,10 +27,10 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
   const prepareAction = async () => {
     try {
       if (!initialKeysRef.current) {
-        const { initialKeys: _initialKeys } = await initWallet(credential, username, invitationCode);
-        initialKeysRef.current = _initialKeys;
-        const _userOp = await getActivateOp(_initialKeys);
-        userOpRef.current = _userOp;
+        // const { initialKeys: _initialKeys } = await initWallet(credential, username, invitationCode);
+        // initialKeysRef.current = _initialKeys;
+        // const _userOp = await getActivateOp(_initialKeys);
+        // userOpRef.current = _userOp;
       } else {
         const _userOp = await getActivateOp(initialKeysRef.current);
         userOpRef.current = _userOp;

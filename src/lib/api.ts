@@ -7,6 +7,15 @@ const axio = axios.create({
   baseURL: config.backendURL,
 });
 
+// add token for each request
+axio.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+});
+
 axio.interceptors.response.use((res: any) => {
   if (res.data.code !== 200) {
     // TODO, wrap API and useToast
@@ -15,6 +24,18 @@ axio.interceptors.response.use((res: any) => {
   }
   return res.data;
 });
+
+const authenticated = {
+  saveKey: (params: any) => axio.post('/authenticated/save-key-info', params),
+  getKey: (params: any) => axio.post('/authenticated/get-key-info', params),
+  saveGuardianInfo: (params: any) => axio.post('/authenticated/save-guardian-info', params),
+  getGuardianInfo: (params: any) => axio.post('/authenticated/get-guardian-info', params),
+}
+
+const auth = {
+  challenge: (params: any) => axio.post('/auth/challenge', params),
+  getJwt: (params: any) => axio.post('/auth/token', params),
+}
 
 const account = {
   create: (params: any) => axio.post('/account/create', params),
@@ -53,6 +74,8 @@ const aave = {
 }
 
 export default {
+  auth,
+  authenticated,
   account,
   sponsor,
   backup,

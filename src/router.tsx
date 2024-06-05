@@ -8,7 +8,6 @@ import Landing from '@/pages/landing';
 import Intro from '@/pages/intro';
 import DashboardDetails from '@/pages/dashboard/Details';
 import AppContainer from './components/mobile/AppContainer';
-import TestPage from '@/pages/test-page'
 
 export const router = createBrowserRouter([
   {
@@ -26,10 +25,6 @@ export const router = createBrowserRouter([
             element: <Navigate to="/dashboard" replace />,
           },
         ],
-      },
-      {
-        path: '/test',
-        element: <TestPage />,
       },
       {
         path: '/details',

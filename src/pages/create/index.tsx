@@ -52,10 +52,11 @@ export default function Create() {
     console.log('skip');
   }, []);
 
+
   const onCreatePasskey = async () => {
     try {
       setAddingPasskey(true);
-      setCredential(await register(username));
+      setCredential(await register(username, invitationCode));
       setStep(3);
       setAddingPasskey(false);
     } catch (error: any) {
@@ -140,7 +141,7 @@ export default function Create() {
         />
       );
     } else if (step == 2) {
-      return <AddPasskey addingPasskey={addingPasskey} onNext={onNext} />;
+      return <AddPasskey addingPasskey={addingPasskey} onNext={onCreatePasskey} />;
     } else if (step == 3) {
       return <CreateSuccess credential={credential} username={username} invitationCode={invitationCode} />;
     }

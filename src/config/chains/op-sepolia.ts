@@ -14,7 +14,7 @@ export default {
   provider: `https://sepolia.optimism.io`,
   scanUrl: 'https://sepolia-optimism.etherscan.io',
   scanName: 'Etherscan',
-  bundlerUrl: `https://api-dev.stable.cash/bundler/op-sepolia/rpc`,
+  bundlerUrl: `https://api-dev.soulwallet.io/walletapi/bundler/optimism-sepolia/rpc`,
   maxCostMultiplier: 120,
   chainId,
   chainIdHex: `0x${(chainId).toString(16)}`,
@@ -27,5 +27,6 @@ export default {
     defaultCallbackHandler: import.meta.env.VITE_DefaultCallbackHandler,
     entryPoint: import.meta.env.VITE_EntryPoint,
     defaultValidator: import.meta.env.VITE_SoulWalletDefaultValidator,
+    socialRecoveryModule: import.meta.env.VITE_SocialRecoveryModule,
   },
 };

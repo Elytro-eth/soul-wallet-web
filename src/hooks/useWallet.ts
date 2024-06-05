@@ -26,7 +26,7 @@ import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
-const noGuardian = {
+export const noGuardian = {
   initialGuardianHash: ethers.ZeroHash,
   initialGuardianSafePeriod: defaultGuardianSafePeriod,
 };
@@ -148,58 +148,6 @@ export default function useWallet() {
     });
 
     return await getUserOp(txs);
-  };
-
-  const initWallet = async (credential: any, walletName: string, invitationCode: string) => {
-    const createIndex = 0;
-
-    const initialKeys = [credential.publicKey as string];
-
-    const createSlotInfo = {
-      initialKeys,
-      initialGuardianHash: noGuardian.initialGuardianHash,
-      initialGuardianSafePeriod: toHex(noGuardian.initialGuardianSafePeriod),
-    };
-
-    // do time consuming jobs
-    const address = (
-      await soulWallet.calcWalletAddress(
-        createIndex,
-        initialKeys,
-        noGuardian.initialGuardianHash,
-        Number(noGuardian.initialGuardianSafePeriod),
-        selectedChainId,
-      )
-    ).OK;
-
-    setSelectedAddress(address);
-    setWalletName(walletName);
-    const res: any = await api.account.create({
-      address,
-      chainID: selectedChainId,
-      name: walletName,
-      initInfo: {
-        index: createIndex,
-        ...createSlotInfo,
-      },
-      invitationCode,
-    });
-    if (res.code !== 200) {
-      toast({
-        title: 'Create wallet failed',
-        description: res.msg,
-        status: 'error',
-      });
-      throw new Error('Create wallet failed');
-    }
-
-    setSlotInfo(createSlotInfo);
-
-    setCredentials([credential as any]);
-
-    return {
-      initialKeys,
-    };
   };
 
   const getActivateOp = async (_initialKeys: any) => {
@@ -412,6 +360,5 @@ export default function useWallet() {
     signWithPasskey,
     logoutWallet,
     getSponsor,
-    initWallet,
   };
 }

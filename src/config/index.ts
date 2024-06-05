@@ -15,7 +15,7 @@ import IconArbSquare from '@/assets/chains/arb-square.svg';
 // import ArbConfig from './chains/arb-sepolia';
 import BaseSepoliaConfig from './chains/base-sepolia';
 import OpConfig from './chains/op';
-// import OpConfig from './chains/op-sepolia';
+import OpSepoliaConfig from './chains/op-sepolia';
 // import SepoliaConfig from './chains/sepolia';
 
 export const xLink = 'https://twitter.com/stabledotcash';
@@ -37,6 +37,7 @@ export const chainIdMapping = {
 
 export const chainIdConfigs: any = {
   10: OpConfig,
+  11155420: OpSepoliaConfig,
   84532: BaseSepoliaConfig,
 };
 
@@ -124,6 +125,6 @@ export default {
     // },
   ],
   magicValue: '0x1626ba7e',
-  backendURL: `${import.meta.env.VITE_BACKEND_URL}/appapi`,
+  backendURL: `${import.meta.env.VITE_BACKEND_URL}/walletapi`,
   chainList: [chainIdConfigs[String(import.meta.env.VITE_CHAIN_ID)]],
 };
