@@ -62,9 +62,9 @@ const buttonStyles = {
   },
   white: {
     color: '#101828',
-    bg: '#fff',
+    bg: '#F6F6F6',
     border: '1px solid #E4E4E4',
-    boxShadow: '0px 4px 20px 0px #223C9C1A',
+    // boxShadow: '0px 4px 20px 0px #223C9C1A',
     _hover: { bg: '#eee' },
     _disabled: { cursor: 'not-allowed', color: '#B2B2B2', _hover: { bg: "#fff" } },
   },

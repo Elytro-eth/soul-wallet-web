@@ -301,6 +301,7 @@ export default function Dashboard() {
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
+                  onClick={() => openFullScreenModal('receive')}
                 >
                   <Box><ReceiveIcon /></Box>
                   <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Receive</Box>

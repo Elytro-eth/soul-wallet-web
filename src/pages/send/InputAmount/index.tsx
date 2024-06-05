@@ -445,7 +445,7 @@ export default function InputAmount({
                   <Button width="calc(100%)" disabled={false} size="xl" type="blue">Done</Button>
                 </Box>
                 <Box width="100%">
-                  <Button width="calc(100%)" disabled={false} size="xl" type="white">Continue</Button>
+                  <Button width="calc(100%)" disabled={false} size="xl" type="white">Copy transaction link</Button>
                 </Box>
               </Box>
             )}

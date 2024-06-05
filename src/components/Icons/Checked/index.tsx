@@ -2,8 +2,8 @@ const Checked = () => {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M9.96416 16.2143C13.5343 16.2143 16.4284 13.3202 16.4284 9.75005C16.4284 6.17993 13.5343 3.28577 9.96416 3.28577C6.39404 3.28577 3.49988 6.17993 3.49988 9.75005C3.49988 13.3202 6.39404 16.2143 9.96416 16.2143Z"
         fill="#1CD20F"
       />

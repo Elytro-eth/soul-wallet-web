@@ -17,6 +17,8 @@ import Activity from '@/pages/activity'
 import Deposit from '@/pages/deposit'
 import Withdraw from '@/pages/withdraw'
 import Send from '@/pages/send'
+import Receive from '@/pages/receive'
+import ReceiveSteps from '@/pages/receiveSteps'
 import Details from '@/pages/dashboard/Details'
 import useWalletContext from '@/context/hooks/useWalletContext';
 
@@ -112,6 +114,10 @@ export function ModalPage({ height, name, openModal, closeModal }: any) {
       return <Withdraw isModal={true} />
     } else if (name === 'send') {
       return <Send isModal={true} />
+    } else if (name === 'receive') {
+      return <Receive isModal={true} />
+    } else if (name === 'receiveSteps') {
+      return <ReceiveSteps isModal={true} />
     }
   }
 
