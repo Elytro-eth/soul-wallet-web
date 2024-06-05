@@ -16,6 +16,7 @@ import Settings from '@/pages/settings'
 import Activity from '@/pages/activity'
 import Deposit from '@/pages/deposit'
 import Withdraw from '@/pages/withdraw'
+import Send from '@/pages/send'
 import Details from '@/pages/dashboard/Details'
 import useWalletContext from '@/context/hooks/useWalletContext';
 
@@ -109,6 +110,8 @@ export function ModalPage({ height, name, openModal, closeModal }: any) {
       return <Deposit isModal={true} registerScrollable={registerScrollable} />
     } else if (name === 'withdraw') {
       return <Withdraw isModal={true} />
+    } else if (name === 'send') {
+      return <Send isModal={true} />
     }
   }
 
@@ -179,10 +182,6 @@ export default function AppContainer() {
     return {}
   }
 
-  useEffect(() => {
-    // openFullScreenModal('deposit')
-  }, [])
-
   return (
     <Box background="black">
       <Box
@@ -245,7 +244,7 @@ export default function AppContainer() {
                 borderRadius="30px"
                 position="absolute"
                 top="20px"
-                right="20px"
+                right="16px"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
