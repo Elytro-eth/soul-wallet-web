@@ -5,7 +5,7 @@ import InputAmount from './InputAmount';
 import Review from './Review';
 import FadeSwitch from '@/components/FadeSwitch';
 
-export default function Withdraw({ isModal }: any) {
+export default function Send({ isModal }: any) {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState('');
