@@ -12,7 +12,7 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 
 export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any) {
   const { closeModal } = useWalletContext()
-  const { getWithdrawOp, signAndSend } = useWallet();
+  const { getWithdrawOp, signAndSend, getTransferEthOp } = useWallet();
   const executingRef = useRef(false);
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);
@@ -23,7 +23,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
 
   const prepareAction = async () => {
     try {
-      const _userOp = await getWithdrawOp(withdrawAmount, sendTo);
+      const _userOp = await getTransferEthOp(withdrawAmount, sendTo);
       userOpRef.current = _userOp;
     } catch (e) {
       // user may reach limit of gas sponsor

@@ -49,9 +49,9 @@ const backup = {
 };
 
 const sponsor = {
-  check: (chainId: string, entryPoint: string, op: UserOperation) =>
+  check: (chainID: string, entryPoint: string, op: UserOperation) =>
     axio.post('/sponsor/sponsor-op', {
-      chainId,
+      chainID,
       entryPoint,
       op,
     }),
@@ -63,7 +63,7 @@ const invitation = {
 
 const token = {
   interest: (params: any) => axio.post('/token/interest',params),
-  balance: (params: any) => axio.post('/token/balance',params),
+  balance: (params: any) => axio.post('/token/ft',params),
   history: (params: any) => axio.post('/token/history',params),
   spendTrialInterest: (params: any) => axio.post('/token/spend-trial-interest',params),
 }

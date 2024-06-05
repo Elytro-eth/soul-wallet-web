@@ -63,9 +63,10 @@ export const fetchTokenBalanceApi = async (address: string, chainId: string) => 
   const res = await api.token.balance({
     address,
     chainID: chainId,
+    reservedTokenAddresses: []
   });
 
-  return res.data.balances;
+  return res.data;
 };
 
 export const formatTokenBalance = (item: ITokenBalanceItem) => {
@@ -79,7 +80,7 @@ export const formatTokenBalance = (item: ITokenBalanceItem) => {
     item.name = 'Unknown';
   }
   if (item.tokenBalance) {
-    item.tokenBalanceFormatted = ethers.formatUnits(parseInt(item.tokenBalance), item.decimals);
+    item.tokenBalanceFormatted = ethers.formatUnits(item.tokenBalance, item.decimals);
   }
   return item;
 };

@@ -1,4 +1,4 @@
-import { MaxUint256, ZeroHash, ethers } from 'ethers';
+import { MaxUint256, ZeroAddress, ZeroHash, ethers, parseEther } from 'ethers';
 import useSdk from './useSdk';
 import useQuery from './useQuery';
 import { ABI_SoulWallet } from '@soulwallet/abi';
@@ -87,6 +87,29 @@ export default function useWallet() {
   const logoutWallet = async () => {
     clearLogData();
     navigate('/landing');
+  };
+
+  const getTransferEthOp = async (amount: string, to: string) => {
+    const ethBalance = getTokenBalance(ZeroAddress)?.tokenBalanceFormatted;
+
+    let txs = [];
+
+    if (BN(amount).isGreaterThan(BN(ethBalance))) {
+      toast({
+        title: 'Insufficient balance',
+        status: 'error',
+      });
+      return;
+    }
+
+    txs.push({
+      from: selectedAddress,
+      to,
+      data: '0x',
+      value: parseEther(amount).toString(),
+    });
+
+    return await getUserOp(txs);
   };
 
   const getWithdrawOp = async (amount: string, to: string) => {
@@ -236,6 +259,7 @@ export default function useWallet() {
             )
           : null;
 
+          console.log('123 in')
     if (!packedSignatureRet) {
       throw new Error('algorithm not supported');
     }
@@ -324,6 +348,7 @@ export default function useWallet() {
     userOp.signature = await getPasskeySignature(packedUserOpHash.packedUserOpHash, packedUserOpHash.validationData);
 
     try {
+      console.log('before execute')
       return await executeTransaction(userOp, chainConfig);
     } catch (err) {
       toast({
@@ -352,6 +377,7 @@ export default function useWallet() {
 
   return {
     loginWallet,
+    getTransferEthOp,
     getWithdrawOp,
     addPaymasterData,
     getActivateOp,

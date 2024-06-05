@@ -19,8 +19,8 @@ export default function Pooling() {
   const getUserInfo = async() => {
     const balances = await fetchTokenBalanceApi(selectedAddress, selectedChainId);
     setTokenBalance(balances);
-    fetchHistory(selectedAddress, selectedChainId);
-    fetchInterest(selectedAddress, selectedChainId);
+    // fetchHistory(selectedAddress, selectedChainId);
+    // fetchInterest(selectedAddress, selectedChainId);
   };
 
   const getCommonInfo = () => {
@@ -51,15 +51,15 @@ export default function Pooling() {
     };
   }, []);
 
-  useEffect(() => {
-    fetchApy();
-    const interval = setInterval(() => {
-     fetchApy();
-    }, 60 * 60 * 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  // useEffect(() => {
+  //   fetchApy();
+  //   const interval = setInterval(() => {
+  //    fetchApy();
+  //   }, 60 * 60 * 1000);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   return <></>;
 }

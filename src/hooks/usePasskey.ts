@@ -101,9 +101,9 @@ export default function usePasskey() {
 
   const getPublicKey = async (credential: any) => {
     if (credential.algorithm === 'ES256') {
-      return await getES256Coordinates(credential.publicKey);
+      return await getES256Coordinates(credential.onchainPublicKey);
     } else if (credential.algorithm === 'RS256') {
-      return await getRS256Coordinates(credential.publicKey);
+      return await getRS256Coordinates(credential.onchainPublicKey);
     }
   };
 
@@ -121,16 +121,22 @@ export default function usePasskey() {
 
     console.log('Registered: ', JSON.stringify(registration, null, 2));
 
+    const verifiedRegistration = await server.verifyRegistration(registration, {
+      challenge,
+      origin: location.origin,
+    });
+
     const onchainPublicKey = await getPublicKey(registration.credential);
 
     const credential = {
       challenge,
       registrationData: registration,
+      id: registration.credential.id,
       credentialID: registration.credential.id,
       publicKey: registration.credential.publicKey,
       onchainPublicKey,
-      // algorithm: registration.credential.algorithm,
-      // name: finalCredentialName,
+      algorithm: registration.credential.algorithm,
+      name: finalCredentialName,
     };
 
     // backup credential info
@@ -164,12 +170,13 @@ export default function usePasskey() {
 
     // private backup key
     const resSaveKey = await api.authenticated.saveKey({
-      "credentialID": credential.credentialID,
-      "name": finalCredentialName,
-      "platform": "string",
-      "backedUp": "string"
-    })
+      credentialID: credential.credentialID,
+      name: finalCredentialName,
+      platform: verifiedRegistration.authenticator.name,
+      backedUp: verifiedRegistration.authenticator.flags.backupState,
+    });
 
+    console.log('res save key', resSaveKey);
     return credential;
   };
 
@@ -198,7 +205,7 @@ export default function usePasskey() {
 
       return {
         messageHash: userOpHash,
-        publicKey: credential.publicKey,
+        publicKey: credential.onchainPublicKey,
         r,
         s,
         authenticatorData,
@@ -207,7 +214,7 @@ export default function usePasskey() {
     } else if (credential.algorithm === 'RS256') {
       return {
         messageHash: userOpHash,
-        publicKey: credential.publicKey,
+        publicKey: credential.onchainPublicKey,
         signature,
         authenticatorData,
         clientDataSuffix,
