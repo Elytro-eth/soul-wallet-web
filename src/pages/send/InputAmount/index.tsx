@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback, Fragment } from 'react'
-import { Box, Input, Image } from '@chakra-ui/react';
+import { Box, Input, Image, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import Header from '@/components/mobile/Header'
 import QuestionIcon from '@/components/Icons/Question'
@@ -20,6 +20,7 @@ export default function InputAmount({
   onSendToChange,
   isModal
 }: any) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { totalUsdValue, } = useBalanceStore();
   const [isENSOpen, setIsENSOpen] = useState(false);
   const [isENSLoading, setIsENSLoading] = useState(false);
@@ -29,6 +30,8 @@ export default function InputAmount({
   const [step, setStep] = useState(0);
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
+  const innerHeight = window.innerHeight
+  const marginHeight = innerHeight - 468
 
   const onAmountChange = (val: string) => {
     // validate decimals
@@ -201,7 +204,7 @@ export default function InputAmount({
             >
               Network
             </Box>
-            <Box marginTop="8px" display="flex" alignItems="center">
+            <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
               <Box marginRight="8px"><Image w="32px" h="32px" src={OpIcon} /></Box>
               <Box fontSize="20px" fontWeight="600">Optimism</Box>
               <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center"><QuestionIcon /></Box>
@@ -420,7 +423,7 @@ export default function InputAmount({
             >
               Network
             </Box>
-            <Box marginTop="8px" display="flex" alignItems="center">
+            <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
               <Box marginRight="8px"><Image w="32px" h="32px" src={OpIcon} /></Box>
               <Box fontSize="20px" fontWeight="600">Optimism</Box>
               <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center"><QuestionIcon /></Box>
@@ -466,6 +469,63 @@ export default function InputAmount({
           </Fragment>
         )}
       </Box>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        motionPreset="slideInBottom"
+        blockScrollOnMount={true}
+      >
+        <ModalOverlay height="100vh" />
+        <ModalContent
+          borderRadius={{
+            sm: '20px 20px 0 0',
+            md: '20px',
+          }}
+          maxW={{
+            sm: '100vw',
+            md: '430px'
+          }}
+          marginTop={{
+            sm: `${marginHeight}px`,
+            md: 'calc(50vh - 125px)'
+          }}
+          height="468px"
+          overflow="auto"
+          mb="0"
+        >
+          <ModalCloseButton />
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            width="100%"
+          >
+            <Box
+              background="#D9D9D9"
+              height="80px"
+              width="80px"
+              borderRadius="80px"
+              marginBottom="30px"
+            >
+              <Image src={OpIcon} />
+            </Box>
+            <Box fontSize="24px" fontWeight="700" marginBottom="14px">
+              Optimism network
+            </Box>
+            <Box
+              fontSize="16px"
+              textAlign="center"
+              marginBottom="40px"
+            >
+              Optimism is a Layer-2 scaling network for Ethereum that operates under a four-pillar design philosophy of simplicity, pragmatism, sustainability, and optimism.
+            </Box>
+            <Box width="100%">
+              <Button size="xl" type="blue" width="100%" onClick={onClose}>Got it</Button>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
