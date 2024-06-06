@@ -12,11 +12,20 @@ import USDCIcon from '@/assets/mobile/usdc.png'
 import { toFixed } from '@/lib/tools';
 import { isAddress } from 'ethers';
 import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
+import SelectToken from '@/components/SelectToken'
+import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 
 export default function SetAmount({ isModal, onPrev, onNext, withdrawAmount, setWithdrawAmount, sendTo, setSendTo }: any) {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { totalUsdValue, } = useBalanceStore();
   const innerHeight = window.innerHeight
   const marginHeight = innerHeight - 468
+  const [selected, setSelected] = useState<any>()
+  const [tokens, setTokens] = useState([
+    { name: 'USDC', balance: '13.213134' },
+    { name: 'USDC', balance: '13.213134' },
+    { name: 'USDC', balance: '13.213134' }
+  ])
 
   const onAmountChange = (val: string) => {
     // validate decimals
@@ -58,9 +67,36 @@ export default function SetAmount({ isModal, onPrev, onNext, withdrawAmount, set
             alignItems="center"
             position="relative"
           >
-            <Box height="40px" lineHeight="40px" fontSize="20px" fontWeight="600" color="rgba(0, 0, 0, 0.3)">Select a Token</Box>
+            <Box height="40px" display="flex" alignItems="center" justifyContent="space-between" width="100%" onClick={() => { isOpen ? onClose() : onOpen() }}>
+              {!selected && (
+                <Box lineHeight="40px" fontSize="20px" fontWeight="600" color="rgba(0, 0, 0, 0.3)">Select a Token</Box>
+              )}
+              {!!selected && (
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box marginRight="8px">
+                    <Image width="36px" height="36px" src={USDCIcon} />
+                  </Box>
+                  <Box>
+                    <Box fontSize="16px" fontWeight="600">{selected.name}</Box>
+                    <Box>{selected.balance}</Box>
+                  </Box>
+                </Box>
+              )}
+              <Box>
+                <ChevronDown />
+              </Box>
+            </Box>
+            <Box
+              position="absolute"
+              top="70px"
+              width="100%"
+            >
+              <SelectToken isOpen={isOpen} select={(token: any) => { setSelected(token); onClose() }} tokens={tokens} />
+            </Box>
           </Box>
-
           <Box
             fontSize="14px"
             fontWeight="700"
