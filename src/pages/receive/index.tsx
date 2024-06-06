@@ -125,6 +125,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
             paddingBottom="42px"
             position="relative"
             zIndex="1"
+            overflow="hidden"
           >
             <Box
               background="#FFEBEB"
@@ -176,7 +177,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
             color="rgba(0, 0, 0, 0.5)"
             width="100%"
             textAlign="center"
-            marginTop="120px"
+            marginTop="50px"
             display="flex"
             alignItems="center"
             justifyContent="center"
