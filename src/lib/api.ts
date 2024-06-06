@@ -39,6 +39,7 @@ const auth = {
 
 const account = {
   create: (params: any) => axio.post('/account/create', params),
+  get: (params: any) => axio.post('/account/get-account', params),
   list: (params: any) => axio.post('/account/list', params),
   nameStatus: (params: any) => axio.post('/account/name-status', params),
 };

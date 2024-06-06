@@ -101,9 +101,9 @@ export default function usePasskey() {
 
   const getPublicKey = async (credential: any) => {
     if (credential.algorithm === 'ES256') {
-      return await getES256Coordinates(credential.onchainPublicKey);
+      return await getES256Coordinates(credential.publicKey);
     } else if (credential.algorithm === 'RS256') {
-      return await getRS256Coordinates(credential.onchainPublicKey);
+      return await getRS256Coordinates(credential.publicKey);
     }
   };
 
@@ -272,10 +272,58 @@ export default function usePasskey() {
     };
   };
 
+  const authenticateLogin = async () => {
+    // get challenge
+    const challengeRes = await api.auth.challenge({});
+    const challenge = challengeRes.data.challenge;
+
+
+    let authentication = await client.authenticate([], challenge, {
+      userVerification: 'required',
+    });
+    // authentication method will return credentialId, but not id.
+    const credentialId = authentication.credentialId;
+    console.log('Authenticated', authentication);
+
+    const res: any = await api.backup.credential({
+      credentialID: credentialId,
+    });
+
+
+    return {
+      credential: res.data,
+    }
+
+    // const resJwt = await api.auth.getJwt({
+
+    // })
+
+    if (res.code !== 200) {
+      toast({
+        title: 'Failed to get credential',
+        description: res.msg,
+        status: 'error',
+        duration: 3000,
+      });
+      throw new Error('Failed to get credential');
+    }
+    const credentialInfo = JSON.parse(res.data.data);
+    return {
+      credential: {
+        ...authentication,
+        algorithm: credentialInfo.algorithm,
+        publicKey: credentialInfo.publicKey,
+        id: credentialId,
+      },
+    };
+  };
+
+
   return {
     decodeDER,
     register,
     signByPasskey,
     authenticate,
+    authenticateLogin,
   };
 }

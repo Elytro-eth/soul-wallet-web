@@ -32,7 +32,7 @@ export const noGuardian = {
 };
 
 export default function useWallet() {
-  const { signByPasskey, authenticate } = usePasskey();
+  const { signByPasskey, authenticate, authenticateLogin } = usePasskey();
   const { chainConfig } = useConfig();
   const { setSlotInfo } = useSlotStore();
   const { selectedChainId, setSelectedChainId } = useChainStore();
@@ -45,7 +45,7 @@ export default function useWallet() {
   const { selectedAddress, setSelectedAddress, setWalletName } = useAddressStore();
 
   const loginWallet = async () => {
-    const { credential } = await authenticate();
+    const { credential } = await authenticateLogin();
     try {
       const res: any = await api.account.list({
         ownerKey: credential.publicKey,
