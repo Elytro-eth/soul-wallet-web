@@ -152,8 +152,12 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal }
 
           <Box padding="10px 0" display="flex" alignItems="center" position="relative"></Box>
         </Box>
-        <Box marginTop="60px">
-          <Box fontSize="14px" fontWeight="700" opacity="0.4">
+        <Box marginTop="40px">
+          <Box
+            fontSize="14px"
+            fontWeight="700"
+            opacity="0.4"
+          >
             To
           </Box>
           <Box marginTop="8px" alignItems="center" width="100%" display="inline-block">
