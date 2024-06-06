@@ -79,7 +79,7 @@ export default function Activity({ isModal, registerScrollable }: any) {
                       Receive
                     </Box>
                   </Box>
-                  <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+                  <Box fontSize="12px">{new Date(item.timestamp * 1000).toLocaleString()}</Box>
                 </Box>
                 <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
                   <Box fontSize="14px" fontWeight="700" display="flex">
