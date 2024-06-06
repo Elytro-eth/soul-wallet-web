@@ -1,9 +1,11 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import WalletWrapper from './wrapper/WalletWrapper';
+import PublicWrapper from './wrapper/PublicWrapper';
 import Dashboard from '@/pages/dashboard';
 import Create from '@/pages/create';
 import Deposit from '@/pages/deposit';
 import Withdraw from '@/pages/withdraw';
+import VerifySecret from '@/pages/public/VerifySecret';
 import Landing from '@/pages/landing';
 import Intro from '@/pages/intro';
 import DashboardDetails from '@/pages/dashboard/Details';
@@ -47,5 +49,10 @@ export const router = createBrowserRouter([
         element: <Landing />,
       },
     ],
+  },
+  {
+    path: '/public',
+    element: <PublicWrapper />,
+    children: [{ path: 'verify-secret/:secret', element: <VerifySecret /> }],
   },
 ]);
