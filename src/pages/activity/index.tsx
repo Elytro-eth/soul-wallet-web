@@ -19,6 +19,9 @@ import { useHistoryStore } from '@/store/history';
 import HistoryIcon from '@/components/Icons/mobile/History'
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit'
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer'
+import SendIcon from '@/components/Icons/mobile/Send';
+import ReceiveIcon from '@/components/Icons/mobile/Receive';
+import ActivityEmptyIcon from '@/assets/mobile/activity-empty.svg'
 
 export default function Activity({ isModal, registerScrollable }: any) {
   const { walletName, selectedAddress } = useAddressStore();
@@ -39,20 +42,291 @@ export default function Activity({ isModal, registerScrollable }: any) {
       width="100%"
       marginTop="24px"
       position="relative"
-      height={window.innerHeight - 40 - 40}
+      height={window.innerHeight - 20}
     >
       <Box
-        fontSize="18px"
+        // fontSize="18px"
+        fontSize="32px"
         fontWeight="700"
         lineHeight="24px"
         width="100%"
         paddingLeft="30px"
         paddingRight="30px"
+        marginTop="60px"
       >
         Activity
       </Box>
-      {finalHistoryList && finalHistoryList.length > 0 && (
-        <Box
+      <Box
+        width="100%"
+        background="white"
+        marginTop="27px"
+        overflow="auto"
+        ref={scrollableRef}
+        paddingLeft="30px"
+        paddingRight="30px"
+        height={window.innerHeight - 64}
+      >
+        {false && (
+          <Flex
+            gap="16px"
+            padding="0"
+            width="100%"
+            paddingBottom="16px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            height="100%"
+          >
+            <Box
+              width="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+            >
+              <Image src={ActivityEmptyIcon} />
+              <Box color="rgba(0, 0, 0, 0.5)" marginTop="18px">You don’t have any activity yet</Box>
+            </Box>
+          </Flex>
+        )}
+        {true && (
+          <Flex
+            gap="16px"
+            padding="0"
+            flexDir="column"
+            width="100%"
+            paddingBottom="16px"
+          >
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              height="52px"
+            >
+              <Box marginRight="12px">
+                <ReceiveIcon />
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box fontSize="14px" fontWeight="700">Receive</Box>
+                </Box>
+                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+              </Box>
+              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box marginRight="8px">+1.12 USDC</Box>
+                  <Image width="18px" height="18px" src={USDCIcon} />
+                </Box>
+                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              </Box>
+            </Box>
+          </Flex>
+        )}
+      </Box>
+      {/* {finalHistoryList && finalHistoryList.length > 0 && (
+          <Box
           width="100%"
           background="white"
           marginTop="27px"
@@ -60,52 +334,42 @@ export default function Activity({ isModal, registerScrollable }: any) {
           ref={scrollableRef}
           paddingLeft="30px"
           paddingRight="30px"
-        >
-          <Flex
-            gap="36px"
-            padding="0"
-            flexDir="column"
-            width="100%"
-            overflow="auto"
-            // maxHeight="calc(100% - 120px)"
           >
-            {finalHistoryList.map((item: any, i: any) => (
-              <Box
-                key={i}
-                display="flex"
-                alignItems="center"
-                height="40px"
-              >
-                <Box marginRight="12px">
-                  {item.action === 'Deposit' ? <ActivityDepositIcon /> :  <ActivityTransferIcon />}
-                </Box>
-                <Box>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                  >
-                    <Box fontSize="14px" fontWeight="700">{item.action}</Box>
-                    {/* <Box
-                        fontSize="12px"
-                        background="#F1F1F1"
-                        color="rgba(0, 0, 0, 0.60)"
-                        padding="0 8px"
-                        borderRadius="4px"
-                        marginLeft="8px"
-                        >
-                        Pending
-                        </Box> */}
-                  </Box>
-                  <Box fontSize="12px">{item.dateFormatted}</Box>
-                </Box>
-                <Box marginLeft="auto">
-                  <Box fontSize="14px" fontWeight="700">{item.amountFormatted} USDC</Box>
-                </Box>
-              </Box>
-            ))}
+          <Flex
+          gap="36px"
+          padding="0"
+          flexDir="column"
+          width="100%"
+          overflow="auto"
+          // maxHeight="calc(100% - 120px)"
+          >
+          {finalHistoryList.map((item: any, i: any) => (
+          <Box
+          key={i}
+          display="flex"
+          alignItems="center"
+          height="40px"
+          >
+          <Box marginRight="12px">
+          {item.action === 'Deposit' ? <ActivityDepositIcon /> :  <ActivityTransferIcon />}
+          </Box>
+          <Box>
+          <Box
+          display="flex"
+          alignItems="center"
+          >
+          <Box fontSize="14px" fontWeight="700">{item.action}</Box>
+          </Box>
+          <Box fontSize="12px">{item.dateFormatted}</Box>
+          </Box>
+          <Box marginLeft="auto">
+          <Box fontSize="14px" fontWeight="700">{item.amountFormatted} USDC</Box>
+          </Box>
+          </Box>
+          ))}
           </Flex>
-        </Box>
-      )}
+          </Box>
+          )} */}
     </Box>
   );
 }
