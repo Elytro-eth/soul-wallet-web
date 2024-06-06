@@ -17,12 +17,6 @@ import api from '@/lib/api';
 import NextIcon from '@/components/Icons/mobile/Next';
 import Header from '@/components/mobile/Header'
 import { Link, useNavigate } from 'react-router-dom';
-import CheckDeposit from './CheckDeposit'
-import MakeTransfer from './MakeTransfer'
-import SelectNetwork from './SelectNetwork'
-import SendToken from './SendToken'
-import ConfirmTransaction from './ConfirmTransaction'
-import FadeSwitch from '@/components/FadeSwitch';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { useHistoryStore } from '@/store/history';
 import useWalletContext from '@/context/hooks/useWalletContext';
@@ -36,7 +30,7 @@ import QuestionIcon from '@/components/Icons/Question'
 import ReceiveCode from '@/components/ReceiveCode';
 import useTools from '@/hooks/useTools';
 
-export default function Deposit({ isModal, registerScrollable }: any) {
+export default function Receive({ isModal, registerScrollable }: any) {
   const { closeModal } = useWalletContext()
   const navigate = useNavigate();
   const [swiper, setSwiper] = useState<any>(null)
@@ -48,18 +42,6 @@ export default function Deposit({ isModal, registerScrollable }: any) {
   const {selectedChainId} = useChainStore();
   const { openModal } = useWalletContext()
   const innerHeight = isModal ? (window.innerHeight - 40) : window.innerHeight
-
-  const onFinish = useCallback(async() => {
-    if (isModal) {
-      closeModal()
-    }
-
-    if (historyList.length) {
-      navigate('/dashboard')
-    } else {
-      navigate('/intro')
-    }
-  }, [isModal])
 
   const onPrev = useCallback(async() => {
     console.log('prev')
@@ -108,7 +90,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
 
   console.log('isModal', isModal)
   return (
-    <Box width="100%" height={innerHeight} overflow="hidden">
+    <Box width="100%" height={innerHeight} overflowY="scroll">
       <Header
         title=""
         showBackButton={!isModal}
@@ -128,6 +110,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
             paddingBottom="42px"
             position="relative"
             zIndex="1"
+            overflow="hidden"
           >
             <Box
               background="#FFEBEB"
@@ -178,7 +161,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
             color="rgba(0, 0, 0, 0.5)"
             width="100%"
             textAlign="center"
-            marginTop="120px"
+            marginTop="50px"
             display="flex"
             alignItems="center"
             justifyContent="center"
