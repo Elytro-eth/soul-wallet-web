@@ -1,37 +1,37 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Box, Flex, Image, Link } from '@chakra-ui/react';
-import Header from '@/components/mobile/Header'
-import Button from '@/components/mobile/Button'
+import Header from '@/components/mobile/Header';
+import Button from '@/components/mobile/Button';
 import { Link as Rlink } from 'react-router-dom';
-import DetailsIMG from '@/components/Icons/mobile/Details'
-import TabIcon from '@/components/Icons/mobile/Tab'
+import DetailsIMG from '@/components/Icons/mobile/Details';
+import TabIcon from '@/components/Icons/mobile/Tab';
 import { useNavigate } from 'react-router-dom';
-import USDCIcon from '@/assets/mobile/usdc_lg.png'
+import USDCIcon from '@/assets/mobile/usdc_lg.png';
 import { aaveLink } from '@/config';
 import useWallet from '@/hooks/useWallet';
-import SettingIcon from '@/components/Icons/mobile/Setting'
-import TelegramIcon from '@/components/Icons/mobile/Telegram'
+import SettingIcon from '@/components/Icons/mobile/Setting';
+import TelegramIcon from '@/components/Icons/mobile/Telegram';
 import { headerHeight, tgLink } from '@/config';
 import { useAddressStore } from '@/store/address';
 import AddressIcon from '@/components/AddressIcon';
-import LogoutIcon from '@/components/Icons/mobile/Logout'
+import LogoutIcon from '@/components/Icons/mobile/Logout';
 import { useHistoryStore } from '@/store/history';
-import HistoryIcon from '@/components/Icons/mobile/History'
-import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit'
-import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer'
+import HistoryIcon from '@/components/Icons/mobile/History';
+import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
+import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
 import SendIcon from '@/components/Icons/mobile/Send';
 import ReceiveIcon from '@/components/Icons/mobile/Receive';
-import ActivityEmptyIcon from '@/assets/mobile/activity-empty.svg'
+import ActivityEmptyIcon from '@/assets/mobile/activity-empty.svg';
 
 export default function Activity({ isModal, registerScrollable }: any) {
-  const { walletName, selectedAddress } = useAddressStore();
   const { historyList } = useHistoryStore();
-  const scrollableRef = useRef<any>()
+  const scrollableRef = useRef<any>();
 
-  const finalHistoryList = historyList
   useEffect(() => {
-    registerScrollable(scrollableRef.current)
-  }, [])
+    registerScrollable(scrollableRef.current);
+  }, []);
+
+  console.log('history', historyList)
 
   return (
     <Box
@@ -66,7 +66,32 @@ export default function Activity({ isModal, registerScrollable }: any) {
         paddingRight="30px"
         height={window.innerHeight - 64}
       >
-        {false && (
+        {historyList.length ? (
+          <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
+            {historyList.map((item) => (
+              <Box display="flex" alignItems="center" height="52px">
+                <Box marginRight="12px">
+                  <ReceiveIcon />
+                </Box>
+                <Box>
+                  <Box display="flex" alignItems="center">
+                    <Box fontSize="14px" fontWeight="700">
+                      Receive
+                    </Box>
+                  </Box>
+                  <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
+                </Box>
+                <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                  <Box fontSize="14px" fontWeight="700" display="flex">
+                    <Box marginRight="8px">+1.12 USDC</Box>
+                    <Image width="18px" height="18px" src={USDCIcon} />
+                  </Box>
+                  <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+                </Box>
+              </Box>
+            ))}
+          </Flex>
+        ) : (
           <Flex
             gap="16px"
             padding="0"
@@ -77,249 +102,10 @@ export default function Activity({ isModal, registerScrollable }: any) {
             justifyContent="center"
             height="100%"
           >
-            <Box
-              width="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flexDirection="column"
-            >
+            <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
               <Image src={ActivityEmptyIcon} />
-              <Box color="rgba(0, 0, 0, 0.5)" marginTop="18px">You don’t have any activity yet</Box>
-            </Box>
-          </Flex>
-        )}
-        {true && (
-          <Flex
-            gap="16px"
-            padding="0"
-            flexDir="column"
-            width="100%"
-            paddingBottom="16px"
-          >
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              height="52px"
-            >
-              <Box marginRight="12px">
-                <ReceiveIcon />
-              </Box>
-              <Box>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box fontSize="14px" fontWeight="700">Receive</Box>
-                </Box>
-                <Box fontSize="12px">{`2024/3/11 11:21:23`}</Box>
-              </Box>
-              <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                <Box fontSize="14px" fontWeight="700" display="flex">
-                  <Box marginRight="8px">+1.12 USDC</Box>
-                  <Image width="18px" height="18px" src={USDCIcon} />
-                </Box>
-                <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+              <Box color="rgba(0, 0, 0, 0.5)" marginTop="18px">
+                You don’t have any activity yet
               </Box>
             </Box>
           </Flex>

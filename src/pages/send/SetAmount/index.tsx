@@ -15,17 +15,10 @@ import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSRe
 import SelectToken from '@/components/SelectToken'
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 
-export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount}: any) {
+export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount, tokenAddress, setTokenAddress, selectedToken, setSelectedToken,}: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { totalUsdValue, } = useBalanceStore();
+  const { totalUsdValue } = useBalanceStore();
   const innerHeight = window.innerHeight
-  const marginHeight = innerHeight - 468
-  const [selected, setSelected] = useState<any>()
-  const [tokens, setTokens] = useState([
-    { name: 'USDC', balance: '13.213134' },
-    { name: 'USDC', balance: '13.213134' },
-    { name: 'USDC', balance: '13.213134' }
-  ])
 
   const onAmountChange = (val: string) => {
     // validate decimals
@@ -68,20 +61,20 @@ export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount}:
             position="relative"
           >
             <Box height="40px" display="flex" alignItems="center" justifyContent="space-between" width="100%" onClick={() => { isOpen ? onClose() : onOpen() }}>
-              {!selected && (
+              {!selectedToken && (
                 <Box lineHeight="40px" fontSize="20px" fontWeight="600" color="rgba(0, 0, 0, 0.3)">Select a Token</Box>
               )}
-              {!!selected && (
+              {!!selectedToken && (
                 <Box
                   display="flex"
                   alignItems="center"
                 >
                   <Box marginRight="8px">
-                    <Image width="36px" height="36px" src={USDCIcon} />
+                    <Image width="36px" height="36px" src={selectedToken.logoURI} />
                   </Box>
                   <Box>
-                    <Box fontSize="16px" fontWeight="600">{selected.name}</Box>
-                    <Box>{selected.balance}</Box>
+                    <Box fontSize="16px" fontWeight="600">{selectedToken.name}</Box>
+                    <Box>{selectedToken.balance}</Box>
                   </Box>
                 </Box>
               )}
@@ -94,7 +87,11 @@ export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount}:
               top="70px"
               width="100%"
             >
-              <SelectToken isOpen={isOpen} select={(token: any) => { setSelected(token); onClose() }} tokens={tokens} />
+              <SelectToken isOpen={isOpen} select={(token: any) => { 
+                setSelectedToken(token);
+                setTokenAddress(token.contractAddress);
+                onClose() 
+              }} />
             </Box>
           </Box>
           <Box
@@ -128,7 +125,12 @@ export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount}:
               <Box
                 fontSize="14px"
                 fontWeight="700"
-                color="rgba(0, 0, 0, 0.2)"
+                color={selectedToken ? "#332244" : "rgba(51, 34, 68, .3)"}
+                onClick={
+                  () => {
+                    selectedToken ? setAmount(selectedToken.tokenBalanceFormatted) : null;
+                  }
+                }
               >
                 MAX
               </Box>

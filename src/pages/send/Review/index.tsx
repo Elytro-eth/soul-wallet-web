@@ -27,7 +27,7 @@ import useWallet from '@/hooks/useWallet';
 import useTools from '@/hooks/useTools';
 import useConfig from '@/hooks/useConfig';
 
-export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal }: any) {
+export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, selectedToken }: any) {
   const { closeModal, closeFullScreenModal } = useWalletContext();
   const { chainConfig } = useConfig();
   const { signAndSend, getTransferEthOp, getTransferErc20Op } = useWallet();
@@ -36,6 +36,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal }
   const [isSending, setIsSending] = useState(false);
   const { doCopy } = useTools();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { getTokenBalance } = useBalanceStore();
   const executingRef = useRef(false);
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);
@@ -143,10 +144,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal }
           </Box>
           <Box marginTop="8px" display="flex" alignItems="center">
             <Box marginRight="8px">
-              <Image w="32px" h="32px" src={USDCIcon} />
+              <Image w="32px" h="32px" src={selectedToken.logoURI} />
             </Box>
             <Box fontSize="24px" fontWeight="600">
-              {amount} ETH
+              {amount} {selectedToken.symbol}
             </Box>
           </Box>
 
