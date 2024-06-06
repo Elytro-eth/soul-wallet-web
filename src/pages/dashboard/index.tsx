@@ -14,8 +14,10 @@ import { useHistoryStore } from '@/store/history';
 import BN from 'bignumber.js';
 import { useScroll, useMotionValueEvent } from 'framer-motion';
 import HistoryIcon from '@/components/Icons/mobile/History';
+import GoToIcon from '@/assets/mobile/goto.svg';
 import { useOutletContext } from 'react-router-dom';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import useBrowser from '@/hooks/useBrowser';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -68,6 +70,7 @@ export default function Dashboard() {
   const [showFullHistory, setShowFullHistory] = useState(false);
   const [modalPosition, setModalPosition] = useState('bottom');
   const [isMoving, setIsMoving] = useState(false);
+  const { navigate } = useBrowser();
   // const { openModal } = useNavigation()
   const [openModal] = useOutletContext<any>();
   const contentRef = useRef();
@@ -199,6 +202,25 @@ export default function Dashboard() {
             <Box fontWeight="700" fontSize="42px" lineHeight="50px" marginTop="8px">
               Welcome to<br />
               Ethereum
+            </Box>
+          </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            width="100%"
+            minHeight="38px"
+            borderRadius="38px"
+            background="white"
+            padding="10px 18px"
+            color="#324174"
+            justifyContent="space-between"
+            marginBottom="40px"
+            fontSize="14px"
+            onClick={() => navigate('/verifyEmail')}
+          >
+            <Box>Verify Email to Get <Box as="span" fontWeight="700">10 USDC</Box> for free</Box>
+            <Box>
+              <Image src={GoToIcon} />
             </Box>
           </Box>
           <Box display="flex" marginBottom="36px">
