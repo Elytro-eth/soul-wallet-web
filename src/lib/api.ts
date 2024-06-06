@@ -26,32 +26,32 @@ axio.interceptors.response.use((res: any) => {
 });
 
 const authenticated = {
-  saveKey: (params: any) => axio.post('/authenticated/save-key-info', params),
-  getKey: (params: any) => axio.post('/authenticated/get-key-info', params),
-  saveGuardianInfo: (params: any) => axio.post('/authenticated/save-guardian-info', params),
-  getGuardianInfo: (params: any) => axio.post('/authenticated/get-guardian-info', params),
+  saveKey: (params: any) => axio.post('/walletapi/authenticated/save-key-info', params),
+  getKey: (params: any) => axio.post('/walletapi/authenticated/get-key-info', params),
+  saveGuardianInfo: (params: any) => axio.post('/walletapi/authenticated/save-guardian-info', params),
+  getGuardianInfo: (params: any) => axio.post('/walletapi/authenticated/get-guardian-info', params),
 }
 
 const auth = {
-  challenge: (params: any) => axio.post('/auth/challenge', params),
-  getJwt: (params: any) => axio.post('/auth/token', params),
+  challenge: (params: any) => axio.post('/walletapi/auth/challenge', params),
+  getJwt: (params: any) => axio.post('/walletapi/auth/token', params),
 }
 
 const account = {
-  create: (params: any) => axio.post('/account/create', params),
-  get: (params: any) => axio.post('/account/get-account', params),
-  list: (params: any) => axio.post('/account/list', params),
-  nameStatus: (params: any) => axio.post('/account/name-status', params),
+  create: (params: any) => axio.post('/walletapi/account/create', params),
+  get: (params: any) => axio.post('/walletapi/account/get-account', params),
+  list: (params: any) => axio.post('/walletapi/account/list', params),
+  nameStatus: (params: any) => axio.post('/walletapi/account/name-status', params),
 };
 
 const backup = {
-  publicBackupCredentialId: (params: any) => axio.post('/backup/public-backup-credential-id', params),
-  credential: (params: any) => axio.get('/backup/credential', { params }),
+  publicBackupCredentialId: (params: any) => axio.post('/walletapi/backup/public-backup-credential-id', params),
+  credential: (params: any) => axio.get('/walletapi/backup/credential', { params }),
 };
 
 const sponsor = {
   check: (chainID: string, entryPoint: string, op: UserOperation) =>
-    axio.post('/sponsor/sponsor-op', {
+    axio.post('/walletapi/sponsor/sponsor-op', {
       chainID,
       entryPoint,
       op,
@@ -59,21 +59,28 @@ const sponsor = {
 };
 
 const invitation = {
-  codeStatus: (params: any) => axio.post('/invitation/code-status', params),
+  codeStatus: (params: any) => axio.post('/walletapi/invitation/code-status', params),
 }
 
 const token = {
-  interest: (params: any) => axio.post('/token/interest',params),
-  balance: (params: any) => axio.post('/token/ft',params),
-  history: (params: any) => axio.post('/token/history',params),
-  spendTrialInterest: (params: any) => axio.post('/token/spend-trial-interest',params),
+  interest: (params: any) => axio.post('/walletapi/token/interest',params),
+  balance: (params: any) => axio.post('/walletapi/token/ft',params),
+  spendTrialInterest: (params: any) => axio.post('/walletapi/token/spend-trial-interest',params),
 }
 
-const aave = {
-  apy: (params: any) => axios.get(`${vaultsFyiEndpoint}/vaults/${params.network}/${params.vaultAddress}/apy`, {params,
-  }),
-}
 
+
+const op = {
+  list: (walletAddress: string, chainId: string[]) =>
+    axio.post('/opapi/op/search', {
+      walletAddress,
+      chainIDs: chainId,
+    }),
+  detail: (opHash: string) =>
+    axio.post('/opapi/op', {
+      opHash,
+    }),
+};
 export default {
   auth,
   authenticated,
@@ -81,6 +88,6 @@ export default {
   sponsor,
   backup,
   token,
-  aave,
   invitation,
+  op,
 };

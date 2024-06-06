@@ -33,16 +33,19 @@ import { useAddressStore } from '@/store/address';
 import Button from '@/components/mobile/Button'
 import OpIcon from '@/assets/mobile/op.png'
 import QuestionIcon from '@/components/Icons/Question'
+import ReceiveCode from '@/components/ReceiveCode';
+import useTools from '@/hooks/useTools';
 
 export default function Deposit({ isModal, registerScrollable }: any) {
   const { closeModal } = useWalletContext()
   const navigate = useNavigate();
   const [swiper, setSwiper] = useState<any>(null)
   const [step, setStep] = useState(0)
+  const { selectedAddress } = useAddressStore();
+  const { doCopy } = useTools();
   const [isPaginationActive, setIsPaginationActive] = useState(false)
   const { historyList } = useHistoryStore();
   const {selectedChainId} = useChainStore();
-  const { selectedAddress } = useAddressStore();
   const { openModal } = useWalletContext()
   const innerHeight = isModal ? (window.innerHeight - 40) : window.innerHeight
 
@@ -70,7 +73,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
         return
       }
       // get history length
-      const res = await api.token.history({ address: selectedAddress, chainID: selectedChainId });
+      const res = await api.op.list(selectedAddress, [selectedChainId]);
       if (res.data.history.length) {
         navigate('/dashboard')
       } else {
@@ -152,9 +155,8 @@ export default function Deposit({ isModal, registerScrollable }: any) {
                 alignItems="center"
                 width="205px"
                 height="205px"
-                background="rgba(0, 0, 0, 0.2)"
               >
-
+                <ReceiveCode address={selectedAddress} onSet={()=>{}} />
               </Box>
               <Box
                 fontWeight="500"
@@ -164,10 +166,10 @@ export default function Deposit({ isModal, registerScrollable }: any) {
                 maxWidth="205px"
                 marginTop="14px"
               >
-                <Box as="span" fontWeight="700">Op:</Box><br />0xFDF7AC7Be34f2882734b1e6A8f39656D6B14691C
+                <Box as="span" fontWeight="700">Op:</Box><br />{selectedAddress}
               </Box>
               <Box marginTop="24px" width="205px">
-                <Button size="xl" type="white" width="100%">Copy address</Button>
+                <Button size="xl" type="white" width="100%" onClick={() => doCopy(selectedAddress)}>Copy address</Button>
               </Box>
             </Box>
           </Box>

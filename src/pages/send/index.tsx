@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import InputAmount from './InputAmount';
 import Review from './Review';
 import FadeSwitch from '@/components/FadeSwitch';
+import { ZeroAddress } from 'ethers';
 
 export default function Send({ isModal }: any) {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [sendTo, setSendTo] = useState('');
+  const [tokenAddress, setTokenAddress] = useState(ZeroAddress);
 
   return (
     <Box width="100%" height="100%">

@@ -19,7 +19,7 @@ export default function Pooling() {
   const getUserInfo = async() => {
     const balances = await fetchTokenBalanceApi(selectedAddress, selectedChainId);
     setTokenBalance(balances);
-    // fetchHistory(selectedAddress, selectedChainId);
+    fetchHistory(selectedAddress, selectedChainId);
     // fetchInterest(selectedAddress, selectedChainId);
   };
 

@@ -112,6 +112,30 @@ export default function useWallet() {
     return await getUserOp(txs);
   };
 
+  const getTransferErc20Op = async (amount: string, to: string, tokenAddress: string) => {
+    const erc20 = new ethers.Interface(erc20Abi);
+
+    const erc20Balance = getTokenBalance(tokenAddress)?.tokenBalanceFormatted;
+
+    let txs = [];
+
+    if (BN(amount).isGreaterThan(BN(erc20Balance))) {
+      toast({
+        title: 'Insufficient balance',
+        status: 'error',
+      });
+      return;
+    }
+
+    txs.push({
+      from: selectedAddress,
+      to: import.meta.env.VITE_TOKEN_USDC,
+      data: erc20.encodeFunctionData('transfer', [to, ethers.parseUnits(String(amount), 6)]),
+    });
+
+    return await getUserOp(txs);
+  };
+
   const getWithdrawOp = async (amount: string, to: string) => {
     const aaveUsdcPool = new ethers.Interface(aaveUsdcPoolAbi);
     const claimInterest = new ethers.Interface(claimInterestAbi);
@@ -259,7 +283,7 @@ export default function useWallet() {
             )
           : null;
 
-          console.log('123 in')
+    console.log('123 in');
     if (!packedSignatureRet) {
       throw new Error('algorithm not supported');
     }
@@ -348,7 +372,7 @@ export default function useWallet() {
     userOp.signature = await getPasskeySignature(packedUserOpHash.packedUserOpHash, packedUserOpHash.validationData);
 
     try {
-      console.log('before execute')
+      console.log('before execute');
       return await executeTransaction(userOp, chainConfig);
     } catch (err) {
       toast({
@@ -378,6 +402,7 @@ export default function useWallet() {
   return {
     loginWallet,
     getTransferEthOp,
+    getTransferErc20Op,
     getWithdrawOp,
     addPaymasterData,
     getActivateOp,
