@@ -88,11 +88,11 @@ export default function Dashboard() {
 
   const [startPosition, setStartPosition] = useState(null);
   const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    console.log('Page scroll: ', latest);
-  });
-
+  /*
+   *   useMotionValueEvent(scrollY, 'change', (latest) => {
+   *     console.log('Page scroll: ', latest);
+   *   });
+   *  */
   useEffect(() => {
     getContentHeight();
     console.log('contentRef', contentRef);

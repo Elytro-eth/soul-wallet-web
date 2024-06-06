@@ -28,7 +28,7 @@ import Button from '@/components/mobile/Button'
 import OpIcon from '@/assets/mobile/op.png'
 import QuestionIcon from '@/components/Icons/Question'
 
-export default function Deposit({ isModal, registerScrollable }: any) {
+export default function Receive({ isModal, registerScrollable }: any) {
   const { closeModal } = useWalletContext()
   const navigate = useNavigate();
   const [swiper, setSwiper] = useState<any>(null)
@@ -39,18 +39,6 @@ export default function Deposit({ isModal, registerScrollable }: any) {
   const { selectedAddress } = useAddressStore();
   const { openModal } = useWalletContext()
   const innerHeight = isModal ? (window.innerHeight - 40) : window.innerHeight
-
-  const onFinish = useCallback(async() => {
-    if (isModal) {
-      closeModal()
-    }
-
-    if (historyList.length) {
-      navigate('/dashboard')
-    } else {
-      navigate('/intro')
-    }
-  }, [isModal])
 
   const onPrev = useCallback(async() => {
     console.log('prev')
