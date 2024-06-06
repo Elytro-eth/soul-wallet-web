@@ -17,12 +17,6 @@ import api from '@/lib/api';
 import NextIcon from '@/components/Icons/mobile/Next';
 import Header from '@/components/mobile/Header'
 import { Link, useNavigate } from 'react-router-dom';
-import CheckDeposit from './CheckDeposit'
-import MakeTransfer from './MakeTransfer'
-import SelectNetwork from './SelectNetwork'
-import SendToken from './SendToken'
-import ConfirmTransaction from './ConfirmTransaction'
-import FadeSwitch from '@/components/FadeSwitch';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { useHistoryStore } from '@/store/history';
 import useWalletContext from '@/context/hooks/useWalletContext';
