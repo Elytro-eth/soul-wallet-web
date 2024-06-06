@@ -133,7 +133,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
           >
           </Box>
         </Box>
-        <Box marginTop="60px">
+        <Box marginTop="40px">
           <Box
             fontSize="14px"
             fontWeight="700"
