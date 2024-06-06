@@ -5,7 +5,7 @@ import ReadyIcon from '@/assets/mobile/ready.gif';
 import ReadyStaticIcon from '@/assets/mobile/ready_static.svg';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function CreateSuccess({ credential, username, invitationCode }: any) {
   const { getActivateOp, signAndSend } = useWallet();
@@ -16,13 +16,13 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
   const navigate = useNavigate();
   const toast = useToast();
 
-  const [animated, setAnimated] = useState(false)
+  const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
-      setAnimated(true)
-    }, 1300)
-  }, [])
+      setAnimated(true);
+    }, 1300);
+  }, []);
 
   const prepareAction = async () => {
     try {
@@ -52,35 +52,35 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
     return () => clearInterval(interval);
   }, []);
 
-  const onCreate = async (skipExecutingCheck = false) => {
-    creatingRef.current = true;
-    if (executingRef.current && !skipExecutingCheck) {
-      return;
-    }
-    executingRef.current = true;
-    if (userOpRef.current) {
-      try {
-        await signAndSend(userOpRef.current);
-        executingRef.current = false;
-        // setExecuting(false);
-        navigate('/intro');
-      } catch (error: any) {
-        toast({
-          title: 'Failed to create wallet',
-          description: error.message,
-          status: 'error',
-        });
-        creatingRef.current = false;
-        executingRef.current = false;
-        // setExecuting(false);
-      }
-    } else {
-      creatingRef.current = false;
-      setTimeout(() => {
-        onCreate(true);
-      }, 1000);
-    }
-  };
+  // const onCreate = async (skipExecutingCheck = false) => {
+  //   creatingRef.current = true;
+  //   if (executingRef.current && !skipExecutingCheck) {
+  //     return;
+  //   }
+  //   executingRef.current = true;
+  //   if (userOpRef.current) {
+  //     try {
+  //       await signAndSend(userOpRef.current);
+  //       executingRef.current = false;
+  //       // setExecuting(false);
+  //       navigate('/intro');
+  //     } catch (error: any) {
+  //       toast({
+  //         title: 'Failed to create wallet',
+  //         description: error.message,
+  //         status: 'error',
+  //       });
+  //       creatingRef.current = false;
+  //       executingRef.current = false;
+  //       // setExecuting(false);
+  //     }
+  //   } else {
+  //     creatingRef.current = false;
+  //     setTimeout(() => {
+  //       onCreate(true);
+  //     }, 1000);
+  //   }
+  // };
 
   if (creatingRef.current) {
     return (
@@ -130,9 +130,11 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
           Thanks for setting up your Stable.cash account. Start saving from now on!
         </Box>
       </Box>
-      <Button width="100%" onClick={onCreate} size="xl" type="blue" minWidth="195px">
-        Let’s go
-      </Button>
+      <Link to="/dashboard" style={{width: "100%"}} >
+        <Button width="100%" size="xl" type="blue" minWidth="195px">
+          Let’s go
+        </Button>
+      </Link>
     </Box>
   );
 }

@@ -3,7 +3,6 @@ import { persist } from 'zustand/middleware';
 import api from '@/lib/api';
 import BN from 'bignumber.js';
 import { toFixed } from '@/lib/tools';
-import { zeroAddress } from 'viem';
 
 export interface IHistoryStore {
   historyList: any[];
@@ -16,7 +15,7 @@ const usdcAddress = import.meta.env.VITE_TOKEN_USDC;
 const autoSaveAddress = import.meta.env.VITE_AaveUsdcSaveAutomation;
 
 export const fetchHistoryApi = async (address: string, chainId: string) => {
-  const res = await api.token.history({ address, chainID: chainId });
+  const res = await api.op.list(address, [chainId]);
 
   const addressLowercase = address.toLowerCase();
 

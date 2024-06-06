@@ -4,6 +4,7 @@ import SetAddress from './SetAddress';
 import SetAmount from './SetAmount';
 import Review from './Review';
 import FadeSwitch from '@/components/FadeSwitch';
+import { ZeroAddress } from 'ethers';
 
 export default function Send({ isModal }: any) {
   const [step, setStep] = useState(0);

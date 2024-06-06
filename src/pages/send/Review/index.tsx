@@ -11,15 +11,81 @@ import OpIcon from '@/assets/mobile/op.png'
 import USDCIcon from '@/assets/mobile/usdc.png'
 import { toFixed } from '@/lib/tools';
 import { isAddress } from 'ethers';
+import useWalletContext from '@/context/hooks/useWalletContext';
+import useWallet from '@/hooks/useWallet';
 
-export default function Review({ isModal, onPrev }: any) {
-  const [withdrawAmount, setWithdrawAmount] = useState<any>('');
-  const [sendTo, setSendTo] = useState('');
+export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any) {
+  const { closeModal } = useWalletContext()
+  const { signAndSend, getTransferEthOp } = useWallet();
+  const [isSent, setIsSent] = useState(false)
+  const [isSending, setIsSending] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isSending, setIsSending] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  const executingRef = useRef(false);
+  const userOpRef = useRef();
+  const isCompletedRef = useRef(false);
+  const isTransferingRef = useRef(false);
   const innerHeight = window.innerHeight
   const marginHeight = innerHeight - 468
+
+  const [animated, setAnimated] = useState(false)
+  const [completed, setCompleted] = useState(false)
+
+  const prepareAction = async () => {
+    try {
+      const _userOp = await getTransferEthOp(withdrawAmount, sendTo);
+      userOpRef.current = _userOp;
+    } catch (e) {
+      // user may reach limit of gas sponsor
+      executingRef.current = false;
+      isTransferingRef.current = false;
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    prepareAction();
+    const interval = setInterval(() => {
+      if (isTransferingRef.current || isCompletedRef.current) {
+        return;
+      }
+      prepareAction();
+    }, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const onWithdraw = async (skipExecutingCheck = false) => {
+    isTransferingRef.current = true;
+    if (executingRef.current && !skipExecutingCheck) {
+      return;
+    }
+    executingRef.current = true;
+    isTransferingRef.current = true;
+    if (userOpRef.current) {
+      try {
+        await signAndSend(userOpRef.current);
+        isTransferingRef.current = false;
+        isCompletedRef.current = true;
+        setAnimated(false)
+        setCompleted(true)
+        console.log('setAnimated false')
+
+        setTimeout(() => {
+          setAnimated(true)
+          console.log('setAnimated true')
+        }, 1300)
+      } catch (e) {
+        // setExecuting(false);
+        executingRef.current = false;
+        isTransferingRef.current = false;
+        isCompletedRef.current = false;
+      }
+    } else {
+      executingRef.current = false;
+      setTimeout(() => {
+        onWithdraw(true);
+      }, 1000);
+    }
+  };
 
   return (
     <Box width="100%" height={innerHeight} overflowY="scroll">

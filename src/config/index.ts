@@ -125,6 +125,6 @@ export default {
     // },
   ],
   magicValue: '0x1626ba7e',
-  backendURL: `${import.meta.env.VITE_BACKEND_URL}/walletapi`,
+  backendURL: `${import.meta.env.VITE_BACKEND_URL}`,
   chainList: [chainIdConfigs[String(import.meta.env.VITE_CHAIN_ID)]],
 };

@@ -107,7 +107,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
         return
       }
       // get history length
-      const res = await api.token.history({ address: selectedAddress, chainID: selectedChainId });
+      const res = await api.op.list(selectedAddress, [selectedChainId]);
       if (res.data.history.length) {
         navigate('/dashboard')
       } else {
