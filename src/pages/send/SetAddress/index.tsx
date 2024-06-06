@@ -13,9 +13,8 @@ import { toFixed } from '@/lib/tools';
 import { isAddress } from 'ethers';
 import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
 
-export default function SetAddress({ isModal, onPrev, onNext }: any) {
+export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo, }: any) {
   const [withdrawAmount, setWithdrawAmount] = useState<any>('');
-  const [sendTo, setSendTo] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { totalUsdValue, } = useBalanceStore();
   const [isENSOpen, setIsENSOpen] = useState(false);
@@ -28,18 +27,6 @@ export default function SetAddress({ isModal, onPrev, onNext }: any) {
   const [isSent, setIsSent] = useState(false);
   const innerHeight = window.innerHeight
   const marginHeight = innerHeight - 468
-
-  const onAmountChange = (val: string) => {
-    // validate decimals
-    const regex = /^\d*(\.\d{0,6})?$/;
-
-    while (val.length > 0 && !regex.test(val)) {
-      // 逐步缩短字符串长度，直到找到一个合法的数值或字符串为空
-      val = val.slice(0, -1);
-    }
-
-    setWithdrawAmount(val)
-  }
 
   const onAddressChange = (val: string) => {
     setSendTo(val);
