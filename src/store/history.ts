@@ -19,7 +19,7 @@ export const fetchHistoryApi = async (address: string, chainId: string) => {
 
   const addressLowercase = address.toLowerCase();
 
-  const finalList = res.data.history
+  const finalList = res.data.ops
     // filter txs
     .filter(
       (historyItem: any) =>

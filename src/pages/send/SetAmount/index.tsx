@@ -15,7 +15,7 @@ import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSRe
 import SelectToken from '@/components/SelectToken'
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 
-export default function SetAmount({ isModal, onPrev, onNext, withdrawAmount, setWithdrawAmount, sendTo, setSendTo }: any) {
+export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount}: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { totalUsdValue, } = useBalanceStore();
   const innerHeight = window.innerHeight
@@ -36,10 +36,10 @@ export default function SetAmount({ isModal, onPrev, onNext, withdrawAmount, set
       val = val.slice(0, -1);
     }
 
-    setWithdrawAmount(val)
+    setAmount(val)
   }
 
-  const disabled = (!withdrawAmount || withdrawAmount <= 0 || !sendTo || BN(withdrawAmount).isGreaterThan(totalUsdValue) || BN(withdrawAmount).isNaN())
+  const disabled = (!amount || amount <= 0 || BN(amount).isGreaterThan(totalUsdValue) || BN(amount).isNaN())
 
   return (
     <Box width="100%" height={innerHeight} overflowY="scroll">
@@ -113,7 +113,7 @@ export default function SetAmount({ isModal, onPrev, onNext, withdrawAmount, set
               alignItems="center"
             >
               <Input
-                value={withdrawAmount}
+                value={amount}
                 onChange={e => onAmountChange(e.target.value)}
                 fontSize="20px"
                 lineHeight="100%"
@@ -135,7 +135,7 @@ export default function SetAmount({ isModal, onPrev, onNext, withdrawAmount, set
             </Box>
           </Box>
           {/* <Box pos="absolute">
-              {BN(withdrawAmount).isGreaterThan(totalUsdValue) &&  <Box
+              {BN(amount).isGreaterThan(totalUsdValue) &&  <Box
               display="flex"
               alignItems="center"
               justifyContent="flex-start"
@@ -149,7 +149,7 @@ export default function SetAmount({ isModal, onPrev, onNext, withdrawAmount, set
               Exceed the available balance
               </Box>
               </Box>}
-              {withdrawAmount && BN(withdrawAmount).isNaN() &&  <Box
+              {amount && BN(amount).isNaN() &&  <Box
               display="flex"
               alignItems="center"
               justifyContent="flex-start"
@@ -184,7 +184,7 @@ export default function SetAmount({ isModal, onPrev, onNext, withdrawAmount, set
               padding="2px 12px"
               fontWeight="700"
               marginLeft="10px"
-              onClick={()=> setWithdrawAmount(Number(totalUsdValue))}
+              onClick={()=> setAmount(Number(totalUsdValue))}
               >
               MAX
               </Box>

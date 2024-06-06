@@ -8,8 +8,9 @@ import { ZeroAddress } from 'ethers';
 
 export default function Send({ isModal }: any) {
   const [step, setStep] = useState(0);
-  const [withdrawAmount, setWithdrawAmount] = useState<any>('');
+  const [amount, setAmount] = useState<any>('');
   const [sendTo, setSendTo] = useState('');
+  const [tokenAddress, setTokenAddress] = useState(ZeroAddress);
 
   const onPrev = useCallback(() => {
     console.log('prev', step);
@@ -26,9 +27,9 @@ export default function Send({ isModal }: any) {
   return (
     <Box width="100%" height="100%">
       <FadeSwitch key={step}>
-        {step === 0 && <SetAddress isModal={true} onNext={onNext} />}
-        {step === 1 && <SetAmount isModal={true} withdrawAmount={withdrawAmount} setWithdrawAmount={setWithdrawAmount} sendTo={sendTo} setSendTo={setSendTo}  onPrev={onPrev} onNext={onNext} />}
-        {step === 2 && <Review isModal={true} onPrev={onPrev} />}
+        {step === 0 && <SetAddress isModal={true} onNext={onNext} sendTo={sendTo} setSendTo={setSendTo} />}
+        {step === 1 && <SetAmount isModal={true} amount={amount} setAmount={setAmount} onPrev={onPrev} onNext={onNext} />}
+        {step === 2 && <Review amount={amount} sendTo={sendTo} tokenAddress={tokenAddress} isModal={true} onPrev={onPrev} />}
       </FadeSwitch>
     </Box>
   )
