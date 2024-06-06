@@ -87,7 +87,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
 
   console.log('isModal', isModal)
   return (
-    <Box width="100%" height={innerHeight} overflow="hidden">
+    <Box width="100%" height={innerHeight} overflowY="scroll">
       <Header
         title=""
         showBackButton={!isModal}

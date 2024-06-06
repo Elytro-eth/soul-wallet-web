@@ -13,13 +13,9 @@ import { toFixed } from '@/lib/tools';
 import { isAddress } from 'ethers';
 import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
 
-export default function InputAmount({
-  withdrawAmount,
-  onWithdrawAmountChange,
-  sendTo,
-  onSendToChange,
-  isModal
-}: any) {
+export default function SendForm({ isModal }: any) {
+  const [withdrawAmount, setWithdrawAmount] = useState<any>('');
+  const [sendTo, setSendTo] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { totalUsdValue, } = useBalanceStore();
   const [isENSOpen, setIsENSOpen] = useState(false);
@@ -42,11 +38,11 @@ export default function InputAmount({
       val = val.slice(0, -1);
     }
 
-    onWithdrawAmountChange(val)
+    setWithdrawAmount(val)
   }
 
   const onAddressChange = (val: string) => {
-    onSendToChange(val);
+    setSendTo(val);
     setSearchText(val);
 
     if (extractENSAddress(val)) {
@@ -120,7 +116,7 @@ export default function InputAmount({
 
   const submitENSName = (name: any) => {
     console.log('submitENSName', resolvedAddress);
-    onSendToChange(resolvedAddress)
+    setSendTo(resolvedAddress)
     // setErrors(({ receiverAddress, ...rest }: any) => rest);
     setIsENSOpen(false);
   };
@@ -128,7 +124,7 @@ export default function InputAmount({
   const disabled = (step === 0) ? (!isAddress(sendTo)) : (!withdrawAmount || withdrawAmount <= 0 || !sendTo || BN(withdrawAmount).isGreaterThan(totalUsdValue) || BN(withdrawAmount).isNaN())
 
   return (
-    <Box width="100%" height="100%">
+    <Box width="100%" height={innerHeight} overflowY="scroll">
       <Header
         title=""
         showBackButton={!isModal}
@@ -327,7 +323,7 @@ export default function InputAmount({
                   padding="2px 12px"
                   fontWeight="700"
                   marginLeft="10px"
-                  onClick={()=> onWithdrawAmountChange(Number(totalUsdValue))}
+                  onClick={()=> setWithdrawAmount(Number(totalUsdValue))}
                   >
                   MAX
                   </Box>
