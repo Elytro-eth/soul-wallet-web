@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { Box, Image, Flex } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import MoreIcon from '@/components/Icons/mobile/More';
+import SendIcon from '@/components/Icons/mobile/Send';
+import ReceiveIcon from '@/components/Icons/mobile/Receive';
+import ActivitiesIcon from '@/components/Icons/mobile/Activities';
 import USDCIcon from '@/assets/tokens/usdc.png';
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
@@ -12,6 +15,7 @@ import BN from 'bignumber.js';
 import { useScroll, useMotionValueEvent } from 'framer-motion';
 import HistoryIcon from '@/components/Icons/mobile/History';
 import { useOutletContext } from 'react-router-dom';
+import useWalletContext from '@/context/hooks/useWalletContext';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -56,6 +60,7 @@ const getFontBottomMargin = (value: any) => {
 };
 
 export default function Dashboard() {
+  const { openFullScreenModal } = useWalletContext()
   const { totalUsdValue, totalTrialValue, getTokenBalance, sevenDayApy, oneDayInterest } = useBalanceStore();
   const { historyList } = useHistoryStore();
   const [modalMargin, setModalMargin] = useState(494);
@@ -66,6 +71,7 @@ export default function Dashboard() {
   // const { openModal } = useNavigation()
   const [openModal] = useOutletContext<any>();
   const contentRef = useRef();
+  const [activeMenu, setActiveMenu] = useState('apps')
 
   const pendingUsdcBalance = getTokenBalance(import.meta.env.VITE_TOKEN_USDC);
 
@@ -186,6 +192,25 @@ export default function Dashboard() {
             contentRef.current = v;
           }}
         >
+          <Box marginBottom="24px">
+            <Box fontWeight="700" fontSize="18px">
+              Hi, Andy
+            </Box>
+            <Box fontWeight="700" fontSize="42px" lineHeight="50px" marginTop="8px">
+              Welcome to<br />
+              Ethereum
+            </Box>
+          </Box>
+          <Box display="flex" marginBottom="36px">
+            <Box marginRight="24px" fontSize="24px" fontWeight={(activeMenu === 'apps') ? 700 : 400} position="relative" onClick={() => setActiveMenu('apps')}>
+              Apps
+              {(activeMenu === 'apps') && <Box position="absolute" bottom="-10px" left="calc(50% - 12px)" height="4px" width="24px" background="#7386C7" borderRadius="4px" />}
+            </Box>
+            <Box fontSize="24px" position="relative" fontWeight={(activeMenu === 'assets') ? 700 : 400} onClick={() => setActiveMenu('assets')}>
+              Assets
+              {(activeMenu === 'assets') && <Box position="absolute" bottom="-10px" left="calc(50% - 12px)" height="4px" width="24px" background="#7386C7" borderRadius="4px" />}
+            </Box>
+          </Box>
           <Box
             width="100%"
             background="white"
@@ -197,9 +222,6 @@ export default function Dashboard() {
             position="relative"
             zIndex="1"
           >
-            <Box fontSize="18px" fontWeight="700" lineHeight="24px" marginBottom="45px">
-              Balance
-            </Box>
             <Box
               display="flex"
               flexDirection="column"
@@ -231,136 +253,68 @@ export default function Dashboard() {
                   }}
                 />
                 {valueRight &&
-                  BN(valueRight).isGreaterThan(0) &&
-                  Number(valueRight.slice(0, 3).replace(/0+$/, '')) > 0 && (
-                    <Box
-                      fontSize={smFontSize}
-                      lineHeight={'1'}
-                      fontWeight="700"
-                      marginTop={fontBottomMargin}
-                      // marginLeft="10px"
-                      color="#939393"
-                    >
-                      .
-                      <Box
-                        as="span"
-                        sx={{
-                          '@property --num': {
-                            syntax: `'<integer>'`,
-                            initialValue: '0',
-                            inherits: 'false',
-                          },
-                          '&': {
-                            transition: '--num 1s',
-                            counterReset: 'num var(--num)',
-                            '--num': valueRight.slice(0, 3).replace(/0+$/, ''),
-                          },
-                          '&::after': {
-                            content: 'counter(num)',
-                          },
-                        }}
-                      />
-                    </Box>
-                  )}
+                 BN(valueRight).isGreaterThan(0) &&
+                 Number(valueRight.slice(0, 3).replace(/0+$/, '')) > 0 && (
+                   <Box
+                     fontSize={smFontSize}
+                     lineHeight={'1'}
+                     fontWeight="700"
+                     marginTop={fontBottomMargin}
+                     // marginLeft="10px"
+                     color="#939393"
+                   >
+                     .
+                     <Box
+                       as="span"
+                       sx={{
+                         '@property --num': {
+                           syntax: `'<integer>'`,
+                           initialValue: '0',
+                           inherits: 'false',
+                         },
+                         '&': {
+                           transition: '--num 1s',
+                           counterReset: 'num var(--num)',
+                           '--num': valueRight.slice(0, 3).replace(/0+$/, ''),
+                         },
+                         '&::after': {
+                           content: 'counter(num)',
+                         },
+                       }}
+                     />
+                   </Box>
+                )}
               </Box>
-              <Box color="#0CB700" fontSize="16px" fontWeight="600" marginBottom="40px" marginTop="4px">
-                + ${oneDayInterest} earned today
-              </Box>
-              {Number(pendingUsdcBalance) > 0 && (
-                <Box color="rgba(0, 0, 0, 0.60)" fontSize="14px">
-                  Deposit in progress, est complete in{' '}
-                  <Box color="#497EE6" as="span">
-                    1 min
-                  </Box>
-                </Box>
-              )}
-            </Box>
-            {hasBalance && (
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                gap="14px"
-                flexDirection={{ xs: 'column', sm: 'row' }}
-              >
+              <Box marginTop="20px" display="flex">
                 <Box
+                  marginRight="30px"
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
-                  justifyContent="center"
-                  width={{ xs: '100%', sm: '34%' }}
+                  onClick={() => openFullScreenModal('send')}
                 >
-                  <Box onClick={() => openModal('withdraw')} style={{ width: '100%' }}>
-                    <Box width="100%">
-                      <Button width="100%" size="xl" type="grey" fontWeight="600" minWidth="auto">
-                        Transfer
-                      </Button>
-                    </Box>
-                  </Box>
+                  <Box><SendIcon /></Box>
+                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Send</Box>
                 </Box>
                 <Box
+                  marginRight="30px"
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
-                  justifyContent="center"
-                  width={{ xs: '100%', sm: 'calc(66% - 14px)' }}
+                  onClick={() => openFullScreenModal('receive')}
                 >
-                  <Box onClick={() => openModal('deposit')} style={{ width: '100%' }}>
-                    <Box width="100%">
-                      <Button width="100%" fontWeight="600" size="xl" type="black" minWidth="auto">
-                        Deposit USDC
-                      </Button>
-                    </Box>
-                  </Box>
+                  <Box><ReceiveIcon /></Box>
+                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Receive</Box>
                 </Box>
-              </Box>
-            )}
-            {!hasBalance && (
-              <Box display="flex" alignItems="center" justifyContent="center" gap="14px">
-                <Box onClick={() => openModal('deposit')} style={{ width: '100%' }}>
-                  <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-                    <Box width="100%">
-                      <Button width="100%" size="xl" type="black">
-                        Deposit USDC
-                      </Button>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-            )}
-          </Box>
-          <Box
-            width="100%"
-            marginTop="-30px"
-            boxShadow="0px 4px 60px 0px rgba(44, 53, 131, 0.08)"
-            border="1px solid #EAECF0"
-            bg="#FAFAFA"
-            padding="22px"
-            borderRadius="24px"
-            paddingTop="44px"
-          >
-            <Box fontSize="18px" fontWeight="700" marginBottom="12px">
-              Earn
-            </Box>
-            <Box onClick={() => openModal('details')} display="flex" justifyContent="space-between" alignItems="center">
-              <Box display="flex" alignItems="center">
-                <Box marginRight="8px">
-                  <Image src={USDCIcon} minW="8" w="8" h="8" />
-                </Box>
-                <Box>
-                  <Box fontSize="18px" lineHeight={'23px'} fontWeight="700">
-                    USDC
-                  </Box>
-                </Box>
-              </Box>
-              <Box display="flex" alignItems="center">
-                <Box display="flex" flexDirection="column" alignItems="flex-end">
-                  <Box fontSize="18px" lineHeight={'23px'} fontWeight="700">
-                    {sevenDayApy}%
-                  </Box>
-                </Box>
-                <Box marginLeft="10px">
-                  <MoreIcon />
+                <Box
+                  marginRight="30px"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  onClick={() => openFullScreenModal('activity')}
+                >
+                  <Box><ActivitiesIcon /></Box>
+                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Activity</Box>
                 </Box>
               </Box>
             </Box>

@@ -6,8 +6,9 @@ import SettingIcon from '@/components/Icons/mobile/Setting'
 import TelegramIcon from '@/components/Icons/mobile/Telegram'
 import UserIcon from '@/components/Icons/mobile/User'
 import MenuIcon from '@/components/Icons/mobile/Menu'
+import CloseIcon from '@/components/Icons/mobile/Close'
 import { useAddressStore } from '@/store/address';
-import IconProfile from '@/assets/icons/profile.svg';
+import IconSetting from '@/assets/icons/setting.svg';
 import Button from '@/components/mobile/Button'
 import useWallet from '@/hooks/useWallet';
 import AddressIcon from '@/components/AddressIcon';
@@ -15,6 +16,9 @@ import Settings from '@/pages/settings'
 import Activity from '@/pages/activity'
 import Deposit from '@/pages/deposit'
 import Withdraw from '@/pages/withdraw'
+import Send from '@/pages/send'
+import Receive from '@/pages/receive'
+import ReceiveSteps from '@/pages/receiveSteps'
 import Details from '@/pages/dashboard/Details'
 import useWalletContext from '@/context/hooks/useWalletContext';
 
@@ -32,18 +36,28 @@ export function Header({ openMenu, username, ...props }: any) {
       {...props}
     >
       <Box display="flex" gap="2" alignItems="center" justifyContent="center">
-        <Box fontSize="16px" lineHeight={"20px"} fontWeight="700">{walletName}</Box>
+        <Box fontSize="16px" lineHeight={"20px"} fontWeight="700"></Box>
       </Box>
       <Box fontSize="18px" fontWeight="700" color="black" lineHeight="24px">
         <Box background="white" height="36px" width="36px" borderRadius="36px" display="flex" alignItems="center" justifyContent="center" onClick={openMenu}>
-          <Image src={IconProfile} />
+          <Box
+            width="36px"
+            height="36px"
+            borderRadius="36px"
+            boxShadow="0px 4px 20px 0px rgba(60, 61, 69, 0.1)"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Image src={IconSetting} />
+          </Box>
         </Box>
       </Box>
     </Box>
   );
 }
 
-export function ModalPage({ name, openModal, closeModal }: any) {
+export function ModalPage({ height, name, openModal, closeModal }: any) {
   const scrollableRef = useRef(null);
   const scrollTop = useRef(0);
   const [startPosition, setStartPosition] = useState(null);
@@ -98,6 +112,12 @@ export function ModalPage({ name, openModal, closeModal }: any) {
       return <Deposit isModal={true} registerScrollable={registerScrollable} />
     } else if (name === 'withdraw') {
       return <Withdraw isModal={true} />
+    } else if (name === 'send') {
+      return <Send isModal={true} />
+    } else if (name === 'receive') {
+      return <Receive isModal={true} />
+    } else if (name === 'receiveSteps') {
+      return <ReceiveSteps isModal={true} />
     }
   }
 
@@ -121,7 +141,7 @@ export function ModalPage({ name, openModal, closeModal }: any) {
   return (
     <Box
       width="100%"
-      height={window.innerHeight - 40}
+      height={height}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onMouseDown={handleMouseDown}
@@ -133,13 +153,23 @@ export function ModalPage({ name, openModal, closeModal }: any) {
 }
 
 export default function AppContainer() {
-  const { isModalOpen, openModal, closeModal, activeModal } = useWalletContext()
+  const {
+    isModalOpen,
+    openModal,
+    closeModal,
+    activeModal,
+    isFullScreenModalOpen,
+    openFullScreenModal,
+    closeFullScreenModal,
+    activeFullScreenModal
+  } = useWalletContext()
   const { logoutWallet } = useWallet();
   const [innerHeight] = useState(window.innerHeight);
   // const innerHeight = window.innerHeight
   const contentHeight = innerHeight - 56
   const marginHeight = innerHeight - 250
   console.log('isModalOpen', isModalOpen)
+  console.log('isFullScreenModalOpen', isFullScreenModalOpen)
 
   const doLogout = async () => {
     logoutWallet();
@@ -150,7 +180,8 @@ export default function AppContainer() {
       return {
         'transform': 'perspective(1300px) translateZ(-80px)',
         'transform-style': 'preserve-3d',
-        'border-radius': '20px'
+        'border-radius': '20px',
+        'overflow': 'hidden'
       }
     }
 
@@ -184,6 +215,59 @@ export default function AppContainer() {
             <Outlet context={[openModal]} />
           </Box>
         </Flex>
+        <Box
+          position="fixed"
+          width="100vw"
+          height="100vh"
+          top="0"
+          left="0"
+          zIndex="99"
+          pointerEvents={isFullScreenModalOpen ? 'all' : 'none'}
+        >
+          <Box
+            height="100%"
+            width="100%"
+            position="relative"
+          >
+            <Box
+              height="100%"
+              width="100%"
+              position="absolute"
+              background={isFullScreenModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
+              transition="all 0.3s ease"
+            />
+            <Box
+              height="100%"
+              width="100%"
+              position="absolute"
+              background="white"
+              top={isFullScreenModalOpen ? '0' : '100%'}
+              transition="all 0.3s ease"
+            >
+              <Box
+                height="32px"
+                width="32px"
+                borderRadius="30px"
+                position="absolute"
+                top="20px"
+                right="16px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                onClick={closeFullScreenModal}
+                zIndex="2"
+              >
+                <CloseIcon />
+              </Box>
+              <ModalPage
+                height={window.innerHeight}
+                name={activeFullScreenModal}
+                openModal={openFullScreenModal}
+                closeModal={closeFullScreenModal}
+              />
+            </Box>
+          </Box>
+        </Box>
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
@@ -229,6 +313,7 @@ export default function AppContainer() {
               padding="0"
             >
               <ModalPage
+                height={window.innerHeight - 40}
                 name={activeModal}
                 openModal={openModal}
                 closeModal={closeModal}

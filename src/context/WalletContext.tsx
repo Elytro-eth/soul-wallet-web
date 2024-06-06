@@ -15,6 +15,10 @@ interface IWalletContext {
   activeModal: any;
   openModal: any;
   closeModal: any;
+  isFullScreenModalOpen: any;
+  activeFullScreenModal: any;
+  openFullScreenModal: any;
+  closeFullScreenModal: any;
 }
 
 export const WalletContext = createContext<IWalletContext>({
@@ -26,6 +30,10 @@ export const WalletContext = createContext<IWalletContext>({
   activeModal: null,
   openModal: () => {},
   closeModal: () => {},
+  isFullScreenModalOpen: false,
+  activeFullScreenModal: null,
+  openFullScreenModal: () => {},
+  closeFullScreenModal: () => {},
 });
 
 export const WalletContextProvider = ({ children }: any) => {
@@ -39,6 +47,16 @@ export const WalletContextProvider = ({ children }: any) => {
   const [activeModal, setActiveModal] = useState(null)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  const [
+    activeFullScreenModal,
+    setActiveFullScreenModal
+  ] = useState(null)
+  const {
+    isOpen: isFullScreenOpen,
+    onOpen: onOpenFullScreen,
+    onClose: onCloseFullScreen
+  } = useDisclosure()
+
   const openModal = (activeModal: any) => {
     setActiveModal(activeModal)
     onOpen()
@@ -47,6 +65,16 @@ export const WalletContextProvider = ({ children }: any) => {
   const closeModal = () => {
     setActiveModal(null)
     onClose()
+  }
+
+  const openFullScreenModal = (activeModal: any) => {
+    setActiveFullScreenModal(activeModal)
+    onOpenFullScreen()
+  }
+
+  const closeFullScreenModal = () => {
+    setActiveFullScreenModal(null)
+    onCloseFullScreen()
   }
 
   const ethersProvider = useMemo(() => {
@@ -86,7 +114,11 @@ export const WalletContextProvider = ({ children }: any) => {
         isModalOpen: isOpen,
         activeModal,
         openModal,
-        closeModal
+        closeModal,
+        isFullScreenModalOpen: isFullScreenOpen,
+        activeFullScreenModal,
+        openFullScreenModal,
+        closeFullScreenModal,
       }}
     >
       {children}
