@@ -1,9 +1,10 @@
-import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image } from '@chakra-ui/react';
+import { Box, Text, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import QuestionIcon from '@/components/Icons/Question';
-import { validEmailProviders } from '@/config/constants'
+import { validEmailDomains, validEmailProviders } from '@/config/constants'
+import useForm from '@/hooks/useForm';
 
-export default function SetEmail({ email, setEmail, onSendEmail }: any) {
+export default function SetEmail({ email, onChange, onBlur, errorMsg, onSendEmail }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const innerHeight = window.innerHeight
@@ -25,7 +26,8 @@ export default function SetEmail({ email, setEmail, onSendEmail }: any) {
           height="40px"
           value={email}
           spellCheck={false}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e: any) => onChange(e.target.value)}
+          onBlur={(e: any) => onBlur(e.target.value)}
           fontSize="28px"
           lineHeight="24px"
           padding="0"
@@ -38,8 +40,10 @@ export default function SetEmail({ email, setEmail, onSendEmail }: any) {
         />
         {/* <Box marginTop="10px" width="100%" height="1px" background="rgba(73, 126, 130, 0.2)" /> */}
       </Box>
-      <Box color="#E83D26" fontSize="14px" fontWeight="500" width="100%">Please enter a valid email address</Box>
-      <Button marginTop="62px" disabled={false} size="xl" type="blue" width="100%" onClick={onSendEmail}>Verify Email</Button>
+      <Box minHeight="21px">
+        {errorMsg && <Box color="#E83D26" fontSize="14px" fontWeight="500" width="100%">{errorMsg}</Box>}
+      </Box>
+      <Button marginTop="41px" disabled={false} size="xl" type="blue" width="100%" onClick={onSendEmail}>Verify Email</Button>
       <Box
         width="100%"
         display="flex"

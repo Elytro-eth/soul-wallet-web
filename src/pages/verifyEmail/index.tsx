@@ -14,6 +14,36 @@ import useTransaction from '@/hooks/useTransaction';
 import { SocialRecovery } from '@soulwallet/sdk';
 import useWallet from '@/hooks/useWallet';
 import useNavigation from '@/hooks/useNavigation';
+import { validEmailDomains, validEmailProviders } from '@/config/constants'
+import useForm from '@/hooks/useForm';
+
+const validate = (values: any, props: any, callbackRef: any) => {
+  let errors: any = {};
+  const { email } = values;
+
+  const emailReg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+
+  if (!emailReg.test(email)) {
+    errors.email = 'Please enter valid email address';
+  } else {
+    const address = email.split('@')[1];
+    console.log('validEmailDomains', validEmailDomains, address)
+    if (!validEmailDomains.includes(address)) {
+      errors.email = (
+        <Box as="p" display="flex">
+          <Box as="span" color="danger" marginRight="4px">This email provider is not supported.</Box>
+        </Box>
+      );
+    }
+  }
+
+  if (callbackRef) {
+    const externalErrors = callbackRef(values) || {};
+    errors = { ...errors, ...externalErrors };
+  }
+
+  return errors;
+};
 
 export default function VerifyEmail() {
   const [verifyToken, setVerifyToken] = useState('');
@@ -26,8 +56,12 @@ export default function VerifyEmail() {
   const [countInterval, setCountInterval] = useState<any>();
   const toast = useToast();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
   const [step, setStep] = useState(0);
+
+  const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
+    fields: ['email'],
+    validate,
+  });
 
   const onPrev = useCallback(() => {
     if (step >= 1) {
@@ -48,11 +82,11 @@ export default function VerifyEmail() {
     setVerifyToken('');
     try{
       const res: any = await api.emailVerify.requestVerifyEmail({
-        email,
+        email: values.email,
         // 1 for binding guardian.
         verifyPurpose: 1,
       });
-  
+
       if (res.code === 200) {
         setVerifyToken(res.data.verifyToken);
         setVerifyExpireTime(res.data.verifyExpireTime);
@@ -62,7 +96,7 @@ export default function VerifyEmail() {
           title: 'A verification email was sent to your email address',
           status: 'success',
         });
-      startCountDown();
+        startCountDown();
 
       } else {
         toast({
@@ -97,7 +131,7 @@ export default function VerifyEmail() {
   const doGenerateAddress = async () => {
     try {
       const res: any = await api.emailGuardian.allocateGuardian({
-        email,
+        email: values.email,
         verifyToken,
         address: selectedAddress,
         chainID: selectedChainId,
@@ -167,9 +201,19 @@ export default function VerifyEmail() {
 
   const renderStep = () => {
     if (step == 0) {
-      return <SetEmail email={email} setEmail={setEmail} onSendEmail={onSendEmail} onPrev={onPrev} onSkip={onSkip} />;
+      return (
+        <SetEmail
+          email={values.email}
+          onChange={onChange('email')}
+          onBlur={onBlur('email')}
+          errorMsg={showErrors.email && errors.email}
+          onSendEmail={onSendEmail}
+          onPrev={onPrev}
+          onSkip={onSkip}
+        />
+      );
     } else if (step == 1) {
-      return verifyToken && verifyStatus === 2 ? <ConfirmGuardians onPrev={onPrev} onChangeGuardian={doChangeGuardian} /> : <ConfirmEmail email={email} onPrev={onPrev} onNext={onNext} />
+      return verifyToken && verifyStatus === 2 ? <ConfirmGuardians onPrev={onPrev} onChangeGuardian={doChangeGuardian} /> : <ConfirmEmail email={values.email} onPrev={onPrev} onNext={onNext} />
     }
   };
 
