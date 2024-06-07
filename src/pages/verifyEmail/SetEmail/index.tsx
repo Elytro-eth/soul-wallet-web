@@ -3,7 +3,7 @@ import Button from '@/components/mobile/Button'
 import QuestionIcon from '@/components/Icons/Question';
 import { validEmailProviders } from '@/config/constants'
 
-export default function SetEmail({ value, onPrev, onNext }: any) {
+export default function SetEmail({ email, setEmail, onSendEmail }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const innerHeight = window.innerHeight
@@ -23,9 +23,9 @@ export default function SetEmail({ value, onPrev, onNext }: any) {
       <Box width="100%" marginBottom="10px">
         <Input
           height="40px"
-        // value={value}
+          value={email}
           spellCheck={false}
-        // onChange={e => onChange(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
           fontSize="28px"
           lineHeight="24px"
           padding="0"
@@ -39,7 +39,7 @@ export default function SetEmail({ value, onPrev, onNext }: any) {
         {/* <Box marginTop="10px" width="100%" height="1px" background="rgba(73, 126, 130, 0.2)" /> */}
       </Box>
       <Box color="#E83D26" fontSize="14px" fontWeight="500" width="100%">Please enter a valid email address</Box>
-      <Button marginTop="62px" disabled={false} size="xl" type="blue" width="100%" onClick={onNext}>Verify Email</Button>
+      <Button marginTop="62px" disabled={false} size="xl" type="blue" width="100%" onClick={onSendEmail}>Verify Email</Button>
       <Box
         width="100%"
         display="flex"
