@@ -1,6 +1,7 @@
 import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import QuestionIcon from '@/components/Icons/Question';
+import { validEmailProviders } from '@/config/constants'
 
 export default function SetEmail({ value, onPrev, onNext }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -83,12 +84,40 @@ export default function SetEmail({ value, onPrev, onNext }: any) {
             </Box>
             <Box
               width="100%"
-              height="150px"
               background="rgba(242, 242, 242, 0.55)"
               padding="24px 20px"
+              paddingBottom="0"
             >
               <Box fontSize="14px" width="100%" textAlign="center" fontWeight="500">Email providers we recommend:</Box>
-              <Box></Box>
+              <Box
+                display="flex"
+                flexWrap="wrap"
+                marginTop="16px"
+              >
+                {validEmailProviders.map((email: any) => (
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    width="33.33%"
+                    // marginRight="24px"
+                    marginBottom="18px"
+                  >
+                    <Box
+                      minWidth="24px"
+                      minHeight="24px"
+                      marginRight="8px"
+                    >
+                      <Image width="24px" minHeight="24px" src={email.icon} />
+                    </Box>
+                    <Box
+                      whiteSpace="pre"
+                    >
+                      {email.title}
+                    </Box>
+                  </Box>
+                ))}
+
+              </Box>
             </Box>
             <Box width="100%" marginTop="40px">
               <Button size="xl" type="blue" width="100%" onClick={onClose}>
