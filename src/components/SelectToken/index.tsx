@@ -14,7 +14,11 @@ const SelectToken = ({ select, isOpen }: any) => {
       >
         {() => (
           <Box width="100%" overflow="auto">
-            <MenuList background="white" width="100%" boxShadow="0px 0px 20px 0px rgba(0, 0, 0, 0.2)">
+            <MenuList
+              background="white"
+              width="100%"
+              boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)"
+            >
               {tokenBalance.map((token: any) =>
                 <MenuItem key={token.name} width="calc(100vw - 60px)" position="relative" padding="9px 16px" onClick={() => select(token)}>
                   <Box marginRight="8px">
