@@ -2,7 +2,7 @@ import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalB
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 
-export default function ConfirmEmail({ onPrev, onNext }: any) {
+export default function ConfirmEmail({ onPrev, onNext, email, }: any) {
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
       <Box
@@ -29,7 +29,7 @@ export default function ConfirmEmail({ onPrev, onNext }: any) {
         fontWeight="600"
         marginTop="20px"
       >
-        {`Necklaceeez@gmail.com`}
+        {email}
       </Box>
       <Box
         width="100%"

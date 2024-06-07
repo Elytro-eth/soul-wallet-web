@@ -1,11 +1,11 @@
 import { MaxUint256, ZeroAddress, ZeroHash, ethers, parseEther } from 'ethers';
 import useSdk from './useSdk';
 import useQuery from './useQuery';
-import { ABI_SoulWallet } from '@soulwallet/abi';
+import { ABI_SocialRecoveryModule, ABI_SoulWallet } from '@soulwallet/abi';
 import { useSlotStore } from '@/store/slot';
 import { addPaymasterData } from '@/lib/tools';
 import { erc20Abi, verifyMessage } from 'viem';
-import { SignkeyType, UserOperation } from '@soulwallet/sdk';
+import { SignkeyType, Transaction, UserOperation } from '@soulwallet/sdk';
 import { executeTransaction } from '@/lib/tx';
 import { UserOpUtils } from '@soulwallet/sdk';
 import useConfig from './useConfig';
@@ -196,6 +196,17 @@ export default function useWallet() {
 
     return await getUserOp(txs);
   };
+
+  const getChangeGuardianOp = async (newGuardianHash: string) => {
+    const soulAbi = new ethers.Interface(ABI_SocialRecoveryModule);
+    const callData = soulAbi.encodeFunctionData('setGuardian(bytes32)', [newGuardianHash]);
+    const tx: Transaction = {
+      to: chainConfig.contracts.socialRecoveryModule,
+      data: callData,
+    };
+
+    return await getUserOp([tx]);
+  }
 
   const getActivateOp = async (_initialKeys: any) => {
     const createIndex = 0;
@@ -411,5 +422,6 @@ export default function useWallet() {
     signWithPasskey,
     logoutWallet,
     getSponsor,
+    getChangeGuardianOp,
   };
 }

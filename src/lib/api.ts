@@ -83,15 +83,15 @@ const op = {
 };
 
 const emailVerify = {
-  requestVerifyEmail: (params: any) => axio.post('/email-verify/request-verify-email', params),
-  confirmVerification: (params: any) => axio.post('/email-verify/confirm-verification', params),
-  verificationStatus: (params: any) => axio.post('/email-verify/verification-status', params),
+  requestVerifyEmail: (params: any) => axio.post('walletapi/email-verify/request-verify-email', params),
+  confirmVerification: (params: any) => axio.post('walletapi/email-verify/confirm-verification', params),
+  verificationStatus: (params: any) => axio.post('walletapi/email-verify/verification-status', params),
 }
 
 const emailGuardian = {
-  allocateGuardian: (params: any) => axio.post('/email-guardian/allocate-guardian', params),
+  allocateGuardian: (params: any) => axio.post('walletapi/email-guardian/allocate-guardian', params),
   // guardianInfo: (params: any) => axio.post('/email-guardian/guardian-info', params),
-  emailTemplate: (params: any) => axio.post('/email-guardian/email-template', params),
+  emailTemplate: (params: any) => axio.post('walletapi/email-guardian/email-template', params),
 }
 
 export default {
