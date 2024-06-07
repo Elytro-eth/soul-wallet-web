@@ -150,8 +150,6 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
               {amount} {selectedToken.symbol}
             </Box>
           </Box>
-
-          <Box padding="10px 0" display="flex" alignItems="center" position="relative"></Box>
         </Box>
         <Box marginTop="40px">
           <Box
@@ -172,8 +170,6 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
               5c93d1
             </Box>
           </Box>
-
-          <Box padding="10px 0" display="flex" alignItems="center" position="relative"></Box>
         </Box>
         <Box fontSize="14px" fontWeight="700" opacity="0.4" marginTop="40px">
           Network

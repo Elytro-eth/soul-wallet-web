@@ -7,6 +7,7 @@ import Deposit from '@/pages/deposit';
 import Withdraw from '@/pages/withdraw';
 import VerifySecret from '@/pages/public/VerifySecret';
 import Landing from '@/pages/landing';
+import VerifyEmail from '@/pages/verifyEmail';
 import Intro from '@/pages/intro';
 import DashboardDetails from '@/pages/dashboard/Details';
 import AppContainer from './components/mobile/AppContainer';
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: '/landing',
         element: <Landing />,
+      },
+      {
+        path: '/verifyEmail',
+        element: <VerifyEmail />,
       },
     ],
   },
