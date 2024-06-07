@@ -42,9 +42,9 @@ export default function VerifyEmail() {
         />
       );
     } else if (step == 1) {
-      return <ConfirmEmail onNext={onNext} />;
+      return <ConfirmEmail onPrev={onPrev} onNext={onNext} />;
     } else if (step == 2) {
-      return <ConfirmGuardians />;
+      return <ConfirmGuardians onPrev={onPrev} onNext={onNext} />;
     }
   };
 
