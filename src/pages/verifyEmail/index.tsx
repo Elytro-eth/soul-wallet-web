@@ -62,6 +62,7 @@ export default function VerifyEmail() {
     fields: ['email'],
     validate,
   });
+  const disabled = invalid
 
   const onPrev = useCallback(() => {
     if (step >= 1) {
@@ -208,6 +209,7 @@ export default function VerifyEmail() {
           onBlur={onBlur('email')}
           errorMsg={showErrors.email && errors.email}
           onSendEmail={onSendEmail}
+          disabled={disabled}
           onPrev={onPrev}
           onSkip={onSkip}
         />
