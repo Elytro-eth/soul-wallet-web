@@ -86,7 +86,7 @@ export default function SetEmail({ email, setEmail, onSendEmail }: any) {
               width="100%"
               background="rgba(242, 242, 242, 0.55)"
               padding="24px 20px"
-              paddingBottom="0"
+              paddingBottom="6px"
             >
               <Box fontSize="14px" width="100%" textAlign="center" fontWeight="500">Email providers we recommend:</Box>
               <Box
