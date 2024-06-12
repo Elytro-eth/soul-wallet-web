@@ -47,11 +47,11 @@ export default function useWallet() {
   const loginWallet = async () => {
     const { credential } = await authenticateLogin();
     try {
-      const res: any = await api.account.list({
-        ownerKey: credential.publicKey,
+      const res: any = await api.account.get({
+        ownerKey: credential.onchainPublicKey,
       });
 
-      if (!res || !res.data || !res.data.length || res.code !== 200) {
+      if (res.code !== 200) {
         toast({
           title: 'Failed to login',
           description: res.msg,
@@ -62,17 +62,17 @@ export default function useWallet() {
       }
 
       // consider first item only for now
-      const item = res.data[0];
+      const accountInfo = res.data;
 
-      const balances = await fetchTokenBalanceApi(item.address, item.chainID);
+      const balances = await fetchTokenBalanceApi(accountInfo.address, accountInfo.chainID);
 
       setTokenBalance(balances);
 
       setCredentials([credential as any]);
-      setWalletName(item.name);
-      setSelectedAddress(item.address);
-      setSelectedChainId(item.chainID);
-      setSlotInfo(item.initInfo);
+      setWalletName(accountInfo.name);
+      setSelectedAddress(accountInfo.address);
+      setSelectedChainId(accountInfo.chainID);
+      setSlotInfo(accountInfo.initInfo);
     } catch (e: any) {
       toast({
         title: 'Failed to login',
