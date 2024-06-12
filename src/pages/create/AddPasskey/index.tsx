@@ -2,7 +2,7 @@ import { Box, Input } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import FadeId from '@/components/Icons/mobile/FaceId'
 
-export default function AddPasskey({ addingPasskey, onNext, onSkip }: any) {
+export default function AddPasskey({ addingPasskey, onNext}: any) {
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px" display="flex" alignItems="flex-start" justifyContent="center" flexDirection="column">
       <Box marginBottom="44px">

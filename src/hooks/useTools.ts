@@ -1,4 +1,3 @@
-import api from '@/lib/api';
 import QRCode from 'qrcode';
 import { useToast } from '@chakra-ui/react';
 import { useSignerStore } from '@/store/signer';

@@ -40,7 +40,7 @@ const auth = {
 const account = {
   create: (params: any) => axio.post('/walletapi/account/create', params),
   get: (params: any) => axio.post('/walletapi/account/get-account', params),
-  list: (params: any) => axio.post('/walletapi/account/list', params),
+  // list: (params: any) => axio.post('/walletapi/account/list', params),
   nameStatus: (params: any) => axio.post('/walletapi/account/name-status', params),
 };
 
@@ -48,6 +48,14 @@ const backup = {
   publicBackupCredentialId: (params: any) => axio.post('/walletapi/backup/public-backup-credential-id', params),
   credential: (params: any) => axio.get('/walletapi/backup/credential', { params }),
 };
+
+const recovery = {
+  createRecord: (params: any) => axio.post('/walletapi/social-recovery/create-recovery-record', params),
+  getRecord: (params: any) => axio.post('/walletapi/social-recovery/record', params),
+  guardianSign: (params: any) => axio.post('/walletapi/social-recovery/guardian-sign', params),
+  execute: (params: any) => axio.post('/walletapi/social-recovery/execute', params),
+}
+
 
 const sponsor = {
   check: (chainID: string, entryPoint: string, op: UserOperation) =>
@@ -67,8 +75,6 @@ const token = {
   balance: (params: any) => axio.post('/walletapi/token/ft',params),
   spendTrialInterest: (params: any) => axio.post('/walletapi/token/spend-trial-interest',params),
 }
-
-
 
 const op = {
   list: (walletAddress: string, chainId: string[]) =>
@@ -105,4 +111,5 @@ export default {
   op,
   emailVerify,
   emailGuardian,
+  recovery,
 };
