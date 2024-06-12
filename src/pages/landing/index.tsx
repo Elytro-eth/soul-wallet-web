@@ -168,7 +168,7 @@ export default function Landing() {
           </Button>
         </Box>
         <Box fontSize="14px" fontWeight="400" color="#324174">
-          Lost access to account? <Box as="span" fontWeight="600">Recover here</Box>
+          Lost access to account? <Box as="span" fontWeight="600" onClick={() =>  navigate('/recover')}>Recover here</Box>
         </Box>
       </Box>
       <Modal
