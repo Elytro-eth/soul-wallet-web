@@ -10,6 +10,7 @@ import Landing from '@/pages/landing';
 import VerifyEmail from '@/pages/verifyEmail';
 import Intro from '@/pages/intro';
 import DashboardDetails from '@/pages/dashboard/Details';
+import Recover from '@/pages/recover';
 import AppContainer from './components/mobile/AppContainer';
 
 export const router = createBrowserRouter([
@@ -27,31 +28,35 @@ export const router = createBrowserRouter([
             path: '/',
             element: <Navigate to="/dashboard" replace />,
           },
+          {
+            path: '/details',
+            element: <DashboardDetails />,
+          },
+          {
+            path: '/create',
+            element: <Create />,
+          },
+          {
+            path: '/deposit',
+            element: <Deposit />,
+          },
+          {
+            path: '/withdraw',
+            element: <Withdraw />,
+          },
+          {
+            path: '/landing',
+            element: <Landing />,
+          },
+          {
+            path: '/verifyEmail',
+            element: <VerifyEmail />,
+          },
+          {
+            path: '/recover',
+            element: <Recover />,
+          },
         ],
-      },
-      {
-        path: '/details',
-        element: <DashboardDetails />,
-      },
-      {
-        path: '/create',
-        element: <Create />,
-      },
-      {
-        path: '/deposit',
-        element: <Deposit />,
-      },
-      {
-        path: '/withdraw',
-        element: <Withdraw />,
-      },
-      {
-        path: '/landing',
-        element: <Landing />,
-      },
-      {
-        path: '/verifyEmail',
-        element: <VerifyEmail />,
       },
     ],
   },

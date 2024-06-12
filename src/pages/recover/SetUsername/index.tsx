@@ -1,0 +1,77 @@
+import { Box, Input } from '@chakra-ui/react';
+import Button from '@/components/mobile/Button';
+import NameChecked from '@/components/Icons/mobile/NameChecked';
+import InputLoading from '@/components/InputLoading';
+
+export default function SetUsername({ value, onNext }: any) {
+  const disabled = !value;
+
+  return (
+    <Box width="100%" height="100%" padding="30px" paddingTop="138px">
+      <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px">
+        Set up username
+      </Box>
+      <Box width="100%" marginBottom="72px">
+        <Input
+          value={value}
+          spellCheck={false}
+          onChange={() => {}}
+          fontSize="32px"
+          lineHeight="24px"
+          padding="0"
+          fontWeight="700"
+          placeholder="Enter username or wallet address"
+          borderRadius="0"
+          border="none"
+          outline="none"
+          _focusVisible={{ border: 'none', boxShadow: 'none' }}
+        />
+        <Box marginTop="10px" width="100%" height="1px" background="rgba(73, 126, 130, 0)" />
+        <Box
+          width="100%"
+          background="#F5FFF4"
+          borderRadius="12px"
+          padding="12px"
+        >
+          <Box
+            color="#0CB700"
+            fontSize="12px"
+            fontWeight="600"
+            display="flex"
+            alignItems="center"
+          >
+            <Box marginRight="4px">
+              <NameChecked />
+            </Box>
+            <Box>Wallet found</Box>
+          </Box>
+          <Box
+            fontSize="13px"
+            fontWeight="600"
+          >
+            <Box as="span" color="black">0x8d34</Box>
+            <Box as="span" color="rgba(0, 0, 0, 0.4)">947d8cba2abd7e8d5b788c8a3674325c93d1</Box>
+            <Box as="span" color="black">5c93d1</Box>
+          </Box>
+        </Box>
+        <Box
+          width="100%"
+          background="#FFF9F8"
+          borderRadius="12px"
+          padding="12px"
+          marginTop="10px"
+        >
+          <Box
+            fontSize="12px"
+            fontWeight="600"
+          >
+            <Box as="span" color="#E83D26">Wallet not found, please enter valid Soul Wallet address</Box>
+          </Box>
+        </Box>
+      </Box>
+      <Button disabled={false} size="xl" type="blue" width="100%" onClick={onNext}>
+        Continue
+      </Button>
+    </Box>
+  );
+}

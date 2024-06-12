@@ -18,6 +18,8 @@ import GoToIcon from '@/assets/mobile/goto.svg';
 import { useOutletContext } from 'react-router-dom';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useBrowser from '@/hooks/useBrowser';
+import IconSetting from '@/assets/icons/setting.svg';
+import { useAddressStore } from '@/store/address';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -60,6 +62,42 @@ const getFontBottomMargin = (value: any) => {
 
   return '20px';
 };
+
+
+export function Header({ openMenu, username, ...props }: any) {
+  const { walletName, selectedAddress } = useAddressStore();
+  return (
+    <Box
+      height="44px"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      padding="0 30px"
+      background="white"
+      position="relative"
+      {...props}
+    >
+      <Box display="flex" gap="2" alignItems="center" justifyContent="center">
+        <Box fontSize="16px" lineHeight={"20px"} fontWeight="700"></Box>
+      </Box>
+      <Box fontSize="18px" fontWeight="700" color="black" lineHeight="24px">
+        <Box background="white" height="36px" width="36px" borderRadius="36px" display="flex" alignItems="center" justifyContent="center" onClick={openMenu}>
+          <Box
+            width="36px"
+            height="36px"
+            borderRadius="36px"
+            boxShadow="0px 4px 20px 0px rgba(60, 61, 69, 0.1)"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Image src={IconSetting} />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
 
 export default function Dashboard() {
   const { openFullScreenModal } = useWalletContext()
@@ -188,8 +226,19 @@ export default function Dashboard() {
   // const finalHistoryList = historyList
 
   return (
-    <Box>
-      <Box padding={{ xs: '20px', sm: '30px' }}>
+    <Box
+      height={innerHeight}
+      background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
+    >
+      <Header
+        showLogo={true}
+        paddingTop="10px"
+        paddingBottom="10px"
+        height="64px"
+        background="transparent"
+        openMenu={() => openModal('settings')}
+      />
+      <Box padding={{ xs: '20px', sm: '30px' }} height={innerHeight - 64}>
         <Box
           ref={(v: any) => {
             contentRef.current = v;
