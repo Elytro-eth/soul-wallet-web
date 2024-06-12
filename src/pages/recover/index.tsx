@@ -8,6 +8,7 @@ import Intro from './Intro'
 import SetUsername from './SetUsername'
 import SetPasskey from './SetPasskey'
 import RecoverProgress from './RecoverProgress'
+import RecoverSuccess from './RecoverSuccess'
 import api from '@/lib/api';
 
 export default function Recover() {
@@ -48,6 +49,10 @@ export default function Recover() {
     } else if (step == 3) {
       return (
         <RecoverProgress onNext={onNext} />
+      )
+    } else if (step == 4) {
+      return (
+        <RecoverSuccess onNext={onNext} />
       )
     }
 
