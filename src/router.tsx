@@ -11,6 +11,8 @@ import VerifyEmail from '@/pages/verifyEmail';
 import Intro from '@/pages/intro';
 import DashboardDetails from '@/pages/dashboard/Details';
 import Recover from '@/pages/recover';
+import Public from '@/pages/public';
+import RecoverSign from '@/pages/public/RecoverSign';
 import AppContainer from './components/mobile/AppContainer';
 
 export const router = createBrowserRouter([
@@ -55,6 +57,16 @@ export const router = createBrowserRouter([
           {
             path: '/recover',
             element: <Recover />,
+          },
+          {
+            path: '/public',
+            element: <Public />,
+            children: [
+              {
+                path: 'sign',
+                element: <RecoverSign />,
+              },
+            ]
           },
         ],
       },
