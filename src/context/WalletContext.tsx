@@ -44,21 +44,22 @@ export const WalletContextProvider = ({ children }: any) => {
   const receiveModal = useRef<any>();
   const sendModal = useRef<any>();
 
-  const [activeModal, setActiveModal] = useState(null)
+  const [activeModal, setActiveModal] = useState<any>()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [
     activeFullScreenModal,
     setActiveFullScreenModal
-  ] = useState(null)
+  ] = useState<any>()
+
   const {
     isOpen: isFullScreenOpen,
     onOpen: onOpenFullScreen,
     onClose: onCloseFullScreen
   } = useDisclosure()
 
-  const openModal = (activeModal: any) => {
-    setActiveModal(activeModal)
+  const openModal = (name: any, props: any) => {
+    setActiveModal({ name, props })
     onOpen()
   }
 
@@ -67,8 +68,8 @@ export const WalletContextProvider = ({ children }: any) => {
     onClose()
   }
 
-  const openFullScreenModal = (activeModal: any) => {
-    setActiveFullScreenModal(activeModal)
+  const openFullScreenModal = (name: any, props: any) => {
+    setActiveFullScreenModal({ name, props })
     onOpenFullScreen()
   }
 

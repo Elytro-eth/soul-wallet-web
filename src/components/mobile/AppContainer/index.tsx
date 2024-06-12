@@ -23,7 +23,7 @@ import RecoverVerifyEmail from '@/pages/recover/RecoverVerifyEmail'
 import Details from '@/pages/dashboard/Details'
 import useWalletContext from '@/context/hooks/useWalletContext';
 
-export function ModalPage({ height, name, openModal, closeModal }: any) {
+export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
   const scrollableRef = useRef(null);
   const scrollTop = useRef(0);
   const [startPosition, setStartPosition] = useState(null);
@@ -67,25 +67,29 @@ export function ModalPage({ height, name, openModal, closeModal }: any) {
     scrollableRef.current = e
   };
 
-  const renderPage = (name: any) => {
+  const renderPage = (activeModal: any) => {
+    const name = activeModal && activeModal.name
+    const props = activeModal && activeModal.props
+    console.log('activeModal', activeModal)
+
     if (name === 'settings') {
-      return <Settings isModal={true} />
+      return <Settings isModal={true} {...props} />
     } else if (name === 'activity') {
-      return <Activity isModal={true} registerScrollable={registerScrollable} />
+      return <Activity isModal={true} {...props} registerScrollable={registerScrollable} />
     } else if (name === 'details') {
-      return <Details isModal={true} registerScrollable={registerScrollable} />
+      return <Details isModal={true} {...props} registerScrollable={registerScrollable} />
     } else if (name === 'deposit') {
-      return <Deposit isModal={true} registerScrollable={registerScrollable} />
+      return <Deposit isModal={true} {...props} registerScrollable={registerScrollable} />
     } else if (name === 'withdraw') {
-      return <Withdraw isModal={true} />
+      return <Withdraw isModal={true} {...props} />
     } else if (name === 'send') {
-      return <Send isModal={true} />
+      return <Send isModal={true} {...props} />
     } else if (name === 'receive') {
-      return <Receive isModal={true} />
+      return <Receive isModal={true} {...props} />
     } else if (name === 'receiveSteps') {
-      return <ReceiveSteps isModal={true} />
+      return <ReceiveSteps isModal={true} {...props} />
     } else if (name === 'recoverVerifyEmail') {
-      return <RecoverVerifyEmail isModal={true} />
+      return <RecoverVerifyEmail isModal={true} {...props} />
     }
   }
 
@@ -115,7 +119,7 @@ export function ModalPage({ height, name, openModal, closeModal }: any) {
       // onMouseDown={handleMouseDown}
       // onMouseMove={handleMouseMove}
     >
-      {renderPage(name)}
+      {renderPage(activeModal)}
     </Box>
   )
 }
@@ -221,7 +225,7 @@ export default function AppContainer() {
               </Box>
               <ModalPage
                 height={window.innerHeight}
-                name={activeFullScreenModal}
+                activeModal={activeFullScreenModal}
                 openModal={openFullScreenModal}
                 closeModal={closeFullScreenModal}
               />
@@ -274,7 +278,7 @@ export default function AppContainer() {
             >
               <ModalPage
                 height={window.innerHeight - 40}
-                name={activeModal}
+                activeModal={activeModal}
                 openModal={openModal}
                 closeModal={closeModal}
               />
