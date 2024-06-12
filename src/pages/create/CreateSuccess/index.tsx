@@ -13,8 +13,6 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
   const initialKeysRef = useRef<any>();
   const creatingRef = useRef(false);
   const executingRef = useRef(false);
-  const navigate = useNavigate();
-  const toast = useToast();
 
   const [animated, setAnimated] = useState(false);
 

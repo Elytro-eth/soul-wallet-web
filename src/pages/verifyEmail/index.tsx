@@ -14,8 +14,9 @@ import useTransaction from '@/hooks/useTransaction';
 import { SocialRecovery } from '@soulwallet/sdk';
 import useWallet from '@/hooks/useWallet';
 import useNavigation from '@/hooks/useNavigation';
-import { validEmailDomains, validEmailProviders } from '@/config/constants'
+import { validEmailDomains, validEmailProviders } from '@/config/constants';
 import useForm from '@/hooks/useForm';
+import { ZeroHash } from 'ethers';
 
 const validate = (values: any, props: any, callbackRef: any) => {
   let errors: any = {};
@@ -27,11 +28,13 @@ const validate = (values: any, props: any, callbackRef: any) => {
     errors.email = 'Please enter valid email address';
   } else {
     const address = email.split('@')[1];
-    console.log('validEmailDomains', validEmailDomains, address)
+    console.log('validEmailDomains', validEmailDomains, address);
     if (!validEmailDomains.includes(address)) {
       errors.email = (
         <Box as="p" display="flex">
-          <Box as="span" color="danger" marginRight="4px">This email provider is not supported.</Box>
+          <Box as="span" color="danger" marginRight="4px">
+            This email provider is not supported.
+          </Box>
         </Box>
       );
     }
@@ -49,9 +52,9 @@ export default function VerifyEmail() {
   const [verifyToken, setVerifyToken] = useState('');
   const [verifyStatus, setVerifyStatus] = useState(0);
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
-  const {selectedChainId } = useChainStore();
-  const {selectedAddress} = useAddressStore();
-  const {getChangeGuardianOp, signAndSend} = useWallet();
+  const { selectedChainId } = useChainStore();
+  const { selectedAddress } = useAddressStore();
+  const { getChangeGuardianOp, signAndSend } = useWallet();
   const [countDown, setCountDown] = useState(0);
   const [countInterval, setCountInterval] = useState<any>();
   const toast = useToast();
@@ -62,7 +65,7 @@ export default function VerifyEmail() {
     fields: ['email'],
     validate,
   });
-  const disabled = invalid
+  const disabled = invalid;
 
   const onPrev = useCallback(() => {
     if (step >= 1) {
@@ -81,7 +84,7 @@ export default function VerifyEmail() {
     setVerifyStatus(0);
     setVerifyExpireTime(0);
     setVerifyToken('');
-    try{
+    try {
       const res: any = await api.emailVerify.requestVerifyEmail({
         email: values.email,
         // 1 for binding guardian.
@@ -98,14 +101,13 @@ export default function VerifyEmail() {
           status: 'success',
         });
         startCountDown();
-
       } else {
         toast({
           title: 'Failed to send email',
           status: 'error',
         });
       }
-    }catch(err:any){
+    } catch (err: any) {
       toast({
         title: err.response.data.message || 'Failed to send email',
         status: 'error',
@@ -162,21 +164,38 @@ export default function VerifyEmail() {
     }
   };
 
+  const doBackupGuardian = async (guardianList: any, threshold: number, guardianHash: string) => {
+    const res = await api.backup.publicBackupGuardians({
+      guardianHash: guardianHash,
+      guardianDetails: {
+        guardians: guardianList,
+        threshold: threshold,
+        salt: ZeroHash,
+      },
+    });
+    console.log('backup result', res);
+  };
+
   const doChangeGuardian = async () => {
+    const defaultThreshold = 1;
     // 1. get guardian address
     const guardianAddress = await doGenerateAddress();
     // 2. calc guardian hash
-    const newGuardianHash = SocialRecovery.calcGuardianHash([guardianAddress], 1);
-    // 3. get user op
+    const newGuardianHash = SocialRecovery.calcGuardianHash([guardianAddress], defaultThreshold);
+
+    // 3. backup guardian
+    await doBackupGuardian([guardianAddress], defaultThreshold, newGuardianHash);
+
+    // 4. get user op
     const userOp = await getChangeGuardianOp(newGuardianHash);
-    // 4. execute op
+    // 5. execute op
     const res = await signAndSend(userOp);
     navigate('/dashboard');
     toast({
-      title: "10 USDC reward received",
-      status: "success",
-    })
-  }
+      title: '10 USDC reward received',
+      status: 'success',
+    });
+  };
 
   const checkVerify = async () => {
     const res: any = await api.emailVerify.verificationStatus({
@@ -215,7 +234,11 @@ export default function VerifyEmail() {
         />
       );
     } else if (step == 1) {
-      return verifyToken && verifyStatus === 2 ? <ConfirmGuardians onPrev={onPrev} onChangeGuardian={doChangeGuardian} /> : <ConfirmEmail email={values.email} onPrev={onPrev} onNext={onNext} />
+      return verifyToken && verifyStatus === 2 ? (
+        <ConfirmGuardians onPrev={onPrev} onChangeGuardian={doChangeGuardian} />
+      ) : (
+        <ConfirmEmail email={values.email} onPrev={onPrev} onNext={onNext} />
+      );
     }
   };
 

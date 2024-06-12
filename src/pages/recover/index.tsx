@@ -22,8 +22,18 @@ export default function Recover() {
   // const [credential, setCredential] = useState<any>(null);
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [accountInfo, setAccountInfo] = useState<any>(null);
+  const [isWalletNotFound, setIsWalletNotFound] = useState(false);
+  const [timer, setTimer] = useState<any>();
+
   const { recoverInfo, setRecoverInfo } = useTempStore();
-  const { recoveryId } = recoverInfo;
+  const { recoveryID } = recoverInfo;
+
+  console.log('R', recoverInfo)
+
+  const debounce = (fn: Function, delay: number) => {
+    clearTimeout(timer);
+    setTimer(setTimeout(fn, delay));
+  };
 
   const onPrev = useCallback(() => {
     if (step >= 1) {
@@ -70,6 +80,10 @@ export default function Recover() {
   const checkUsername = async()=>{
     // todo, add debounce;
     if( !username ) return;
+    // clear Previous info
+    setAccountInfo(null);
+    setIsWalletNotFound(false);
+
     // check username or wallet address
     const usernameRes:any = await api.account.get({
       name: username,
@@ -78,6 +92,7 @@ export default function Recover() {
     if(usernameRes.code === 200){
       console.log('matched')
       setAccountInfo(usernameRes.data);
+      setIsWalletNotFound(false);
       return;
     }
 
@@ -85,30 +100,33 @@ export default function Recover() {
       address: username,
     });
 
-
     if(addressRes.code === 200){
       console.log('matched')
       setAccountInfo(addressRes.data);
+      setIsWalletNotFound(false);
+      return;
     }
 
+    setIsWalletNotFound(true);
   }
 
   useEffect(()=>{
-    checkUsername();
+    debounce(()=>{
+      checkUsername();
+    }, 1000);
   }, [username])
 
   const getPreviousRecord = async () => {
     try {
-      const recoveryRecord = await api.recovery.getRecord({
-        recoveryID: recoveryId,
+      const recoveryRecordRes = await api.recovery.getRecord({
+        recoveryID,
       })
 
       setRecoverInfo({
-        recoveryId: recoveryId,
-        ...recoveryRecord,
+        ...recoveryRecordRes.data,
       });
 
-      const status = recoveryRecord.status;
+      const status = recoveryRecordRes.data.status;
 
       if (status == 0) {
         // record submitted
@@ -123,14 +141,14 @@ export default function Recover() {
   };
 
   useEffect(() => {
-    if (recoveryId) {
+    if (recoveryID) {
       getPreviousRecord();
       const interval = setInterval(async () => {
         getPreviousRecord();
       }, 5000);
       return () => clearInterval(interval);
     }
-  }, [recoveryId]);
+  }, [recoveryID]);
 
   const renderStep = () => {
     if (step == 0) {
@@ -139,7 +157,7 @@ export default function Recover() {
       )
     } else if (step == 1) {
       return (
-        <SetUsername onPrev={onPrev} onNext={onNext} accountInfo={accountInfo} username={username} setUsername={setUsername} />
+        <SetUsername onPrev={onPrev} isWalletNotFound={isWalletNotFound} onNext={onNext} accountInfo={accountInfo} username={username} setUsername={setUsername} />
       )
     } else if (step == 2) {
       return (

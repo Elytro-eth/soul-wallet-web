@@ -3,7 +3,7 @@ import Button from '@/components/mobile/Button';
 import NameChecked from '@/components/Icons/mobile/NameChecked';
 import InputLoading from '@/components/InputLoading';
 
-export default function SetUsername({ username, setUsername, accountInfo, onNext }: any) {
+export default function SetUsername({ username, isWalletNotFound, setUsername, accountInfo, onNext }: any) {
   const disabled = !username;
 
   return (
@@ -52,7 +52,7 @@ export default function SetUsername({ username, setUsername, accountInfo, onNext
                   </Box>
                 </Box>
               </Box>
-            ) : (
+            ) : isWalletNotFound ? (
               <Box width="100%" background="#FFF9F8" borderRadius="12px" padding="12px" marginTop="10px">
                 <Box fontSize="12px" fontWeight="600">
                   <Box as="span" color="#E83D26">
@@ -60,7 +60,7 @@ export default function SetUsername({ username, setUsername, accountInfo, onNext
                   </Box>
                 </Box>
               </Box>
-            )}
+            ) : <></>}
           </>
         )}
       </Box>

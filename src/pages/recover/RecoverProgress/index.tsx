@@ -7,10 +7,29 @@ import CopyIcon from '@/components/Icons/mobile/Copy';
 import WaitingIcon from '@/components/Icons/mobile/Waiting';
 import ApprovedIcon from '@/components/Icons/mobile/Approved';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import { useTempStore } from '@/store/temp';
+import api from '@/lib/api';
 
 export default function RecoverProgress({ onNext }: any) {
   const { openModal } = useWalletContext()
+  const { recoverInfo, setEmailTemplate } = useTempStore();
+  
+  const doOpenModal = async() => {
+    // get template info
+    const res = await api.emailGuardian.emailTemplate({
+      email: "",
+      guardianAddress: "",
+      recoveryID: recoverInfo.recoveryID
+    });
 
+    console.log('template info');
+    setEmailTemplate({
+      ...res.data, 
+      mailToLink: `mailto:${res.data.to}?subject=${res.data.subject}&body=${res.data.body}`
+    });
+    openModal('recoverVerifyEmail')
+  }
+  
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="40px">
       <Box
@@ -65,10 +84,10 @@ export default function RecoverProgress({ onNext }: any) {
           <Box>{`ne****ez@gmail.com`}</Box>
         </Box>
         <Box marginLeft="auto">
-          <Button size="sm" type="blue" height="32px" onClick={() => openModal('recoverVerifyEmail')}>Verify Email</Button>
+          <Button size="sm" type="blue" height="32px" onClick={doOpenModal}>Verify Email</Button>
         </Box>
       </Box>
-      <Box
+      {/* <Box
         fontWeight="600"
         fontSize="14px"
         width="100%"
@@ -112,7 +131,7 @@ export default function RecoverProgress({ onNext }: any) {
             </Box>
           </Box>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 }

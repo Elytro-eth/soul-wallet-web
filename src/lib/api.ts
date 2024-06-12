@@ -45,6 +45,8 @@ const account = {
 };
 
 const backup = {
+  publicBackupGuardians: (params: any) => axio.post('/walletapi/backup/public-backup-guardians', params),
+  publicGetGuardians: (params: any) => axio.get('/walletapi/backup/guardian-info', {params}),
   publicBackupCredentialId: (params: any) => axio.post('/walletapi/backup/public-backup-credential-id', params),
   credential: (params: any) => axio.get('/walletapi/backup/credential', { params }),
 };

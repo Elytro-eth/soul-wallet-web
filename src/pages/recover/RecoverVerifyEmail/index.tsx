@@ -3,8 +3,10 @@ import { Box, Flex, Image, Link } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import Button from '@/components/mobile/Button';
 import CopyIcon from '@/components/Icons/mobile/Copy';
+import { useTempStore } from '@/store/temp';
 
-export default function RecoverVerifyEmail({ isModal }: any) {
+export default function RecoverVerifyEmail() {
+  const { emailTemplate } = useTempStore();
 
   return (
     <Box
@@ -51,19 +53,19 @@ export default function RecoverVerifyEmail({ isModal }: any) {
           >
             <Box display="flex" alignItems="center" marginTop="24px">
               <Box width="40px" marginRight="25px">From</Box>
-              <Box>{`******@gmail.com`}</Box>
+              <Box>{emailTemplate.from || '...'}</Box>
             </Box>
             <Box display="flex" alignItems="center" marginTop="24px">
               <Box width="40px" marginRight="25px">To</Box>
               <Box display="flex" alignItems="center">
-                <Box>{`security@soulwallet.io`}</Box>
+                <Box>{emailTemplate.to || '...'}</Box>
                 <Box marginLeft="4px"><CopyIcon /></Box>
               </Box>
             </Box>
             <Box marginTop="50px">
               <Box color="rgba(0, 0, 0, 0.5)">Subject</Box>
               <Box marginTop="20px" display="flex" alignItems="center">
-                <Box width="calc(100% - 40px)">{`Please recover my wallet (0x8d34947d8cba2abd7e8d5b788c8a3674325c93d1, 0x8d34947d8cba2abd7e8d5b788c8a3674325c93d1)`}</Box>
+                <Box width="calc(100% - 40px)">{emailTemplate.subject}</Box>
                 <Box marginLeft="auto"><CopyIcon /></Box>
               </Box>
             </Box>
@@ -71,7 +73,9 @@ export default function RecoverVerifyEmail({ isModal }: any) {
         </Box>
       </Box>
       <Box padding="0 30px" width="100%" marginTop="40px">
-        <Button size="xl" type="blue" width="100%">Send via default email app</Button>
+        <Link href={emailTemplate.mailToLink}>
+          <Button size="xl" type="blue" width="100%">Send via default email app</Button>
+        </Link>
       </Box>
     </Box>
   );

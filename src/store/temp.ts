@@ -9,6 +9,8 @@ import { persist } from 'zustand/middleware';
 export interface ITempStore {
   recoverInfo: any;
   setRecoverInfo: (val: any) => void;
+  emailTemplate: any;
+  setEmailTemplate: (val: any) => void;
 }
 
 const createTempSlice = immer<ITempStore>((set, get) => ({
@@ -16,6 +18,12 @@ const createTempSlice = immer<ITempStore>((set, get) => ({
   setRecoverInfo: (val: any) => {
     set({
       recoverInfo: val,
+    });
+  },
+  emailTemplate: {},
+  setEmailTemplate: (val: any) => {
+    set({
+      emailTemplate: val,
     });
   },
 }));

@@ -73,6 +73,7 @@ export default function useWallet() {
       setSelectedAddress(accountInfo.address);
       setSelectedChainId(accountInfo.chainID);
       setSlotInfo(accountInfo.initInfo);
+      // rob, IMPORTANT TODO, fetch GUARDIANS
     } catch (e: any) {
       toast({
         title: 'Failed to login',
