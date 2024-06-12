@@ -11,6 +11,7 @@ import RecoverProgress from './RecoverProgress'
 import RecoverSuccess from './RecoverSuccess'
 import api from '@/lib/api';
 import { useTempStore } from '@/store/temp';
+import { SocialRecovery } from '@soulwallet/sdk';
 
 
 export default function Recover() {
@@ -23,12 +24,11 @@ export default function Recover() {
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [accountInfo, setAccountInfo] = useState<any>(null);
   const [isWalletNotFound, setIsWalletNotFound] = useState(false);
+  const [guardiansInfo, setGuardiansInfo] = useState([]);
   const [timer, setTimer] = useState<any>();
 
   const { recoverInfo, setRecoverInfo } = useTempStore();
   const { recoveryID } = recoverInfo;
-
-  console.log('R', recoverInfo)
 
   const debounce = (fn: Function, delay: number) => {
     clearTimeout(timer);
@@ -127,6 +127,14 @@ export default function Recover() {
       });
 
       const status = recoveryRecordRes.data.status;
+
+      // get guardian list by hash, to search for specialGuardians
+      const guardianHash = SocialRecovery.calcGuardianHash(recoveryRecordRes.data.guardianInfo.guardians, recoveryRecordRes.data.guardianInfo.threshold);
+      const guardianInfoRes = await api.backup.publicGetGuardians({
+        guardianHash,
+      });
+
+      console.log('special guardian info', guardianInfoRes);
 
       if (status == 0) {
         // record submitted

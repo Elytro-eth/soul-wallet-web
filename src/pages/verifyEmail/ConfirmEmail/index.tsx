@@ -2,7 +2,7 @@ import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalB
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 
-export default function ConfirmEmail({ onPrev, onNext, email, }: any) {
+export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, onResend }: any) {
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
       <Box
@@ -40,7 +40,9 @@ export default function ConfirmEmail({ onPrev, onNext, email, }: any) {
       >
         Please follow the instructions and complete the verification process.
       </Box>
-      <Button disabled={false} size="xl" type="blue" width="100%" onClick={onNext} marginTop="30px">Continue</Button>
+      <Button disabled={countDown > 0} loading={sendingEmail} size="xl" type="blue" width="100%" marginTop="30px" onClick={onResend}>
+        Resend {countDown > 0 ? `(${countDown}s)` : ''}
+      </Button>
       <Button disabled={false} size="xl" type="white" width="100%" onClick={onPrev} marginTop="20px">Use another Email</Button>
     </Box>
   );

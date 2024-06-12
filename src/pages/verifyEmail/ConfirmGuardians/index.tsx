@@ -4,7 +4,7 @@ import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 
-export default function ConfirmGuardians({ onPrev, onChangeGuardian }: any) {
+export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGuardian, }: any) {
   const [showDetails, setShowDetails] = useState(false)
 
   return (
@@ -60,7 +60,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian }: any) {
           {`{ "domain": { ... } }`}
         </Box>
       )}
-      <Button onClick={onChangeGuardian} size="xl" type="blue" width="100%" marginTop="30px">Continue</Button>
+      <Button onClick={onChangeGuardian} loading={changingGuardian} size="xl" type="blue" width="100%" marginTop="30px">Continue</Button>
       <Button size="xl" type="white" width="100%" onClick={onPrev} marginTop="20px">Back</Button>
     </Box>
   );

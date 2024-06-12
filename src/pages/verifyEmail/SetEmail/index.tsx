@@ -4,12 +4,11 @@ import QuestionIcon from '@/components/Icons/Question';
 import { validEmailDomains, validEmailProviders } from '@/config/constants'
 import useForm from '@/hooks/useForm';
 
-export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, onSendEmail }: any) {
+export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, onSendEmail, sendingEmail, }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const innerHeight = window.innerHeight
   const marginHeight = innerHeight - 508
-  console.log('innerHeight', innerHeight)
 
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
@@ -43,7 +42,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
       <Box minHeight="21px">
         {errorMsg && <Box color="#E83D26" fontSize="14px" fontWeight="500" width="100%">{errorMsg}</Box>}
       </Box>
-      <Button marginTop="41px" disabled={disabled} size="xl" type="blue" width="100%" onClick={onSendEmail}>Verify Email</Button>
+      <Button marginTop="41px" disabled={disabled} size="xl" type="blue" width="100%" loading={sendingEmail} onClick={onSendEmail}>Verify Email</Button>
       <Box
         width="100%"
         display="flex"

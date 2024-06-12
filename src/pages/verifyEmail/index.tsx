@@ -13,7 +13,6 @@ import { useAddressStore } from '@/store/address';
 import useTransaction from '@/hooks/useTransaction';
 import { SocialRecovery } from '@soulwallet/sdk';
 import useWallet from '@/hooks/useWallet';
-import useNavigation from '@/hooks/useNavigation';
 import { validEmailDomains, validEmailProviders } from '@/config/constants';
 import useForm from '@/hooks/useForm';
 import { ZeroHash } from 'ethers';
@@ -56,6 +55,8 @@ export default function VerifyEmail() {
   const { selectedAddress } = useAddressStore();
   const { getChangeGuardianOp, signAndSend } = useWallet();
   const [countDown, setCountDown] = useState(0);
+  const [changingGuardian, setChangingGuardian] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
   const [countInterval, setCountInterval] = useState<any>();
   const toast = useToast();
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ export default function VerifyEmail() {
   }, [step]);
 
   const onSendEmail = async () => {
+    setSendingEmail(true);
     setVerifyStatus(0);
     setVerifyExpireTime(0);
     setVerifyToken('');
@@ -112,10 +114,12 @@ export default function VerifyEmail() {
         title: err.response.data.message || 'Failed to send email',
         status: 'error',
       });
+    }finally{
+      setSendingEmail(false);
     }
   };
 
-  const startCountDown = useCallback(() => {
+  const startCountDown = () => {
     let count = 60;
     setCountDown(count);
 
@@ -129,7 +133,11 @@ export default function VerifyEmail() {
     }, 1000);
 
     setCountInterval(interval);
-  }, []);
+  };
+
+  const stopCountDown = () => {
+    clearInterval(countInterval);
+  }
 
   const doGenerateAddress = async () => {
     try {
@@ -177,24 +185,29 @@ export default function VerifyEmail() {
   };
 
   const doChangeGuardian = async () => {
-    const defaultThreshold = 1;
-    // 1. get guardian address
-    const guardianAddress = await doGenerateAddress();
-    // 2. calc guardian hash
-    const newGuardianHash = SocialRecovery.calcGuardianHash([guardianAddress], defaultThreshold);
-
-    // 3. backup guardian
-    await doBackupGuardian([guardianAddress], defaultThreshold, newGuardianHash);
-
-    // 4. get user op
-    const userOp = await getChangeGuardianOp(newGuardianHash);
-    // 5. execute op
-    const res = await signAndSend(userOp);
-    navigate('/dashboard');
-    toast({
-      title: '10 USDC reward received',
-      status: 'success',
-    });
+    setChangingGuardian(true);
+    try{
+      const defaultThreshold = 1;
+      // 1. get guardian address
+      const guardianAddress = await doGenerateAddress();
+      // 2. calc guardian hash
+      const newGuardianHash = SocialRecovery.calcGuardianHash([guardianAddress], defaultThreshold);
+  
+      // 3. backup guardian
+      await doBackupGuardian([guardianAddress], defaultThreshold, newGuardianHash);
+  
+      // 4. get user op
+      const userOp = await getChangeGuardianOp(newGuardianHash);
+      // 5. execute op
+      const res = await signAndSend(userOp);
+      navigate('/dashboard');
+      toast({
+        title: '10 USDC reward received',
+        status: 'success',
+      });
+    }finally{
+      setChangingGuardian(false);
+    }
   };
 
   const checkVerify = async () => {
@@ -219,6 +232,15 @@ export default function VerifyEmail() {
     console.log('skip');
   }, []);
 
+  const onUseAnotherEmail = async() => {
+    stopCountDown();
+    setVerifyStatus(0);
+    setVerifyExpireTime(0);
+    setVerifyToken('');
+    setCountDown(0);
+    setStep(0);
+  }
+
   const renderStep = () => {
     if (step == 0) {
       return (
@@ -228,6 +250,7 @@ export default function VerifyEmail() {
           onBlur={onBlur('email')}
           errorMsg={showErrors.email && errors.email}
           onSendEmail={onSendEmail}
+          sendingEmail={sendingEmail}
           disabled={disabled}
           onPrev={onPrev}
           onSkip={onSkip}
@@ -235,9 +258,9 @@ export default function VerifyEmail() {
       );
     } else if (step == 1) {
       return verifyToken && verifyStatus === 2 ? (
-        <ConfirmGuardians onPrev={onPrev} onChangeGuardian={doChangeGuardian} />
+        <ConfirmGuardians changingGuardian={changingGuardian} onPrev={onPrev} onChangeGuardian={doChangeGuardian} />
       ) : (
-        <ConfirmEmail email={values.email} onPrev={onPrev} onNext={onNext} />
+        <ConfirmEmail email={values.email} sendingEmail={sendingEmail} onResend={onSendEmail} onPrev={onUseAnotherEmail} onNext={onNext} countDown={countDown} />
       );
     }
   };
