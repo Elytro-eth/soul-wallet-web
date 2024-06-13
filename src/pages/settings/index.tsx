@@ -10,6 +10,7 @@ import USDCIcon from '@/assets/mobile/usdc_lg.png'
 import { aaveLink } from '@/config';
 import useWallet from '@/hooks/useWallet';
 import SettingIcon from '@/components/Icons/mobile/Setting'
+import FaceIdIcon from '@/components/Icons/FaceId'
 import TelegramIcon from '@/components/Icons/mobile/Telegram'
 import { headerHeight, tgLink } from '@/config';
 import { useAddressStore } from '@/store/address';
@@ -31,6 +32,7 @@ export default function Settings({ isModal }: any) {
       alignItems="center"
       justifyContent="flex-start"
       width="100%"
+      height="100%"
       paddingTop="34px"
       paddingLeft="30px"
       paddingRight="30px"
@@ -41,14 +43,14 @@ export default function Settings({ isModal }: any) {
         lineHeight="24px"
         width="100%"
       >
-        Setting
+
       </Box>
       <Box
         width="100%"
         display="flex"
         alignItems="center"
         paddingTop="30px"
-        paddingBottom="40px"
+        paddingBottom="24px"
         borderBottom="1px solid #E7E7E7"
       >
         <Box
@@ -66,8 +68,58 @@ export default function Settings({ isModal }: any) {
         flexDirection="column"
         alignItems="center"
         width="100%"
-        marginTop="10px"
+        marginTop="24px"
       >
+        <Box
+          width="100%"
+          fontSize="16px"
+          fontWeight="700"
+          py="10px"
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-start"
+        >
+          <Box
+            marginRight="12px"
+            height="32px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <SettingIcon />
+          </Box>
+          <Box>Guardian settings</Box>
+        </Box>
+        <Box
+          width="100%"
+          fontSize="16px"
+          fontWeight="700"
+          py="10px"
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-start"
+        >
+          <Box
+            marginRight="12px"
+            height="32px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <FaceIdIcon />
+          </Box>
+          <Box>Device & passkey</Box>
+          <Box
+            marginLeft="auto"
+            background="#F2F2F2"
+            padding="3px 8px"
+            fontSize="12px"
+            fontWeight="400"
+            rounded="4px"
+          >
+            Coming soon
+          </Box>
+        </Box>
         <a target='_blank' href={tgLink} style={{width: "100%"}}>
           <Box
             width="100%"
@@ -90,39 +142,8 @@ export default function Settings({ isModal }: any) {
             <Box>Join Telegram group</Box>
           </Box>
         </a>
-        <Box
-          width="100%"
-          fontSize="16px"
-          fontWeight="700"
-          py="10px"
-          display="flex"
-          alignItems="center"
-          justifyContent="flex-start"
-        >
-          <Box
-            marginRight="12px"
-            height="32px"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <SettingIcon />
-          </Box>
-          <Box>Recovery Setting</Box>
-          <Box
-            marginLeft="auto"
-            background="#F2F2F2"
-            padding="3px 8px"
-            fontSize="12px"
-            fontWeight="400"
-            rounded="4px"
-          >
-            Coming soon
-          </Box>
-        </Box>
-
       </Box>
-      <Box width="100%" marginTop="20px">
+      <Box width="100%" marginTop="auto" marginBottom="40px">
         <Button
           size="xl"
           width="100%"
