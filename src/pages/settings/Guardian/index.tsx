@@ -3,6 +3,7 @@ import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
+import Intro from './Intro'
 
 export default function GuardianSetting() {
   const { registerForRecover } = usePasskey();
@@ -25,7 +26,9 @@ export default function GuardianSetting() {
 
   const renderStep = () => {
     if (step == 0) {
-
+      return (
+        <Intro onPrev={onPrev} onNext={onNext} />
+      )
     }
 
     return null

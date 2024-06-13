@@ -4,7 +4,7 @@ import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 
-export default function ConfirmGuardians({ onPrev, onNext }: any) {
+export default function Intro({ onPrev, onNext }: any) {
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
       <Box
