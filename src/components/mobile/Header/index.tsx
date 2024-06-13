@@ -1,6 +1,6 @@
 import { Box, Text, Image,} from '@chakra-ui/react';
 import BackIcon from '@/components/Icons/mobile/Back'
-import ImgLogo from '@/assets/logo.svg';
+import ImgLogo from '@/assets/soul-logo.svg';
 
 export default function Header({ title, onBack, showBackButton, showLogo, ...props }: any) {
   return (

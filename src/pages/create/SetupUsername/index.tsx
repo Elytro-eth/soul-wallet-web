@@ -36,7 +36,6 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
                   fontSize="14px"
                   lineHeight="24px"
                   fontWeight="600"
-                  marginTop="8px"
                   minHeight="24px"
                   color="#0CB700"
                 >
@@ -48,7 +47,6 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
                   fontSize="14px"
                   lineHeight="24px"
                   fontWeight="700"
-                  marginTop="8px"
                   minHeight="24px"
                   color="#E83D26"
                 >

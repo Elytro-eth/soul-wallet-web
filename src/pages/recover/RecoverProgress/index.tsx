@@ -44,10 +44,10 @@ export default function RecoverProgress({ onNext }: any) {
       <Box
         width="100%"
         textAlign="center"
-        fontSize="24px"
+        fontSize="23px"
         fontWeight="700"
         marginTop="20px"
-        whiteSpace="pre"
+        letterSpacing="-1px"
       >
         Share link with your guardians
       </Box>
