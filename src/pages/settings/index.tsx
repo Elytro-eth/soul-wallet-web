@@ -16,9 +16,13 @@ import { headerHeight, tgLink } from '@/config';
 import { useAddressStore } from '@/store/address';
 import AddressIcon from '@/components/AddressIcon';
 import LogoutIcon from '@/components/Icons/mobile/Logout'
+import useWalletContext from '@/context/hooks/useWalletContext';
+import useBrowser from '@/hooks/useBrowser';
 
 export default function Settings({ isModal }: any) {
   const { walletName, selectedAddress } = useAddressStore();
+  const { closeModal } = useWalletContext()
+  const { navigate } = useBrowser();
   const { logoutWallet } = useWallet();
 
   const doLogout = async () => {
@@ -78,6 +82,7 @@ export default function Settings({ isModal }: any) {
           display="flex"
           alignItems="center"
           justifyContent="flex-start"
+          onClick={() => { closeModal(); navigate('/guardian-setting'); }}
         >
           <Box
             marginRight="12px"

@@ -20,7 +20,7 @@ export default function FindRoute({ children }: { children: ReactNode }) {
   const findRoute = async () => {
     const storageVersion = storage.getItem('storeVersion');
 
-    const allowBypass = location.pathname.includes('create') || location.pathname.includes('landing') || location.pathname.includes('test') || location.pathname.includes('deposit') || location.pathname.includes('details') || location.pathname.includes('dashboard') || location.pathname.includes('create') || location.pathname.includes('withdraw') || location.pathname.includes('intro') || location.pathname.includes('verifyEmail') || location.pathname.includes('recover') || location.pathname.includes('public');
+    const allowBypass = location.pathname.includes('create') || location.pathname.includes('landing') || location.pathname.includes('test') || location.pathname.includes('deposit') || location.pathname.includes('details') || location.pathname.includes('dashboard') || location.pathname.includes('create') || location.pathname.includes('withdraw') || location.pathname.includes('intro') || location.pathname.includes('verify-email') || location.pathname.includes('recover') || location.pathname.includes('public') || location.pathname.includes('guardian-setting');
 
     if (storeVersion !== storageVersion) {
       storage.setItem('storeVersion', storeVersion);

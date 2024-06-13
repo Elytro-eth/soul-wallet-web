@@ -13,7 +13,6 @@ import api from '@/lib/api';
 import { useTempStore } from '@/store/temp';
 import { SocialRecovery } from '@soulwallet/sdk';
 
-
 export default function Recover() {
   const { registerForRecover } = usePasskey();
   const toast = useToast();

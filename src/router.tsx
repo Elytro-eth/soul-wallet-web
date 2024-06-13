@@ -13,6 +13,7 @@ import DashboardDetails from '@/pages/dashboard/Details';
 import Recover from '@/pages/recover';
 import Public from '@/pages/public';
 import RecoverSign from '@/pages/public/RecoverSign';
+import GuardianSetting from '@/pages/settings/Guardian';
 import AppContainer from './components/mobile/AppContainer';
 
 export const router = createBrowserRouter([
@@ -51,12 +52,16 @@ export const router = createBrowserRouter([
             element: <Landing />,
           },
           {
-            path: '/verifyEmail',
+            path: '/verify-email',
             element: <VerifyEmail />,
           },
           {
             path: '/recover',
             element: <Recover />,
+          },
+          {
+            path: '/guardian-setting',
+            element: <GuardianSetting />,
           },
           {
             path: '/public',
