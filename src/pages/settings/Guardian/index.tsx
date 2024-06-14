@@ -4,12 +4,14 @@ import Header from '@/components/mobile/Header';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
 import Intro from './Intro'
+import Manage from './Manage'
 
 export default function GuardianSetting() {
   const { registerForRecover } = usePasskey();
   const toast = useToast();
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
+  const innerHeight = window.innerHeight - 62
 
   const onPrev = useCallback(() => {
     if (step >= 1) {
@@ -29,6 +31,10 @@ export default function GuardianSetting() {
       return (
         <Intro onPrev={onPrev} onNext={onNext} />
       )
+    } else if (step == 1) {
+      return (
+        <Manage onPrev={onPrev} onNext={onNext} />
+      )
     }
 
     return null
@@ -37,7 +43,9 @@ export default function GuardianSetting() {
   return (
     <Box width="100%" height="100%">
       <Header title="Guardian setting" showBackButton onBack={onPrev} />
-      {renderStep()}
+      <Box height={innerHeight} overflowY="scroll">
+        {renderStep()}
+      </Box>
     </Box>
   );
 }
