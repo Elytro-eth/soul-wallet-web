@@ -2,8 +2,8 @@ import React, { useState, useCallback, useEffect, Fragment } from 'react';
 import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import SetEmail from './SetEmail';
-import ConfirmEmail from './ConfirmEmail';
 import ConfirmGuardians from './ConfirmGuardians';
+import ConfirmEmail from './ConfirmEmail';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
 import ProgressBar from '@/components/ProgressBar';
@@ -61,6 +61,7 @@ export default function VerifyEmail() {
   const toast = useToast();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
+  const innerHeight = window.innerHeight - 134
 
   const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
     fields: ['email'],
@@ -267,12 +268,8 @@ export default function VerifyEmail() {
 
   return (
     <Box width="100%" height="100%">
-      {step < 3 && (
-        <Fragment>
-          <Header title="Verify email" showBackButton onBack={onPrev} />
-        </Fragment>
-      )}
-      {renderStep()}
+      <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">Add Email Guardian</Box>
+      <Box height={innerHeight}>{renderStep()}</Box>
     </Box>
   );
 }

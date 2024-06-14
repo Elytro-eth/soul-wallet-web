@@ -6,9 +6,11 @@ import GuardianIcon from '@/assets/mobile/guardian.svg'
 import EmailGuardianIcon from '@/components/Icons/mobile/EmailGuardian';
 import WalletGuardianIcon from '@/components/Icons/mobile/WalletGuardian';
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
+import useWalletContext from '@/context/hooks/useWalletContext';
 
 export default function Intro({ onPrev, onNext }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { openModal } = useWalletContext()
 
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
@@ -64,6 +66,7 @@ export default function Intro({ onPrev, onNext }: any) {
                       position="relative"
                       padding="18px 27px"
                       borderBottom="1px solid #E4E4E4"
+                      onClick={() => { openModal('addEmailGuardian'); onClose(); }}
                     >
                       <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
                         <Box marginRight="8px"><EmailGuardianIcon /></Box>
@@ -74,6 +77,7 @@ export default function Intro({ onPrev, onNext }: any) {
                       width="100%"
                       position="relative"
                       padding="18px 27px"
+                      onClick={() => { openModal('addWalletGuardian'); onClose(); }}
                     >
                       <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
                         <Box marginRight="8px"><WalletGuardianIcon /></Box>
