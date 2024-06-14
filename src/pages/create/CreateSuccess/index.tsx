@@ -6,9 +6,11 @@ import ReadyStaticIcon from '@/assets/mobile/ready_static.svg';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 import { Link, useNavigate } from 'react-router-dom';
+import useBrowser from '@/hooks/useBrowser';
 
 export default function CreateSuccess({ credential, username, invitationCode }: any) {
   const { getActivateOp, signAndSend } = useWallet();
+  const { navigate } = useBrowser();
   const userOpRef = useRef<any>();
   const initialKeysRef = useRef<any>();
   const creatingRef = useRef(false);
@@ -128,11 +130,11 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
           Thanks for setting up your Stable.cash account. Start saving from now on!
         </Box>
       </Box>
-      <Link to="/dashboard" style={{width: "100%"}} >
-        <Button width="100%" size="xl" type="blue" minWidth="195px">
+      <Box style={{width: "100%"}} >
+        <Button width="100%" size="xl" type="blue" minWidth="195px" onClick={() => navigate('/dashboard')}>
           Let’s go
         </Button>
-      </Link>
+      </Box>
     </Box>
   );
 }
