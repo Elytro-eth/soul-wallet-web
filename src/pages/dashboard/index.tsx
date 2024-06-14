@@ -288,8 +288,6 @@ export default function Dashboard() {
             borderRadius="24px"
             boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
             border="1px solid #EAECF0"
-            padding="24px"
-            paddingBottom="42px"
             position="relative"
             zIndex="1"
           >
@@ -297,6 +295,7 @@ export default function Dashboard() {
               display="flex"
               flexDirection="column"
               alignItems="flex-start"
+              padding="24px"
               // fontFamily={"Nunito"}
             >
               <Box display="flex" alignItems="center">
@@ -386,6 +385,28 @@ export default function Dashboard() {
                 >
                   <Box><ActivitiesIcon /></Box>
                   <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Activity</Box>
+                </Box>
+              </Box>
+            </Box>
+            <Box padding="24px 30px" paddingBottom="0" borderTop="1px solid rgba(0, 0, 0, 0.1)">
+              <Box marginBottom="18px" display="flex" alignItems="center" justifyContent="space-between">
+                <Box fontSize="16px" fontWeight="600">Tokens</Box>
+                <Box fontSize="14px" fontWeight="400" color="rgba(0, 0, 0, 0.5)">$10</Box>
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                marginBottom="28px"
+              >
+                <Box marginRight="10px">
+                  <Image src={USDCIcon} />
+                </Box>
+                <Box fontWeight="700" fontSize="16px">
+                  USDC
+                </Box>
+                <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                  <Box fontWeight="700" fontSize="20px">10</Box>
+                  <Box fontSize="12px" color="rgba(0, 0, 0, 0.5)">$10.11</Box>
                 </Box>
               </Box>
             </Box>
