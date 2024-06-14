@@ -265,7 +265,7 @@ export default function Dashboard() {
             justifyContent="space-between"
             marginBottom="40px"
             fontSize="14px"
-            onClick={() => navigate('/verifyEmail')}
+            onClick={() => navigate('/verify-email')}
           >
             <Box>Verify Email to Get <Box as="span" fontWeight="700">10 USDC</Box> for free</Box>
             <Box>
