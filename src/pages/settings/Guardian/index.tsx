@@ -42,9 +42,9 @@ export default function GuardianSetting() {
   };
 
   return (
-    <Box width="100%" height="100%">
+    <Box width="100%" height={innerHeight}>
       <Header title="Guardian setting" showBackButton onBack={onPrev} />
-      <Box height={innerHeight} overflowY="scroll">
+      <Box height={innerHeight - 60} overflowY="auto">
         {renderStep()}
       </Box>
     </Box>
