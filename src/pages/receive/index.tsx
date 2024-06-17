@@ -162,7 +162,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
             color="rgba(0, 0, 0, 0.5)"
             width="100%"
             textAlign="center"
-            marginTop="50px"
+            marginTop="20px"
             display="flex"
             alignItems="center"
             justifyContent="center"
