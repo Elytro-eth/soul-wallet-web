@@ -5,13 +5,12 @@ import ImgLogo from '@/assets/soul-logo.svg';
 export default function Header({ title, onBack, showBackButton, showLogo, ...props }: any) {
   return (
     <Box
-      height="62px"
+      height="60px"
       display="flex"
       alignItems="center"
       justifyContent="center"
       background="white"
       position="relative"
-      paddingTop="18px"
       {...props}
     >
       {showLogo && (
@@ -20,7 +19,6 @@ export default function Header({ title, onBack, showBackButton, showLogo, ...pro
           left="20px"
           top="0px"
           cursor="pointer"
-          paddingTop="18px"
         >
           <Image src={ImgLogo} />
         </Box>
@@ -31,17 +29,16 @@ export default function Header({ title, onBack, showBackButton, showLogo, ...pro
           left="20px"
           top="0px"
           cursor="pointer"
-          paddingTop="18px"
+          marginTop="15px"
           onClick={onBack}
           display="flex"
           alignItems="center"
           justifyContent="center"
-          height="100%"
         >
           <BackIcon />
         </Box>
       )}
-      <Box fontSize="18px" fontWeight="700" color="black" lineHeight="24px">
+      <Box fontSize="18px" fontWeight="700" color="black" lineHeight="60px">
         {title}
       </Box>
     </Box>

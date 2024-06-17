@@ -42,8 +42,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
   const { historyList } = useHistoryStore();
   const {selectedChainId} = useChainStore();
   const { openModal } = useWalletContext()
-  const screenSize = useScreenSize()
-  const innerHeight = isModal ? (screenSize.innerHeight - 40) : screenSize.innerHeight
+  const { innerHeight } = useScreenSize()
 
   const onPrev = useCallback(async() => {
     console.log('prev')

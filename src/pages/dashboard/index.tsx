@@ -241,7 +241,7 @@ export default function Dashboard() {
         background="transparent"
         openMenu={() => openModal('settings')}
       />
-      <Box padding={{ xs: '20px', sm: '30px' }} height={innerHeight - 64}>
+      <Box padding={{ xs: '20px', sm: '30px' }} height={innerHeight - 64} overflowY="scroll">
         <Box
           ref={(v: any) => {
             contentRef.current = v;
