@@ -188,7 +188,7 @@ export default function Recover() {
       {step < 4 && (
         <Fragment>
           {step === 0 && (
-            <Header title="" showLogo={true} />
+            <Header title="" showLogo />
           )}
           {step > 0 && (
             <Header title="Recover account" showBackButton onBack={onPrev} />

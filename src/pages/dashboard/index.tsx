@@ -234,7 +234,6 @@ export default function Dashboard() {
       background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
     >
       <Header
-        showLogo={true}
         paddingTop="10px"
         paddingBottom="10px"
         height="64px"
