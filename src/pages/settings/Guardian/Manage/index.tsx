@@ -144,7 +144,7 @@ export default function Manage({ onPrev, onNext }: any) {
         marginTop="auto"
         width="100%"
         display="flex"
-        marginBottom="10px"
+        paddingBottom="20px"
       >
         <Box width="50%" paddingRight="7px">
           <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">Back</Button>
