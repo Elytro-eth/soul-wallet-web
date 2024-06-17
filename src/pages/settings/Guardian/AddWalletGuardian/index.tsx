@@ -28,7 +28,7 @@ export default function AddWalletGuardian() {
       <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">Add Wallet Guardian</Box>
       <Box height={innerHeight} padding="30px">
         <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px"  marginTop="50px">
-          Set up username
+          ENS or wallet address
         </Box>
         <Box>
           <Input
