@@ -10,6 +10,7 @@ import USDCIcon from '@/assets/mobile/usdc_lg.png'
 import { aaveLink } from '@/config';
 import { useBalanceStore } from '@/store/balance';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Details({ isModal, registerScrollable }: any) {
   const { openModal } = useWalletContext()
@@ -18,6 +19,7 @@ export default function Details({ isModal, registerScrollable }: any) {
   const [showInfo3, setShowInfo3] = useState(false)
   const [showInfo4, setShowInfo4] = useState(false)
   const { sevenDayApy } = useBalanceStore();
+  const { innerHeight } = useScreenSize()
   const scrollableRef = useRef<any>()
 
   const navigate = useNavigate();
@@ -36,7 +38,7 @@ export default function Details({ isModal, registerScrollable }: any) {
 
   return (
     <Box
-      height={window.innerHeight - 40}
+      height={innerHeight - 40}
       overflow="auto"
       ref={scrollableRef}
     >

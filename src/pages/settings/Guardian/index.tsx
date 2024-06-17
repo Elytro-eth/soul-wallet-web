@@ -3,6 +3,7 @@ import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
+import useScreenSize from '@/hooks/useScreenSize'
 import Intro from './Intro'
 import Manage from './Manage'
 
@@ -11,7 +12,7 @@ export default function GuardianSetting() {
   const toast = useToast();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const innerHeight = window.innerHeight - 62
+  const { innerHeight } = useScreenSize()
 
   const onPrev = useCallback(() => {
     if (step >= 1) {

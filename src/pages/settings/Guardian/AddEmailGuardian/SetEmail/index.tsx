@@ -3,11 +3,12 @@ import Button from '@/components/mobile/Button'
 import QuestionIcon from '@/components/Icons/Question';
 import { validEmailDomains, validEmailProviders } from '@/config/constants'
 import useForm from '@/hooks/useForm';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, onSendEmail, sendingEmail, }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 508
 
   return (

@@ -18,6 +18,7 @@ import GoToIcon from '@/assets/mobile/goto.svg';
 import { useOutletContext } from 'react-router-dom';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useBrowser from '@/hooks/useBrowser';
+import useScreenSize from '@/hooks/useScreenSize'
 import IconSetting from '@/assets/icons/setting.svg';
 import { useAddressStore } from '@/store/address';
 
@@ -103,8 +104,9 @@ export default function Dashboard() {
   const { openFullScreenModal } = useWalletContext()
   const { totalUsdValue, totalTrialValue, getTokenBalance, sevenDayApy, oneDayInterest } = useBalanceStore();
   const { historyList } = useHistoryStore();
+  const { innerHeight } = useScreenSize()
   const [modalMargin, setModalMargin] = useState(494);
-  const [modalHeight, setModalHeight] = useState(window.innerHeight - 494);
+  const [modalHeight, setModalHeight] = useState(innerHeight - 494);
   const [showFullHistory, setShowFullHistory] = useState(false);
   const [modalPosition, setModalPosition] = useState('bottom');
   const [isMoving, setIsMoving] = useState(false);
@@ -202,7 +204,7 @@ export default function Dashboard() {
 
         if (modalPosition === 'bottom') {
           setModalMargin(64);
-          setModalHeight(window.innerHeight - 64);
+          setModalHeight(innerHeight - 64);
           setModalPosition('top');
         } else {
           const height = getContentHeight();
@@ -210,7 +212,7 @@ export default function Dashboard() {
           setModalPosition('bottom');
 
           setTimeout(() => {
-            setModalHeight(window.innerHeight - height);
+            setModalHeight(innerHeight - height);
           }, 620);
         }
 
@@ -219,12 +221,13 @@ export default function Dashboard() {
         }, 600);
       }
     },
-    [modalPosition, isMoving],
+    [modalPosition, isMoving, innerHeight],
   );
 
   const finalHistoryList = showFullHistory ? historyList : historyList.slice(0, 2);
   // const finalHistoryList = historyList
 
+  console.log('innerHeight', innerHeight)
   return (
     <Box
       height={innerHeight}

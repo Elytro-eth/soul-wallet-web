@@ -29,6 +29,7 @@ import OpIcon from '@/assets/mobile/op.png'
 import QuestionIcon from '@/components/Icons/Question'
 import ReceiveCode from '@/components/ReceiveCode';
 import useTools from '@/hooks/useTools';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Receive({ isModal, registerScrollable }: any) {
   const { closeModal } = useWalletContext()
@@ -41,7 +42,8 @@ export default function Receive({ isModal, registerScrollable }: any) {
   const { historyList } = useHistoryStore();
   const {selectedChainId} = useChainStore();
   const { openModal } = useWalletContext()
-  const innerHeight = isModal ? (window.innerHeight - 40) : window.innerHeight
+  const screenSize = useScreenSize()
+  const innerHeight = isModal ? (screenSize.innerHeight - 40) : screenSize.innerHeight
 
   const onPrev = useCallback(async() => {
     console.log('prev')

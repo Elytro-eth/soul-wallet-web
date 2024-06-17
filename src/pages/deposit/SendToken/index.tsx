@@ -1,11 +1,12 @@
 import { Box, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc.png'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function SelectToken({
   onFinish,
 }: any) {
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const contentHeight = innerHeight - 64 - 120
 
   return (

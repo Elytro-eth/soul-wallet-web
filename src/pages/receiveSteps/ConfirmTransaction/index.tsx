@@ -2,11 +2,12 @@ import { Box, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc.png'
 import CheckedIcon from '@/components/Icons/Success';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function ConfirmTransaction({
   onFinish,
 }: any) {
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const contentHeight = innerHeight - 64 - 120
 
   return (

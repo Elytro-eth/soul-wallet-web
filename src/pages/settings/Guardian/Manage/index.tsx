@@ -9,12 +9,13 @@ import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import EditIcon from '@/components/Icons/mobile/Edit';
 import AddressIcon from '@/components/AddressIcon';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Manage({ onPrev, onNext }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [showDetails, setShowDetails] = useState(false)
   const { openModal } = useWalletContext()
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 468
 
   return (

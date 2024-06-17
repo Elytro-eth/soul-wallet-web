@@ -3,13 +3,14 @@ import Button from '@/components/mobile/Button'
 import InputLoading from '@/components/InputLoading';
 import { xLink } from '@/config';
 import XIcon from '@/assets/x.svg';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function InputInviteCode({value, onChange, codeStatus, checking, onNext}: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const disabled = !value || codeStatus !== 0
+  const { innerHeight } = useScreenSize()
 
   console.log('code status', codeStatus);
-  const innerHeight = window.innerHeight
   const marginHeight = innerHeight - 468
   console.log('innerHeight', innerHeight)
 

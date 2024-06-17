@@ -11,6 +11,7 @@ import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import BN from 'bignumber.js'
 import APYCard from '@/components/mobile/APYCard'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Intro() {
   const [loaded, setLoaded] = useState(false);
@@ -19,7 +20,7 @@ export default function Intro() {
   const { historyList } = useHistoryStore();
   const navigate = useNavigate();
 
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 428
 
   const baseHeight = 59;

@@ -24,6 +24,7 @@ import Details from '@/pages/dashboard/Details'
 import AddEmailGuardian from '@/pages/settings/Guardian/AddEmailGuardian'
 import AddWalletGuardian from '@/pages/settings/Guardian/AddWalletGuardian'
 import useWalletContext from '@/context/hooks/useWalletContext';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
   const scrollableRef = useRef(null);
@@ -142,7 +143,7 @@ export default function AppContainer() {
     activeFullScreenModal
   } = useWalletContext()
   const { logoutWallet } = useWallet();
-  const [innerHeight] = useState(window.innerHeight);
+  const { innerHeight } = useScreenSize()
   // const innerHeight = window.innerHeight
   const contentHeight = innerHeight - 56
   const marginHeight = innerHeight - 250
@@ -283,7 +284,7 @@ export default function AppContainer() {
               padding="0"
             >
               <ModalPage
-                height={window.innerHeight - 40}
+                height={innerHeight - 40}
                 activeModal={activeModal}
                 openModal={openModal}
                 closeModal={closeModal}
