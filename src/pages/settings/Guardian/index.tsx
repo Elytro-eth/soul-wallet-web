@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, Fragment } from 'react';
 import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import usePasskey from '@/hooks/usePasskey';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import useScreenSize from '@/hooks/useScreenSize'
 import Intro from './Intro'
 import Manage from './Manage'
@@ -45,7 +45,7 @@ export default function GuardianSetting() {
     <Box width="100%" height={innerHeight}>
       <Header title="Guardian setting" showBackButton onBack={onPrev} />
       <Box height={innerHeight - 60} overflowY="auto">
-        {renderStep()}
+        <Outlet />
       </Box>
     </Box>
   );

@@ -35,10 +35,18 @@ export default function Manage({ onPrev, onNext }: any) {
   } = useDisclosure()
 
   const {
-    isOpen: isMenuOpen,
-    onOpen: onMenuOpen,
-    onClose: onMenuClose
+    isOpen: isThresholdMenuOpen,
+    onOpen: onThresholdMenuOpen,
+    onClose: onThresholdMenuClose
   } = useDisclosure()
+
+  const {
+    isOpen: isGuardianMenuOpen,
+    onOpen: onGuardianMenuOpen,
+    onClose: onGuardianMenuClose
+  } = useDisclosure()
+
+  // const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [showDetails, setShowDetails] = useState(false)
   const { openModal } = useWalletContext()
@@ -87,13 +95,56 @@ export default function Manage({ onPrev, onNext }: any) {
           </Box>
         </Box>
       </Box>
-      <Box marginBottom="40px">
-        <Button fontSize="14px" size="xl" type="white" color="black" onClick={() => openModal('addWalletGuardian')}>+Add another guardian</Button>
+      <Box marginBottom="40px" position="relative">
+        <Button fontSize="14px" size="xl" type="white" color="black" onClick={onGuardianMenuOpen}>+Add another guardian</Button>
+        <Box
+          position="absolute"
+          top="60px"
+          left="0"
+        >
+          <Menu
+            isOpen={isGuardianMenuOpen}
+            isLazy
+          >
+            {() => (
+              <Box overflow="auto">
+                <MenuList
+                  background="white"
+                  boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)"
+                >
+                  <MenuItem
+                    width="calc(100vw - 60px)"
+                    position="relative"
+                    padding="18px 27px"
+                    borderBottom="1px solid #E4E4E4"
+                    onClick={() => { openModal('addEmailGuardian'); onGuardianMenuClose(); }}
+                  >
+                    <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
+                      <Box marginRight="8px"><EmailGuardianIcon /></Box>
+                      <Box>Email</Box>
+                    </Box>
+                  </MenuItem>
+                  <MenuItem
+                    width="calc(100vw - 60px)"
+                    position="relative"
+                    padding="18px 27px"
+                    onClick={() => { openModal('addWalletGuardian'); onGuardianMenuClose(); }}
+                  >
+                    <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
+                      <Box marginRight="8px"><WalletGuardianIcon /></Box>
+                      <Box>Wallet</Box>
+                    </Box>
+                  </MenuItem>
+                </MenuList>
+              </Box>
+            )}
+          </Menu>
+        </Box>
       </Box>
       <Box width="100%" height="1px" background="#F0F0F0" marginBottom="40px" />
       <Box fontSize="16px" fontWeight="600">Recovery settings</Box>
       <Box marginBottom="14px" marginTop="12px" position="relative">
-        <Button borderRadius="8px" width="100%" size="xl" type="white" color="black" onClick={() => { isMenuOpen ? onMenuClose() : onMenuOpen()}}>1</Button>
+        <Button borderRadius="8px" width="100%" size="xl" type="white" color="black" onClick={() => { isThresholdMenuOpen ? onThresholdMenuClose() : onThresholdMenuOpen()}}>1</Button>
         <Box position="absolute" right="16px" top="calc(50% - 6px)"><ArrowDownIcon /></Box>
         <Box
           position="absolute"
@@ -102,7 +153,7 @@ export default function Manage({ onPrev, onNext }: any) {
           width="100%"
         >
           <Menu
-            isOpen={isMenuOpen}
+            isOpen={isThresholdMenuOpen}
             isLazy
           >
             {() => (
@@ -115,7 +166,7 @@ export default function Manage({ onPrev, onNext }: any) {
                     position="relative"
                     padding="18px 27px"
                     width="calc(100vw - 60px)"
-                    onClick={() => onMenuClose()}
+                    onClick={() => onThresholdMenuClose()}
                   >
                     <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
                       <Box>1</Box>
@@ -125,7 +176,7 @@ export default function Manage({ onPrev, onNext }: any) {
                     width="100%"
                     position="relative"
                     padding="18px 27px"
-                    onClick={() => onMenuClose()}
+                    onClick={() => onThresholdMenuClose()}
                   >
                     <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
                       <Box>2</Box>
