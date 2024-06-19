@@ -4,19 +4,15 @@ import Header from '@/components/mobile/Header';
 import SetEmail from './SetEmail';
 import ConfirmEmail from './ConfirmEmail';
 import ConfirmGuardians from './ConfirmGuardians';
-import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
-import ProgressBar from '@/components/ProgressBar';
 import api from '@/lib/api';
 import { useChainStore } from '@/store/chain';
 import { useAddressStore } from '@/store/address';
-import useTransaction from '@/hooks/useTransaction';
-import { SocialRecovery } from '@soulwallet/sdk';
 import useWallet from '@/hooks/useWallet';
 import { validEmailDomains, validEmailProviders } from '@/config/constants';
 import useForm from '@/hooks/useForm';
-import { ZeroHash } from 'ethers';
 import useScreenSize from '@/hooks/useScreenSize';
+import useRecover from '@/hooks/useRecover';
 
 const validate = (values: any, props: any, callbackRef: any) => {
   let errors: any = {};
@@ -54,7 +50,7 @@ export default function VerifyEmail({ isModal }: any) {
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
   const { selectedChainId } = useChainStore();
   const { selectedAddress } = useAddressStore();
-  const { getChangeGuardianOp, signAndSend } = useWallet();
+  const { doSetGuardians } = useRecover();
   const [countDown, setCountDown] = useState(0);
   const [changingGuardian, setChangingGuardian] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
@@ -174,29 +170,6 @@ export default function VerifyEmail({ isModal }: any) {
     }
   };
 
-  const doBackupGuardian = async (guardianList: any, threshold: number, guardianHash: string) => {
-    // public backup
-    const res = await api.backup.publicBackupGuardians({
-      guardianHash: guardianHash,
-      guardianDetails: {
-        guardians: guardianList,
-        threshold: threshold,
-        salt: ZeroHash,
-      },
-    });
-    console.log('backup result', res);
-    // private backup
-    const res2 = await api.authenticated.saveGuardianInfo({
-      guardians: [
-        {
-          guardianAddress: guardianList[0],
-          mark: values.email,
-        },
-      ],
-    });
-    console.log('11111', res2);
-  };
-
   const doChangeGuardian = async () => {
     setChangingGuardian(true);
     try {
@@ -204,15 +177,7 @@ export default function VerifyEmail({ isModal }: any) {
       // 1. get guardian address
       const guardianAddress = await doGenerateAddress();
       // 2. calc guardian hash
-      const newGuardianHash = SocialRecovery.calcGuardianHash([guardianAddress], defaultThreshold);
-
-      // 3. backup guardian
-      await doBackupGuardian([guardianAddress], defaultThreshold, newGuardianHash);
-
-      // 4. get user op
-      const userOp = await getChangeGuardianOp(newGuardianHash);
-      // 5. execute op
-      const res = await signAndSend(userOp);
+      await doSetGuardians([guardianAddress], [''], defaultThreshold);
       navigate('/dashboard');
       toast({
         title: '10 USDC reward received',
