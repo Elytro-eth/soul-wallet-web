@@ -26,6 +26,7 @@ export default function Settings({ isModal }: any) {
   const { logoutWallet } = useWallet();
 
   const doLogout = async () => {
+    closeModal()
     logoutWallet();
   }
 
