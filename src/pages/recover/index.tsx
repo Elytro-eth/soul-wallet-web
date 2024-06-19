@@ -13,6 +13,7 @@ import api from '@/lib/api';
 import { useTempStore } from '@/store/temp';
 import { SocialRecovery } from '@soulwallet/sdk';
 import { useSettingStore } from '@/store/setting';
+import useWallet from '@/hooks/useWallet';
 
 export default function Recover() {
   const { registerForRecover } = usePasskey();
@@ -24,8 +25,11 @@ export default function Recover() {
   const [accountInfo, setAccountInfo] = useState<any>(null);
   const [isWalletNotFound, setIsWalletNotFound] = useState(false);
   const [guardiansInfo, setGuardiansInfo] = useState({});
+  const { boostAfterRecovered } = useWallet();
   const { saveGuardianAddressEmail, guardianAddressEmail } = useSettingStore();
   const [timer, setTimer] = useState<any>();
+  const [isRecovering, setIsRecovering] = useState(false);
+  const [signedGuardians, setSignedGuardians] = useState<any>([]);
 
   const { recoverInfo, setRecoverInfo } = useTempStore();
   const { recoveryID } = recoverInfo;
@@ -120,6 +124,29 @@ export default function Recover() {
     }, 1000);
   }, [username]);
 
+  const doRecover = async () => {
+    try{
+      while (true) {
+        setIsRecovering(true);
+        const res: any = await api.recovery.execute({ recoveryID });
+        if (res.msg === 'executeRecovery tirggered' || res.msg === 'already executed') {
+          console.log('ready to boooooost');
+          const recoverRecord = await getPreviousRecord();
+          await boostAfterRecovered(recoverRecord);
+          navigate('/dashboard');
+          break;
+        }
+      }
+    }catch(err: any){
+      setIsRecovering(false);
+      toast({
+        title: 'Error',
+        description: err.response.data.msg,
+        status: 'error',
+      });
+    }
+  };
+
   const getPreviousRecord = async () => {
     try {
       const recoveryRecordRes = await api.recovery.getRecord({
@@ -129,6 +156,10 @@ export default function Recover() {
       setRecoverInfo({
         ...recoveryRecordRes.data,
       });
+
+      if (recoveryRecordRes.data.guardianSignatures) {
+        setSignedGuardians(recoveryRecordRes.data.guardianSignatures.map((item: any) => item.guardian));
+      }
 
       const status = recoveryRecordRes.data.status;
 
@@ -155,6 +186,8 @@ export default function Recover() {
         // signatured gathered
         setStep(4);
       }
+
+      return recoveryRecordRes.data;
     } catch (error: any) {
       console.log('error', error.message);
     }
@@ -187,9 +220,9 @@ export default function Recover() {
     } else if (step == 2) {
       return <SetPasskey onPrev={onPrev} onNext={onCreatePasskey} addingPasskey={addingPasskey} />;
     } else if (step == 3) {
-      return <RecoverProgress onNext={onNext} guardiansInfo={guardiansInfo} />;
+      return <RecoverProgress onNext={onNext} guardiansInfo={guardiansInfo} signedGuardians={signedGuardians} />;
     } else if (step == 4) {
-      return <RecoverSuccess onNext={onNext} />;
+      return <RecoverSuccess isRecovering={isRecovering} doRecover={doRecover} />;
     }
 
     return null;
@@ -199,12 +232,8 @@ export default function Recover() {
     <Box width="100%" height="100%">
       {step < 4 && (
         <Fragment>
-          {step === 0 && (
-            <Header title="" showLogo />
-          )}
-          {step > 0 && (
-            <Header title="Recover account" showBackButton onBack={onPrev} />
-          )}
+          {step === 0 && <Header title="" showLogo />}
+          {step > 0 && <Header title="Recover account" showBackButton onBack={onPrev} />}
         </Fragment>
       )}
       {renderStep()}
