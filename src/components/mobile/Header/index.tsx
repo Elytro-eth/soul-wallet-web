@@ -17,7 +17,7 @@ export default function Header({ title, onBack, showBackButton, showLogo, ...pro
         <Box
           position="absolute"
           left="20px"
-          top="0px"
+          top="calc(50% - 17px)"
           cursor="pointer"
         >
           <Image src={ImgLogo} />
