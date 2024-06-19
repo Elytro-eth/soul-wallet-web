@@ -29,6 +29,15 @@ export default function Settings({ isModal }: any) {
     logoutWallet();
   }
 
+  const goGuardianSettings = async () => {
+    closeModal();
+    if(true){
+      navigate('/guardian/intro')
+    }else{
+      navigate('/guardian/manage');
+    }
+  }
+
   return (
     <Box
       display="flex"
@@ -82,7 +91,7 @@ export default function Settings({ isModal }: any) {
           display="flex"
           alignItems="center"
           justifyContent="flex-start"
-          onClick={() => { closeModal(); navigate('/guardian-setting'); }}
+          onClick={goGuardianSettings}
         >
           <Box
             marginRight="12px"

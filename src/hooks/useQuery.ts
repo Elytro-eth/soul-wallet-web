@@ -5,6 +5,7 @@ import BN from 'bignumber.js';
 import { ethers } from 'ethers';
 import useSdk from './useSdk';
 import useConfig from './useConfig';
+import api from '@/lib/api';
 
 export default function useQuery() {
   const { soulWallet } = useSdk();
@@ -40,7 +41,14 @@ export default function useQuery() {
     }
   };
 
+  // authenticated fetch guardian info
+  const fetchGuardianInfo = async () => {
+    const res = await api.authenticated.getGuardianInfo({});
+    console.log('res', res);
+  };
+
   return {
     getPrefund,
+    fetchGuardianInfo,
   };
 }
