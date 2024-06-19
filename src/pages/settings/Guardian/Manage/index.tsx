@@ -13,6 +13,7 @@ import {
   Menu,
   MenuList,
   MenuItem,
+  useToast,
 } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import EmailIcon from '@/assets/mobile/email-guardian.svg';
@@ -31,6 +32,8 @@ import useScreenSize from '@/hooks/useScreenSize';
 import { useGuardianStore } from '@/store/guardian';
 import { useSettingStore } from '@/store/setting';
 import { toShortAddress } from '@/lib/tools';
+import { useNavigate } from 'react-router-dom';
+import useRecover from '@/hooks/useRecover';
 
 export default function Manage({ onPrev, onNext }: any) {
   const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
@@ -48,8 +51,44 @@ export default function Manage({ onPrev, onNext }: any) {
   const { guardianAddressEmail, guardianAddressName } = useSettingStore();
   const { openModal } = useWalletContext();
   const { innerHeight } = useScreenSize();
+  const [activeGuardianIndex, setActiveGuardianIndex] = useState(-1);
   const [tempGuardians, setTempGuardians] = useState(guardiansInfo.guardianDetails.guardians);
   const [tempThreshold, setTempThreshold] = useState(guardiansInfo.guardianDetails.threshold);
+  const [changingGuardian, setChangingGuardian] = useState(false);
+  const { doSetGuardians } = useRecover();
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const doHandleGuardian = (index: number) => {
+    setActiveGuardianIndex(index);
+    onSelectOpen();
+  }
+
+  const doDeleteGuardian = () => {
+    setTempGuardians((prev:any) => prev.filter((_:any, index: number) => index !== activeGuardianIndex));
+    onDeleteClose();
+  }
+
+  const onSetThreshold = (threshold: number) => {
+    setTempThreshold(threshold);
+    onThresholdMenuClose();
+  }
+
+  const doChangeGuardian = async () => {
+    // do basic check
+    setChangingGuardian(true);
+    try {
+      const guardianNames = tempGuardians.map((guardianAddress: any) => guardianAddressName[guardianAddress]);
+      await doSetGuardians(tempGuardians, guardianNames, tempThreshold);
+      toast({
+        title: 'Guardian updated',
+        status: 'success',
+      })
+      navigate('/dashboard');
+    } finally {
+      setChangingGuardian(false);
+    }
+  };
 
   return (
     <Box width="100%" height="100%" padding="30px" display="flex" flexDirection="column">
@@ -57,7 +96,7 @@ export default function Manage({ onPrev, onNext }: any) {
         My guardians
       </Box>
       <Box marginTop="14px">
-        {guardiansInfo.guardianDetails && guardiansInfo.guardianDetails.guardians.map((guardianAddress: any, index: number) => (
+        {tempGuardians.map((guardianAddress: any, index: number) => (
           <Box
             border="1px solid #DFDFDF"
             borderRadius="12px"
@@ -81,7 +120,7 @@ export default function Manage({ onPrev, onNext }: any) {
                 {guardianAddressEmail[guardianAddress] ? guardianAddressEmail[guardianAddress] : toShortAddress(guardianAddress)}
               </Box>
             </Box>
-            <Box marginLeft="auto" onClick={onSelectOpen}>
+            <Box marginLeft="auto" onClick={()=> doHandleGuardian(index)}>
               <EditIcon />
             </Box>
           </Box>
@@ -160,15 +199,15 @@ export default function Manage({ onPrev, onNext }: any) {
             {() => (
               <Box overflow="auto">
                 <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
-                  {Array.from({ length: tempGuardians.length }, (_, i) => (
+                  {Array.from({ length: tempGuardians.length + 1 }, (_, i) => (
                     <MenuItem
                       position="relative"
                       padding="18px 27px"
                       w="100%"
-                      onClick={() => onThresholdMenuClose()}
+                      onClick={() => onSetThreshold(i)}
                     >
                       <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                        <Box>{i + 1}</Box>
+                        <Box>{i}</Box>
                       </Box>
                     </MenuItem>
                   ))}
@@ -295,10 +334,10 @@ export default function Manage({ onPrev, onNext }: any) {
               Delete guardian
             </Box>
             <Box fontSize="16px" textAlign="center" marginBottom="10px">
-              {`Are you sure to remove <Guardiannnnnnn> as guardian?`}
+              {`Are you sure to remove <${tempGuardians[activeGuardianIndex]}> as guardian?`}
             </Box>
             <Box width="100%" marginTop="20px">
-              <Button size="xl" type="blue" width="100%">
+              <Button size="xl" type="blue" width="100%" onClick={() => doDeleteGuardian()}>
                 Delete
               </Button>
               <Button size="xl" type="white" width="100%" marginTop="20px" onClick={onDeleteClose}>
@@ -364,7 +403,7 @@ export default function Manage({ onPrev, onNext }: any) {
               </Box>
             )}
             <Box width="100%" marginTop="20px">
-              <Button size="xl" type="blue" width="100%">
+              <Button size="xl" loading={changingGuardian} type="blue" width="100%" onClick={() => doChangeGuardian()}>
                 Confirm
               </Button>
               <Button size="xl" type="white" width="100%" marginTop="20px" onClick={onConfirmClose}>

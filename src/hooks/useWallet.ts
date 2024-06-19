@@ -48,7 +48,7 @@ export default function useWallet() {
   const { selectedAddress, setSelectedAddress, setWalletName, setAddressList } = useAddressStore();
 
   const loginWallet = async () => {
-    const { credential } = await authenticateLogin();
+    const { credential, challenge, authentication } = await authenticateLogin();
     try {
       const res: any = await api.account.get({
         ownerKey: credential.onchainPublicKey,
@@ -66,6 +66,19 @@ export default function useWallet() {
 
       // consider first item only for now
       const accountInfo = res.data;
+
+      // set jwt
+      const resJwt = await api.auth.getJwt({
+        address: accountInfo.address,
+        chainID: accountInfo.chainID,
+        challenge,
+        responseData: {
+          isRegistration: false,
+          credentialID: credential.credentialID,
+          data: authentication,
+        },
+      });
+      localStorage.setItem('token', resJwt.data.token);
 
       const balances = await fetchTokenBalanceApi(accountInfo.address, accountInfo.chainID);
 

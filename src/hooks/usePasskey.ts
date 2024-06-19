@@ -352,7 +352,6 @@ export default function usePasskey() {
     const challengeRes = await api.auth.challenge({});
     const challenge = challengeRes.data.challenge;
 
-
     let authentication = await client.authenticate([], challenge, {
       userVerification: 'required',
     });
@@ -363,8 +362,11 @@ export default function usePasskey() {
     const res: any = await api.backup.credential({
       credentialID: credentialId,
     });
+
     return {
-      credential: res.data,
+      credential: {...res.data, id: res.data.credentialID},
+      challenge,
+      authentication,
     }
   };
 

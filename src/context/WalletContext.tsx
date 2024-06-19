@@ -87,9 +87,9 @@ export const WalletContextProvider = ({ children }: any) => {
   }, [selectedChainItem]);
 
 
-  const showSignTransaction = async (txns: any, origin?: string, sendTo?: string) => {
-    return await signTransactionModal.current.show(txns, origin, sendTo);
-  };
+  // const showSignTransaction = async (txns: any, origin?: string, sendTo?: string) => {
+  //   return await signTransactionModal.current.show(txns, origin, sendTo);
+  // };
 
   const showSignMessage = async (messageToSign: string, signType?: string, guardianInfo?: any) => {
     console.log('G', guardianInfo)

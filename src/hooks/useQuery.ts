@@ -22,9 +22,9 @@ export default function useQuery() {
     const contract = new Contract(chainConfig.contracts.socialRecoveryModule, ABI_SocialRecoveryModule, ethersProvider);
     const recoveryInfo = await contract.getSocialRecoveryInfo(walletAddress);
     const activeGuardianHash = recoveryInfo[0];
-    if (activeGuardianHash === ZeroHash) {
-      return null;
-    }
+    // if (activeGuardianHash === ZeroHash) {
+    //   return null;
+    // }
     const resPublic = await api.backup.publicGetGuardians({ guardianHash: activeGuardianHash });
 
     resPublic.data.specialGuardians.forEach((item: any) => {
