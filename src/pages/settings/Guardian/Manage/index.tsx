@@ -117,7 +117,7 @@ export default function Manage({ onPrev, onNext }: any) {
                     position="relative"
                     padding="18px 27px"
                     borderBottom="1px solid #E4E4E4"
-                    onClick={() => { openModal('addEmailGuardian'); onGuardianMenuClose(); }}
+                    onClick={() => { openModal('verifyEmail'); onGuardianMenuClose(); }}
                   >
                     <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
                       <Box marginRight="8px"><EmailGuardianIcon /></Box>

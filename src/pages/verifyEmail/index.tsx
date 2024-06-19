@@ -48,7 +48,7 @@ const validate = (values: any, props: any, callbackRef: any) => {
   return errors;
 };
 
-export default function VerifyEmail() {
+export default function VerifyEmail({ isModal }: any) {
   const [verifyToken, setVerifyToken] = useState('');
   const [verifyStatus, setVerifyStatus] = useState(0);
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
@@ -243,7 +243,7 @@ export default function VerifyEmail() {
     setStep(0);
   }
 
-  const renderStep = () => {
+  const renderStep = (isModal: boolean) => {
     if (step == 0) {
       return (
         <SetEmail
@@ -256,26 +256,30 @@ export default function VerifyEmail() {
           disabled={disabled}
           onPrev={onPrev}
           onSkip={onSkip}
+          isModal={isModal}
         />
       );
     } else if (step == 1) {
       return verifyToken && verifyStatus === 2 ? (
-        <ConfirmGuardians changingGuardian={changingGuardian} onPrev={onPrev} onChangeGuardian={doChangeGuardian} />
+        <ConfirmGuardians changingGuardian={changingGuardian} onPrev={onPrev} onChangeGuardian={doChangeGuardian} isModal={isModal} />
       ) : (
-        <ConfirmEmail email={values.email} sendingEmail={sendingEmail} onResend={onSendEmail} onPrev={onUseAnotherEmail} onNext={onNext} countDown={countDown} />
+        <ConfirmEmail email={values.email} sendingEmail={sendingEmail} onResend={onSendEmail} onPrev={onUseAnotherEmail} onNext={onNext} countDown={countDown} isModal={isModal} />
       );
     }
   };
 
   return (
-    <Box width="100%" height={innerHeight}>
-      {step < 3 && (
+    <Box width="100%" height={isModal ? '100%' : innerHeight}>
+      {(!isModal && step < 3) && (
         <Fragment>
           <Header title="Verify email" showBackButton onBack={onPrev} />
         </Fragment>
       )}
-      <Box height={innerHeight - 60} overflowY="auto">
-        {renderStep()}
+      {isModal && (
+        <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">Add Email Guardian</Box>
+      )}
+      <Box height={isModal ? (innerHeight - 134) : (innerHeight - 60)} overflowY="auto">
+        {renderStep(isModal)}
       </Box>
     </Box>
   );
