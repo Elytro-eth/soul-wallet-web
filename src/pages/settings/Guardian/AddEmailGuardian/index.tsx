@@ -16,6 +16,7 @@ import useWallet from '@/hooks/useWallet';
 import { validEmailDomains, validEmailProviders } from '@/config/constants';
 import useForm from '@/hooks/useForm';
 import { ZeroHash } from 'ethers';
+import useScreenSize from '@/hooks/useScreenSize'
 
 const validate = (values: any, props: any, callbackRef: any) => {
   let errors: any = {};
@@ -61,7 +62,8 @@ export default function VerifyEmail() {
   const toast = useToast();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const innerHeight = window.innerHeight - 134
+  const screenSize = useScreenSize()
+  const innerHeight = screenSize.innerHeight - 134
 
   const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
     fields: ['email'],

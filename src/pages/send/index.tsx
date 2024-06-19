@@ -5,6 +5,7 @@ import SetAmount from './SetAmount';
 import Review from './Review';
 import FadeSwitch from '@/components/FadeSwitch';
 import { ZeroAddress } from 'ethers';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Send({ isModal }: any) {
   const [step, setStep] = useState(0);
@@ -12,6 +13,7 @@ export default function Send({ isModal }: any) {
   const [sendTo, setSendTo] = useState('');
   const [tokenAddress, setTokenAddress] = useState();
   const [selectedToken, setSelectedToken] = useState<any>(null);
+  const { innerHeight } = useScreenSize()
 
   const onPrev = useCallback(() => {
     console.log('prev', step);
@@ -26,12 +28,10 @@ export default function Send({ isModal }: any) {
   }, [step]);
 
   return (
-    <Box width="100%" height="100%">
-      <FadeSwitch key={step}>
-        {step === 0 && <SetAddress isModal={true} onNext={onNext} sendTo={sendTo} setSendTo={setSendTo} />}
-        {step === 1 && <SetAmount isModal={true} amount={amount} setAmount={setAmount} onPrev={onPrev} onNext={onNext} tokenAddress={tokenAddress} setTokenAddress={setTokenAddress} selectedToken={selectedToken} setSelectedToken={setSelectedToken} />}
-        {step === 2 && <Review amount={amount} selectedToken={selectedToken} sendTo={sendTo} tokenAddress={tokenAddress} isModal={true} onPrev={onPrev} />}
-      </FadeSwitch>
+    <Box width="100%" height={innerHeight}>
+      {step === 0 && <SetAddress isModal={true} onNext={onNext} sendTo={sendTo} setSendTo={setSendTo} />}
+      {step === 1 && <SetAmount isModal={true} amount={amount} setAmount={setAmount} onPrev={onPrev} onNext={onNext} tokenAddress={tokenAddress} setTokenAddress={setTokenAddress} selectedToken={selectedToken} setSelectedToken={setSelectedToken} />}
+      {step === 2 && <Review amount={amount} selectedToken={selectedToken} sendTo={sendTo} tokenAddress={tokenAddress} isModal={true} onPrev={onPrev} />}
     </Box>
   )
 }

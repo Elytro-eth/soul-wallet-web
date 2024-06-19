@@ -1,9 +1,10 @@
 import { Box, Image, useDisclosure } from '@chakra-ui/react';
 import NextIcon from '@/components/Icons/mobile/Next'
 import OpIcon from '@/assets/mobile/op.png'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function SelectNetwork({ onNext }: any) {
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const contentHeight = innerHeight - 64 - 120
 
   return (

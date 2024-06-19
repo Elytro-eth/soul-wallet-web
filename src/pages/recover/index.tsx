@@ -199,8 +199,12 @@ export default function Recover() {
     <Box width="100%" height="100%">
       {step < 4 && (
         <Fragment>
-          {step === 0 && <Header title="" showLogo={true} />}
-          {step > 0 && <Header title="Recover account" showBackButton onBack={onPrev} />}
+          {step === 0 && (
+            <Header title="" showLogo />
+          )}
+          {step > 0 && (
+            <Header title="Recover account" showBackButton onBack={onPrev} />
+          )}
         </Fragment>
       )}
       {renderStep()}

@@ -9,6 +9,7 @@ import CreateSuccess from './CreateSuccess';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
 import ProgressBar from '@/components/ProgressBar'
+import useScreenSize from '@/hooks/useScreenSize'
 import api from '@/lib/api';
 
 export default function Create() {
@@ -25,6 +26,7 @@ export default function Create() {
   const [checkingCodeStatus, setCheckingCodeStatus] = useState(false);
   const [timer, setTimer] = useState<any>();
   const toast = useToast();
+  const { innerHeight } = useScreenSize()
 
   const debounce = (fn: Function, delay: number) => {
     clearTimeout(timer);
@@ -148,14 +150,16 @@ export default function Create() {
   };
 
   return (
-    <Box width="100%" height="100%">
+    <Box width="100%" height={innerHeight}>
       {step < 3 && (
         <Fragment>
           <Header title="Create account" showBackButton onBack={onPrev} />
           <ProgressBar percentage={step >= 3 ? 100 : (((step + 1) / 3) * 100)} />
         </Fragment>
       )}
-      {renderStep()}
+      <Box height={innerHeight - 64} overflowY="auto">
+        {renderStep()}
+      </Box>
     </Box>
   );
 }

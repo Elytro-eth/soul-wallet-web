@@ -14,11 +14,12 @@ import { isAddress } from 'ethers';
 import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
 import SelectToken from '@/components/SelectToken'
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount, tokenAddress, setTokenAddress, selectedToken, setSelectedToken,}: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { totalUsdValue } = useBalanceStore();
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
 
   const onAmountChange = (val: string) => {
     // validate decimals
@@ -127,9 +128,9 @@ export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount, 
                 fontWeight="700"
                 color={selectedToken ? "#332244" : "rgba(51, 34, 68, .3)"}
                 onClick={
-                  () => {
-                    selectedToken ? setAmount(selectedToken.tokenBalanceFormatted) : null;
-                  }
+                () => {
+                  selectedToken ? setAmount(selectedToken.tokenBalanceFormatted) : null;
+                }
                 }
               >
                 MAX

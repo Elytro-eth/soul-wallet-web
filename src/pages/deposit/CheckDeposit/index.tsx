@@ -29,6 +29,7 @@ import ReceiveCode from '@/components/ReceiveCode';
 import { shareFile } from '@/lib/tools';
 import { useSettingStore } from '@/store/setting';
 import { useHistoryStore } from '@/store/history';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, isModal, registerScrollable }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,8 +42,8 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
   const [checked3, setChecked3] = useState(false);
   const { isDepositAllChecked, setIsDepositAllChecked } = useSettingStore();
   const isAllChecked = (checked1 && checked2 && checked3) || isDepositAllChecked;
-  const innerHeight = window.innerHeight
-  const contentHeight = isModal ? (innerHeight - 140) : (innerHeight - 64)
+  const screenSize = useScreenSize()
+  const contentHeight = isModal ? (screenSize.innerHeight - 140) : (screenSize.innerHeight - 64)
   const scrollableRef = useRef<any>()
   // console.log('isModal', isModal)
 

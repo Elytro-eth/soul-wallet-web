@@ -29,6 +29,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { useChainStore } from '@/store/chain';
 import { useAddressStore } from '@/store/address';
+import useScreenSize from '@/hooks/useScreenSize'
 // import { Pagination } from 'swiper/modules';
 
 const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => {
@@ -81,7 +82,8 @@ export default function Deposit({ isModal, registerScrollable }: any) {
   const { historyList } = useHistoryStore();
   const {selectedChainId} = useChainStore();
   const { selectedAddress } = useAddressStore();
-  const innerHeight = isModal ? (window.innerHeight - 40) : window.innerHeight
+  const screenSize = useScreenSize()
+  const innerHeight = isModal ? (screenSize.innerHeight - 40) : screenSize.innerHeight
 
   const onFinish = useCallback(async() => {
     if (isModal) {

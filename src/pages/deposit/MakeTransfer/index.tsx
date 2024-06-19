@@ -5,10 +5,11 @@ import MetamaskIcon from '@/assets/mobile/metamask.png'
 import OKEXIcon from '@/assets/mobile/okex.png'
 import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import BinanceIcon from '@/assets/mobile/binance.png'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function MakeTransfer({ onNext, registerScrollable }: any) {
   const scrollableRef = useRef<any>()
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const contentHeight = innerHeight - 64 - 120
 
   useEffect(() => {

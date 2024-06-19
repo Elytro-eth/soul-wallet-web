@@ -12,6 +12,7 @@ import USDCIcon from '@/assets/mobile/usdc.png'
 import { toFixed } from '@/lib/tools';
 import { isAddress } from 'ethers';
 import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo, }: any) {
   const [withdrawAmount, setWithdrawAmount] = useState<any>('');
@@ -25,7 +26,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
   const [step, setStep] = useState(0);
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 468
 
   const onAddressChange = (val: string) => {

@@ -14,6 +14,8 @@ import Recover from '@/pages/recover';
 import Public from '@/pages/public';
 import RecoverSign from '@/pages/public/RecoverSign';
 import GuardianSetting from '@/pages/settings/Guardian';
+import ManageGuardian from '@/pages/settings/Guardian/Manage';
+import IntroGuardian from '@/pages/settings/Guardian/Intro';
 import AppContainer from './components/mobile/AppContainer';
 
 export const router = createBrowserRouter([
@@ -60,8 +62,18 @@ export const router = createBrowserRouter([
             element: <Recover />,
           },
           {
-            path: '/guardian-setting',
+            path: '/guardian',
             element: <GuardianSetting />,
+            children: [
+              {
+                path: 'intro',
+                element: <IntroGuardian />,
+              },
+              {
+                path: 'manage',
+                element: <ManageGuardian />,
+              },
+            ]
           },
           {
             path: '/public',

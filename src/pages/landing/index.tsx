@@ -20,6 +20,7 @@ import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import BN from 'bignumber.js'
 import APYCard from '@/components/mobile/APYCard'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Landing() {
   const [loaded, setLoaded] = useState(false);
@@ -27,7 +28,7 @@ export default function Landing() {
   const { sevenDayApy } = useBalanceStore();
   const [logging, setLogging] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const innerHeight = window.innerHeight
+  const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 740
 
   const navigate = useNavigate();

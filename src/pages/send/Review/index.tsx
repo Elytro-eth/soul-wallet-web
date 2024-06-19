@@ -26,6 +26,7 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 import useWallet from '@/hooks/useWallet';
 import useTools from '@/hooks/useTools';
 import useConfig from '@/hooks/useConfig';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, selectedToken }: any) {
   const { closeModal, closeFullScreenModal } = useWalletContext();
@@ -41,7 +42,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);
   const isTransferingRef = useRef(false);
-  const innerHeight = window.innerHeight;
+  const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 468;
 
   const [animated, setAnimated] = useState(false);

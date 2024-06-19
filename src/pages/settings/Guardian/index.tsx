@@ -2,7 +2,8 @@ import React, { useState, useCallback, useEffect, Fragment } from 'react';
 import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import usePasskey from '@/hooks/usePasskey';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
+import useScreenSize from '@/hooks/useScreenSize'
 import Intro from './Intro'
 import Manage from './Manage'
 
@@ -11,7 +12,7 @@ export default function GuardianSetting() {
   const toast = useToast();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const innerHeight = window.innerHeight - 62
+  const { innerHeight } = useScreenSize()
 
   const onPrev = useCallback(() => {
     if (step >= 1) {
@@ -41,10 +42,10 @@ export default function GuardianSetting() {
   };
 
   return (
-    <Box width="100%" height="100%">
+    <Box width="100%" height={innerHeight}>
       <Header title="Guardian setting" showBackButton onBack={onPrev} />
-      <Box height={innerHeight} overflowY="scroll">
-        {renderStep()}
+      <Box height={innerHeight - 60} overflowY="auto">
+        <Outlet />
       </Box>
     </Box>
   );
