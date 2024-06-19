@@ -9,16 +9,18 @@ import ApprovedIcon from '@/components/Icons/mobile/Approved';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import { useTempStore } from '@/store/temp';
 import api from '@/lib/api';
+import { useSettingStore } from '@/store/setting';
 
-export default function RecoverProgress({ onNext }: any) {
+export default function RecoverProgress({ onNext, guardiansInfo, }: any) {
   const { openModal } = useWalletContext()
   const { recoverInfo, setEmailTemplate } = useTempStore();
+  const { guardianAddressEmail } = useSettingStore();
   
-  const doOpenModal = async() => {
+  const doOpenModal = async(guardianAddress: string,) => {
     // get template info
     const res = await api.emailGuardian.emailTemplate({
-      email: "",
-      guardianAddress: "",
+      email: guardianAddressEmail[guardianAddress],
+      guardianAddress,
       recoveryID: recoverInfo.recoveryID
     });
 
@@ -29,6 +31,8 @@ export default function RecoverProgress({ onNext }: any) {
     });
     openModal('recoverVerifyEmail')
   }
+
+  const guardiansList = guardiansInfo.guardianDetails.guardians;
   
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="40px">
@@ -70,23 +74,27 @@ export default function RecoverProgress({ onNext }: any) {
       >
         2 more guardians approval needed
       </Box>
-      <Box
-        fontWeight="600"
-        fontSize="14px"
-        width="100%"
-        padding="24px 0"
-        borderBottom="1px solid #F0F0F0"
-        display="flex"
-        alignItems="center"
-      >
-        <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
-        <Box>
-          <Box>{`ne****ez@gmail.com`}</Box>
-        </Box>
-        <Box marginLeft="auto">
-          <Button size="sm" type="blue" height="32px" onClick={doOpenModal}>Verify Email</Button>
-        </Box>
-      </Box>
+      {guardiansList && guardiansList.map((guardianAddress: any, index: number) => (
+           <Box
+           fontWeight="600"
+           fontSize="14px"
+           key={index}
+           width="100%"
+           padding="24px 0"
+           borderBottom="1px solid #F0F0F0"
+           display="flex"
+           alignItems="center"
+         >
+           <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
+           <Box>
+             <Box>{guardianAddressEmail[guardianAddress] || guardianAddress}</Box>
+           </Box>
+           <Box marginLeft="auto">
+             <Button size="sm" type="blue" height="32px" onClick={() => doOpenModal(guardianAddress)}>Verify Email</Button>
+           </Box>
+         </Box>
+      ))}
+   
       {/* <Box
         fontWeight="600"
         fontSize="14px"
