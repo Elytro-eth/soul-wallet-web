@@ -29,7 +29,7 @@ export default function Landing() {
   const [logging, setLogging] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { innerHeight } = useScreenSize()
-  const marginHeight = innerHeight - 740
+  const marginHeight = innerHeight - 680
 
   const navigate = useNavigate();
   const doSignIn = async () => {
@@ -192,7 +192,7 @@ export default function Landing() {
             sm: `${marginHeight}px`,
             md: 'calc(50vh - 125px)'
           }}
-          height="740px"
+          height="680px"
           overflow="visible"
           mb="0"
           position="relative"
