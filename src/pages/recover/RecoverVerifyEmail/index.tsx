@@ -4,9 +4,11 @@ import Header from '@/components/mobile/Header';
 import Button from '@/components/mobile/Button';
 import CopyIcon from '@/components/Icons/mobile/Copy';
 import { useTempStore } from '@/store/temp';
+import useTools from '@/hooks/useTools';
 
 export default function RecoverVerifyEmail() {
   const { emailTemplate } = useTempStore();
+  const { doCopy } = useTools();
 
   return (
     <Box
@@ -59,14 +61,14 @@ export default function RecoverVerifyEmail() {
               <Box width="40px" marginRight="25px">To</Box>
               <Box display="flex" alignItems="center">
                 <Box>{emailTemplate.to || '...'}</Box>
-                <Box marginLeft="4px"><CopyIcon /></Box>
+                <Box marginLeft="4px" onClick={()=> doCopy(emailTemplate.to)}><CopyIcon /></Box>
               </Box>
             </Box>
             <Box marginTop="50px">
               <Box color="rgba(0, 0, 0, 0.5)">Subject</Box>
               <Box marginTop="20px" display="flex" alignItems="center">
                 <Box width="calc(100% - 40px)">{emailTemplate.subject}</Box>
-                <Box marginLeft="auto"><CopyIcon /></Box>
+                <Box marginLeft="auto" onClick={()=> doCopy(emailTemplate.subject)}><CopyIcon /></Box>
               </Box>
             </Box>
           </Box>

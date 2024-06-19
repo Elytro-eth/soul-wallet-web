@@ -5,7 +5,7 @@ import { ABI_SocialRecoveryModule, ABI_SoulWallet } from '@soulwallet/abi';
 import { useSlotStore } from '@/store/slot';
 import { addPaymasterData } from '@/lib/tools';
 import { erc20Abi, verifyMessage } from 'viem';
-import { SignkeyType, Transaction, UserOperation } from '@soulwallet/sdk';
+import { SignkeyType, SocialRecovery, Transaction, UserOperation } from '@soulwallet/sdk';
 import { executeTransaction } from '@/lib/tx';
 import { UserOpUtils } from '@soulwallet/sdk';
 import useConfig from './useConfig';
@@ -25,6 +25,8 @@ import useBrowser from './useBrowser';
 import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
+import { useTempStore } from '@/store/temp';
+import { useGuardianStore } from '@/store/guardian';
 
 export const noGuardian = {
   initialGuardianHash: ethers.ZeroHash,
@@ -39,10 +41,12 @@ export default function useWallet() {
   const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
   const { soulWallet } = useSdk();
   const { navigate } = useBrowser();
+  const { clearRecoverInfo } = useTempStore();
   const toast = useToast();
+  const { setGuardiansInfo } = useGuardianStore();
   const { getTokenBalance, setTokenBalance } = useBalanceStore();
   const { clearLogData } = useTools();
-  const { selectedAddress, setSelectedAddress, setWalletName } = useAddressStore();
+  const { selectedAddress, setSelectedAddress, setWalletName, setAddressList } = useAddressStore();
 
   const loginWallet = async () => {
     const { credential } = await authenticateLogin();
@@ -370,6 +374,34 @@ export default function useWallet() {
     }
   };
 
+  const boostAfterRecovered = async (_recoverInfo: any) => {
+    setSlotInfo({
+      ..._recoverInfo.initInfo,
+    });
+    setAddressList([
+      {
+        address: _recoverInfo.recoveryRecord.address,
+        chainIdHex: _recoverInfo.recoveryRecord.chain_id,
+        activated: true,
+      },
+    ]);
+    const credentialsInStore = _recoverInfo.signers.filter((signer: any) => signer.type === 'passkey');
+    if (credentialsInStore.length) setCredentials(credentialsInStore);
+    setSelectedChainId(_recoverInfo.chain_id);
+
+    // calculate guardian hash
+    const guardianHash = SocialRecovery.calcGuardianHash(_recoverInfo.guardianInfo.guardians, _recoverInfo.guardianInfo.threshold);
+
+    setGuardiansInfo({
+      guardianHash,
+      guardians: _recoverInfo.guardianInfo.guardians,
+      salt: _recoverInfo.guardianInfo.salt,
+      threshold: _recoverInfo.guardianInfo.threshold,
+    })
+
+    // clearRecoverInfo();
+  };
+
   const signAndSend = async (userOp: UserOperation) => {
     const validAfter = Math.floor(Date.now() / 1000 - 300);
     const validUntil = validAfter + 3600;
@@ -424,5 +456,6 @@ export default function useWallet() {
     logoutWallet,
     getSponsor,
     getChangeGuardianOp,
+    boostAfterRecovered,
   };
 }

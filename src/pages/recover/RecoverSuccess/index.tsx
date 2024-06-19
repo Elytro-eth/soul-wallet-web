@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function RecoverSuccess({ }: any) {
+export default function RecoverSuccess({ doRecover, isRecovering }: any) {
   const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
@@ -39,11 +39,9 @@ export default function RecoverSuccess({ }: any) {
           Your account has been recovered. Free to check it out!
         </Box>
       </Box>
-      <Link to="/dashboard" style={{ width: "100%" }} >
-        <Button width="100%" size="xl" type="blue" minWidth="195px">
-          Go to account
-        </Button>
-      </Link>
+      <Button width="100%" size="xl" type="blue" minWidth="195px" onClick={doRecover} loading={isRecovering}>
+        Go to account
+      </Button>
     </Box>
   );
 }
