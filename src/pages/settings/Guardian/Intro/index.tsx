@@ -66,7 +66,7 @@ export default function Intro({ onPrev, onNext }: any) {
                       position="relative"
                       padding="18px 27px"
                       borderBottom="1px solid #E4E4E4"
-                      onClick={() => { openModal('addEmailGuardian'); onClose(); }}
+                      onClick={() => { openModal('verifyEmail'); onClose(); }}
                     >
                       <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
                         <Box marginRight="8px"><EmailGuardianIcon /></Box>

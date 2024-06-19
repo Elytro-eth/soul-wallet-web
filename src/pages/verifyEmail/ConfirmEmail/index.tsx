@@ -2,9 +2,9 @@ import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalB
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 
-export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, onResend }: any) {
+export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, onResend, isModal }: any) {
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop="138px">
+    <Box width="100%" height="100%" padding="30px" paddingTop={isModal ? '80px' : '138px'}>
       <Box
         width="120px"
         height="120px"

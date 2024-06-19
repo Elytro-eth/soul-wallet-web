@@ -82,7 +82,7 @@ export default function Settings({ isModal }: any) {
           display="flex"
           alignItems="center"
           justifyContent="flex-start"
-          onClick={() => { closeModal(); navigate('/guardian-setting'); }}
+          onClick={() => { closeModal(); navigate('/guardian/intro'); }}
         >
           <Box
             marginRight="12px"

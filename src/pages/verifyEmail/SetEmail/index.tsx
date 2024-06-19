@@ -5,14 +5,14 @@ import { validEmailDomains, validEmailProviders } from '@/config/constants'
 import useForm from '@/hooks/useForm';
 import useScreenSize from '@/hooks/useScreenSize'
 
-export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, onSendEmail, sendingEmail, }: any) {
+export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, onSendEmail, sendingEmail, isModal }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 508
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop="138px">
+    <Box width="100%" height="100%" padding="30px" paddingTop={isModal ? '80px' : '138px'}>
       <Box
         fontWeight="600"
         fontSize="24px"
