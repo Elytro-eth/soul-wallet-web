@@ -8,10 +8,11 @@ import { persist } from 'zustand/middleware';
 
 export interface ITempStore {
   recoverInfo: any;
-  setRecoverInfo: (val: any) => void;
   clearRecoverInfo: () => void;
+  updateRecoverInfo: (val: any) => void;
   emailTemplate: any;
   setEmailTemplate: (val: any) => void;
+  clearTempInfo: () => void;
 }
 
 const createTempSlice = immer<ITempStore>((set, get) => ({
@@ -21,15 +22,29 @@ const createTempSlice = immer<ITempStore>((set, get) => ({
       recoverInfo: {},
     });
   },
-  setRecoverInfo: (val: any) => {
-    set({
-      recoverInfo: val,
+  // setRecoverInfo: (val: any) => {
+  //   set({
+  //     recoverInfo: val,
+  //   });
+  // },
+  updateRecoverInfo: (val: any) => {
+    set((state) => {
+      state.recoverInfo = {
+        ...state.recoverInfo,
+        ...val,
+      };
     });
   },
   emailTemplate: {},
   setEmailTemplate: (val: any) => {
     set({
       emailTemplate: val,
+    });
+  },
+  clearTempInfo: () => {
+    set({
+      emailTemplate: {},
+      recoverInfo: {},
     });
   },
 }));

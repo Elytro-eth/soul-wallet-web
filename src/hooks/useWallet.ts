@@ -41,7 +41,7 @@ export default function useWallet() {
   const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
   const { soulWallet } = useSdk();
   const { navigate } = useBrowser();
-  const { clearRecoverInfo, recoverInfo } = useTempStore();
+  const { clearTempInfo, recoverInfo } = useTempStore();
   const toast = useToast();
   const { getTokenBalance, setTokenBalance } = useBalanceStore();
   const { clearLogData } = useTools();
@@ -379,8 +379,8 @@ export default function useWallet() {
   const boostAfterRecovered = async (_recoverInfo: any) => {
     setAddressList([
       {
-        address: _recoverInfo.recoveryRecord.address,
-        chainIdHex: _recoverInfo.recoveryRecord.chain_id,
+        address: _recoverInfo.address,
+        chainIdHex: _recoverInfo.chainID,
       },
     ]);
     setCredentials([recoverInfo.credential]);
@@ -388,7 +388,7 @@ export default function useWallet() {
     setSlotInfo({
       ..._recoverInfo.initInfo,
     });
-    // clearRecoverInfo();
+    clearTempInfo();
   };
 
   const signAndSend = async (userOp: UserOperation) => {

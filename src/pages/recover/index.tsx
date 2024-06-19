@@ -30,7 +30,7 @@ export default function Recover() {
   const [isRecovering, setIsRecovering] = useState(false);
   const [signedGuardians, setSignedGuardians] = useState<any>([]);
 
-  const { recoverInfo, setRecoverInfo } = useTempStore();
+  const { recoverInfo, updateRecoverInfo } = useTempStore();
   const { recoveryID } = recoverInfo;
 
   // const recoveryID = '0x08455df5b125cddf03d0b007f4c65939cde128bdae8eb81574f20af85f704a98'
@@ -68,7 +68,7 @@ export default function Recover() {
         address: accountInfo.address,
         newOwners: [credential.onchainPublicKey],
       });
-      setRecoverInfo({
+      updateRecoverInfo({
         recoveryID: createRecordRes.data.recoveryID,
         credential,
       });
@@ -152,7 +152,7 @@ export default function Recover() {
         recoveryID,
       });
 
-      setRecoverInfo({
+      updateRecoverInfo({
         ...recoveryRecordRes.data,
       });
 
