@@ -41,9 +41,8 @@ export default function useWallet() {
   const { setCredentials, getSelectedCredential, selectedKeyType } = useSignerStore();
   const { soulWallet } = useSdk();
   const { navigate } = useBrowser();
-  const { clearRecoverInfo } = useTempStore();
+  const { clearRecoverInfo, recoverInfo } = useTempStore();
   const toast = useToast();
-  const { setGuardiansInfo } = useGuardianStore();
   const { getTokenBalance, setTokenBalance } = useBalanceStore();
   const { clearLogData } = useTools();
   const { selectedAddress, setSelectedAddress, setWalletName, setAddressList } = useAddressStore();
@@ -75,6 +74,10 @@ export default function useWallet() {
       setCredentials([credential as any]);
       setWalletName(accountInfo.name);
       setSelectedAddress(accountInfo.address);
+      setAddressList([{
+        address: accountInfo.address,
+        chainIdHex: accountInfo.chainID,
+      }])
       setSelectedChainId(accountInfo.chainID);
       setSlotInfo(accountInfo.initInfo);
       // rob, IMPORTANT TODO, fetch GUARDIANS
@@ -299,7 +302,6 @@ export default function useWallet() {
             )
           : null;
 
-    console.log('123 in');
     if (!packedSignatureRet) {
       throw new Error('algorithm not supported');
     }
@@ -375,30 +377,17 @@ export default function useWallet() {
   };
 
   const boostAfterRecovered = async (_recoverInfo: any) => {
-    setSlotInfo({
-      ..._recoverInfo.initInfo,
-    });
     setAddressList([
       {
         address: _recoverInfo.recoveryRecord.address,
         chainIdHex: _recoverInfo.recoveryRecord.chain_id,
-        activated: true,
       },
     ]);
-    const credentialsInStore = _recoverInfo.signers.filter((signer: any) => signer.type === 'passkey');
-    if (credentialsInStore.length) setCredentials(credentialsInStore);
-    setSelectedChainId(_recoverInfo.chain_id);
-
-    // calculate guardian hash
-    const guardianHash = SocialRecovery.calcGuardianHash(_recoverInfo.guardianInfo.guardians, _recoverInfo.guardianInfo.threshold);
-
-    setGuardiansInfo({
-      guardianHash,
-      guardians: _recoverInfo.guardianInfo.guardians,
-      salt: _recoverInfo.guardianInfo.salt,
-      threshold: _recoverInfo.guardianInfo.threshold,
-    })
-
+    setCredentials([recoverInfo.credential]);
+    setSelectedChainId(_recoverInfo.chainID);
+    setSlotInfo({
+      ..._recoverInfo.initInfo,
+    });
     // clearRecoverInfo();
   };
 

@@ -16,7 +16,7 @@ import useWallet from '@/hooks/useWallet';
 import { validEmailDomains, validEmailProviders } from '@/config/constants';
 import useForm from '@/hooks/useForm';
 import { ZeroHash } from 'ethers';
-import useScreenSize from '@/hooks/useScreenSize'
+import useScreenSize from '@/hooks/useScreenSize';
 
 const validate = (values: any, props: any, callbackRef: any) => {
   let errors: any = {};
@@ -62,7 +62,7 @@ export default function VerifyEmail({ isModal }: any) {
   const toast = useToast();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const { innerHeight } = useScreenSize()
+  const { innerHeight } = useScreenSize();
 
   const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
     fields: ['email'],
@@ -116,7 +116,7 @@ export default function VerifyEmail({ isModal }: any) {
         title: err.response.data.message || 'Failed to send email',
         status: 'error',
       });
-    }finally{
+    } finally {
       setSendingEmail(false);
     }
   };
@@ -139,7 +139,7 @@ export default function VerifyEmail({ isModal }: any) {
 
   const stopCountDown = () => {
     clearInterval(countInterval);
-  }
+  };
 
   const doGenerateAddress = async () => {
     try {
@@ -175,6 +175,7 @@ export default function VerifyEmail({ isModal }: any) {
   };
 
   const doBackupGuardian = async (guardianList: any, threshold: number, guardianHash: string) => {
+    // public backup
     const res = await api.backup.publicBackupGuardians({
       guardianHash: guardianHash,
       guardianDetails: {
@@ -184,11 +185,21 @@ export default function VerifyEmail({ isModal }: any) {
       },
     });
     console.log('backup result', res);
+    // private backup
+    const res2 = await api.authenticated.saveGuardianInfo({
+      guardians: [
+        {
+          guardianAddress: guardianList[0],
+          mark: values.email,
+        },
+      ],
+    });
+    console.log('11111', res2);
   };
 
   const doChangeGuardian = async () => {
     setChangingGuardian(true);
-    try{
+    try {
       const defaultThreshold = 1;
       // 1. get guardian address
       const guardianAddress = await doGenerateAddress();
@@ -207,7 +218,7 @@ export default function VerifyEmail({ isModal }: any) {
         title: '10 USDC reward received',
         status: 'success',
       });
-    }finally{
+    } finally {
       setChangingGuardian(false);
     }
   };
@@ -234,14 +245,14 @@ export default function VerifyEmail({ isModal }: any) {
     console.log('skip');
   }, []);
 
-  const onUseAnotherEmail = async() => {
+  const onUseAnotherEmail = async () => {
     stopCountDown();
     setVerifyStatus(0);
     setVerifyExpireTime(0);
     setVerifyToken('');
     setCountDown(0);
     setStep(0);
-  }
+  };
 
   const renderStep = (isModal: boolean) => {
     if (step == 0) {
@@ -261,24 +272,39 @@ export default function VerifyEmail({ isModal }: any) {
       );
     } else if (step == 1) {
       return verifyToken && verifyStatus === 2 ? (
-        <ConfirmGuardians changingGuardian={changingGuardian} onPrev={onPrev} onChangeGuardian={doChangeGuardian} isModal={isModal} />
+        <ConfirmGuardians
+          changingGuardian={changingGuardian}
+          onPrev={onPrev}
+          onChangeGuardian={doChangeGuardian}
+          isModal={isModal}
+        />
       ) : (
-        <ConfirmEmail email={values.email} sendingEmail={sendingEmail} onResend={onSendEmail} onPrev={onUseAnotherEmail} onNext={onNext} countDown={countDown} isModal={isModal} />
+        <ConfirmEmail
+          email={values.email}
+          sendingEmail={sendingEmail}
+          onResend={onSendEmail}
+          onPrev={onUseAnotherEmail}
+          onNext={onNext}
+          countDown={countDown}
+          isModal={isModal}
+        />
       );
     }
   };
 
   return (
     <Box width="100%" height={isModal ? '100%' : innerHeight}>
-      {(!isModal && step < 3) && (
+      {!isModal && step < 3 && (
         <Fragment>
           <Header title="Verify email" showBackButton onBack={onPrev} />
         </Fragment>
       )}
       {isModal && (
-        <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">Add Email Guardian</Box>
+        <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">
+          Add Email Guardian
+        </Box>
       )}
-      <Box height={isModal ? (innerHeight - 134) : (innerHeight - 60)} overflowY="auto">
+      <Box height={isModal ? innerHeight - 134 : innerHeight - 60} overflowY="auto">
         {renderStep(isModal)}
       </Box>
     </Box>

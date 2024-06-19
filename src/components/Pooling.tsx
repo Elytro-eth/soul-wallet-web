@@ -22,7 +22,7 @@ export default function Pooling() {
     const balances = await fetchTokenBalanceApi(selectedAddress, selectedChainId);
     setTokenBalance(balances);
     fetchHistory(selectedAddress, selectedChainId);
-    fetchGuardianInfo();
+    fetchGuardianInfo(selectedAddress);
     // fetchInterest(selectedAddress, selectedChainId);
   };
 

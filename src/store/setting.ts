@@ -15,20 +15,29 @@ export interface ISettingStore {
   guardianAddressEmail: { [address: string]: string };
   saveGuardianAddressEmail: (address: string, email: string) => void;
   removeGuardianAddressEmail: (address: string) => void;
-  getGuardianAddressEmail: (address: string) => string;
+  guardianAddressName: { [address: string] : string};
+  saveGuardianAddressName: (address: string, name: string) => void;
+  removeGuardianAddressName: (address: string) => void;
+  // getGuardianAddressEmail: (address: string) => string;
 }
 
 const createSettingSlice = immer<ISettingStore>((set, get) => ({
   isDepositAllChecked: false,
   guardianAddressEmail: {},
-  getGuardianAddressEmail: (address) => {
-    return get().guardianAddressEmail[address] || '';
-  },
+  guardianAddressName: {},
   saveGuardianAddressEmail: (address, email) => {
     set((state) => ({
       guardianAddressEmail: {
         ...state.guardianAddressEmail,
         [address]: email,
+      },
+    }));
+  },
+  saveGuardianAddressName: (address, name) => {
+    set((state) => ({
+      guardianAddressName: {
+        ...state.guardianAddressName,
+        [address]: name,
       },
     }));
   },
@@ -41,7 +50,17 @@ const createSettingSlice = immer<ISettingStore>((set, get) => ({
       return {
         guardianAddressEmail: newState,
       };
-      // state.guardianAddressEmail = newState;
+    });
+  },
+  removeGuardianAddressName: (address) => {
+    set((state) => {
+      const newState = {
+        ...state.guardianAddressName,
+      };
+      delete newState[address];
+      return {
+        guardianAddressName: newState,
+      };
     });
   },
   setIsDepositAllChecked: (val: boolean) => {

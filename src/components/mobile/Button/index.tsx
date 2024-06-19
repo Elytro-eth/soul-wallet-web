@@ -151,7 +151,7 @@ export default function Button({
   const { slotInfo } = useSlotStore();
   const styles = buttonStyles[type || 'black'];
 
-  const canSign = (selectedAddressItem && !selectedAddressItem.recovering) || skipSignCheck || !slotInfo.slot;
+  const canSign = selectedAddressItem || skipSignCheck || !slotInfo.slot;
 
   const sizeStyles = getSizeStyles(size);
 

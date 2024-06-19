@@ -64,7 +64,7 @@ export default function SetUsername({ username, isWalletNotFound, setUsername, a
           </>
         )}
       </Box>
-      <Button disabled={false} size="xl" type="blue" width="100%" onClick={onNext}>
+      <Button disabled={!accountInfo} size="xl" type="blue" width="100%" onClick={onNext}>
         Continue
       </Button>
     </Box>

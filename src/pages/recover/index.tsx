@@ -24,9 +24,8 @@ export default function Recover() {
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [accountInfo, setAccountInfo] = useState<any>(null);
   const [isWalletNotFound, setIsWalletNotFound] = useState(false);
-  const [guardiansInfo, setGuardiansInfo] = useState({});
   const { boostAfterRecovered } = useWallet();
-  const { saveGuardianAddressEmail, guardianAddressEmail } = useSettingStore();
+  // const { saveGuardianAddressEmail, guardianAddressEmail } = useSettingStore();
   const [timer, setTimer] = useState<any>();
   const [isRecovering, setIsRecovering] = useState(false);
   const [signedGuardians, setSignedGuardians] = useState<any>([]);
@@ -71,6 +70,7 @@ export default function Recover() {
       });
       setRecoverInfo({
         recoveryID: createRecordRes.data.recoveryID,
+        credential,
       });
       setStep(3);
     } catch (err: any) {
@@ -129,8 +129,7 @@ export default function Recover() {
       while (true) {
         setIsRecovering(true);
         const res: any = await api.recovery.execute({ recoveryID });
-        if (res.msg === 'executeRecovery tirggered' || res.msg === 'already executed') {
-          console.log('ready to boooooost');
+        if (res.msg === 'executeRecovery tirggered' || res.msg === 'recovery already executed') {
           const recoverRecord = await getPreviousRecord();
           await boostAfterRecovered(recoverRecord);
           navigate('/dashboard');
@@ -162,22 +161,6 @@ export default function Recover() {
       }
 
       const status = recoveryRecordRes.data.status;
-
-      // get guardian list by hash, to search for specialGuardians
-      const guardianHash = SocialRecovery.calcGuardianHash(
-        recoveryRecordRes.data.guardianInfo.guardians,
-        recoveryRecordRes.data.guardianInfo.threshold,
-      );
-      const guardianInfoRes = await api.backup.publicGetGuardians({
-        guardianHash,
-      });
-
-      setGuardiansInfo(guardianInfoRes.data);
-
-      // set email name
-      guardianInfoRes.data.specialGuardians.forEach((item: any) => {
-        saveGuardianAddressEmail(item.guardianAddress, item.data.email);
-      });
 
       if (status == 0) {
         // record submitted
@@ -220,7 +203,7 @@ export default function Recover() {
     } else if (step == 2) {
       return <SetPasskey onPrev={onPrev} onNext={onCreatePasskey} addingPasskey={addingPasskey} />;
     } else if (step == 3) {
-      return <RecoverProgress onNext={onNext} guardiansInfo={guardiansInfo} signedGuardians={signedGuardians} />;
+      return <RecoverProgress onNext={onNext} signedGuardians={signedGuardians} />;
     } else if (step == 4) {
       return <RecoverSuccess isRecovering={isRecovering} doRecover={doRecover} />;
     }

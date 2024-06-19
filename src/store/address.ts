@@ -5,8 +5,6 @@ import { persist } from 'zustand/middleware';
 export interface IAddressItem {
   address: string;
   chainIdHex:string;
-  activated?: boolean;
-  recovering?: boolean;
 }
 
 export interface IAddressStore {

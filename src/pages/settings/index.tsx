@@ -18,9 +18,11 @@ import AddressIcon from '@/components/AddressIcon';
 import LogoutIcon from '@/components/Icons/mobile/Logout'
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useBrowser from '@/hooks/useBrowser';
+import { useGuardianStore } from '@/store/guardian';
 
 export default function Settings({ isModal }: any) {
   const { walletName, selectedAddress } = useAddressStore();
+  const { guardiansInfo, } = useGuardianStore();
   const { closeModal } = useWalletContext()
   const { navigate } = useBrowser();
   const { logoutWallet } = useWallet();
@@ -31,7 +33,7 @@ export default function Settings({ isModal }: any) {
 
   const goGuardianSettings = async () => {
     closeModal();
-    if(true){
+    if(!guardiansInfo || !guardiansInfo.guardianHash){
       navigate('/guardian/intro')
     }else{
       navigate('/guardian/manage');

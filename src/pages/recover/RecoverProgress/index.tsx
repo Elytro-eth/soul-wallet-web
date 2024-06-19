@@ -21,10 +21,12 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 import { useTempStore } from '@/store/temp';
 import api from '@/lib/api';
 import { useSettingStore } from '@/store/setting';
+import { useGuardianStore } from '@/store/guardian';
 
-export default function RecoverProgress({ onNext, guardiansInfo, signedGuardians }: any) {
+export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const { openModal } = useWalletContext();
   const { recoverInfo, setEmailTemplate } = useTempStore();
+  const { guardiansInfo } = useGuardianStore();
   const { guardianAddressEmail } = useSettingStore();
 
   const doOpenModal = async (guardianAddress: string) => {

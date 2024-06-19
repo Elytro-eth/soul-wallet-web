@@ -2,14 +2,46 @@
  * Query data on chain
  */
 import BN from 'bignumber.js';
-import { ethers } from 'ethers';
+import { ethers, Contract, ZeroHash } from 'ethers';
+import { ABI_SocialRecoveryModule } from '@soulwallet/abi';
 import useSdk from './useSdk';
 import useConfig from './useConfig';
+import useWalletContext from '@/context/hooks/useWalletContext';
 import api from '@/lib/api';
+import { useSettingStore } from '@/store/setting';
+import { useGuardianStore } from '@/store/guardian';
 
 export default function useQuery() {
   const { soulWallet } = useSdk();
   const { chainConfig } = useConfig();
+  const { guardiansInfo, setGuardiansInfo } = useGuardianStore();
+  const { saveGuardianAddressEmail, saveGuardianAddressName, guardianAddressEmail, guardianAddressName } = useSettingStore();
+  const { ethersProvider } = useWalletContext();
+
+  const fetchGuardianInfo = async (walletAddress: string) => {
+    const contract = new Contract(chainConfig.contracts.socialRecoveryModule, ABI_SocialRecoveryModule, ethersProvider);
+    const recoveryInfo = await contract.getSocialRecoveryInfo(walletAddress);
+    const activeGuardianHash = recoveryInfo[0];
+    if (activeGuardianHash === ZeroHash) {
+      return null;
+    }
+    const resPublic = await api.backup.publicGetGuardians({ guardianHash: activeGuardianHash });
+
+    resPublic.data.specialGuardians.forEach((item: any) => {
+      if(!guardianAddressEmail[item.guardianAddress]){
+        saveGuardianAddressEmail(item.guardianAddress, item.data.email);
+      }
+    });
+
+    setGuardiansInfo(resPublic.data);
+
+    const resPrivate = await api.authenticated.getGuardianInfo(resPublic.data.guardianDetails.guardians);
+
+    resPrivate.data.guardians.forEach((item: any) => {
+      saveGuardianAddressName(item.guardianAddress, item.data.mark);
+      saveGuardianAddressEmail(item.guardianAddress, item.data.email);
+    });
+  };
 
   const getPrefund = async (userOp: any, payToken: string) => {
     // get preFund
@@ -39,12 +71,6 @@ export default function useQuery() {
         userOp,
       };
     }
-  };
-
-  // authenticated fetch guardian info
-  const fetchGuardianInfo = async () => {
-    const res = await api.authenticated.getGuardianInfo({});
-    console.log('res', res);
   };
 
   return {

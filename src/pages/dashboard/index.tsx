@@ -21,6 +21,7 @@ import useBrowser from '@/hooks/useBrowser';
 import useScreenSize from '@/hooks/useScreenSize'
 import IconSetting from '@/assets/icons/setting.svg';
 import { useAddressStore } from '@/store/address';
+import { useGuardianStore } from '@/store/guardian';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -109,6 +110,7 @@ export default function Dashboard() {
   const [modalHeight, setModalHeight] = useState(innerHeight - 494);
   const [showFullHistory, setShowFullHistory] = useState(false);
   const [modalPosition, setModalPosition] = useState('bottom');
+  const {guardiansInfo} = useGuardianStore();
   const [isMoving, setIsMoving] = useState(false);
   const { navigate } = useBrowser();
   // const { openModal } = useNavigation()
@@ -116,11 +118,7 @@ export default function Dashboard() {
   const contentRef = useRef();
   const [activeMenu, setActiveMenu] = useState('apps')
 
-  const pendingUsdcBalance = getTokenBalance(import.meta.env.VITE_TOKEN_USDC);
-
   const totalShowBalance = BN(totalUsdValue).plus(totalTrialValue).toFixed(2);
-
-  const hasBalance = BN(totalShowBalance).isGreaterThan(0);
 
   const valueLeft = totalShowBalance.split('.')[0];
   const valueRight = totalShowBalance.split('.')[1];
@@ -130,7 +128,6 @@ export default function Dashboard() {
   const fontBottomMargin = getFontBottomMargin(valueLeft);
 
   const [startPosition, setStartPosition] = useState(null);
-  const { scrollY } = useScroll();
   /*
    *   useMotionValueEvent(scrollY, 'change', (latest) => {
    *     console.log('Page scroll: ', latest);
@@ -168,24 +165,24 @@ export default function Dashboard() {
     }
   };
 
-  const handleTouchStart = (e: any) => {
-    handleStart(e.touches[0].clientY);
-  };
+  // const handleTouchStart = (e: any) => {
+  //   handleStart(e.touches[0].clientY);
+  // };
 
-  const handleTouchMove = (e: any) => {
-    handleMove(e.touches[0].clientY);
-  };
+  // const handleTouchMove = (e: any) => {
+  //   handleMove(e.touches[0].clientY);
+  // };
 
-  const handleMouseDown = (e: any) => {
-    handleStart(e.clientY);
-  };
+  // const handleMouseDown = (e: any) => {
+  //   handleStart(e.clientY);
+  // };
 
-  const handleMouseMove = (e: any) => {
-    // Only track movement when the mouse button is pressed
-    if (e.buttons === 1) {
-      handleMove(e.clientY);
-    }
-  };
+  // const handleMouseMove = (e: any) => {
+  //   // Only track movement when the mouse button is pressed
+  //   if (e.buttons === 1) {
+  //     handleMove(e.clientY);
+  //   }
+  // };
 
   const getContentHeight = () => {
     const elem: any = contentRef.current;
@@ -255,7 +252,7 @@ export default function Dashboard() {
               Ethereum
             </Box>
           </Box>
-          <Box
+          {!guardiansInfo || !guardiansInfo.guardianHash && <Box
             display="flex"
             alignItems="center"
             width="100%"
@@ -273,7 +270,8 @@ export default function Dashboard() {
             <Box>
               <Image src={GoToIcon} />
             </Box>
-          </Box>
+          </Box>}
+          
           <Box display="flex" marginBottom="36px">
             <Box marginRight="24px" fontSize="24px" fontWeight={(activeMenu === 'apps') ? 700 : 400} position="relative" onClick={() => setActiveMenu('apps')}>
               Apps
