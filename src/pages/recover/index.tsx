@@ -14,6 +14,7 @@ import { useTempStore } from '@/store/temp';
 import { SocialRecovery } from '@soulwallet/sdk';
 import { useSettingStore } from '@/store/setting';
 import useWallet from '@/hooks/useWallet';
+import RecoverProcess from './RecoverProcess'
 
 export default function Recover() {
   const { registerForRecover } = usePasskey();
@@ -219,6 +220,7 @@ export default function Recover() {
           {step > 0 && <Header title="Recover account" showBackButton onBack={onPrev} />}
         </Fragment>
       )}
+      {(step > 0 && step < 4) && <RecoverProcess step={step} />}
       {renderStep()}
     </Box>
   );
