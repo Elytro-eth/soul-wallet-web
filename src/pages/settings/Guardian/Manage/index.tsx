@@ -128,7 +128,7 @@ export default function Manage({ onPrev, onNext }: any) {
       </Box>
       <Box marginBottom="40px" position="relative">
         <Button fontSize="14px" size="xl" type="white" color="black" onClick={onGuardianMenuOpen}>
-          +Add another guardian
+          +Add {tempGuardians.length ? 'another' : ''} guardian
         </Button>
         <Box position="absolute" top="60px" left="0">
           <Menu isOpen={isGuardianMenuOpen} isLazy>
@@ -141,7 +141,9 @@ export default function Manage({ onPrev, onNext }: any) {
                     padding="18px 27px"
                     borderBottom="1px solid #E4E4E4"
                     onClick={() => {
-                      openModal('verifyEmail');
+                      openModal('verifyEmail', {
+                        callback: () => {console.log('1111')}
+                      });
                       onGuardianMenuClose();
                     }}
                   >
@@ -157,7 +159,9 @@ export default function Manage({ onPrev, onNext }: any) {
                     position="relative"
                     padding="18px 27px"
                     onClick={() => {
-                      openModal('addWalletGuardian');
+                      openModal('addWalletGuardian', {
+                        callback: () => {console.log('11121')}
+                      });
                       onGuardianMenuClose();
                     }}
                   >
@@ -174,64 +178,65 @@ export default function Manage({ onPrev, onNext }: any) {
           </Menu>
         </Box>
       </Box>
-      <Box width="100%" height="1px" background="#F0F0F0" marginBottom="40px" />
-      <Box fontSize="16px" fontWeight="600">
-        Recovery settings
-      </Box>
-      <Box marginBottom="14px" marginTop="12px" position="relative">
-        <Button
-          borderRadius="8px"
-          width="100%"
-          size="xl"
-          type="white"
-          color="black"
-          onClick={() => {
-            isThresholdMenuOpen ? onThresholdMenuClose() : onThresholdMenuOpen();
-          }}
-        >
-          {tempThreshold}
-        </Button>
-        <Box position="absolute" right="16px" top="calc(50% - 6px)">
-          <ArrowDownIcon />
-        </Box>
-        <Box position="absolute" top="60px" left="0" width="100%">
-          <Menu isOpen={isThresholdMenuOpen} isLazy>
-            {() => (
-              <Box overflow="auto">
-                <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
-                  {Array.from({ length: tempGuardians.length + 1 }, (_, i) => (
-                    <MenuItem
-                      position="relative"
-                      padding="18px 27px"
-                      w="calc(100vw - 60px)"
-                      maxW="370px"
-                      onClick={() => onSetThreshold(i)}
-                    >
-                      <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                        <Box>{i}</Box>
-                      </Box>
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Box>
-            )}
-          </Menu>
-        </Box>
-      </Box>
-      <Box marginBottom="20px">out of {tempGuardians.length} guardian(s) confirmation is needed for wallet recovery.</Box>
+      {tempGuardians.length > 0 && <Box>
+        <Box width="100%" height="1px" background="#F0F0F0" marginBottom="40px" />
+          <Box fontSize="16px" fontWeight="600">
+            Recovery settings
+          </Box>
+          <Box marginBottom="14px" marginTop="12px" position="relative">
+            <Button
+              borderRadius="8px"
+              width="100%"
+              size="xl"
+              type="white"
+              color="black"
+              onClick={() => {
+                isThresholdMenuOpen ? onThresholdMenuClose() : onThresholdMenuOpen();
+              }}
+            >
+              {tempThreshold}
+            </Button>
+            <Box position="absolute" right="16px" top="calc(50% - 6px)">
+              <ArrowDownIcon />
+            </Box>
+            <Box position="absolute" top="60px" left="0" width="100%">
+              <Menu isOpen={isThresholdMenuOpen} isLazy>
+                {() => (
+                  <Box overflow="auto">
+                    <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
+                      {Array.from({ length: tempGuardians.length }, (_, i) => (
+                        <MenuItem
+                          position="relative"
+                          padding="18px 27px"
+                          w="calc(100vw - 60px)"
+                          maxW="370px"
+                          onClick={() => onSetThreshold(i + 1)}
+                        >
+                          <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
+                            <Box>{i + 1}</Box>
+                          </Box>
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Box>
+                )}
+              </Menu>
+            </Box>
+          </Box>
+          <Box marginBottom="20px">out of {tempGuardians.length} guardian(s) confirmation is needed for wallet recovery.</Box>
+      </Box>}
       <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px">
-        <Box width="50%" paddingRight="7px">
-          <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
-            Back
-          </Button>
-        </Box>
-        <Box width="50%" paddingLeft="7px">
-          <Button width="calc(100% - 7px)" disabled={false} size="xl" type="blue" onClick={onConfirmOpen}>
-            Continue
-          </Button>
-        </Box>
-      </Box>
-
+            <Box width="50%" paddingRight="7px">
+              <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
+                Back
+              </Button>
+            </Box>
+            <Box width="50%" paddingLeft="7px">
+              <Button width="calc(100% - 7px)" disabled={false} size="xl" type="blue" onClick={onConfirmOpen}>
+                Continue
+              </Button>
+            </Box>
+          </Box>
       <Modal isOpen={isSelectOpen} onClose={onSelectClose} motionPreset="slideInBottom">
         <ModalOverlay height="100vh" />
         <ModalContent
@@ -335,7 +340,7 @@ export default function Manage({ onPrev, onNext }: any) {
               Delete guardian
             </Box>
             <Box fontSize="16px" textAlign="center" marginBottom="10px">
-              {`Are you sure to remove <${tempGuardians[activeGuardianIndex]}> as guardian?`}
+              {`Are you sure to remove <${toShortAddress(tempGuardians[activeGuardianIndex], 6)}> as guardian?`}
             </Box>
             <Box width="100%" marginTop="20px">
               <Button size="xl" type="blue" width="100%" onClick={() => doDeleteGuardian()}>

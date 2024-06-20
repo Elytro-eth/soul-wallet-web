@@ -27,11 +27,11 @@ export default function useQuery() {
     // }
     const resPublic = await api.backup.publicGetGuardians({ guardianHash: activeGuardianHash });
 
-    resPublic.data.specialGuardians.forEach((item: any) => {
-      if(!guardianAddressEmail[item.guardianAddress]){
-        saveGuardianAddressEmail(item.guardianAddress, item.data.email);
-      }
-    });
+    // resPublic.data.specialGuardians.forEach((item: any) => {
+    //   if(!guardianAddressEmail[item.guardianAddress]){
+    //     saveGuardianAddressEmail(item.guardianAddress, item.data.email);
+    //   }
+    // });
 
     setGuardiansInfo(resPublic.data);
 

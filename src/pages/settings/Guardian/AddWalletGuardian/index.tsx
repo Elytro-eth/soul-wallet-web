@@ -17,7 +17,7 @@ import { ZeroHash } from 'ethers';
 import Button from '@/components/mobile/Button';
 import useScreenSize from '@/hooks/useScreenSize'
 
-export default function AddWalletGuardian() {
+export default function AddWalletGuardian({callback}: any) {
   const toast = useToast();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
@@ -29,7 +29,7 @@ export default function AddWalletGuardian() {
   const [searchText, setSearchText] = useState('');
   const [searchAddress, setSearchAddress] = useState('');
   const [resolvedAddress, setResolvedAddress] = useState('');
-
+callback();
   const onAddressChange = (val: string) => {
     setSearchText(val);
 

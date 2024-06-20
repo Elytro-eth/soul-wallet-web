@@ -113,7 +113,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
             </Box>
             <Box width="100%">
               <Link target='_blank' href={xLink}>
-                <Button size="xl" type="blue" width="100%">Follow Stable.cash on X</Button>
+                <Button size="xl" type="blue" width="100%">Follow SoulWallet on X</Button>
               </Link>
             </Box>
           </ModalBody>

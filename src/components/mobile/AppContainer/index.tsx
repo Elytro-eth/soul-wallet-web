@@ -22,7 +22,6 @@ import ReceiveSteps from '@/pages/receiveSteps'
 import RecoverVerifyEmail from '@/pages/recover/RecoverVerifyEmail'
 import Details from '@/pages/dashboard/Details'
 import VerifyEmail from '@/pages/verifyEmail'
-import AddEmailGuardian from '@/pages/settings/Guardian/AddEmailGuardian'
 import AddWalletGuardian from '@/pages/settings/Guardian/AddWalletGuardian'
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useScreenSize from '@/hooks/useScreenSize'
@@ -94,8 +93,6 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
       return <ReceiveSteps isModal={true} {...props} />
     } else if (name === 'recoverVerifyEmail') {
       return <RecoverVerifyEmail isModal={true} {...props} />
-    } else if (name === 'addEmailGuardian') {
-      return <AddEmailGuardian isModal={true} {...props} />
     } else if (name === 'addWalletGuardian') {
       return <AddWalletGuardian isModal={true} {...props} />
     } else if (name === 'verifyEmail') {

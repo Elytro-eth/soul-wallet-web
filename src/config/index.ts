@@ -18,7 +18,7 @@ import OpConfig from './chains/op';
 import OpSepoliaConfig from './chains/op-sepolia';
 // import SepoliaConfig from './chains/sepolia';
 
-export const xLink = 'https://twitter.com/stabledotcash';
+export const xLink = 'https://x.com/soulwallet_eth';
 
 export const chainIdMapping = {
   1: 'ETH Mainnet',

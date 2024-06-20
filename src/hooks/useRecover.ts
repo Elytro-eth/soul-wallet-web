@@ -16,7 +16,7 @@ export default function useRecover() {
       guardianHash: guardianHash,
       guardianDetails: {
         guardians: guardians,
-        threshold: threshold,
+        threshold: guardians.length ? threshold : 0,
         salt: ZeroHash,
       },
     });

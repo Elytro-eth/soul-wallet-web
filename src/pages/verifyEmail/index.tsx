@@ -13,6 +13,7 @@ import { validEmailDomains, validEmailProviders } from '@/config/constants';
 import useForm from '@/hooks/useForm';
 import useScreenSize from '@/hooks/useScreenSize';
 import useRecover from '@/hooks/useRecover';
+import useWalletContext from '@/context/hooks/useWalletContext';
 
 const validate = (values: any, props: any, callbackRef: any) => {
   let errors: any = {};
@@ -49,6 +50,7 @@ export default function VerifyEmail({ isModal }: any) {
   const [verifyStatus, setVerifyStatus] = useState(0);
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
   const { selectedChainId } = useChainStore();
+  const { closeModal } = useWalletContext();
   const { selectedAddress } = useAddressStore();
   const { doSetGuardians } = useRecover();
   const [countDown, setCountDown] = useState(0);
@@ -178,11 +180,15 @@ export default function VerifyEmail({ isModal }: any) {
       const guardianAddress = await doGenerateAddress();
       // 2. calc guardian hash
       await doSetGuardians([guardianAddress], [''], defaultThreshold);
-      navigate('/dashboard');
-      toast({
-        title: '10 USDC reward received',
-        status: 'success',
-      });
+      if(isModal){
+        closeModal();
+      }else{
+        toast({
+          title: '10 USDC reward received',
+          status: 'success',
+        });
+        navigate('/dashboard');
+      }
     } finally {
       setChangingGuardian(false);
     }
