@@ -17,7 +17,7 @@ import IconOp from '@/assets/chains/op.svg';
 
 const validateSigner = (recoveryRecord: any, address: any) => {
   if (!recoveryRecord) return;
-  const guardians = recoveryRecord.guardian_info.guardians;
+  const guardians = recoveryRecord.guardianInfo.guardians;
   console.log('validateSigner', guardians, String(address).toLowerCase());
   return !!guardians && guardians.indexOf(String(address).toLowerCase()) !== -1;
 };
@@ -188,11 +188,11 @@ export default function Sign() {
       setSigning(true);
 
       const typedDataToSign:any = SocialRecovery.getSocialRecoveryTypedData(
-        recoveryRecord.chain_id,
+        recoveryRecord.chainID,
         chainConfig.contracts.socialRecoveryModule,
         recoveryRecord.address,
         recoveryRecord.nonce,
-        recoveryRecord.new_owners,
+        recoveryRecord.newOwners,
       )
 
       typedDataToSign.domain.chainId = parseInt(typedDataToSign.domain.chainId)
@@ -230,7 +230,9 @@ export default function Sign() {
     }
   }, [recoveryRecord, address]);
 
-  const targetChainId = parseInt(recoveryRecord?.chain_id);
+  const targetChainId = parseInt(recoveryRecord?.chainID);
+
+  console.log('target chain', targetChainId)
 
   if (!loaded) {
     return (

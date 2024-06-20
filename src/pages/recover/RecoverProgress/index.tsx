@@ -10,6 +10,7 @@ import {
   useDisclosure,
   Link,
   Image,
+  Flex,
 } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import EmailIcon from '@/assets/mobile/email-guardian.svg';
@@ -24,6 +25,7 @@ import { useSettingStore } from '@/store/setting';
 import { useGuardianStore } from '@/store/guardian';
 import { toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
+import AddressIcon from '@/components/AddressIcon';
 
 export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const { openModal } = useWalletContext();
@@ -96,10 +98,12 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
            display="flex"
            alignItems="center"
          >
-           <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
-           <Box>
-             <Box wordBreak={"break-all"}>{guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) }</Box>
-           </Box>
+          <AddressIcon width={32} address={guardianAddress} />
+           {/* <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" /> */}
+           <Flex align={'center'} gap="2" ml={"2"}>
+             <Box wordBreak={"break-all"} fontFamily={"monospace"}>{guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) }</Box>
+             <Box onClick={()=> doCopy(guardianAddress)}><CopyIcon /></Box>
+           </Flex>
            <Box marginLeft="auto">
              {signedGuardians.includes(guardianAddress) ? (
                <Box
@@ -139,45 +143,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
          </Box>
       ))}
 
-      {/* <Box
-          fontWeight="600"
-          fontSize="14px"
-          width="100%"
-          padding="24px 0"
-          borderBottom="1px solid #F0F0F0"
-          display="flex"
-          alignItems="center"
-          >
-          <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
-          <Box>
-          <Box>{`Helloworld.eth`}</Box>
-          <Box>{`(0xAAA......dS123)`}</Box>
-          </Box>
-          <Box marginLeft="8px"><CopyIcon /></Box>
-          <Box marginLeft="auto">
-
-          </Box>
-          </Box>
-          <Box
-          fontWeight="600"
-          fontSize="14px"
-          width="100%"
-          padding="24px 0"
-          borderBottom="1px solid #F0F0F0"
-          display="flex"
-          alignItems="center"
-          >
-          <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
-          <Box>
-          <Box>{`ne****ez@gmail.com`}</Box>
-          </Box>
-          <Box marginLeft="8px"><CopyIcon /></Box>
-          <Box marginLeft="auto">
-          <Box marginLeft="auto">
-
-          </Box>
-          </Box>
-          </Box> */}
+ 
     </Box>
   );
 }

@@ -12,7 +12,8 @@ import Intro from '@/pages/intro';
 import DashboardDetails from '@/pages/dashboard/Details';
 import Recover from '@/pages/recover';
 import Public from '@/pages/public';
-import RecoverSign from '@/pages/public/RecoverSign';
+// import RecoverSign from '@/pages/public/RecoverSign';
+import Sign from '@/pages/public/Sign';
 import GuardianSetting from '@/pages/settings/Guardian';
 import ManageGuardian from '@/pages/settings/Guardian/Manage';
 import IntroGuardian from '@/pages/settings/Guardian/Intro';
@@ -73,21 +74,7 @@ export const router = createBrowserRouter([
                 path: 'manage',
                 element: <ManageGuardian />,
               },
-            ]
-          },
-          {
-            path: '/public',
-            element: <Public />,
-            children: [
-              {
-                path: 'sign',
-                element: <RecoverSign />,
-              },
-              {
-                path: 'sign/:recoverId',
-                element: <RecoverSign />,
-              },
-            ]
+            ],
           },
         ],
       },
@@ -96,15 +83,12 @@ export const router = createBrowserRouter([
   {
     path: '/public',
     element: <PublicWrapper />,
-    children: [{ path: 'verify-secret/:secret', element: <VerifySecret /> },    {
-      path: 'sign',
-      element: <Public />,
-      children: [
-        {
-          path: ':recoverId',
-          element: <RecoverSign />,
-        },
-      ]
-    },],
+    children: [
+      { path: 'verify-secret/:secret', element: <VerifySecret /> },
+      {
+        path: 'sign/:recoverId',
+        element: <Sign />
+      },
+    ],
   },
 ]);
