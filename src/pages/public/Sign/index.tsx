@@ -105,7 +105,7 @@ export const SignContainer = ({ children, isOpen, onOpen, onClose, connectEOA }:
             </Box>
             <Box width="100%" display="flex" flexWrap="wrap">
               {connectors.filter(item => supportedEoas.includes(item.id)).map((connector: Connector) =>
-                <Box width="50%" onClick={() => connectEOA(connector)} key={connector.uid}>
+                <Box width="50%" onClick={() => { onClose(); connectEOA(connector) }} key={connector.uid}>
                   <Box width="calc(100% - 8px)" background="rgba(0, 0, 0, 0.05)" borderRadius="12px" height="64px" display="flex" alignItems="center" padding="8px 10px" marginTop="16px">
                     <Box marginRight="8px" width="48px" height="48px" borderRadius="12px" background="white" border="1px solid rgba(0, 0, 0, 0.1)" display="flex" alignItems="center" justifyContent="center">
                       <Image width="32px" src={getWalletIcon(connector.id)} />
@@ -493,7 +493,17 @@ export default function Sign() {
             <Box fontWeight="600" fontSize="14px">Optimism</Box>
           </Box>
         </Box>
-        <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={onOpen}>Connect Wallet</Button>
+        <Button
+          size="xl"
+          type="blue"
+          width="100%"
+          marginTop="30px"
+          onClick={sign}
+          loading={signing}
+          disabled={signing}
+        >
+          Confirm and Sign
+        </Button>
         <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F8F8F8">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">
