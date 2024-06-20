@@ -23,12 +23,14 @@ import api from '@/lib/api';
 import { useSettingStore } from '@/store/setting';
 import { useGuardianStore } from '@/store/guardian';
 import { toShortAddress } from '@/lib/tools';
+import useTools from '@/hooks/useTools';
 
 export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const { openModal } = useWalletContext();
   const { recoverInfo, setEmailTemplate } = useTempStore();
   const { guardianAddressEmail } = useSettingStore();
   const { guardianInfo } = recoverInfo;
+  const { doCopy } = useTools();
 
   const doOpenModal = async (guardianAddress: string) => {
     // get template info
@@ -45,6 +47,21 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
     });
     openModal('recoverVerifyEmail');
   };
+
+  const onShare = () => {
+    if (!navigator.share) {
+      doCopy(`${location.origin}/public/sign/${recoverInfo.recoveryID}`)
+    } else {
+      navigator
+        .share({
+          title: '',
+          text: '',
+          url: `${location.origin}/public/sign/${recoverInfo.recoveryID}`
+        })
+        .then(() => console.log('Successful share!'))
+        .catch(err => console.error(err))
+    }
+  }
 
   const shareLink = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
 
@@ -63,106 +80,106 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
       <Box width="100%" textAlign="center" fontSize="14px" fontWeight="400" marginTop="12px">
         Ask your guardians to recover for you
       </Box>
-      <Button onClick={onNext} size="xl" type="blue" width="100%" marginTop="30px" marginBottom="60px">
+      <Button onClick={onShare} size="xl" type="blue" width="100%" marginTop="30px" marginBottom="60px">
         Share
       </Button>
       <Box fontWeight="700" fontSize="18px" width="100%" paddingBottom="24px" borderBottom="1px solid #F0F0F0">
         {pendingGuardianNum} more guardians approval needed
       </Box>
       {guardiansList &&
-        guardiansList.map((guardianAddress: any, index: number) => (
-          <Box
-            fontWeight="600"
-            fontSize="14px"
-            key={index}
-            width="100%"
-            padding="24px 0"
-            borderBottom="1px solid #F0F0F0"
-            display="flex"
-            alignItems="center"
-          >
-            <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
-            <Box>
-              <Box wordBreak={"break-all"}>{guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) }</Box>
-            </Box>
-            <Box marginLeft="auto">
-              {signedGuardians.includes(guardianAddress) ? (
-                <Box
-                  color="#0CB700"
-                  background="#F5FFF4"
-                  padding="2px 8px"
-                  borderRadius="24px"
-                  fontWeight="600"
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box marginRight="4px">
-                    <ApprovedIcon />
-                  </Box>
-                  <Box>Approved</Box>
-                </Box>
-              ) : guardianAddressEmail[guardianAddress] ? (
-                <Button size="sm" type="blue" height="32px" onClick={() => doOpenModal(guardianAddress)}>
-                  Verify Email
-                </Button>
-              ) : (
-                <Box
-                  color="#848488"
-                  background="#F3F3F3"
-                  padding="2px 8px"
-                  borderRadius="24px"
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Box marginRight="4px">
-                    <WaitingIcon />
-                  </Box>
-                  <Box>Waiting</Box>
-                </Box>
-              )}
-            </Box>
-          </Box>
-        ))}
+       guardiansList.map((guardianAddress: any, index: number) => (
+         <Box
+           fontWeight="600"
+           fontSize="14px"
+           key={index}
+           width="100%"
+           padding="24px 0"
+           borderBottom="1px solid #F0F0F0"
+           display="flex"
+           alignItems="center"
+         >
+           <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
+           <Box>
+             <Box wordBreak={"break-all"}>{guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) }</Box>
+           </Box>
+           <Box marginLeft="auto">
+             {signedGuardians.includes(guardianAddress) ? (
+               <Box
+                 color="#0CB700"
+                 background="#F5FFF4"
+                 padding="2px 8px"
+                 borderRadius="24px"
+                 fontWeight="600"
+                 display="flex"
+                 alignItems="center"
+               >
+                 <Box marginRight="4px">
+                   <ApprovedIcon />
+                 </Box>
+                 <Box>Approved</Box>
+               </Box>
+             ) : guardianAddressEmail[guardianAddress] ? (
+               <Button size="sm" type="blue" height="32px" onClick={() => doOpenModal(guardianAddress)}>
+                 Verify Email
+               </Button>
+             ) : (
+               <Box
+                 color="#848488"
+                 background="#F3F3F3"
+                 padding="2px 8px"
+                 borderRadius="24px"
+                 display="flex"
+                 alignItems="center"
+               >
+                 <Box marginRight="4px">
+                   <WaitingIcon />
+                 </Box>
+                 <Box>Waiting</Box>
+               </Box>
+             )}
+           </Box>
+         </Box>
+      ))}
 
       {/* <Box
-        fontWeight="600"
-        fontSize="14px"
-        width="100%"
-        padding="24px 0"
-        borderBottom="1px solid #F0F0F0"
-        display="flex"
-        alignItems="center"
-      >
-        <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
-        <Box>
+          fontWeight="600"
+          fontSize="14px"
+          width="100%"
+          padding="24px 0"
+          borderBottom="1px solid #F0F0F0"
+          display="flex"
+          alignItems="center"
+          >
+          <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
+          <Box>
           <Box>{`Helloworld.eth`}</Box>
           <Box>{`(0xAAA......dS123)`}</Box>
-        </Box>
-        <Box marginLeft="8px"><CopyIcon /></Box>
-        <Box marginLeft="auto">
-       
-        </Box>
-      </Box>
-      <Box
-        fontWeight="600"
-        fontSize="14px"
-        width="100%"
-        padding="24px 0"
-        borderBottom="1px solid #F0F0F0"
-        display="flex"
-        alignItems="center"
-      >
-        <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
-        <Box>
-          <Box>{`ne****ez@gmail.com`}</Box>
-        </Box>
-        <Box marginLeft="8px"><CopyIcon /></Box>
-        <Box marginLeft="auto">
-          <Box marginLeft="auto">
-          
           </Box>
-        </Box>
-      </Box> */}
+          <Box marginLeft="8px"><CopyIcon /></Box>
+          <Box marginLeft="auto">
+
+          </Box>
+          </Box>
+          <Box
+          fontWeight="600"
+          fontSize="14px"
+          width="100%"
+          padding="24px 0"
+          borderBottom="1px solid #F0F0F0"
+          display="flex"
+          alignItems="center"
+          >
+          <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
+          <Box>
+          <Box>{`ne****ez@gmail.com`}</Box>
+          </Box>
+          <Box marginLeft="8px"><CopyIcon /></Box>
+          <Box marginLeft="auto">
+          <Box marginLeft="auto">
+
+          </Box>
+          </Box>
+          </Box> */}
     </Box>
   );
 }
