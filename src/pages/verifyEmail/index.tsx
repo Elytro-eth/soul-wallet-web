@@ -14,6 +14,7 @@ import useForm from '@/hooks/useForm';
 import useScreenSize from '@/hooks/useScreenSize';
 import useRecover from '@/hooks/useRecover';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import { useSettingStore } from '@/store/setting';
 
 const validate = (values: any, props: any, callbackRef: any) => {
   let errors: any = {};
@@ -45,12 +46,13 @@ const validate = (values: any, props: any, callbackRef: any) => {
   return errors;
 };
 
-export default function VerifyEmail({ isModal }: any) {
+export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
   const [verifyToken, setVerifyToken] = useState('');
   const [verifyStatus, setVerifyStatus] = useState(0);
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
   const { selectedChainId } = useChainStore();
   const { closeModal } = useWalletContext();
+  const { guardianAddressEmail,} = useSettingStore();
   const { selectedAddress } = useAddressStore();
   const { doSetGuardians } = useRecover();
   const [countDown, setCountDown] = useState(0);
@@ -65,6 +67,7 @@ export default function VerifyEmail({ isModal }: any) {
   const { values, errors, invalid, onChange, onBlur, showErrors } = useForm({
     fields: ['email'],
     validate,
+    initialValues: [defaultEmail || '']
   });
   const disabled = invalid;
 
@@ -175,19 +178,21 @@ export default function VerifyEmail({ isModal }: any) {
   const doChangeGuardian = async () => {
     setChangingGuardian(true);
     try {
-      const defaultThreshold = 1;
-      // 1. get guardian address
       const guardianAddress = await doGenerateAddress();
-      // 2. calc guardian hash
-      await doSetGuardians([guardianAddress], [''], defaultThreshold);
-      if(isModal){
-        closeModal();
+      if(callback){
+        callback(guardianAddress, values.email);
       }else{
-        toast({
-          title: '10 USDC reward received',
-          status: 'success',
-        });
-        navigate('/dashboard');
+        const defaultThreshold = 1;
+        await doSetGuardians([guardianAddress], [''], defaultThreshold);
+        if(isModal){
+          closeModal();
+        }else{
+          toast({
+            title: '10 USDC reward received',
+            status: 'success',
+          });
+          navigate('/dashboard');
+        }
       }
     } finally {
       setChangingGuardian(false);

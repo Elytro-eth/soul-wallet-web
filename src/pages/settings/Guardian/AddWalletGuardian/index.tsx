@@ -20,7 +20,7 @@ import useRecover from '@/hooks/useRecover';
 import { useSettingStore } from '@/store/setting';
 import useWalletContext from '@/context/hooks/useWalletContext';
 
-export default function AddWalletGuardian({isModal}: any) {
+export default function AddWalletGuardian({isModal, callback, defaultGuardianAddress, defaultGuardianName}: any) {
   // const toast = useToast();
   // const navigate = useNavigate();
   // const [step, setStep] = useState(0);
@@ -36,8 +36,8 @@ export default function AddWalletGuardian({isModal}: any) {
   const [searchText, setSearchText] = useState('');
   const [searchAddress, setSearchAddress] = useState('');
   const [resolvedAddress, setResolvedAddress] = useState('');
-  const [guardianAddress, setGuardianAddress] = useState<string>('');
-  const [guardianName, setGuardianName] = useState('');
+  const [guardianAddress, setGuardianAddress] = useState<string>(defaultGuardianAddress || '');
+  const [guardianName, setGuardianName] = useState(defaultGuardianName || '');
 
   const onAddressChange = (val: string) => {
     setGuardianAddress(val)
@@ -119,6 +119,14 @@ export default function AddWalletGuardian({isModal}: any) {
     }
   };
 
+  const onConfirm = async () => {
+    if(callback){
+      callback(guardianAddress, guardianName)
+    }else{
+      doChangeGuardian()
+    }
+  }
+
   return (
     <Box width="100%" height="100%">
       <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">Add Wallet Guardian</Box>
@@ -187,7 +195,7 @@ export default function AddWalletGuardian({isModal}: any) {
             _focusVisible={{ border: 'none', boxShadow: 'none' }}
           />
         </Box>
-        <Button size="xl" type="blue" width="100%" marginTop="60px" loading={changingGuardian} onClick={doChangeGuardian}>
+        <Button size="xl" type="blue" width="100%" marginTop="60px" loading={changingGuardian} onClick={onConfirm}>
           Add
         </Button>
       </Box>

@@ -34,6 +34,7 @@ import { useSettingStore } from '@/store/setting';
 import { toShortAddress } from '@/lib/tools';
 import { useNavigate } from 'react-router-dom';
 import useRecover from '@/hooks/useRecover';
+import useWalletContract from '@/hooks/useWalletContract';
 
 export default function Manage({ onPrev, onNext }: any) {
   const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
@@ -48,8 +49,8 @@ export default function Manage({ onPrev, onNext }: any) {
 
   const { guardiansInfo } = useGuardianStore();
   const [showDetails, setShowDetails] = useState(false);
-  const { guardianAddressEmail, guardianAddressName } = useSettingStore();
-  const { openModal } = useWalletContext();
+  const { guardianAddressEmail, guardianAddressName, saveGuardianAddressName, saveGuardianAddressEmail } = useSettingStore();
+  const { openModal, closeModal, } = useWalletContext();
   const { innerHeight } = useScreenSize();
   const [activeGuardianIndex, setActiveGuardianIndex] = useState(-1);
   const [tempGuardians, setTempGuardians] = useState(guardiansInfo.guardianDetails.guardians);
@@ -62,17 +63,17 @@ export default function Manage({ onPrev, onNext }: any) {
   const doHandleGuardian = (index: number) => {
     setActiveGuardianIndex(index);
     onSelectOpen();
-  }
+  };
 
   const doDeleteGuardian = () => {
-    setTempGuardians((prev:any) => prev.filter((_:any, index: number) => index !== activeGuardianIndex));
+    setTempGuardians((prev: any) => prev.filter((_: any, index: number) => index !== activeGuardianIndex));
     onDeleteClose();
-  }
+  };
 
   const onSetThreshold = (threshold: number) => {
     setTempThreshold(threshold);
     onThresholdMenuClose();
-  }
+  };
 
   const doChangeGuardian = async () => {
     // do basic check
@@ -83,10 +84,74 @@ export default function Manage({ onPrev, onNext }: any) {
       toast({
         title: 'Guardian updated',
         status: 'success',
-      })
+      });
       navigate('/dashboard');
     } finally {
       setChangingGuardian(false);
+    }
+  };
+
+  const onEditGuardianOpen = () => {
+    const guardianAddress = tempGuardians[activeGuardianIndex];
+    const guardianName = guardianAddressName[guardianAddress];
+    const guardianEmail = guardianAddressEmail[guardianAddress];
+    if (guardianEmail) {
+      openModal('verifyEmailGuardian', {
+        defaultGuardianEmail: guardianEmail,
+        callback: (guardianAddress: string, guardianEmail: string) => {
+          setTempGuardians((prev: any) => {
+            const newGuardians = [...prev];
+            newGuardians[activeGuardianIndex] = guardianAddress;
+            return newGuardians;
+          });
+          saveGuardianAddressEmail(guardianAddress, guardianEmail);
+          closeModal();
+        },
+      });
+    } else {
+      openModal('addWalletGuardian', {
+        defaultGuardianAddress: guardianAddress,
+        defaultGuardianName: guardianName,
+        callback: (guardianAddress: string, guardianName: string) => {
+          saveGuardianAddressName(guardianAddress, guardianName);
+          setTempGuardians((prev: any) => {
+            const newGuardians = [...prev];
+            newGuardians[activeGuardianIndex] = guardianAddress;
+            return newGuardians;
+          });
+          closeModal();
+        },
+      });
+    }
+  };
+
+  const onCreateGuardianOpen = (guardianType: number) => {
+    onGuardianMenuClose();
+    if (guardianType === 0) {
+      openModal('verifyEmailGuardian', {
+        defaultEmail: "",
+        callback: (guardianAddress: string, guardianEmail: string) => {
+          setTempGuardians((prev: any) => {
+            const newGuardians = [...prev];
+            newGuardians[activeGuardianIndex] = guardianAddress;
+            return newGuardians;
+          });
+          saveGuardianAddressEmail(guardianAddress, guardianEmail);
+          closeModal();
+        },
+      });
+    } else if(guardianType === 1) {
+      openModal('addWalletGuardian', {
+        callback: (guardianAddress: string, guardianName: string) => {
+          saveGuardianAddressName(guardianAddress, guardianName);
+          setTempGuardians((prev: any) => {
+            const newGuardians = [...prev];
+            newGuardians[activeGuardianIndex] = guardianAddress;
+            return newGuardians;
+          });
+          closeModal();
+        },
+      });
     }
   };
 
@@ -111,16 +176,18 @@ export default function Manage({ onPrev, onNext }: any) {
             <Box>
               <Box fontSize="16px" fontWeight="600">
                 {guardianAddressEmail[guardianAddress]
-                ? 'Email guardian'
-                : guardianAddressName[guardianAddress]
-                ? guardianAddressName[guardianAddress]
-                : 'Guardian'}
+                  ? 'Email guardian'
+                  : guardianAddressName[guardianAddress]
+                    ? guardianAddressName[guardianAddress]
+                    : 'Guardian'}
               </Box>
               <Box fontSize="12px" fontWeight="500" marginTop="4px" color="#868686">
-                {guardianAddressEmail[guardianAddress] ? guardianAddressEmail[guardianAddress] : toShortAddress(guardianAddress)}
+                {guardianAddressEmail[guardianAddress]
+                  ? guardianAddressEmail[guardianAddress]
+                  : toShortAddress(guardianAddress)}
               </Box>
             </Box>
-            <Box marginLeft="auto" onClick={()=> doHandleGuardian(index)}>
+            <Box marginLeft="auto" onClick={() => doHandleGuardian(index)}>
               <EditIcon />
             </Box>
           </Box>
@@ -141,10 +208,7 @@ export default function Manage({ onPrev, onNext }: any) {
                     padding="18px 27px"
                     borderBottom="1px solid #E4E4E4"
                     onClick={() => {
-                      openModal('addEmailGuardian', {
-                        callback: () => {console.log('1111')}
-                      });
-                      onGuardianMenuClose();
+                     onCreateGuardianOpen(0)
                     }}
                   >
                     <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
@@ -159,10 +223,7 @@ export default function Manage({ onPrev, onNext }: any) {
                     position="relative"
                     padding="18px 27px"
                     onClick={() => {
-                      openModal('addWalletGuardian', {
-                        callback: () => {console.log('11121')}
-                      });
-                      onGuardianMenuClose();
+                      onCreateGuardianOpen(1);
                     }}
                   >
                     <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
@@ -178,53 +239,57 @@ export default function Manage({ onPrev, onNext }: any) {
           </Menu>
         </Box>
       </Box>
-      {tempGuardians.length > 0 && <Box>
-        <Box width="100%" height="1px" background="#F0F0F0" marginBottom="40px" />
-        <Box fontSize="16px" fontWeight="600">
-          Recovery settings
-        </Box>
-        <Box marginBottom="14px" marginTop="12px" position="relative">
-          <Button
-            borderRadius="8px"
-            width="100%"
-            size="xl"
-            type="white"
-            color="black"
-            onClick={() => {
-              isThresholdMenuOpen ? onThresholdMenuClose() : onThresholdMenuOpen();
-            }}
-          >
-            {tempThreshold}
-          </Button>
-          <Box position="absolute" right="16px" top="calc(50% - 6px)">
-            <ArrowDownIcon />
+      {tempGuardians.length > 0 && (
+        <Box>
+          <Box width="100%" height="1px" background="#F0F0F0" marginBottom="40px" />
+          <Box fontSize="16px" fontWeight="600">
+            Recovery settings
           </Box>
-          <Box position="absolute" top="60px" left="0" width="100%">
-            <Menu isOpen={isThresholdMenuOpen} isLazy>
-              {() => (
-                <Box overflow="auto">
-                  <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
-                    {Array.from({ length: tempGuardians.length }, (_, i) => (
-                      <MenuItem
-                        position="relative"
-                        padding="18px 27px"
-                        w="calc(100vw - 60px)"
-                        maxW="370px"
-                        onClick={() => onSetThreshold(i + 1)}
-                      >
-                        <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                          <Box>{i + 1}</Box>
-                        </Box>
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </Box>
-              )}
-            </Menu>
+          <Box marginBottom="14px" marginTop="12px" position="relative">
+            <Button
+              borderRadius="8px"
+              width="100%"
+              size="xl"
+              type="white"
+              color="black"
+              onClick={() => {
+                isThresholdMenuOpen ? onThresholdMenuClose() : onThresholdMenuOpen();
+              }}
+            >
+              {tempThreshold}
+            </Button>
+            <Box position="absolute" right="16px" top="calc(50% - 6px)">
+              <ArrowDownIcon />
+            </Box>
+            <Box position="absolute" top="60px" left="0" width="100%">
+              <Menu isOpen={isThresholdMenuOpen} isLazy>
+                {() => (
+                  <Box overflow="auto">
+                    <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
+                      {Array.from({ length: tempGuardians.length }, (_, i) => (
+                        <MenuItem
+                          position="relative"
+                          padding="18px 27px"
+                          w="calc(100vw - 60px)"
+                          maxW="370px"
+                          onClick={() => onSetThreshold(i + 1)}
+                        >
+                          <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
+                            <Box>{i + 1}</Box>
+                          </Box>
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Box>
+                )}
+              </Menu>
+            </Box>
+          </Box>
+          <Box marginBottom="20px">
+            out of {tempGuardians.length} guardian(s) confirmation is needed for wallet recovery.
           </Box>
         </Box>
-        <Box marginBottom="20px">out of {tempGuardians.length} guardian(s) confirmation is needed for wallet recovery.</Box>
-      </Box>}
+      )}
       <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px">
         <Box width="50%" paddingRight="7px">
           <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
@@ -273,7 +338,7 @@ export default function Manage({ onPrev, onNext }: any) {
                 padding="0 23px"
                 onClick={() => {
                   onSelectClose();
-                  openModal('addWalletGuardian');
+                  onEditGuardianOpen();
                 }}
               >
                 <Box marginRight="4px">
