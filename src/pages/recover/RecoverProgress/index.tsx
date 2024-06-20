@@ -48,24 +48,22 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
     openModal('recoverVerifyEmail');
   };
 
+  const shareLink = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
+
   const onShare = () => {
     if (!navigator.share) {
-      doCopy(`${location.origin}/public/sign/${recoverInfo.recoveryID}`)
+      doCopy(shareLink)
     } else {
       navigator
         .share({
           title: '',
           text: '',
-          url: `${location.origin}/public/sign/${recoverInfo.recoveryID}`
+          url: shareLink
         })
-        .then(() => console.log('Successful share!'))
+        .then(() => console.log('Successful shared!'))
         .catch(err => console.error(err))
     }
   }
-
-  const shareLink = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
-
-  console.log('share link', shareLink)
 
   const guardiansList = guardianInfo && guardianInfo.guardians ? guardianInfo.guardians : []
 
