@@ -275,7 +275,7 @@ export default function Dashboard() {
             </Box>
           </Box>}
           
-          <Box display="flex" marginBottom="36px">
+          {/* <Box display="flex" marginBottom="36px">
             <Box marginRight="24px" fontSize="24px" fontWeight={(activeMenu === 'apps') ? 700 : 400} position="relative" onClick={() => setActiveMenu('apps')}>
               Apps
               {(activeMenu === 'apps') && <Box position="absolute" bottom="-10px" left="calc(50% - 12px)" height="4px" width="24px" background="#7386C7" borderRadius="4px" />}
@@ -284,7 +284,7 @@ export default function Dashboard() {
               Assets
               {(activeMenu === 'assets') && <Box position="absolute" bottom="-10px" left="calc(50% - 12px)" height="4px" width="24px" background="#7386C7" borderRadius="4px" />}
             </Box>
-          </Box>
+          </Box> */}
           <Box
             width="100%"
             background="white"

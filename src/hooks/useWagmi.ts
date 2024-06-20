@@ -25,6 +25,10 @@ export default function useWagmi() {
     }
   }, [])
 
+  const disconnectEOA = () => {
+    disconnectAsync()
+  }
+
   const openConnect = useCallback(async () => {
     setIsConnectOpen(true)
   }, [])
@@ -35,6 +39,7 @@ export default function useWagmi() {
 
   return {
     connectEOA,
+    disconnectEOA,
     isConnected,
     isConnectOpen,
     isConnecting,

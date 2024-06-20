@@ -35,7 +35,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
       >
         Please confirm guardian updates on your Soul Wallet account.
       </Box>
-      <Box
+      {/* <Box
         width="100%"
         display="flex"
         alignItems="center"
@@ -47,8 +47,8 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
       >
         <Box>View details</Box>
         <Box marginLeft="2px" transform={showDetails ? 'rotate(-180deg)' : 'rotate(0deg)'}><ChevronDown /></Box>
-      </Box>
-      {showDetails && (
+      </Box> */}
+      {/* {showDetails && (
         <Box
           background="#F8F8F8"
           borderRadius="20px"
@@ -59,7 +59,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
         >
           {`{ "domain": { ... } }`}
         </Box>
-      )}
+      )} */}
       <Button onClick={onChangeGuardian} loading={changingGuardian} size="xl" type="blue" width="100%" marginTop="30px">Continue</Button>
       <Button size="xl" type="white" width="100%" onClick={onPrev} marginTop="20px">Back</Button>
     </Box>

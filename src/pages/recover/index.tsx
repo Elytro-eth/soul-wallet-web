@@ -15,7 +15,7 @@ import { SocialRecovery } from '@soulwallet/sdk';
 import { useSettingStore } from '@/store/setting';
 import useWallet from '@/hooks/useWallet';
 import useQuery from '@/hooks/useQuery';
-import RecoverProcess from './RecoverProcess'
+import RecoverProcess from './RecoverProcess';
 
 export default function Recover() {
   const { registerForRecover } = usePasskey();
@@ -91,32 +91,39 @@ export default function Recover() {
     setAccountInfo(null);
     setIsWalletNotFound(false);
 
-    // check username or wallet address
-    const usernameRes: any = await api.account.get({
-      name: username,
-    });
+    try {
+      // check username or wallet address
+      const usernameRes: any = await api.account.get({
+        name: username,
+      });
 
-    if (usernameRes.code === 200) {
-      console.log('matched');
-      setAccountInfo(usernameRes.data);
-      setIsWalletNotFound(false);
+      if (usernameRes.code === 200) {
+        console.log('matched');
+        setAccountInfo(usernameRes.data);
+        setIsWalletNotFound(false);
+        setCheckingUsername(false);
+        return;
+      }
+
+      const addressRes: any = await api.account.get({
+        address: username,
+      });
+
+      if (addressRes.code === 200) {
+        console.log('matched');
+        setAccountInfo(addressRes.data);
+        setIsWalletNotFound(false);
+        setCheckingUsername(false);
+        return;
+      }
+
+      setIsWalletNotFound(true);
+    } catch (err: any) {
+      setIsWalletNotFound(true);
+      setAccountInfo(null);
+    } finally {
       setCheckingUsername(false);
-      return;
     }
-
-    const addressRes: any = await api.account.get({
-      address: username,
-    });
-
-    if (addressRes.code === 200) {
-      console.log('matched');
-      setAccountInfo(addressRes.data);
-      setIsWalletNotFound(false);
-      setCheckingUsername(false);
-      return;
-    }
-
-    setIsWalletNotFound(true);
   };
 
   useEffect(() => {
@@ -126,7 +133,7 @@ export default function Recover() {
   }, [username]);
 
   const doRecover = async () => {
-    try{
+    try {
       while (true) {
         setIsRecovering(true);
         const res: any = await api.recovery.execute({ recoveryID });
@@ -138,7 +145,7 @@ export default function Recover() {
           break;
         }
       }
-    }catch(err: any){
+    } catch (err: any) {
       setIsRecovering(false);
       toast({
         title: 'Error',
@@ -222,7 +229,7 @@ export default function Recover() {
           {step > 0 && <Header title="Recover account" showBackButton onBack={onPrev} />}
         </Fragment>
       )}
-      {(step > 0 && step < 4) && <RecoverProcess step={step} />}
+      {step > 0 && step < 4 && <RecoverProcess step={step} />}
       {renderStep()}
     </Box>
   );

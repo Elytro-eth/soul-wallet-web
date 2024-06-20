@@ -4,6 +4,7 @@ import { ethers } from 'ethers';
 import IconLoading from '@/assets/loading.svg';
 import { toShortAddress } from '@/lib/tools';
 import config, { ensContractAddress } from '@/config'
+import useConfig from '@/hooks/useConfig';
 
 function stringToSeed(str: any) {
   let hash = 0;
@@ -115,12 +116,13 @@ const ENSResolver = ({
   getActiveENSNameRef,
   _styles,
 }: any) => {
+  const {chainConfig} = useConfig();
   const resolveName = async (ensName: any) => {
     const resolveNameMainnet = async (ensName: any) => {
       setActiveENSNameRef(ensName)
       setIsENSLoading(true)
       setResolvedAddress('')
-      const ethersProvider = new ethers.JsonRpcProvider(`https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_KEY}`);
+      const ethersProvider = new ethers.JsonRpcProvider(chainConfig.mainnetProvider);
       const address = await ethersProvider.resolveName(ensName);
       let isSuccess = false
       const isExpired = await isENSExpiration(ensName, ethersProvider);

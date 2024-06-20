@@ -63,7 +63,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
 
   const guardiansList = guardianInfo && guardianInfo.guardians ? guardianInfo.guardians : []
 
-  const pendingGuardianNum = guardiansList.length - signedGuardians.length;
+  const pendingGuardianNum = guardianInfo.threshold - signedGuardians.length;
 
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="40px">

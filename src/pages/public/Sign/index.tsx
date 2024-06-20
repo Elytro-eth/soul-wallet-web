@@ -14,7 +14,6 @@ import OpenIcon from '@/components/Icons/mobile/Open';
 import SuccessIcon from '@/components/Icons/Success';
 import ConnectWalletModal from '@/components/ConnectWalletModal';
 import useWagmi from '@/hooks/useWagmi';
-import IconOp from '@/assets/chains/op.svg';
 import OpIcon from '@/assets/mobile/op.png'
 import useScreenSize from '@/hooks/useScreenSize'
 import { toShortAddress } from '@/lib/tools';
@@ -135,6 +134,7 @@ export default function Sign() {
   const {
     connectEOA,
     isConnected,
+    disconnectEOA,
     isConnectOpen,
     openConnect,
     closeConnect,
@@ -317,9 +317,9 @@ export default function Sign() {
             marginTop="18px"
           >
             <Box marginRight="4px">
-              <Image width="20px" height="20px" src={OpIcon} />
+              <Image width="20px" height="20px" src={chainConfig.icon} />
             </Box>
-            <Box fontWeight="600" fontSize="14px">Optimism</Box>
+            <Box fontWeight="600" fontSize="14px">{chainConfig.chainName}</Box>
           </Box>
         </Box>
       </SignContainer>
@@ -358,16 +358,16 @@ export default function Sign() {
         >
           The wallet you connected is not the guardian for the recovery wallet. Please double check.
         </Box>
-        <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={onOpen}>Connect another wallet</Button>
+        <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={() => {disconnectEOA(); onOpen()}}>Connect another wallet</Button>
         <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F8F8F8">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
             </Box>
-            <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box>
-            <Box fontSize="14px">({toShortAddress(address)})</Box>
+            {/* <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
+            <Box fontSize="14px">{toShortAddress(address)}</Box>
             <Box width="1px" height="20px" background="#E2E2E2" marginLeft="10px" marginRight="10px"></Box>
-            <Box><OpenIcon /></Box>
+            <Box onClick={() => disconnectEOA()}><OpenIcon /></Box>
           </Box>
         </Box>
       </SignContainer>
@@ -414,10 +414,10 @@ export default function Sign() {
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
             </Box>
-            <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box>
-            <Box fontSize="14px">({toShortAddress(address)})</Box>
+            {/* <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
+            <Box fontSize="14px">{toShortAddress(address)}</Box>
             <Box width="1px" height="20px" background="#E2E2E2" marginLeft="10px" marginRight="10px"></Box>
-            <Box><OpenIcon /></Box>
+            <Box onClick={() => disconnectEOA()}><OpenIcon /></Box>
           </Box>
         </Box>
       </SignContainer>
@@ -488,9 +488,9 @@ export default function Sign() {
             marginTop="18px"
           >
             <Box marginRight="4px">
-              <Image width="20px" height="20px" src={OpIcon} />
+              <Image width="20px" height="20px" src={chainConfig.icon} />
             </Box>
-            <Box fontWeight="600" fontSize="14px">Optimism</Box>
+            <Box fontWeight="600" fontSize="14px">{chainConfig.chainName}</Box>
           </Box>
         </Box>
         <Button
@@ -509,10 +509,10 @@ export default function Sign() {
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
             </Box>
-            <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box>
-            <Box fontSize="14px">({toShortAddress(address)})</Box>
+            {/* <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
+            <Box fontSize="14px">{toShortAddress(address)}</Box>
             <Box width="1px" height="20px" background="#E2E2E2" marginLeft="10px" marginRight="10px"></Box>
-            <Box><OpenIcon /></Box>
+            <Box onClick={() => disconnectEOA()}><OpenIcon /></Box>
           </Box>
         </Box>
       </SignContainer>
@@ -582,9 +582,9 @@ export default function Sign() {
           marginTop="18px"
         >
           <Box marginRight="4px">
-            <Image width="20px" height="20px" src={OpIcon} />
+            <Image width="20px" height="20px" src={chainConfig.icon} />
           </Box>
-          <Box fontWeight="600" fontSize="14px">Optimism</Box>
+          <Box fontWeight="600" fontSize="14px">{chainConfig.chainName}</Box>
         </Box>
       </Box>
       <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={onOpen}>{isConnecting ? 'Connecting' : 'Connect wallet'}</Button>

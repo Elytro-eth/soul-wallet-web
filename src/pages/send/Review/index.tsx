@@ -162,13 +162,13 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
           <Box marginTop="8px" alignItems="center" width="100%" display="inline-block">
             <Box as="span" fontSize="24px" fontWeight="600">
-              0x8d34
+              {sendTo.slice(0, 6)}
             </Box>
             <Box as="span" fontSize="24px" fontWeight="600" color="rgba(0, 0, 0, 0.4)">
-              947d8cba2abd7e8d5b788c8a3674325c93d1
+              {sendTo.slice(6, 32)}
             </Box>
             <Box as="span" fontSize="24px" fontWeight="600">
-              5c93d1
+              {sendTo.slice(32)}
             </Box>
           </Box>
         </Box>

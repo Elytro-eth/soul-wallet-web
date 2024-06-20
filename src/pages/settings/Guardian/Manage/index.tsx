@@ -14,7 +14,8 @@ import {
   MenuList,
   MenuItem,
   useToast,
-  useOutsideClick
+  useOutsideClick,
+  MenuButton
 } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import EmailIcon from '@/assets/mobile/email-guardian.svg';
@@ -169,6 +170,16 @@ export default function Manage({ onPrev, onNext }: any) {
       });
     }
   };
+
+  useEffect(()=>{
+    if(tempGuardians.length === 0) {
+      setTempThreshold(0);
+    }else if(tempGuardians.length < tempThreshold) {
+      setTempThreshold(tempGuardians.length);
+    }
+  }, [tempGuardians])
+
+  const isActiveGuardianEmail = guardianAddressEmail[tempGuardians[activeGuardianIndex]];
 
   return (
     <Box width="100%" height="100%" padding="30px" display="flex" flexDirection="column">
@@ -329,10 +340,10 @@ export default function Manage({ onPrev, onNext }: any) {
             md: '430px',
           }}
           marginTop={{
-            sm: `${innerHeight - 154}px`,
+            sm: `${innerHeight - (isActiveGuardianEmail ? 110 : 154)}px`,
             md: 'calc(50vh - 125px)',
           }}
-          height="154px"
+          height={isActiveGuardianEmail ? "110px" : "154px"}
           overflow="auto"
           mb="0"
         >
@@ -346,7 +357,7 @@ export default function Manage({ onPrev, onNext }: any) {
             padding="0"
           >
             <Box width="100%">
-              <Box
+              {!isActiveGuardianEmail && <Box
                 height="48px"
                 display="flex"
                 alignItems="center"
@@ -362,7 +373,7 @@ export default function Manage({ onPrev, onNext }: any) {
                 <Box fontSize="16px" fontWeight="600">
                   Edit
                 </Box>
-              </Box>
+              </Box>}
               <Box
                 height="48px"
                 display="flex"
@@ -462,7 +473,7 @@ export default function Manage({ onPrev, onNext }: any) {
             <Box fontSize="16px" textAlign="center" marginBottom="10px">
               Please confirm guardian updates on your Soul Wallet account.
             </Box>
-            <Box
+            {/* <Box
               width="100%"
               display="flex"
               alignItems="center"
@@ -475,8 +486,8 @@ export default function Manage({ onPrev, onNext }: any) {
               <Box marginLeft="2px" transform={showDetails ? 'rotate(-180deg)' : 'rotate(0deg)'}>
                 <ChevronDown />
               </Box>
-            </Box>
-            {showDetails && (
+            </Box> */}
+            {/* {showDetails && (
               <Box
                 background="#F8F8F8"
                 borderRadius="20px"
@@ -487,7 +498,7 @@ export default function Manage({ onPrev, onNext }: any) {
               >
                 {`{ "domain": { ... } }`}
               </Box>
-            )}
+            )} */}
             <Box width="100%" marginTop="20px">
               <Button size="xl" loading={changingGuardian} type="blue" width="100%" onClick={() => doChangeGuardian()}>
                 Confirm
