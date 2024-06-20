@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image, Menu, MenuList, MenuItem } from '@chakra-ui/react';
+import { useState, useRef } from 'react'
+import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image, Menu, MenuList, MenuItem, useOutsideClick } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 import GuardianIcon from '@/assets/mobile/guardian.svg'
@@ -10,7 +10,13 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 
 export default function Intro({ onPrev, onNext }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const menuRef = useRef<any>()
   const { openModal } = useWalletContext()
+
+  useOutsideClick({
+    ref: menuRef,
+    handler: () => onClose(),
+  })
 
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
@@ -56,7 +62,7 @@ export default function Intro({ onPrev, onNext }: any) {
               isLazy
             >
               {() => (
-                <Box overflow="auto">
+                <Box overflow="auto" ref={menuRef}>
                   <MenuList
                     background="white"
                     boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)"
