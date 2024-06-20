@@ -19,6 +19,7 @@ import LogoutIcon from '@/components/Icons/mobile/Logout'
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useBrowser from '@/hooks/useBrowser';
 import { useGuardianStore } from '@/store/guardian';
+import { ZeroHash } from 'ethers';
 
 export default function Settings({ isModal }: any) {
   const { walletName, selectedAddress } = useAddressStore();
@@ -34,7 +35,7 @@ export default function Settings({ isModal }: any) {
 
   const goGuardianSettings = async () => {
     closeModal();
-    if(!guardiansInfo || !guardiansInfo.guardianHash){
+    if(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash){
       navigate('/guardian/intro')
     }else{
       navigate('/guardian/manage');

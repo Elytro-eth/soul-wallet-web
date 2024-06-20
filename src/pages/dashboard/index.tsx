@@ -6,7 +6,7 @@ import MoreIcon from '@/components/Icons/mobile/More';
 import SendIcon from '@/components/Icons/mobile/Send';
 import ReceiveIcon from '@/components/Icons/mobile/Receive';
 import ActivitiesIcon from '@/components/Icons/mobile/Activities';
-import USDCIcon from '@/assets/tokens/usdc.png';
+// import USDCIcon from '@/assets/tokens/usdc.png';
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
 import { useBalanceStore } from '@/store/balance';
@@ -22,6 +22,7 @@ import useScreenSize from '@/hooks/useScreenSize'
 import IconSetting from '@/assets/icons/setting.svg';
 import { useAddressStore } from '@/store/address';
 import { useGuardianStore } from '@/store/guardian';
+import { ZeroHash } from 'ethers';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -103,7 +104,7 @@ export function Header({ openMenu, username, ...props }: any) {
 
 export default function Dashboard() {
   const { openFullScreenModal } = useWalletContext()
-  const { totalUsdValue, totalTrialValue, getTokenBalance, sevenDayApy, oneDayInterest } = useBalanceStore();
+  const { totalUsdValue, totalTrialValue, tokenBalance } = useBalanceStore();
   const { historyList } = useHistoryStore();
   const { innerHeight } = useScreenSize()
   const [modalMargin, setModalMargin] = useState(494);
@@ -252,7 +253,7 @@ export default function Dashboard() {
               Ethereum
             </Box>
           </Box>
-          {!guardiansInfo || !guardiansInfo.guardianHash && <Box
+          {(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash) && <Box
             display="flex"
             alignItems="center"
             width="100%"
@@ -391,24 +392,24 @@ export default function Dashboard() {
             <Box padding="24px 30px" paddingBottom="0" borderTop="1px solid rgba(0, 0, 0, 0.1)">
               <Box marginBottom="18px" display="flex" alignItems="center" justifyContent="space-between">
                 <Box fontSize="16px" fontWeight="600">Tokens</Box>
-                <Box fontSize="14px" fontWeight="400" color="rgba(0, 0, 0, 0.5)">$10</Box>
+                <Box fontSize="14px" fontWeight="400" color="rgba(0, 0, 0, 0.5)">${totalUsdValue}</Box>
               </Box>
-              <Box
+              {tokenBalance.map((item: any, index: number) => <Box
                 display="flex"
                 alignItems="center"
                 marginBottom="28px"
               >
                 <Box marginRight="10px">
-                  <Image src={USDCIcon} />
+                  <Image src={item.logoURI} w="10" />
                 </Box>
                 <Box fontWeight="700" fontSize="16px">
-                  USDC
+                  {item.name}
                 </Box>
                 <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                  <Box fontWeight="700" fontSize="20px">10</Box>
-                  <Box fontSize="12px" color="rgba(0, 0, 0, 0.5)">$10.11</Box>
+                  <Box fontWeight="700" fontSize="20px">{item.tokenBalanceFormatted}</Box>
+                  {/* <Box fontSize="12px" color="rgba(0, 0, 0, 0.5)">$10.11</Box> */}
                 </Box>
-              </Box>
+              </Box>)}
             </Box>
           </Box>
           {finalHistoryList && finalHistoryList.length > 0 && (
