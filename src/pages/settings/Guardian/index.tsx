@@ -11,7 +11,7 @@ export default function GuardianSetting() {
   const { registerForRecover } = usePasskey();
   const toast = useToast();
   const navigate = useNavigate();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const { innerHeight } = useScreenSize()
 
   const onPrev = useCallback(() => {
@@ -26,20 +26,6 @@ export default function GuardianSetting() {
     console.log('next');
     setStep(step + 1);
   }, [step]);
-
-  const renderStep = () => {
-    if (step == 0) {
-      return (
-        <Intro onPrev={onPrev} onNext={onNext} />
-      )
-    } else if (step == 1) {
-      return (
-        <Manage onPrev={onPrev} onNext={onNext} />
-      )
-    }
-
-    return null
-  };
 
   return (
     <Box width="100%" height={innerHeight}>

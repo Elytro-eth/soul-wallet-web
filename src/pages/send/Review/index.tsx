@@ -216,8 +216,8 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
               </Button>
             </Box>
             <Box width="50%" paddingLeft="7px">
-              <Button width="calc(100% - 7px)" disabled={false} size="xl" type="blue" onClick={() => onTransfer()}>
-                Continue
+              <Button width="calc(100% - 7px)" disabled={isSending} size="xl" type="blue" onClick={() => onTransfer()}>
+                {isSending ? 'Sending' : 'Continue'}
               </Button>
             </Box>
           </Box>

@@ -72,10 +72,10 @@ export default function Manage({ onPrev, onNext }: any) {
             <Box>
               <Box fontSize="16px" fontWeight="600">
                 {guardianAddressEmail[guardianAddress]
-                  ? 'Email guardian'
-                  : guardianAddressName[guardianAddress]
-                    ? guardianAddressName[guardianAddress]
-                    : 'Guardian'}
+                ? 'Email guardian'
+                : guardianAddressName[guardianAddress]
+                ? guardianAddressName[guardianAddress]
+                : 'Guardian'}
               </Box>
               <Box fontSize="12px" fontWeight="500" marginTop="4px" color="#868686">
                 {guardianAddressEmail[guardianAddress] ? guardianAddressEmail[guardianAddress] : toShortAddress(guardianAddress)}
@@ -164,7 +164,8 @@ export default function Manage({ onPrev, onNext }: any) {
                     <MenuItem
                       position="relative"
                       padding="18px 27px"
-                      w="100%"
+                      w="calc(100vw - 60px)"
+                      maxW="370px"
                       onClick={() => onThresholdMenuClose()}
                     >
                       <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
