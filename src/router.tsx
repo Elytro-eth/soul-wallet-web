@@ -75,16 +75,7 @@ export const router = createBrowserRouter([
               },
             ]
           },
-          {
-            path: '/public',
-            element: <Public />,
-            children: [
-              {
-                path: 'sign',
-                element: <RecoverSign />,
-              },
-            ]
-          },
+       
         ],
       },
     ],
@@ -92,6 +83,15 @@ export const router = createBrowserRouter([
   {
     path: '/public',
     element: <PublicWrapper />,
-    children: [{ path: 'verify-secret/:secret', element: <VerifySecret /> }],
+    children: [{ path: 'verify-secret/:secret', element: <VerifySecret /> },    {
+      path: 'sign',
+      element: <Public />,
+      children: [
+        {
+          path: ':recoverId',
+          element: <RecoverSign />,
+        },
+      ]
+    },],
   },
 ]);

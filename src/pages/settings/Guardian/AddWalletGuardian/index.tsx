@@ -25,6 +25,7 @@ export default function AddWalletGuardian({isModal}: any) {
   // const navigate = useNavigate();
   // const [step, setStep] = useState(0);
   // const screenSize = useScreenSize()
+  const navigate = useNavigate();
   const innerHeight = window.innerHeight - 134
   const { doSetGuardians } = useRecover();
   const { guardianAddressName, saveGuardianAddressName } = useSettingStore();
@@ -108,6 +109,7 @@ export default function AddWalletGuardian({isModal}: any) {
       await doSetGuardians([searchText], [guardianName], defaultThreshold);
       saveGuardianAddressName(searchText, guardianName);
       closeModal();
+      navigate('/dashboard')
     } finally {
       setChangingGuardian(false);
     }
@@ -174,6 +176,8 @@ export default function AddWalletGuardian({isModal}: any) {
             placeholder="Enter or paste here"
             borderRadius="0"
             border="none"
+            value={guardianName}
+            onChange={e=> setGuardianName(e.target.value)}
             outline="none"
             _focusVisible={{ border: 'none', boxShadow: 'none' }}
           />
