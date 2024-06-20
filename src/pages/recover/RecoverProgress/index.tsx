@@ -22,6 +22,7 @@ import { useTempStore } from '@/store/temp';
 import api from '@/lib/api';
 import { useSettingStore } from '@/store/setting';
 import { useGuardianStore } from '@/store/guardian';
+import { toShortAddress } from '@/lib/tools';
 
 export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const { openModal } = useWalletContext();
@@ -44,6 +45,8 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
     });
     openModal('recoverVerifyEmail');
   };
+
+  const shareLink = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
 
   const guardiansList = guardiansInfo.guardianDetails.guardians;
 
@@ -78,7 +81,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           >
             <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
             <Box>
-              <Box>{guardianAddressEmail[guardianAddress] || guardianAddress}</Box>
+              <Box>{guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) }</Box>
             </Box>
             <Box marginLeft="auto">
               {signedGuardians.includes(guardianAddress) ? (
