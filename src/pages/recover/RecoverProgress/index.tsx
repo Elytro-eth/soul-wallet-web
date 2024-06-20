@@ -27,8 +27,8 @@ import { toShortAddress } from '@/lib/tools';
 export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const { openModal } = useWalletContext();
   const { recoverInfo, setEmailTemplate } = useTempStore();
-  const { guardiansInfo } = useGuardianStore();
   const { guardianAddressEmail } = useSettingStore();
+  const { guardianInfo } = recoverInfo;
 
   const doOpenModal = async (guardianAddress: string) => {
     // get template info
@@ -48,9 +48,9 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
 
   const shareLink = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
 
-  console.log('sha', shareLink)
+  console.log('share link', shareLink)
 
-  const guardiansList = guardiansInfo.guardianDetails.guardians;
+  const guardiansList = guardianInfo && guardianInfo.guardians ? guardianInfo.guardians : []
 
   const pendingGuardianNum = guardiansList.length - signedGuardians.length;
 

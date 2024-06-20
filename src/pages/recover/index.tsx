@@ -14,6 +14,7 @@ import { useTempStore } from '@/store/temp';
 import { SocialRecovery } from '@soulwallet/sdk';
 import { useSettingStore } from '@/store/setting';
 import useWallet from '@/hooks/useWallet';
+import useQuery from '@/hooks/useQuery';
 
 export default function Recover() {
   const { registerForRecover } = usePasskey();
@@ -25,7 +26,7 @@ export default function Recover() {
   const [accountInfo, setAccountInfo] = useState<any>(null);
   const [isWalletNotFound, setIsWalletNotFound] = useState(false);
   const { boostAfterRecovered } = useWallet();
-  // const { saveGuardianAddressEmail, guardianAddressEmail } = useSettingStore();
+  const { fetchPublicGuardianInfo } = useQuery();
   const [timer, setTimer] = useState<any>();
   const [isRecovering, setIsRecovering] = useState(false);
   const [signedGuardians, setSignedGuardians] = useState<any>([]);
@@ -107,6 +108,13 @@ export default function Recover() {
     const addressRes: any = await api.account.get({
       address: username,
     });
+    // get guardians info
+    // const guardianRes = await fetchPublicGuardianInfo(addressRes.data.address);
+
+    // console.log('guardian res', guardianRes);
+    // updateRecoverInfo({
+    //   guardiansInfo: guardianRes.data,
+    // });
 
     if (addressRes.code === 200) {
       console.log('matched');

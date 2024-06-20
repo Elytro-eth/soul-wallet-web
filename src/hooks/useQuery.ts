@@ -43,6 +43,13 @@ export default function useQuery() {
     });
   };
 
+  const fetchPublicGuardianInfo = async (walletAddress: string) => {
+    const contract = new Contract(chainConfig.contracts.socialRecoveryModule, ABI_SocialRecoveryModule, ethersProvider);
+    const recoveryInfo = await contract.getSocialRecoveryInfo(walletAddress);
+    const activeGuardianHash = recoveryInfo[0];
+    return await api.backup.publicGetGuardians({ guardianHash: activeGuardianHash });
+  };
+
   const getPrefund = async (userOp: any, payToken: string) => {
     // get preFund
     const preFund = await soulWallet.preFund(userOp);
@@ -76,5 +83,6 @@ export default function useQuery() {
   return {
     getPrefund,
     fetchGuardianInfo,
+    fetchPublicGuardianInfo,
   };
 }
