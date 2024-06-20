@@ -53,7 +53,7 @@ export const sidebarLinks = [
   },
 ];
 
-export const supportedEoas = ['injected', 'walletConnect'];
+export const supportedEoas = ['injected', 'walletConnect', 'io.metamask'];
 
 export const vaultsFyiEndpoint = 'https://api.vaults.fyi/v1'
 
