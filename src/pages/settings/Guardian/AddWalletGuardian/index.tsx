@@ -36,8 +36,11 @@ export default function AddWalletGuardian({isModal}: any) {
   const [searchText, setSearchText] = useState('');
   const [searchAddress, setSearchAddress] = useState('');
   const [resolvedAddress, setResolvedAddress] = useState('');
+  const [guardianAddress, setGuardianAddress] = useState<string>('');
   const [guardianName, setGuardianName] = useState('');
+
   const onAddressChange = (val: string) => {
+    setGuardianAddress(val)
     setSearchText(val);
 
     if (extractENSAddress(val)) {
@@ -98,6 +101,7 @@ export default function AddWalletGuardian({isModal}: any) {
 
   const submitENSName = (name: any) => {
     console.log('submitENSName', resolvedAddress);
+    setGuardianAddress(resolvedAddress)
     // setErrors(({ receiverAddress, ...rest }: any) => rest);
     setIsENSOpen(false);
   };
@@ -128,6 +132,7 @@ export default function AddWalletGuardian({isModal}: any) {
           <Input
             ref={setInputRef}
             spellCheck={false}
+            value={guardianAddress}
             onChange={e => onAddressChange(e.target.value)}
             fontSize="32px"
             lineHeight="24px"
