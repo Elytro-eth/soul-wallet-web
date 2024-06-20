@@ -23,6 +23,7 @@ import IconSetting from '@/assets/icons/setting.svg';
 import { useAddressStore } from '@/store/address';
 import { useGuardianStore } from '@/store/guardian';
 import { ZeroHash } from 'ethers';
+import { toFixed } from '@/lib/tools';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -458,31 +459,22 @@ export default function Dashboard() {
                     paddingRight="22px"
                   >
                     <Box marginRight="12px">
-                      {item.action === 'Deposit' ? <ActivityDepositIcon /> : <ActivityTransferIcon />}
+                      {item.functionName === 'Deposit' ? <ActivityDepositIcon /> : <ActivityTransferIcon />}
                     </Box>
                     <Box>
                       <Box display="flex" alignItems="center">
-                        <Box fontSize="14px" fontWeight="700">
-                          {item.action}
+                        <Box fontSize="14px" fontWeight="700" textTransform={"capitalize"}>
+                          {item.functionName}
                         </Box>
-                        {/* <Box
-                            fontSize="12px"
-                            background="#F1F1F1"
-                            color="rgba(0, 0, 0, 0.60)"
-                            padding="0 8px"
-                            borderRadius="4px"
-                            marginLeft="8px"
-                            >
-                            Pending
-                            </Box> */}
                       </Box>
-                      <Box fontSize="12px">{item.dateFormatted}</Box>
+                      {/* <Box fontSize="12px">{item.dateFormatted}</Box> */}
                     </Box>
-                    <Box marginLeft="auto">
+                    {item.actualGasCost ? <Box marginLeft="auto">
                       <Box fontSize="14px" fontWeight="700">
-                        {item.amountFormatted} USDC
+                        {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH
                       </Box>
-                    </Box>
+                    </Box> : '' }
+                   
                   </Box>
                 ))}
               </Flex>

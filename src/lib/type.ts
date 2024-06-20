@@ -11,3 +11,10 @@ export enum EnHandleMode {
   Create,
   Recover,
 }
+
+
+export enum ActivityStatusEn {
+  Success,
+  Error,
+  Pending,
+}
