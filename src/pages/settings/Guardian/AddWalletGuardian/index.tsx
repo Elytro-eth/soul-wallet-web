@@ -16,20 +16,27 @@ import useForm from '@/hooks/useForm';
 import { ZeroHash } from 'ethers';
 import Button from '@/components/mobile/Button';
 import useScreenSize from '@/hooks/useScreenSize'
+import useRecover from '@/hooks/useRecover';
+import { useSettingStore } from '@/store/setting';
+import useWalletContext from '@/context/hooks/useWalletContext';
 
-export default function AddWalletGuardian({callback}: any) {
-  const toast = useToast();
-  const navigate = useNavigate();
-  const [step, setStep] = useState(0);
-  const screenSize = useScreenSize()
+export default function AddWalletGuardian({isModal}: any) {
+  // const toast = useToast();
+  // const navigate = useNavigate();
+  // const [step, setStep] = useState(0);
+  // const screenSize = useScreenSize()
   const innerHeight = window.innerHeight - 134
-
+  const { doSetGuardians } = useRecover();
+  const { guardianAddressName, saveGuardianAddressName } = useSettingStore();
+  const [changingGuardian, setChangingGuardian] = useState(false);
+  const { closeModal } = useWalletContext();
   const [isENSOpen, setIsENSOpen] = useState(false);
   const [isENSLoading, setIsENSLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [searchAddress, setSearchAddress] = useState('');
   const [resolvedAddress, setResolvedAddress] = useState('');
   const [guardianAddress, setGuardianAddress] = useState<string>('');
+  const [guardianName, setGuardianName] = useState('');
 
   const onAddressChange = (val: string) => {
     setGuardianAddress(val)
@@ -42,20 +49,19 @@ export default function AddWalletGuardian({callback}: any) {
     }
   }
 
-
   const activeENSNameRef = useRef();
   const menuRef = useRef();
   const inputRef = useRef();
 
-  const inputOnFocus = (value: any) => {
-    setSearchText(value);
+  // const inputOnFocus = (value: any) => {
+  //   setSearchText(value);
 
-    if (extractENSAddress(value)) {
-      setIsENSOpen(true);
-    } else {
-      setIsENSOpen(false);
-    }
-  };
+  //   if (extractENSAddress(value)) {
+  //     setIsENSOpen(true);
+  //   } else {
+  //     setIsENSOpen(false);
+  //   }
+  // };
 
   const setMenuRef = (value: any) => {
     menuRef.current = value;
@@ -97,6 +103,18 @@ export default function AddWalletGuardian({callback}: any) {
     setGuardianAddress(resolvedAddress)
     // setErrors(({ receiverAddress, ...rest }: any) => rest);
     setIsENSOpen(false);
+  };
+
+  const doChangeGuardian = async () => {
+    setChangingGuardian(true);
+    try {
+      const defaultThreshold = 1;
+      await doSetGuardians([searchText], [guardianName], defaultThreshold);
+      saveGuardianAddressName(searchText, guardianName);
+      closeModal();
+    } finally {
+      setChangingGuardian(false);
+    }
   };
 
   return (
@@ -165,7 +183,7 @@ export default function AddWalletGuardian({callback}: any) {
             _focusVisible={{ border: 'none', boxShadow: 'none' }}
           />
         </Box>
-        <Button size="xl" type="blue" width="100%" marginTop="60px">
+        <Button size="xl" type="blue" width="100%" marginTop="60px" loading={changingGuardian} onClick={doChangeGuardian}>
           Add
         </Button>
       </Box>
