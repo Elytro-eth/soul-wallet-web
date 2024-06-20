@@ -4,7 +4,7 @@ import FadeId from '@/components/Icons/mobile/FaceId'
 
 export default function SepupPasskey({ addingPasskey, onNext, onSkip }: any) {
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop="138px" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+    <Box width="100%" height="100%" padding="30px" paddingTop="117px" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
       <Box marginBottom="74px">
         <FadeId />
       </Box>
