@@ -83,6 +83,10 @@ export const router = createBrowserRouter([
                 path: 'sign',
                 element: <RecoverSign />,
               },
+              {
+                path: 'sign/:recoverId',
+                element: <RecoverSign />,
+              },
             ]
           },
         ],
