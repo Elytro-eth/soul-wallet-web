@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Input,
@@ -14,6 +14,7 @@ import {
   MenuList,
   MenuItem,
   useToast,
+  useOutsideClick
 } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import EmailIcon from '@/assets/mobile/email-guardian.svg';
@@ -59,6 +60,18 @@ export default function Manage({ onPrev, onNext }: any) {
   const { doSetGuardians } = useRecover();
   const toast = useToast();
   const navigate = useNavigate();
+  const guardianMenuRef = useRef<any>()
+  const thresholdMenuRef = useRef<any>()
+
+  useOutsideClick({
+    ref: guardianMenuRef,
+    handler: () => onGuardianMenuClose(),
+  })
+
+  useOutsideClick({
+    ref: thresholdMenuRef,
+    handler: () => onThresholdMenuClose(),
+  })
 
   const doHandleGuardian = (index: number) => {
     setActiveGuardianIndex(index);
@@ -178,15 +191,15 @@ export default function Manage({ onPrev, onNext }: any) {
             <Box>
               <Box fontSize="16px" fontWeight="600">
                 {guardianAddressEmail[guardianAddress]
-                  ? 'Email guardian'
-                  : guardianAddressName[guardianAddress]
-                    ? guardianAddressName[guardianAddress]
-                    : 'Guardian'}
+                ? 'Email guardian'
+                : guardianAddressName[guardianAddress]
+                ? guardianAddressName[guardianAddress]
+                : 'Guardian'}
               </Box>
               <Box fontSize="12px" fontWeight="500" marginTop="4px" color="#868686">
                 {guardianAddressEmail[guardianAddress]
-                  ? guardianAddressEmail[guardianAddress]
-                  : toShortAddress(guardianAddress)}
+                ? guardianAddressEmail[guardianAddress]
+                : toShortAddress(guardianAddress)}
               </Box>
             </Box>
             <Box marginLeft="auto" onClick={() => doHandleGuardian(index)}>
@@ -202,7 +215,7 @@ export default function Manage({ onPrev, onNext }: any) {
         <Box position="absolute" top="60px" left="0">
           <Menu isOpen={isGuardianMenuOpen} isLazy>
             {() => (
-              <Box overflow="auto">
+              <Box overflow="auto" ref={guardianMenuRef}>
                 <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
                   <MenuItem
                     width="calc(100vw - 60px)"
@@ -210,7 +223,7 @@ export default function Manage({ onPrev, onNext }: any) {
                     padding="18px 27px"
                     borderBottom="1px solid #E4E4E4"
                     onClick={() => {
-                     onCreateGuardianOpen(0)
+                      onCreateGuardianOpen(0)
                     }}
                   >
                     <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
@@ -266,7 +279,7 @@ export default function Manage({ onPrev, onNext }: any) {
             <Box position="absolute" top="60px" left="0" width="100%">
               <Menu isOpen={isThresholdMenuOpen} isLazy>
                 {() => (
-                  <Box overflow="auto">
+                  <Box overflow="auto" ref={thresholdMenuRef}>
                     <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
                       {Array.from({ length: tempGuardians.length }, (_, i) => (
                         <MenuItem
