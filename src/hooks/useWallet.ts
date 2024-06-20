@@ -150,68 +150,7 @@ export default function useWallet() {
 
     txs.push({
       from: selectedAddress,
-      to: import.meta.env.VITE_TOKEN_USDC,
-      data: erc20.encodeFunctionData('transfer', [to, ethers.parseUnits(String(amount), 6)]),
-    });
-
-    return await getUserOp(txs);
-  };
-
-  const getWithdrawOp = async (amount: string, to: string) => {
-    const aaveUsdcPool = new ethers.Interface(aaveUsdcPoolAbi);
-    const claimInterest = new ethers.Interface(claimInterestAbi);
-    const erc20 = new ethers.Interface(erc20Abi);
-
-    const usdcBalance = getTokenBalance(import.meta.env.VITE_TOKEN_USDC)?.tokenBalanceFormatted;
-    const ausdcBalance = getTokenBalance(import.meta.env.VITE_TOKEN_AUSDC)?.tokenBalanceFormatted;
-    const trialInterestBalance = getTokenBalance(import.meta.env.VITE_TOKEN_TRIAL_INTEREST)?.tokenBalanceFormatted;
-
-    let txs = [];
-
-    if (BN(amount).isGreaterThan(BN(usdcBalance).plus(ausdcBalance).plus(trialInterestBalance))) {
-      toast({
-        title: 'Insufficient balance',
-        status: 'error',
-      });
-      return;
-    }
-
-    let deductTrialAmount = BN(0);
-    // 1. deduct interest balance first
-    if (BN(trialInterestBalance).isGreaterThan(0)) {
-      deductTrialAmount = BN(amount).isGreaterThan(trialInterestBalance) ? BN(trialInterestBalance) : BN(amount);
-      if (deductTrialAmount.isGreaterThan(0)) {
-        const res = await api.token.spendTrialInterest({
-          address: selectedAddress,
-          chainID: selectedChainId,
-          amount: `0x${deductTrialAmount.shiftedBy(6).toString(16)}`,
-        });
-        const { actualAmount, nonce, signature, expireTime } = res.data;
-        txs.push({
-          from: selectedAddress,
-          to: import.meta.env.VITE_ClaimInterest,
-          data: claimInterest.encodeFunctionData('claimInterest', [actualAmount, nonce, expireTime, signature]),
-        });
-      }
-    }
-
-    const withdrawAmount = BN(amount).minus(deductTrialAmount).minus(usdcBalance);
-
-    if (withdrawAmount.isGreaterThan(0)) {
-      txs.push({
-        from: selectedAddress,
-        to: import.meta.env.VITE_AAVE_USDC_POOL,
-        data: aaveUsdcPool.encodeFunctionData('withdraw(address,uint256,address)', [
-          import.meta.env.VITE_TOKEN_USDC,
-          ethers.parseUnits(withdrawAmount.toString(), 6),
-          selectedAddress,
-        ]),
-      });
-    }
-
-    txs.push({
-      from: selectedAddress,
-      to: import.meta.env.VITE_TOKEN_USDC,
+      to: tokenAddress,
       data: erc20.encodeFunctionData('transfer', [to, ethers.parseUnits(String(amount), 6)]),
     });
 
@@ -248,9 +187,13 @@ export default function useWallet() {
     const soulAbi = new ethers.Interface(ABI_SoulWallet);
     const erc20Interface = new ethers.Interface(erc20Abi);
     // approve defi contract to spend token
-    const approveTos = [import.meta.env.VITE_TOKEN_USDC];
+    const approveTos = [
+      // erc20 address
+      ''
+    ];
     const approveCalldata = erc20Interface.encodeFunctionData('approve', [
-      import.meta.env.VITE_AaveUsdcSaveAutomation,
+      // approve to who
+      '',
       MaxUint256,
     ]);
 
@@ -449,7 +392,6 @@ export default function useWallet() {
     loginWallet,
     getTransferEthOp,
     getTransferErc20Op,
-    getWithdrawOp,
     addPaymasterData,
     getActivateOp,
     signAndSend,

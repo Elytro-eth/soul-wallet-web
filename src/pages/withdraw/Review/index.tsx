@@ -12,7 +12,7 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 
 export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any) {
   const { closeModal } = useWalletContext()
-  const { getWithdrawOp, signAndSend, getTransferEthOp } = useWallet();
+  const { signAndSend, getTransferEthOp } = useWallet();
   const executingRef = useRef(false);
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);

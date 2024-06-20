@@ -39,7 +39,6 @@ export interface IBalanceStore {
   maxPriorityFeePerGas: string;
   fetchFeeData: (provider: any) => void;
   sevenDayApy: string;
-  fetchApy: () => void;
   oneDayInterest: string;
   totalInterest: string;
   fetchInterest: (address: string, chainID: string) => void;
@@ -106,15 +105,6 @@ export const useBalanceStore = create<IBalanceStore>()(
         //   maxFeePerGas: `0x${feeData.maxFeePerGas?.toString(16)}`,
         //   maxPriorityFeePerGas: `0x${feeData.maxPriorityFeePerGas?.toString(16)}`,
         // });
-      },
-      fetchApy: async () => {
-        // const res: any = await api.aave.apy({
-        //   interval: '7day',
-        //   vaultAddress: import.meta.env.VITE_TOKEN_AUSDC,
-        //   network: 'optimism',
-        // });
-
-        // set({ sevenDayApy: BN(res.data.apy).div(100).toFixed(2) });
       },
       fetchInterest: async (address, chainID) => {
         const date = new Date();

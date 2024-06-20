@@ -11,7 +11,10 @@ export default {
   icon: IconEthSquare,
   iconFaded: IconEthFaded,
   iconSquare: IconEthSquare,
-  provider: `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_KEY}`,
+  /**
+   * TODO, find new provider
+   */
+  provider: ``,
   mainnetProvider: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_.VITE_ALCHEMY_KEY}`,
   scanUrl: 'https://sepolia.etherscan.io',
   scanName: 'Etherscan',
