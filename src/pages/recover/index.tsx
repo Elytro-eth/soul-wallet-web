@@ -29,13 +29,12 @@ export default function Recover() {
   const { boostAfterRecovered } = useWallet();
   const { fetchPublicGuardianInfo } = useQuery();
   const [timer, setTimer] = useState<any>();
+  const [checkingUsername, setCheckingUsername] = useState(false);
   const [isRecovering, setIsRecovering] = useState(false);
   const [signedGuardians, setSignedGuardians] = useState<any>([]);
 
   const { recoverInfo, updateRecoverInfo } = useTempStore();
   const { recoveryID } = recoverInfo;
-
-  // const recoveryID = '0x08455df5b125cddf03d0b007f4c65939cde128bdae8eb81574f20af85f704a98'
 
   const debounce = (fn: Function, delay: number) => {
     clearTimeout(timer);
@@ -55,10 +54,6 @@ export default function Recover() {
     setStep(step + 1);
   }, [step]);
 
-  // const onSkip = useCallback(() => {
-  //   console.log('skip');
-  // }, []);
-
   const onCreatePasskey = async () => {
     setAddingPasskey(true);
     // create credential
@@ -70,6 +65,7 @@ export default function Recover() {
         address: accountInfo.address,
         newOwners: [credential.onchainPublicKey],
       });
+      await fetchPublicGuardianInfo(accountInfo.address);
       updateRecoverInfo({
         recoveryID: createRecordRes.data.recoveryID,
         credential,
@@ -91,6 +87,7 @@ export default function Recover() {
     // todo, add debounce;
     if (!username) return;
     // clear Previous info
+    setCheckingUsername(true);
     setAccountInfo(null);
     setIsWalletNotFound(false);
 
@@ -103,24 +100,19 @@ export default function Recover() {
       console.log('matched');
       setAccountInfo(usernameRes.data);
       setIsWalletNotFound(false);
+      setCheckingUsername(false);
       return;
     }
 
     const addressRes: any = await api.account.get({
       address: username,
     });
-    // get guardians info
-    // const guardianRes = await fetchPublicGuardianInfo(addressRes.data.address);
-
-    // console.log('guardian res', guardianRes);
-    // updateRecoverInfo({
-    //   guardiansInfo: guardianRes.data,
-    // });
 
     if (addressRes.code === 200) {
       console.log('matched');
       setAccountInfo(addressRes.data);
       setIsWalletNotFound(false);
+      setCheckingUsername(false);
       return;
     }
 
@@ -141,7 +133,8 @@ export default function Recover() {
         if (res.msg === 'executeRecovery tirggered' || res.msg === 'recovery already executed') {
           const recoverRecord = await getPreviousRecord();
           await boostAfterRecovered(recoverRecord);
-          navigate('/dashboard');
+          // todo, need to get jwt again
+          navigate('/landing');
           break;
         }
       }
@@ -206,6 +199,7 @@ export default function Recover() {
           onNext={onNext}
           accountInfo={accountInfo}
           username={username}
+          checking={checkingUsername}
           setUsername={setUsername}
         />
       );

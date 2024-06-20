@@ -47,7 +47,15 @@ export default function useQuery() {
     const contract = new Contract(chainConfig.contracts.socialRecoveryModule, ABI_SocialRecoveryModule, ethersProvider);
     const recoveryInfo = await contract.getSocialRecoveryInfo(walletAddress);
     const activeGuardianHash = recoveryInfo[0];
-    return await api.backup.publicGetGuardians({ guardianHash: activeGuardianHash });
+    // set email
+
+    const res = await api.backup.publicGetGuardians({ guardianHash: activeGuardianHash });
+
+    res.data.specialGuardians.forEach((item: any) => {
+      saveGuardianAddressEmail(item.guardianAddress, item.data.email);
+    })
+
+    return res.data;
   };
 
   const getPrefund = async (userOp: any, payToken: string) => {

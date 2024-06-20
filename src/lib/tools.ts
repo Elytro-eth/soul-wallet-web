@@ -44,6 +44,12 @@ export const shareFile = (file: string) => {
   }
 };
 
+export const shareUrl = (url: string) => {
+  if (navigator.canShare && navigator.canShare({url})) {
+    navigator.share({ url, title: 'Social recovery link' });
+  }
+};
+
 export const getWalletIcon = (walletId: string) => {
   switch (walletId) {
     case 'injected':

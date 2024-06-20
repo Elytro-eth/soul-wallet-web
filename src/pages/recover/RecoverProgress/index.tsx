@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from 'react';
 import {
   Box,
@@ -23,7 +24,7 @@ import { useTempStore } from '@/store/temp';
 import api from '@/lib/api';
 import { useSettingStore } from '@/store/setting';
 import { useGuardianStore } from '@/store/guardian';
-import { toShortAddress } from '@/lib/tools';
+import { shareUrl, toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
 import AddressIcon from '@/components/AddressIcon';
 
@@ -50,20 +51,13 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
     openModal('recoverVerifyEmail');
   };
 
-  const shareLink = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
+  const shareLink:any = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
 
   const onShare = () => {
     if (!navigator.share) {
       doCopy(shareLink)
     } else {
-      navigator
-        .share({
-          title: '',
-          text: '',
-          url: shareLink
-        })
-        .then(() => console.log('Successful shared!'))
-        .catch(err => console.error(err))
+      shareUrl(shareLink)
     }
   }
 
@@ -87,8 +81,9 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
         {pendingGuardianNum} more guardians approval needed
       </Box>
       {guardiansList &&
-       guardiansList.map((guardianAddress: any, index: number) => (
-         <Box
+       guardiansList.map((guardianAddress: any, index: number) => {
+        const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) 
+         return <Box
            fontWeight="600"
            fontSize="14px"
            key={index}
@@ -101,8 +96,8 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           <AddressIcon width={32} address={guardianAddress} />
            {/* <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" /> */}
            <Flex align={'center'} gap="2" ml={"2"}>
-             <Box wordBreak={"break-all"} fontFamily={"monospace"}>{guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) }</Box>
-             <Box onClick={()=> doCopy(guardianAddress)}><CopyIcon /></Box>
+             <Box wordBreak={"break-all"} fontFamily={"monospace"}>{label}</Box>
+             <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>
            </Flex>
            <Box marginLeft="auto">
              {signedGuardians.includes(guardianAddress) ? (
@@ -141,7 +136,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
              )}
            </Box>
          </Box>
-      ))}
+})}
 
  
     </Box>
