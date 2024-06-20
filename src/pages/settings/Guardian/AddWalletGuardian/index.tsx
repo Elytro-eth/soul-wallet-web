@@ -29,8 +29,10 @@ export default function AddWalletGuardian({callback}: any) {
   const [searchText, setSearchText] = useState('');
   const [searchAddress, setSearchAddress] = useState('');
   const [resolvedAddress, setResolvedAddress] = useState('');
-callback();
+  const [guardianAddress, setGuardianAddress] = useState<string>('');
+
   const onAddressChange = (val: string) => {
+    setGuardianAddress(val)
     setSearchText(val);
 
     if (extractENSAddress(val)) {
@@ -92,6 +94,7 @@ callback();
 
   const submitENSName = (name: any) => {
     console.log('submitENSName', resolvedAddress);
+    setGuardianAddress(resolvedAddress)
     // setErrors(({ receiverAddress, ...rest }: any) => rest);
     setIsENSOpen(false);
   };
@@ -109,6 +112,7 @@ callback();
           <Input
             ref={setInputRef}
             spellCheck={false}
+            value={guardianAddress}
             onChange={e => onAddressChange(e.target.value)}
             fontSize="32px"
             lineHeight="24px"
