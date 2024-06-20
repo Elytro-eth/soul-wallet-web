@@ -114,6 +114,7 @@ export default function Dashboard() {
   const {guardiansInfo} = useGuardianStore();
   const [isMoving, setIsMoving] = useState(false);
   const { navigate } = useBrowser();
+  const { walletName } = useAddressStore();
   // const { openModal } = useNavigation()
   const [openModal] = useOutletContext<any>();
   const contentRef = useRef();
@@ -246,7 +247,7 @@ export default function Dashboard() {
         >
           <Box marginBottom="24px">
             <Box fontWeight="700" fontSize="18px">
-              Hi, Andy
+              Hi, {walletName}
             </Box>
             <Box fontWeight="700" fontSize="42px" lineHeight="50px" marginTop="8px">
               Welcome to<br />

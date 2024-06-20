@@ -132,9 +132,10 @@ export default function Manage({ onPrev, onNext }: any) {
         defaultEmail: "",
         callback: (guardianAddress: string, guardianEmail: string) => {
           setTempGuardians((prev: any) => {
-            const newGuardians = [...prev];
-            newGuardians[activeGuardianIndex] = guardianAddress;
-            return newGuardians;
+            return [
+              ...prev,
+              guardianAddress,
+            ]
           });
           saveGuardianAddressEmail(guardianAddress, guardianEmail);
           closeModal();
@@ -145,9 +146,10 @@ export default function Manage({ onPrev, onNext }: any) {
         callback: (guardianAddress: string, guardianName: string) => {
           saveGuardianAddressName(guardianAddress, guardianName);
           setTempGuardians((prev: any) => {
-            const newGuardians = [...prev];
-            newGuardians[activeGuardianIndex] = guardianAddress;
-            return newGuardians;
+            return [
+              ...prev,
+              guardianAddress,
+            ]
           });
           closeModal();
         },
@@ -171,7 +173,7 @@ export default function Manage({ onPrev, onNext }: any) {
             marginBottom="16px"
           >
             <Box width="48px" height="48px" marginRight="8px">
-              <AddressIcon address={`necklaceeez@gmail.com`} width={48} />
+              <AddressIcon address={guardianAddress} width={48} />
             </Box>
             <Box>
               <Box fontSize="16px" fontWeight="600">

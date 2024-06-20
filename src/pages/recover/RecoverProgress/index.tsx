@@ -48,6 +48,8 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
 
   const shareLink = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
 
+  console.log('sha', shareLink)
+
   const guardiansList = guardiansInfo.guardianDetails.guardians;
 
   const pendingGuardianNum = guardiansList.length - signedGuardians.length;
@@ -81,7 +83,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           >
             <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" />
             <Box>
-              <Box>{guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) }</Box>
+              <Box wordBreak={"break-all"}>{guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) }</Box>
             </Box>
             <Box marginLeft="auto">
               {signedGuardians.includes(guardianAddress) ? (

@@ -70,7 +70,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
     initialValues: [defaultEmail || '']
   });
   const disabled = invalid;
-
+  
   const onPrev = useCallback(() => {
     if (step >= 1) {
       setStep((prev) => prev - 1);
@@ -153,11 +153,12 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
 
       if (res.code === 200) {
         if (res.msg === 'already allocated') {
-          toast({
-            title: 'Email is already added.',
-            status: 'error',
-          });
-          return;
+          // important todo, backend handle this.
+          // toast({
+          //   title: 'Email is already added.',
+          //   status: 'error',
+          // });
+          return res.data.guardianAddress;
         }
         return res.data.guardianAddress;
       } else {

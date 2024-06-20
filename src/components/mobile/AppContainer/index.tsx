@@ -98,6 +98,8 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
       return <AddWalletGuardian isModal={true} {...props} />
     } else if (name === 'verifyEmail') {
       return <VerifyEmail isModal={true} {...props} />
+    } else if (name === 'verifyEmailGuardian') {
+      return <VerifyEmail isModal={true} {...props} />
     }
   }
 
