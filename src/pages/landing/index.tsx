@@ -108,7 +108,7 @@ export default function Landing() {
         height={innerHeight - 60}
         overflowY="auto"
       >
-        <Box width="100%" fontSize="48px" fontWeight="700" lineHeight="56px" textAlign="left" marginTop="60px">
+        <Box width="100%" fontSize="48px" fontWeight="700" lineHeight="56px" textAlign="left" marginTop="20px">
           Democratize access to<br /> Ethereum<br /> for All
         </Box>
         <Box
@@ -139,7 +139,7 @@ export default function Landing() {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          marginTop="93px"
+          marginTop="auto"
         >
           <Link to="/create" style={{ width: '100%' }}>
             <Button

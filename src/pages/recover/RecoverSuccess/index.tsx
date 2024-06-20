@@ -19,7 +19,7 @@ export default function RecoverSuccess({ doRecover, isRecovering }: any) {
   return (
     <Box
       width="100%"
-      height="100%"
+      // height="100%"
       padding="30px"
       paddingTop="200px"
       display="flex"
