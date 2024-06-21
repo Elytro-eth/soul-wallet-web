@@ -326,7 +326,7 @@ export default function Dashboard() {
                 />
                 {valueRight &&
                  BN(valueRight).isGreaterThan(0) &&
-                 Number(valueRight.slice(0, 3).replace(/0+$/, '')) > 0 && (
+                 Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
                    <Box
                      fontSize={smFontSize}
                      lineHeight={'1'}
