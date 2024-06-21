@@ -102,25 +102,23 @@ export default function Recover() {
         setAccountInfo(usernameRes.data);
         setIsWalletNotFound(false);
         setCheckingUsername(false);
-        return;
       }
-
-      const addressRes: any = await api.account.get({
-        address: username,
-      });
-
-      if (addressRes.code === 200) {
-        console.log('matched');
-        setAccountInfo(addressRes.data);
-        setIsWalletNotFound(false);
-        setCheckingUsername(false);
-        return;
-      }
-
-      setIsWalletNotFound(true);
     } catch (err: any) {
-      setIsWalletNotFound(true);
-      setAccountInfo(null);
+      try {
+        const addressRes: any = await api.account.get({
+          address: username,
+        });
+
+        if (addressRes.code === 200) {
+          console.log('matched');
+          setAccountInfo(addressRes.data);
+          setIsWalletNotFound(false);
+          setCheckingUsername(false);
+        }
+      } catch (err) {
+        setIsWalletNotFound(true);
+        setAccountInfo(null);
+      }
     } finally {
       setCheckingUsername(false);
     }
