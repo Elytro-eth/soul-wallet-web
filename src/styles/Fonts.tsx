@@ -4,6 +4,8 @@ import SfSemiBold from '@/assets/fonts/sf/SF-Pro-Text-Semibold.otf';
 import SfBold from '@/assets/fonts/sf/SF-Pro-Text-Bold.otf';
 
 import InterRegular from '@/assets/fonts/inter/Inter-Regular.ttf';
+import InterMedium from '@/assets/fonts/inter/Inter-Medium.ttf';
+import InterSemiBold from '@/assets/fonts/inter/Inter-SemiBold.ttf';
 import InterBold from '@/assets/fonts/inter/Inter-Bold.ttf';
 
 const Fonts = () => (
@@ -28,6 +30,16 @@ const Fonts = () => (
       font-family: 'Inter';
       font-weight: 400;
       src: url(${InterRegular});
+    }
+       @font-face {
+      font-family: 'Inter';
+      font-weight: 500;
+      src: url(${InterMedium});
+    }
+       @font-face {
+      font-family: 'Inter';
+      font-weight: 600;
+      src: url(${InterSemiBold});
     }
     @font-face {
       font-family: 'Inter';
