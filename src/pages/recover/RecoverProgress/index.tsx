@@ -68,7 +68,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const pendingGuardianNum = guardianInfo && guardianInfo.threshold ? guardianInfo.threshold - signedGuardians.length : 0;
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingBottom="120px">
+    <Box width="100%" height="100%" padding="30px">
       <Box width="120px" height="120px" borderRadius="120px" margin="0 auto" background="#F2F2F2" opacity="0.55"></Box>
       <Box width="100%" textAlign="center" fontSize="23px" fontWeight="700" marginTop="20px" letterSpacing="-1px">
         Share link with your guardians
@@ -139,8 +139,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
            </Box>
          </Box>
       })}
-
-      
+      <Box height="80px" />
     </Box>
   );
 }
