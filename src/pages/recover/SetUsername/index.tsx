@@ -7,7 +7,7 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
   const disabled = !username;
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop="138px">
+    <Box width="100%" height="400px" padding="30px">
       <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px">
         Enter username
       </Box>

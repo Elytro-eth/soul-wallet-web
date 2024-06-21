@@ -16,7 +16,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
 
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop="138px">
+    <Box width="100%" padding="30px" height="400px">
       <Box
         fontWeight="600"
         fontSize="24px"

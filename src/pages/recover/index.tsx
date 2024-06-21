@@ -16,12 +16,13 @@ import { useSettingStore } from '@/store/setting';
 import useWallet from '@/hooks/useWallet';
 import useQuery from '@/hooks/useQuery';
 import RecoverProcess from './RecoverProcess';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Recover() {
   const { registerForRecover } = usePasskey();
   const toast = useToast();
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(3);
   const [username, setUsername] = useState('');
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [accountInfo, setAccountInfo] = useState<any>(null);
@@ -32,6 +33,7 @@ export default function Recover() {
   const [checkingUsername, setCheckingUsername] = useState(false);
   const [isRecovering, setIsRecovering] = useState(false);
   const [signedGuardians, setSignedGuardians] = useState<any>([]);
+  const { innerHeight } = useScreenSize()
 
   const { recoverInfo, updateRecoverInfo } = useTempStore();
   const { recoveryID } = recoverInfo;
@@ -230,7 +232,15 @@ export default function Recover() {
         </Fragment>
       )}
       {step > 0 && step < 4 && <RecoverProcess step={step} />}
-      {renderStep()}
+      <Box
+        height={(step < 4) ? (innerHeight - 64) : innerHeight}
+        overflowY="auto"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        {renderStep()}
+      </Box>
     </Box>
   );
 }

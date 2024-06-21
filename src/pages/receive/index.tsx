@@ -101,7 +101,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
         <Box fontSize="32px" fontWeight="700">
           Receive
         </Box>
-        <Box marginTop="60px">
+        <Box marginTop="20px">
           <Box
             width="100%"
             background="white"

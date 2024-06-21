@@ -157,7 +157,13 @@ export default function Create() {
           <ProgressBar percentage={step >= 3 ? 100 : (((step + 1) / 3) * 100)} />
         </Fragment>
       )}
-      <Box height={innerHeight - 64} overflowY="auto">
+      <Box
+        height={(step < 3) ? (innerHeight - 64) : innerHeight}
+        overflowY="auto"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         {renderStep()}
       </Box>
     </Box>

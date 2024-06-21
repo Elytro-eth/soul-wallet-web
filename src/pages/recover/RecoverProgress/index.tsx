@@ -27,6 +27,7 @@ import { useGuardianStore } from '@/store/guardian';
 import { shareUrl, toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
 import AddressIcon from '@/components/AddressIcon';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const { openModal } = useWalletContext();
@@ -34,6 +35,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const { guardianAddressEmail } = useSettingStore();
   const { guardianInfo } = recoverInfo;
   const { doCopy } = useTools();
+  const { innerHeight } = useScreenSize()
 
   const doOpenModal = async (guardianAddress: string) => {
     // get template info
@@ -66,7 +68,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const pendingGuardianNum = guardianInfo && guardianInfo.threshold ? guardianInfo.threshold - signedGuardians.length : 0;
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop="40px">
+    <Box width="100%" height="100%" padding="30px" paddingBottom="120px">
       <Box width="120px" height="120px" borderRadius="120px" margin="0 auto" background="#F2F2F2" opacity="0.55"></Box>
       <Box width="100%" textAlign="center" fontSize="23px" fontWeight="700" marginTop="20px" letterSpacing="-1px">
         Share link with your guardians
@@ -82,18 +84,18 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
       </Box>
       {guardiansList &&
        guardiansList.map((guardianAddress: any, index: number) => {
-        const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) 
+         const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) 
          return <Box
-           fontWeight="600"
-           fontSize="14px"
-           key={index}
-           width="100%"
-           padding="24px 0"
-           borderBottom="1px solid #F0F0F0"
-           display="flex"
-           alignItems="center"
-         >
-          <AddressIcon width={32} address={guardianAddress} />
+                  fontWeight="600"
+                  fontSize="14px"
+                  key={index}
+                  width="100%"
+                  padding="24px 0"
+                  borderBottom="1px solid #F0F0F0"
+                  display="flex"
+                  alignItems="center"
+                >
+           <AddressIcon width={32} address={guardianAddress} />
            {/* <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" /> */}
            <Flex align={'center'} gap="2" ml={"2"}>
              <Box wordBreak={"break-all"} fontFamily={"monospace"}>{label}</Box>
@@ -136,9 +138,9 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
              )}
            </Box>
          </Box>
-})}
+      })}
 
- 
+      
     </Box>
   );
 }

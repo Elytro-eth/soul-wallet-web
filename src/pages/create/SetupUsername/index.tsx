@@ -6,7 +6,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
   const disabled = !value || nameStatus !== 0;
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop="138px">
+    <Box width="100%" padding="30px" height="400px">
       <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px">
         Set up username
       </Box>

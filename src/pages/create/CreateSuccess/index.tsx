@@ -110,9 +110,8 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
   return (
     <Box
       width="100%"
-      // height="100%"
       padding="30px"
-      paddingTop="200px"
+      height="500px"
       display="flex"
       alignItems="center"
       justifyContent="center"

@@ -9,7 +9,7 @@ export default function RecoverProcess({ step }: any) {
   return (
     <Box
       position="fixed"
-      bottom="24px"
+      bottom="20px"
       left="16px"
       width="calc(100vw - 32px)"
       padding="24px"

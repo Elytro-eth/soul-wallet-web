@@ -30,7 +30,13 @@ export default function GuardianSetting() {
   return (
     <Box width="100%" height={innerHeight}>
       <Header title="Guardian setting" showBackButton onBack={onPrev} />
-      <Box height={innerHeight - 60} overflowY="auto">
+      <Box
+        height={innerHeight - 60}
+        overflowY="auto"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Outlet />
       </Box>
     </Box>

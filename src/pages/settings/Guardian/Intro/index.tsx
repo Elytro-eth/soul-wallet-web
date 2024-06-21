@@ -19,7 +19,7 @@ export default function Intro({ onPrev, onNext }: any) {
   })
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop="138px">
+    <Box width="100%" height="400px" padding="30px">
       <Box
         width="120px"
         height="120px"
