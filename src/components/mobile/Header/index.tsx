@@ -2,7 +2,7 @@ import { Box, Text, Image,} from '@chakra-ui/react';
 import BackIcon from '@/components/Icons/mobile/Back'
 import ImgLogo from '@/assets/soul-logo.svg';
 
-export default function Header({ title, onBack, showBackButton, showLogo, ...props }: any) {
+export default function Header({ title, onBack, step, showBackButton, showLogo, ...props }: any) {
   return (
     <Box
       height="60px"

@@ -87,7 +87,7 @@ export default function Recover() {
     // todo, add debounce;
     if (!username) return;
     // clear Previous info
-    setCheckingUsername(true);
+    // setCheckingUsername(true);
     setAccountInfo(null);
     setIsWalletNotFound(false);
 
@@ -125,6 +125,8 @@ export default function Recover() {
   };
 
   useEffect(() => {
+    if(!username) return
+    setCheckingUsername(true);
     debounce(() => {
       checkUsername();
     }, 1000);
@@ -224,7 +226,7 @@ export default function Recover() {
       {step < 4 && (
         <Fragment>
           {step === 0 && <Header title="" showLogo />}
-          {step > 0 && <Header title="Recover account" showBackButton onBack={onPrev} />}
+          {step > 0 && <Header title="Recover account" showBackButton={step < 3} step={step} onBack={onPrev} />}
         </Fragment>
       )}
       {step > 0 && step < 4 && <RecoverProcess step={step} />}
