@@ -18,7 +18,7 @@ import GoToIcon from '@/assets/mobile/goto.svg';
 import { useOutletContext } from 'react-router-dom';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useBrowser from '@/hooks/useBrowser';
-import useScreenSize from '@/hooks/useScreenSize'
+import useScreenSize from '@/hooks/useScreenSize';
 import IconSetting from '@/assets/icons/setting.svg';
 import { useAddressStore } from '@/store/address';
 import { useGuardianStore } from '@/store/guardian';
@@ -44,7 +44,7 @@ const getFontSize = (value: any) => {
 const getSmallFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
 
-  return '24px'
+  return '24px';
 
   // if (length > 2) {
   //   return '24px';
@@ -67,7 +67,6 @@ const getFontBottomMargin = (value: any) => {
   return '20px';
 };
 
-
 export function Header({ openMenu, username, ...props }: any) {
   const { walletName, selectedAddress } = useAddressStore();
   return (
@@ -82,10 +81,19 @@ export function Header({ openMenu, username, ...props }: any) {
       {...props}
     >
       <Box display="flex" gap="2" alignItems="center" justifyContent="center">
-        <Box fontSize="16px" lineHeight={"20px"} fontWeight="700"></Box>
+        <Box fontSize="16px" lineHeight={'20px'} fontWeight="700"></Box>
       </Box>
       <Box fontSize="18px" fontWeight="700" color="black" lineHeight="24px">
-        <Box background="white" height="36px" width="36px" borderRadius="36px" display="flex" alignItems="center" justifyContent="center" onClick={openMenu}>
+        <Box
+          background="white"
+          height="36px"
+          width="36px"
+          borderRadius="36px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          onClick={openMenu}
+        >
           <Box
             width="36px"
             height="36px"
@@ -104,27 +112,25 @@ export function Header({ openMenu, username, ...props }: any) {
 }
 
 export default function Dashboard() {
-  const { openFullScreenModal } = useWalletContext()
+  const { openFullScreenModal } = useWalletContext();
   const { totalUsdValue, totalTrialValue, tokenBalance } = useBalanceStore();
   const { historyList } = useHistoryStore();
-  const { innerHeight } = useScreenSize()
+  const { innerHeight } = useScreenSize();
   const [modalMargin, setModalMargin] = useState(494);
   const [modalHeight, setModalHeight] = useState(innerHeight - 494);
   const [showFullHistory, setShowFullHistory] = useState(false);
   const [modalPosition, setModalPosition] = useState('bottom');
-  const {guardiansInfo} = useGuardianStore();
+  const { guardiansInfo } = useGuardianStore();
   const [isMoving, setIsMoving] = useState(false);
   const { navigate } = useBrowser();
   const { walletName } = useAddressStore();
   // const { openModal } = useNavigation()
   const [openModal] = useOutletContext<any>();
   const contentRef = useRef();
-  const [activeMenu, setActiveMenu] = useState('apps')
+  // const [activeMenu, setActiveMenu] = useState('apps')
 
-  const totalShowBalance = BN(totalUsdValue).plus(totalTrialValue).toFixed(2);
-
-  const valueLeft = totalShowBalance.split('.')[0];
-  const valueRight = totalShowBalance.split('.')[1];
+  const valueLeft = totalUsdValue.split('.')[0];
+  const valueRight = totalUsdValue.split('.')[1];
 
   const fontSize = getFontSize(valueLeft);
   const smFontSize = getSmallFontSize(valueRight);
@@ -227,12 +233,9 @@ export default function Dashboard() {
   const finalHistoryList = showFullHistory ? historyList : historyList.slice(0, 2);
   // const finalHistoryList = historyList
 
-  console.log('innerHeight', innerHeight)
+  console.log('innerHeight', innerHeight);
   return (
-    <Box
-      height={innerHeight}
-      background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
-    >
+    <Box height={innerHeight} background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)">
       <Header
         paddingTop="10px"
         paddingBottom="10px"
@@ -251,30 +254,39 @@ export default function Dashboard() {
               Hi, {walletName}
             </Box>
             <Box fontWeight="700" fontSize="42px" lineHeight="50px" marginTop="8px">
-              Welcome to<br />
+              Welcome to
+              <br />
               Ethereum
             </Box>
           </Box>
-          {(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash) && <Box
-            display="flex"
-            alignItems="center"
-            width="100%"
-            minHeight="38px"
-            borderRadius="38px"
-            background="white"
-            padding="10px 18px"
-            color="#324174"
-            justifyContent="space-between"
-            marginBottom="40px"
-            fontSize="14px"
-            onClick={() => navigate('/verify-email')}
-          >
-            <Box>Verify Email to Get <Box as="span" fontWeight="700">10 USDC</Box> for free</Box>
-            <Box>
-              <Image src={GoToIcon} />
+          {(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash) && (
+            <Box
+              display="flex"
+              alignItems="center"
+              width="100%"
+              minHeight="38px"
+              borderRadius="38px"
+              background="white"
+              padding="10px 18px"
+              color="#324174"
+              justifyContent="space-between"
+              marginBottom="40px"
+              fontSize="14px"
+              onClick={() => navigate('/verify-email')}
+            >
+              <Box>
+                Verify Email to Get{' '}
+                <Box as="span" fontWeight="700">
+                  10 USDC
+                </Box>{' '}
+                for free
+              </Box>
+              <Box>
+                <Image src={GoToIcon} />
+              </Box>
             </Box>
-          </Box>}
-          
+          )}
+
           {/* <Box display="flex" marginBottom="36px">
             <Box marginRight="24px" fontSize="24px" fontWeight={(activeMenu === 'apps') ? 700 : 400} position="relative" onClick={() => setActiveMenu('apps')}>
               Apps
@@ -294,12 +306,7 @@ export default function Dashboard() {
             position="relative"
             zIndex="1"
           >
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="flex-start"
-              padding="24px"
-            >
+            <Box display="flex" flexDirection="column" alignItems="flex-start" padding="24px">
               <Box display="flex" alignItems="center">
                 <Box fontSize="24px" fontWeight="700" marginRight="2px">
                   $
@@ -325,37 +332,39 @@ export default function Dashboard() {
                   }}
                 />
                 {valueRight &&
-                 BN(valueRight).isGreaterThan(0) &&
-                 Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
-                   <Box
-                     fontSize={smFontSize}
-                     lineHeight={'1'}
-                     fontWeight="700"
-                     marginTop={fontBottomMargin}
-                     // marginLeft="10px"
-                     color="#939393"
-                   >
-                     .
-                     <Box
-                       as="span"
-                       sx={{
-                         '@property --num': {
-                           syntax: `'<integer>'`,
-                           initialValue: '0',
-                           inherits: 'false',
-                         },
-                         '&': {
-                           transition: '--num 1s',
-                           counterReset: 'num var(--num)',
-                           '--num': valueRight.slice(0, 3).replace(/0+$/, ''),
-                         },
-                         '&::after': {
-                           content: 'counter(num)',
-                         },
-                       }}
-                     />
-                   </Box>
-                )}
+                  BN(valueRight).isGreaterThan(0) &&
+                  Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
+                    <Box
+                      fontSize={smFontSize}
+                      lineHeight={'1'}
+                      fontWeight="700"
+                      marginTop={fontBottomMargin}
+                      // marginLeft="10px"
+                      color="#939393"
+                    >
+                      .
+                      <Box
+                        as="span"
+                        //  sx={{
+                        //    '@property --num': {
+                        //      syntax: `'<integer>'`,
+                        //      initialValue: '0',
+                        //      inherits: 'false',
+                        //    },
+                        //    '&': {
+                        //      transition: '--num 1s',
+                        //      counterReset: 'num var(--num)',
+                        //      '--num': valueRight.slice(0, 4).replace(/0+$/, ''),
+                        //    },
+                        //    '&::after': {
+                        //      content: 'counter(num)',
+                        //    },
+                        //  }}
+                      >
+                        {valueRight.slice(0, 4).replace(/0+$/, '')}
+                      </Box>
+                    </Box>
+                  )}
               </Box>
               <Box marginTop="20px" display="flex">
                 <Box
@@ -365,8 +374,12 @@ export default function Dashboard() {
                   alignItems="center"
                   onClick={() => openFullScreenModal('send')}
                 >
-                  <Box><SendIcon /></Box>
-                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Send</Box>
+                  <Box>
+                    <SendIcon />
+                  </Box>
+                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">
+                    Send
+                  </Box>
                 </Box>
                 <Box
                   marginRight="30px"
@@ -375,8 +388,12 @@ export default function Dashboard() {
                   alignItems="center"
                   onClick={() => openFullScreenModal('receive')}
                 >
-                  <Box><ReceiveIcon /></Box>
-                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Receive</Box>
+                  <Box>
+                    <ReceiveIcon />
+                  </Box>
+                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">
+                    Receive
+                  </Box>
                 </Box>
                 <Box
                   marginRight="30px"
@@ -385,32 +402,40 @@ export default function Dashboard() {
                   alignItems="center"
                   onClick={() => openFullScreenModal('activity')}
                 >
-                  <Box><ActivitiesIcon /></Box>
-                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">Activity</Box>
+                  <Box>
+                    <ActivitiesIcon />
+                  </Box>
+                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">
+                    Activity
+                  </Box>
                 </Box>
               </Box>
             </Box>
             <Box padding="24px 30px" paddingBottom="0" borderTop="1px solid rgba(0, 0, 0, 0.1)">
               <Box marginBottom="18px" display="flex" alignItems="center" justifyContent="space-between">
-                <Box fontSize="16px" fontWeight="600">Tokens</Box>
-                <Box fontSize="14px" fontWeight="400" color="rgba(0, 0, 0, 0.5)">${totalUsdValue}</Box>
+                <Box fontSize="16px" fontWeight="600">
+                  Tokens
+                </Box>
+                <Box fontSize="14px" fontWeight="400" color="rgba(0, 0, 0, 0.5)">
+                  ${totalUsdValue}
+                </Box>
               </Box>
-              {tokenBalance.map((item: any, index: number) => <Box
-                display="flex"
-                alignItems="center"
-                marginBottom="28px"
-              >
-                <Box marginRight="10px">
-                  <Image src={item.logoURI} w="10" />
+              {tokenBalance.map((item: any, index: number) => (
+                <Box display="flex" alignItems="center" marginBottom="28px">
+                  <Box marginRight="10px">
+                    <Image src={item.logoURI} w="10" />
+                  </Box>
+                  <Box fontWeight="700" fontSize="16px">
+                    {item.name}
+                  </Box>
+                  <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                    <Box fontWeight="700" fontSize="20px">
+                      {item.tokenBalanceFormatted}
+                    </Box>
+                    {/* <Box fontSize="12px" color="rgba(0, 0, 0, 0.5)">$10.11</Box> */}
+                  </Box>
                 </Box>
-                <Box fontWeight="700" fontSize="16px">
-                  {item.name}
-                </Box>
-                <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                  <Box fontWeight="700" fontSize="20px">{item.tokenBalanceFormatted}</Box>
-                  {/* <Box fontSize="12px" color="rgba(0, 0, 0, 0.5)">$10.11</Box> */}
-                </Box>
-              </Box>)}
+              ))}
             </Box>
           </Box>
           {finalHistoryList && finalHistoryList.length > 0 && (
@@ -462,18 +487,21 @@ export default function Dashboard() {
                     </Box>
                     <Box>
                       <Box display="flex" alignItems="center">
-                        <Box fontSize="14px" fontWeight="700" textTransform={"capitalize"}>
+                        <Box fontSize="14px" fontWeight="700" textTransform={'capitalize'}>
                           {item.functionName}
                         </Box>
                       </Box>
                       {/* <Box fontSize="12px">{item.dateFormatted}</Box> */}
                     </Box>
-                    {item.actualGasCost ? <Box marginLeft="auto">
-                      <Box fontSize="14px" fontWeight="700">
-                        {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH
+                    {item.actualGasCost ? (
+                      <Box marginLeft="auto">
+                        <Box fontSize="14px" fontWeight="700">
+                          {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH
+                        </Box>
                       </Box>
-                    </Box> : '' }
-                   
+                    ) : (
+                      ''
+                    )}
                   </Box>
                 ))}
               </Flex>
