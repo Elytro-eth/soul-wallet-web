@@ -11,6 +11,9 @@ export interface ISettingStore {
   setIgnoreWebauthnOverride: (val: boolean) => void;
   isDepositAllChecked: boolean;
   setIsDepositAllChecked: (val: boolean) => void;
+  isAddedToHomeScreen: boolean;
+  setIsAddedToHomeScreen: (val: boolean) => void;
+  getIsAddedToHomeScreen: () => boolean;
   // for lasting data
   guardianAddressEmail: { [address: string]: string };
   saveGuardianAddressEmail: (address: string, email: string) => void;
@@ -23,6 +26,7 @@ export interface ISettingStore {
 
 const createSettingSlice = immer<ISettingStore>((set, get) => ({
   isDepositAllChecked: false,
+  isAddedToHomeScreen: false,
   guardianAddressEmail: {},
   guardianAddressName: {},
   saveGuardianAddressEmail: (address, email) => {
@@ -67,6 +71,14 @@ const createSettingSlice = immer<ISettingStore>((set, get) => ({
     set({
       isDepositAllChecked: val,
     });
+  },
+  setIsAddedToHomeScreen: (val: boolean) => {
+    set({
+      isAddedToHomeScreen: val,
+    });
+  },
+  getIsAddedToHomeScreen: () => {
+    return get().isAddedToHomeScreen
   },
   ignoreWebauthnOverride: false,
   setIgnoreWebauthnOverride: (val: boolean) => {

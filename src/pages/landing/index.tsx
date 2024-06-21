@@ -21,6 +21,7 @@ import AAVEIcon from '@/assets/mobile/aave.png'
 import BN from 'bignumber.js'
 import APYCard from '@/components/mobile/APYCard'
 import useScreenSize from '@/hooks/useScreenSize'
+import { useSettingStore } from '@/store/setting';
 
 export default function Landing() {
   const [loaded, setLoaded] = useState(false);
@@ -29,7 +30,8 @@ export default function Landing() {
   const [logging, setLogging] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { innerHeight } = useScreenSize()
-  const marginHeight = innerHeight - 680
+  const { getIsAddedToHomeScreen, setIsAddedToHomeScreen } = useSettingStore()
+  const marginHeight = innerHeight - (innerHeight < 680 ? innerHeight : 680)
 
   const navigate = useNavigate();
   const doSignIn = async () => {
@@ -55,7 +57,7 @@ export default function Landing() {
   }, [loaded])
 
   useEffect(() => {
-    onOpen()
+    if (!getIsAddedToHomeScreen()) onOpen()
 
     return () => {
       onClose()
@@ -174,7 +176,7 @@ export default function Landing() {
       </Box>
       <Modal
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => { setIsAddedToHomeScreen(true); onClose() }}
         motionPreset="slideInBottom"
         blockScrollOnMount={true}
       >
@@ -192,10 +194,11 @@ export default function Landing() {
             sm: `${marginHeight}px`,
             md: 'calc(50vh - 125px)'
           }}
-          height="680px"
+          height={innerHeight < 680 ? innerHeight : 680}
           overflow="visible"
           mb="0"
           position="relative"
+          overflowY="scroll"
         >
           <ModalCloseButton />
           <ModalBody
@@ -217,7 +220,7 @@ export default function Landing() {
             >
               <Image src={AddHomeIMG} />
             </Box>
-            <Box fontSize="24px" fontWeight="700" marginBottom="14px" textAlign="center" letterSpacing="-2px">
+            <Box fontSize="24px" fontWeight="700" marginBottom="14px" textAlign="center" letterSpacing="-1px">
               Add to home screen to continue...
             </Box>
             <Box width="100%">
