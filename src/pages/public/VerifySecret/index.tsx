@@ -39,7 +39,7 @@ function SignContainer({ children }: any) {
         flexDirection="column"
         width="100%"
       >
-        <RoundContainer
+        <Box
           width="1058px"
           maxWidth="100%"
           minHeight="544px"
@@ -51,7 +51,7 @@ function SignContainer({ children }: any) {
           background="#FFFFFF"
         >
           {children}
-        </RoundContainer>
+        </Box>
       </Box>
     </Flex>
   );
@@ -95,7 +95,7 @@ export default function VerifySecret() {
               alignItems="center"
               justifyContent="center"
             >
-              <Box fontSize="32px" fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+              <Box fontSize="32px" fontWeight="700" lineHeight={'normal'}>
                 Loading...
               </Box>
             </Box>
@@ -128,13 +128,12 @@ export default function VerifySecret() {
               >
                 <SuccessIcon size="120" />
               </Box>
-              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'}>
                 Email verified successfully!
               </Box>
               <Box
                 fontSize="14px"
                 fontWeight="400"
-                fontFamily="Nunito"
                 lineHeight={'normal'}
                 color="black"
                 marginTop="34px"
@@ -172,20 +171,9 @@ export default function VerifySecret() {
               >
                 <ErrorIcon size="120" />
               </Box>
-              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'} fontFamily="Nunito">
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'}>
                 Failed to verify secret.
               </Box>
-              {/* <Box
-                fontSize="14px"
-                fontWeight="400"
-                fontFamily="Nunito"
-                lineHeight={'normal'}
-                color="black"
-                marginTop="34px"
-                maxWidth={{ base: '300px', md: '500px' }}
-              >
-                Your email has been verified. Please continue guardian setup.
-              </Box> */}
             </Box>
           </Box>
         </Box>

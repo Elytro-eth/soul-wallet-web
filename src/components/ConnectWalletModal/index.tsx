@@ -55,14 +55,12 @@ export default function ConnectWalletModal({
                   >
                     <Box
                       fontWeight="700"
-                      fontFamily="Nunito"
                       fontSize="20px"
                     >
                       Connecting wallet...
                     </Box>
                     <Box
                       fontWeight="600"
-                      fontFamily="Nunito"
                       fontSize="14px"
                       color="rgba(0, 0, 0, 0.6)"
                       marginTop="6px"

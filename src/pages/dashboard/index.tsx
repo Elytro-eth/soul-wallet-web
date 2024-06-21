@@ -299,7 +299,6 @@ export default function Dashboard() {
               flexDirection="column"
               alignItems="flex-start"
               padding="24px"
-              // fontFamily={"Nunito"}
             >
               <Box display="flex" alignItems="center">
                 <Box fontSize="24px" fontWeight="700" marginRight="2px">
