@@ -48,7 +48,6 @@ function SignContainer({ children }: any) {
           padding="0"
           overflow="hidden"
           flexDirection={{ base: 'column', md: 'row' }}
-          background="#FFFFFF"
         >
           {children}
         </Box>
