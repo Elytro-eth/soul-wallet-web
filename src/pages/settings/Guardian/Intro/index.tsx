@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image, Menu, MenuList, MenuItem, useOutsideClick } from '@chakra-ui/react';
+import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image, Menu, MenuList, MenuItem, useOutsideClick, MenuButton } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 import GuardianIcon from '@/assets/mobile/guardian.svg'
@@ -48,9 +48,8 @@ export default function Intro({ onPrev, onNext }: any) {
       >
         Guardians are the wallet addresses from your own or trusted friends which will be requested for signature when your wallet is lost. Adding guardians will protect your wallet from potential lose.
       </Box>
-      <Box width="100%" marginTop="40px" display="flex" alignItems="center" justifyContent="center">
+      <Box width="100%" display="flex" alignItems="center" justifyContent="center">
         <Box position="relative">
-          <Button onClick={() => { isOpen ? onClose() : onOpen()}} size="xl" type="blue" width="195px">Add guardian</Button>
           <Box
             position="absolute"
             top="60px"
@@ -63,6 +62,11 @@ export default function Intro({ onPrev, onNext }: any) {
             >
               {() => (
                 <Box overflow="auto" ref={menuRef}>
+                  <MenuButton width="244px" as={Box} onClick={() => { isOpen ? onClose() : onOpen()}}>
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                      <Button  size="xl" type="blue" width="194px">Add guardian</Button>
+                    </Box>
+                  </MenuButton>
                   <MenuList
                     background="white"
                     boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)"

@@ -9,6 +9,7 @@ export default function Public() {
     <Box
       width="100%"
       height={innerHeight}
+      maxWidth="430px"
     >
       <Header
         showLogo={true}
