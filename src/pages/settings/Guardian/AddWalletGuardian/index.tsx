@@ -128,18 +128,18 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   }
 
   return (
-    <Box width="100%" height="100%">
+    <Box width="100%" height={innerHeight - 40}>
       <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">
         Add Wallet Guardian
       </Box>
       <Box
-        height={innerHeight - 134}
-        overflowY="auto"
+        // height="calc(100% - 94px)"
+        // overflowY="auto"
         display="flex"
         alignItems="center"
         justifyContent="center"
       >
-        <Box width="100%" height="400px">
+        <Box width="100%">
           <Box padding="30px">
             <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px"  marginTop="50px">
               ENS or wallet address
