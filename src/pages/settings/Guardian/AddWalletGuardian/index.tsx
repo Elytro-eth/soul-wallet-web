@@ -129,75 +129,87 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
 
   return (
     <Box width="100%" height="100%">
-      <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">Add Wallet Guardian</Box>
-      <Box height={innerHeight} padding="30px">
-        <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px"  marginTop="50px">
-          ENS or wallet address
+      <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">
+        Add Wallet Guardian
+      </Box>
+      <Box
+        height={innerHeight - 134}
+        overflowY="auto"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Box width="100%" height="400px">
+          <Box padding="30px">
+            <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px"  marginTop="50px">
+              ENS or wallet address
+            </Box>
+            <Box
+              position="relative"
+            >
+              <Input
+                ref={setInputRef}
+                spellCheck={false}
+                value={guardianAddress}
+                onChange={e => onAddressChange(e.target.value)}
+                fontSize="32px"
+                lineHeight="24px"
+                padding="0"
+                fontWeight="700"
+                placeholder="Enter or paste here"
+                borderRadius="0"
+                border="none"
+                outline="none"
+                _focusVisible={{ border: 'none', boxShadow: 'none' }}
+              />
+              <ENSResolver
+                _styles={{
+                  width: '100%',
+                  top: '65px',
+                  left: '0',
+                  right: '0',
+                  borderRadius: '12px'
+                }}
+                isENSOpen={isENSOpen}
+                setIsENSOpen={setIsENSOpen}
+                isENSLoading={isENSLoading}
+                setIsENSLoading={setIsENSLoading}
+                searchText={searchText}
+                setSearchText={setSearchText}
+                searchAddress={searchAddress}
+                setSearchAddress={setSearchAddress}
+                resolvedAddress={resolvedAddress}
+                setResolvedAddress={setResolvedAddress}
+                setMenuRef={setMenuRef}
+                submitENSName={submitENSName}
+                setActiveENSNameRef={setActiveENSNameRef}
+                getActiveENSNameRef={getActiveENSNameRef}
+              />
+            </Box>
+            <Box fontWeight="700" fontSize="16px" lineHeight="14px" marginBottom="20px" marginTop="40px">
+              Guardian name (optional)
+            </Box>
+            <Box>
+              <Input
+                spellCheck={false}
+                fontSize="18px"
+                lineHeight="24px"
+                padding="0"
+                fontWeight="700"
+                placeholder="Enter or paste here"
+                borderRadius="0"
+                border="none"
+                value={guardianName}
+                onChange={e=> setGuardianName(e.target.value)}
+                outline="none"
+                _focusVisible={{ border: 'none', boxShadow: 'none' }}
+              />
+            </Box>
+            <Button size="xl" type="blue" width="100%" marginTop="60px" loading={changingGuardian} onClick={onConfirm}>
+              Add
+            </Button>
+          </Box>
         </Box>
-        <Box
-          position="relative"
-        >
-          <Input
-            ref={setInputRef}
-            spellCheck={false}
-            value={guardianAddress}
-            onChange={e => onAddressChange(e.target.value)}
-            fontSize="32px"
-            lineHeight="24px"
-            padding="0"
-            fontWeight="700"
-            placeholder="Enter or paste here"
-            borderRadius="0"
-            border="none"
-            outline="none"
-            _focusVisible={{ border: 'none', boxShadow: 'none' }}
-          />
-          <ENSResolver
-            _styles={{
-              width: '100%',
-              top: '65px',
-              left: '0',
-              right: '0',
-              borderRadius: '12px'
-            }}
-            isENSOpen={isENSOpen}
-            setIsENSOpen={setIsENSOpen}
-            isENSLoading={isENSLoading}
-            setIsENSLoading={setIsENSLoading}
-            searchText={searchText}
-            setSearchText={setSearchText}
-            searchAddress={searchAddress}
-            setSearchAddress={setSearchAddress}
-            resolvedAddress={resolvedAddress}
-            setResolvedAddress={setResolvedAddress}
-            setMenuRef={setMenuRef}
-            submitENSName={submitENSName}
-            setActiveENSNameRef={setActiveENSNameRef}
-            getActiveENSNameRef={getActiveENSNameRef}
-          />
-        </Box>
-        <Box fontWeight="700" fontSize="16px" lineHeight="14px" marginBottom="20px" marginTop="40px">
-          Guardian name (optional)
-        </Box>
-        <Box>
-          <Input
-            spellCheck={false}
-            fontSize="18px"
-            lineHeight="24px"
-            padding="0"
-            fontWeight="700"
-            placeholder="Enter or paste here"
-            borderRadius="0"
-            border="none"
-            value={guardianName}
-            onChange={e=> setGuardianName(e.target.value)}
-            outline="none"
-            _focusVisible={{ border: 'none', boxShadow: 'none' }}
-          />
-        </Box>
-        <Button size="xl" type="blue" width="100%" marginTop="60px" loading={changingGuardian} onClick={onConfirm}>
-          Add
-        </Button>
       </Box>
     </Box>
   );
