@@ -184,7 +184,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
         callback(guardianAddress, values.email);
       }else{
         const defaultThreshold = 1;
-        await doSetGuardians([guardianAddress], [''], defaultThreshold);
+        await doSetGuardians([guardianAddress], [values.email], defaultThreshold);
         if(isModal){
           closeModal();
         }else{

@@ -5,8 +5,11 @@ import Button from '@/components/mobile/Button';
 import { Link as Rlink } from 'react-router-dom';
 import DetailsIMG from '@/components/Icons/mobile/Details';
 import TabIcon from '@/components/Icons/mobile/Tab';
+import { toFixed, toShortAddress } from '@/lib/tools';
+import BN from 'bignumber.js'
 import { useNavigate } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc_lg.png';
+import ETHIcon from '@/assets/tokens/eth.svg';
 import { aaveLink } from '@/config';
 import useWallet from '@/hooks/useWallet';
 import SettingIcon from '@/components/Icons/mobile/Setting';
@@ -75,18 +78,18 @@ export default function Activity({ isModal, registerScrollable }: any) {
                 </Box>
                 <Box>
                   <Box display="flex" alignItems="center">
-                    <Box fontSize="14px" fontWeight="700">
-                      Receive
+                    <Box fontSize="14px" fontWeight="700" textTransform={"capitalize"}>
+                      {item.functionName}
                     </Box>
                   </Box>
                   <Box fontSize="12px">{new Date(item.timestamp * 1000).toLocaleString()}</Box>
                 </Box>
                 <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
                   <Box fontSize="14px" fontWeight="700" display="flex">
-                    <Box marginRight="8px">+1.12 USDC</Box>
-                    <Image width="18px" height="18px" src={USDCIcon} />
+                    <Box marginRight="8px">{toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH</Box>
+                    <Image width="18px" height="18px" src={ETHIcon} />
                   </Box>
-                  <Box fontSize="12px" fontWeight="400" marginTop="4px">{`0xjds…ysia8`}</Box>
+                  <Box fontSize="12px" fontWeight="400" marginTop="4px">{toShortAddress(item.to, 6)}</Box>
                 </Box>
               </Box>
             ))}
