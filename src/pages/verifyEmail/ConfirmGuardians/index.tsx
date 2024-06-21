@@ -8,7 +8,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
   const [showDetails, setShowDetails] = useState(false)
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop={isModal ? '80px' : '138px'}>
+    <Box width="100%" height="500px" padding="30px">
       <Box
         width="120px"
         height="120px"

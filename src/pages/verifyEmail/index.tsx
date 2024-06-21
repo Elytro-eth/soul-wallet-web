@@ -70,7 +70,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
     initialValues: [defaultEmail || '']
   });
   const disabled = invalid;
-  
+
   const onPrev = useCallback(() => {
     if (step >= 1) {
       setStep((prev) => prev - 1);
@@ -281,7 +281,13 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
           Add Email Guardian
         </Box>
       )}
-      <Box height={isModal ? innerHeight - 134 : innerHeight - 60} overflowY="auto">
+      <Box
+        height={isModal ? innerHeight - 134 : innerHeight - 60}
+        overflowY="auto"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         {renderStep(isModal)}
       </Box>
     </Box>

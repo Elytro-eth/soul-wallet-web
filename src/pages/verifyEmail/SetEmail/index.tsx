@@ -12,7 +12,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
   const marginHeight = innerHeight - 508
 
   return (
-    <Box width="100%" height="100%" padding="30px" paddingTop={isModal ? '80px' : '138px'}>
+    <Box width="100%" height="400px" padding="30px">
       <Box
         fontWeight="600"
         fontSize="24px"
