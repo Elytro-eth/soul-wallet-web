@@ -220,14 +220,16 @@ export default function Manage({ onPrev, onNext }: any) {
         ))}
       </Box>
       <Box marginBottom="40px" position="relative">
-        <Button fontSize="14px" size="xl" type="white" color="black" onClick={onGuardianMenuOpen}>
-          +Add {tempGuardians.length ? 'another' : ''} guardian
-        </Button>
-        <Box position="absolute" top="60px" left="0">
+        <Box>
           <Menu isOpen={isGuardianMenuOpen} isLazy>
             {() => (
               <Box overflow="auto" ref={guardianMenuRef}>
-                <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
+                <MenuButton as={Box} onClick={() => { isGuardianMenuOpen ? onGuardianMenuClose() : onGuardianMenuOpen(); }}>
+                  <Button fontSize="14px" size="xl" type="white" color="black">
+                    +Add {tempGuardians.length ? 'another' : ''} guardian
+                  </Button>
+                </MenuButton>
+                <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)" marginTop="0">
                   <MenuItem
                     width="calc(100vw - 60px)"
                     position="relative"
@@ -272,26 +274,31 @@ export default function Manage({ onPrev, onNext }: any) {
             Recovery settings
           </Box>
           <Box marginBottom="14px" marginTop="12px" position="relative">
-            <Button
-              borderRadius="8px"
-              width="100%"
-              size="xl"
-              type="white"
-              color="black"
-              onClick={() => {
-                isThresholdMenuOpen ? onThresholdMenuClose() : onThresholdMenuOpen();
-              }}
-            >
-              {tempThreshold}
-            </Button>
-            <Box position="absolute" right="16px" top="calc(50% - 6px)">
-              <ArrowDownIcon />
-            </Box>
-            <Box position="absolute" top="60px" left="0" width="100%">
+            <Box top="60px" width="100%">
               <Menu isOpen={isThresholdMenuOpen} isLazy>
                 {() => (
                   <Box overflow="auto" ref={thresholdMenuRef}>
-                    <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)">
+                    <MenuButton
+                      as={Box}
+                      position="relative"
+                      onClick={() => {
+                        isThresholdMenuOpen ? onThresholdMenuClose() : onThresholdMenuOpen();
+                      }}
+                    >
+                      <Button
+                        borderRadius="8px"
+                        width="100%"
+                        size="xl"
+                        type="white"
+                        color="black"
+                      >
+                        {tempThreshold}
+                      </Button>
+                      <Box position="absolute" right="16px" top="calc(50% - 6px)">
+                        <ArrowDownIcon />
+                      </Box>
+                    </MenuButton>
+                    <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)" marginTop="20px" marginBottom="20px">
                       {Array.from({ length: tempGuardians.length }, (_, i) => (
                         <MenuItem
                           position="relative"
@@ -358,15 +365,15 @@ export default function Manage({ onPrev, onNext }: any) {
           >
             <Box width="100%">
               {!isActiveGuardianEmail && <Box
-                height="48px"
-                display="flex"
-                alignItems="center"
-                padding="0 23px"
-                onClick={() => {
-                  onSelectClose();
-                  onEditGuardianOpen();
-                }}
-              >
+                                           height="48px"
+                                           display="flex"
+                                           alignItems="center"
+                                           padding="0 23px"
+                                           onClick={() => {
+                                             onSelectClose();
+                                             onEditGuardianOpen();
+                                           }}
+                                         >
                 <Box marginRight="4px">
                   <EditGuardianIcon />
                 </Box>
@@ -474,31 +481,31 @@ export default function Manage({ onPrev, onNext }: any) {
               Please confirm guardian updates on your Soul Wallet account.
             </Box>
             {/* <Box
-              width="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              fontWeight="500"
-              fontSize="14px"
-              // onClick={() => setShowDetails(!showDetails)}
-            >
-              <Box>View details</Box>
-              <Box marginLeft="2px" transform={showDetails ? 'rotate(-180deg)' : 'rotate(0deg)'}>
+                width="100%"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                fontWeight="500"
+                fontSize="14px"
+                // onClick={() => setShowDetails(!showDetails)}
+                >
+                <Box>View details</Box>
+                <Box marginLeft="2px" transform={showDetails ? 'rotate(-180deg)' : 'rotate(0deg)'}>
                 <ChevronDown />
-              </Box>
-            </Box> */}
+                </Box>
+                </Box> */}
             {/* {showDetails && (
-              <Box
+                <Box
                 background="#F8F8F8"
                 borderRadius="20px"
                 marginTop="12px"
                 padding="12px"
                 fontWeight="700x"
                 fontSize="12px"
-              >
+                >
                 {`{ "domain": { ... } }`}
-              </Box>
-            )} */}
+                </Box>
+                )} */}
             <Box width="100%" marginTop="20px">
               <Button size="xl" loading={changingGuardian} type="blue" width="100%" onClick={() => doChangeGuardian()}>
                 Confirm
