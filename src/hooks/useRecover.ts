@@ -30,7 +30,7 @@ export default function useRecover() {
       });
     }
     const privateRes = await api.authenticated.saveGuardianInfo({
-      guardians: guardianWithMarks,
+      guardians: guardianWithMarks.filter((g) => g.mark),
     });
   };
 
