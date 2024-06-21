@@ -9,7 +9,7 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="138px">
       <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px">
-        Set up username
+        Enter username
       </Box>
       <Box width="100%" marginBottom="72px">
         <Input
@@ -68,7 +68,7 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
           )}
         </Box>
       </Box>
-      <Button disabled={!accountInfo} size="xl" type="blue" width="100%" onClick={onNext}>
+      <Button disabled={!accountInfo||disabled} size="xl" type="blue" width="100%" onClick={onNext}>
         Continue
       </Button>
     </Box>
