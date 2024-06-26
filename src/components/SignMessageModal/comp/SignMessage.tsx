@@ -29,7 +29,7 @@ const GuardianInfo = ({ guardiansInfo }: any) => {
   return (
     <Box>
       <Text mb="2" fontSize="20px" fontWeight="700" textAlign={'center'}>
-        Confirm Guardian Change
+        Confirm Recovery Contact Change
       </Text>
       <Text fontSize={'14px'} textAlign={'center'} fontWeight={'500'} mb="18px">
         Per your settings,
@@ -40,7 +40,7 @@ const GuardianInfo = ({ guardiansInfo }: any) => {
         <Text mx="1" as="span" fontWeight={'700'}>
           {guardianList.length}
         </Text>
-        {guardianList.length > 1 ? `guardians'` : `guardian's`} approve is required for recovery.
+        {guardianList.length > 1 ? `recovery contacts'` : `recovery contact's`} approve is required for recovery.
       </Text>
       <Flex
         mb="18px"
@@ -57,7 +57,7 @@ const GuardianInfo = ({ guardiansInfo }: any) => {
           return (
             <Box key={index}>
               <Text fontWeight={'800'} mb="6px">
-                Guardian {index + 1}
+                Recovery Contact {index + 1}
                 {guardiansInfo.guardianNames[index] ? `: ${guardiansInfo.guardianNames[index]}` : ''}
               </Text>
               <Text fontWeight={'500'}>{address}</Text>

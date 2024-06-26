@@ -118,7 +118,7 @@ export const guideList = [
   {
     id: 2,
     title: 'Guard Your Wallet!',
-    desc: `Adjust your guardian settings for enhanced security.`,
+    desc: `Adjust your recovery contact settings for enhanced security.`,
     buttonText: 'Edit',
     buttonTextFull: 'Edit Guardians',
     statusText: 'Change guardians',

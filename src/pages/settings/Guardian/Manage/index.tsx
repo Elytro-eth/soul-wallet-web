@@ -96,7 +96,7 @@ export default function Manage({ onPrev, onNext }: any) {
       const guardianNames = tempGuardians.map((guardianAddress: any) => guardianAddressName[guardianAddress]);
       await doSetGuardians(tempGuardians, guardianNames, tempThreshold);
       toast({
-        title: 'Guardian updated',
+        title: 'Recovery contact updated',
         status: 'success',
       });
       navigate('/dashboard');
@@ -319,7 +319,7 @@ export default function Manage({ onPrev, onNext }: any) {
             </Box>
           </Box>
           <Box marginBottom="20px">
-            out of {tempGuardians.length} guardian(s) confirmation is needed for wallet recovery.
+            out of {tempGuardians.length} recovery contact(s) confirmation is needed for wallet recovery.
           </Box>
         </Box>
       )}
