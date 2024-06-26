@@ -107,7 +107,9 @@ const buttonStyles = {
   gradientBlue: {
     color: '#161F36',
     background: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
-    _hover: { bg: '#3042B9' },
+    _hover: {
+      background: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+    },
     _disabled: {
       cursor: 'not-allowed',
       opacity: '0.4'

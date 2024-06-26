@@ -6,6 +6,7 @@ import OKEXIcon from '@/assets/mobile/okex.png'
 import CoinbaseIcon from '@/assets/mobile/coinbase.png'
 import BinanceIcon from '@/assets/mobile/binance.png'
 import useScreenSize from '@/hooks/useScreenSize'
+import Button from '@/components/mobile/Button'
 
 export default function MakeTransfer({ onNext, registerScrollable }: any) {
   const scrollableRef = useRef<any>()
@@ -24,14 +25,14 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
       ref={scrollableRef}
     >
       <Box padding="30px">
-        <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
+        <Box width="100%" fontSize="28px" fontWeight="500" lineHeight="36px" marginTop="20px" color="#161F36">
           Initiate a transfer
         </Box>
         <Box
           fontSize="14px"
-          fontWeight="500"
+          fontWeight="400"
           marginTop="18px"
-          textAlign="center"
+          color="#676B75"
         >
           {`Find the “Send” or “Transfer button” in your wallet or exchange account. And paste the address you copied from last step.`}
         </Box>
@@ -40,7 +41,7 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          marginTop="62px"
+          marginTop="40px"
           gap="6"
           transition="0.6s all ease"
         >
@@ -106,6 +107,9 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
           >
             {`...`}
           </Box>
+        </Box>
+        <Box marginTop="40px">
+          <Button size="xl" type="gradientBlue" width="100%" onClick={onNext}>Next</Button>
         </Box>
       </Box>
     </Box>

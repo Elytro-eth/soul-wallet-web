@@ -68,7 +68,7 @@ export default function Settings({ isModal }: any) {
         alignItems="center"
         paddingTop="30px"
         paddingBottom="24px"
-        borderBottom="1px solid #E7E7E7"
+        // borderBottom="1px solid #E7E7E7"
       >
         <Box
           display="flex"
@@ -85,12 +85,12 @@ export default function Settings({ isModal }: any) {
         flexDirection="column"
         alignItems="center"
         width="100%"
-        marginTop="24px"
       >
         <Box
           width="100%"
-          fontSize="16px"
-          fontWeight="700"
+          height="56px"
+          fontSize="18px"
+          fontWeight="500"
           py="10px"
           display="flex"
           alignItems="center"
@@ -110,8 +110,9 @@ export default function Settings({ isModal }: any) {
         </Box>
         <Box
           width="100%"
-          fontSize="16px"
-          fontWeight="700"
+          height="56px"
+          fontSize="18px"
+          fontWeight="500"
           py="10px"
           display="flex"
           alignItems="center"
@@ -141,8 +142,9 @@ export default function Settings({ isModal }: any) {
         <a target='_blank' href={tgLink} style={{width: "100%"}}>
           <Box
             width="100%"
-            fontSize="16px"
-            fontWeight="700"
+            height="56px"
+            fontSize="18px"
+            fontWeight="500"
             py="10px"
             display="flex"
             alignItems="center"
@@ -165,10 +167,9 @@ export default function Settings({ isModal }: any) {
         <Button
           size="xl"
           width="100%"
-          background="#F2F2F2"
           color="#E83D26"
           onClick={doLogout}
-          _hover={{ background: '#F2F2F2' }}
+          type="white"
         >
           <Box><LogoutIcon /></Box>
           Logout

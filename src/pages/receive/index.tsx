@@ -97,34 +97,34 @@ export default function Receive({ isModal, registerScrollable }: any) {
         showBackButton={!isModal}
         onBack={onPrev}
       />
-      <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
-        <Box fontSize="32px" fontWeight="700">
+      <Box padding="30px 8px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
+        <Box fontSize="28px" fontWeight="500" padding="0 24px">
           Receive
         </Box>
         <Box marginTop="20px">
           <Box
             width="100%"
-            background="white"
-            borderRadius="24px"
+            borderRadius="32px"
             boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
             border="1px solid #EAECF0"
             paddingBottom="42px"
             position="relative"
             zIndex="1"
             overflow="hidden"
+            background="white"
           >
             <Box
-              background="#FFEBEB"
+              // background="#FFEBEB"
               padding="12px"
               display="flex"
               alignItems="center"
             >
               <Box marginRight="8px">
-                <Image width="24px" height="24px" src={OpIcon} />
+                <Image width="40px" height="40px" src={OpIcon} />
               </Box>
               <Box>
-                <Box fontSize="16px" fontWeight="600">Optimism network</Box>
-                <Box fontSize="12px">Only send Optimism assets to this address</Box>
+                <Box fontSize="20px" fontWeight="500">Optimism network</Box>
+                <Box fontSize="12px" color="#676B75">Only send Optimism assets to this address</Box>
               </Box>
             </Box>
             <Box

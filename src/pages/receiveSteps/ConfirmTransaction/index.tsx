@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc.png'
 import CheckedIcon from '@/components/Icons/Success';
 import useScreenSize from '@/hooks/useScreenSize'
+import Button from '@/components/mobile/Button'
 
 export default function ConfirmTransaction({
   onFinish,
@@ -22,51 +23,30 @@ export default function ConfirmTransaction({
         }
       }}
     >
-      <Box padding="30px" paddingBottom="144px">
-        <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
-          Confirm transaction
-        </Box>
-        <Box
-          fontSize="14px"
-          fontWeight="500"
-          marginTop="18px"
-          textAlign="center"
-          minHeight="80px"
-        >
-          Review the info you provided, and confirm the transactions.
-        </Box>
-        <Box
-          width="100%"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          marginTop="64px"
-        >
+      <Box padding="30px">
+        <Box paddingTop="10px">
           <Box
-            background="#F1F1F1"
+            width="135px"
+            height="96px"
+            borderRadius="12px"
+            marginLeft="6px"
+            marginRight="6px"
             display="flex"
             alignItems="center"
             justifyContent="center"
-            flexDirection="column"
-            padding="30px 10px"
-            borderRadius="20px"
-            width="180px"
-            height="180px"
+            margin="0 auto"
           >
-            <Box
-              width="129px"
-              height="129px"
-              borderRadius="12px"
-              marginLeft="6px"
-              marginRight="6px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              {/* <Image width="72px" height="72px" src={USDCIcon} className="icon" /> */}
-              <CheckedIcon size="129px" />
-            </Box>
+            <CheckedIcon size="135px" />
           </Box>
+        </Box>
+        <Box width="100%" fontSize="28px" fontWeight="500" lineHeight="36px" marginTop="20px" textAlign="center">
+          Confirm transaction
+        </Box>
+        <Box fontSize="14px" fontWeight="400" marginTop="18px" textAlign="center" color="#676B75">
+          Review the info you provided, and confirm the transactions.
+        </Box>
+        <Box marginTop="40px">
+          <Button size="xl" type="gradientBlue" width="100%" onClick={onFinish}>Done</Button>
         </Box>
       </Box>
     </Box>

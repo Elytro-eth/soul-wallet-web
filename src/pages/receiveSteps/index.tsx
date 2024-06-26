@@ -32,6 +32,7 @@ import { useChainStore } from '@/store/chain';
 import { useAddressStore } from '@/store/address';
 import Button from '@/components/mobile/Button'
 import useScreenSize from '@/hooks/useScreenSize'
+import ProgressBar from '@/components/ProgressBar';
 // import { Pagination } from 'swiper/modules';
 
 const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => {
@@ -147,6 +148,9 @@ export default function Deposit({ isModal, registerScrollable }: any) {
         showBackButton={!isModal}
         onBack={onPrev}
       />
+      <Box marginTop="20px">
+        <ProgressBar size={4} activeIndex={step} />
+      </Box>
       <Swiper
         className="mySwiper"
         onSlideChange={onSlideChange}
@@ -159,14 +163,14 @@ export default function Deposit({ isModal, registerScrollable }: any) {
           <SelectNetwork onPrev={onPrev} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
         <SwiperSlide>
-          <SendToken onFinish={onFinish} isModal={isModal} registerScrollable={registerScrollable} />
+          <SendToken onFinish={onFinish} onNext={onNext}isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
 
         <SwiperSlide>
           <ConfirmTransaction onFinish={onFinish} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
       </Swiper>
-      <Pagination isActive={isPaginationActive} activeIndex={step} count={4} onNext={onNext} onFinish={onFinish} />
+      {/* <Pagination isActive={isPaginationActive} activeIndex={step} count={4} onNext={onNext} onFinish={onFinish} /> */}
     </Box>
   );
 }
