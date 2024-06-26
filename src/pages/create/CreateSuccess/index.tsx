@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 import { Link, useNavigate } from 'react-router-dom';
 import useBrowser from '@/hooks/useBrowser';
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function CreateSuccess({ credential, username, invitationCode }: any) {
   const { getActivateOp, signAndSend } = useWallet();
@@ -15,6 +16,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
   const initialKeysRef = useRef<any>();
   const creatingRef = useRef(false);
   const executingRef = useRef(false);
+  const { innerHeight } = useScreenSize()
 
   const [animated, setAnimated] = useState(false);
 
@@ -111,7 +113,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
     <Box
       width="100%"
       padding="30px"
-      height="500px"
+      height={innerHeight}
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -134,6 +136,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
           Let’s go
         </Button>
       </Box>
+      <Box height="60px" />
     </Box>
   );
 }

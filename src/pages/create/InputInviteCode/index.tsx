@@ -16,32 +16,34 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
 
 
   return (
-    <Box width="100%" padding="30px" height="400px">
+    <Box width="100%" padding="40px 30px" height="400px">
       <Box
-        fontWeight="600"
-        fontSize="24px"
-        lineHeight="14px"
+        fontWeight="500"
+        fontSize="28px"
+        lineHeight="30px"
         marginBottom="20px"
       >
         Invite code
       </Box>
-      <Box width="100%" marginBottom="74px">
+      <Box width="100%" marginBottom="30px">
         <Input
-          height="40px"
           value={value}
-          spellCheck={false}
           onChange={e => onChange(e.target.value)}
-          fontSize="28px"
-          lineHeight="24px"
-          padding="0"
-          fontWeight="700"
+          height="82px"
+          spellCheck={false}
+          fontSize="32px"
+          lineHeight="34px"
+          fontWeight="500"
           placeholder="Enter or paste here"
-          borderRadius="0"
           border="none"
           outline="none"
+          background="#F2F3F5"
+          padding="24px 40px"
+          borderRadius="24px"
+          color="#161F36"
+          marginBottom="16px"
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
         />
-        <Box marginTop="10px" width="100%" height="1px" background="rgba(73, 126, 130, 0.2)" />
         <Box mt="1" h="44px" overflow={"hidden"}>
           {checking ? <InputLoading /> : <>
             {codeStatus === -1 && <Box fontSize="14px" lineHeight="24px" fontWeight="600" onClick={onOpen}>What if I don’t have one?</Box>}
@@ -69,8 +71,8 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
+            sm: '32px 32px 0 0',
+            md: '32px',
           }}
           maxW={{
             sm: '100vw',
@@ -94,18 +96,20 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           >
             <Box
               background="#D9D9D9"
-              height="120px"
-              width="120px"
-              borderRadius="120px"
-              marginBottom="30px"
+              height="96px"
+              width="96px"
+              borderRadius="96px"
+              marginBottom="16px"
             >
               <Image src={XIcon} />
             </Box>
-            <Box fontSize="24px" fontWeight="700" marginBottom="14px">
+            <Box fontSize="28px" fontWeight="500" marginBottom="8px">
               Thanks for your interest
             </Box>
             <Box
-              fontSize="16px"
+              fontSize="14px"
+              fontWeight="400"
+              lineHeight="17.5px"
               textAlign="center"
               marginBottom="40px"
             >
@@ -113,7 +117,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
             </Box>
             <Box width="100%">
               <Link target='_blank' href={xLink}>
-                <Button size="xl" type="blue" width="100%">Follow SoulWallet on X</Button>
+                <Button size="xl" type="black" width="100%">Follow SoulWallet on X</Button>
               </Link>
             </Box>
           </ModalBody>

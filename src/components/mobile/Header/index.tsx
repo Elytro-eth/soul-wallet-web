@@ -38,7 +38,7 @@ export default function Header({ title, onBack, step, showBackButton, showLogo, 
           <BackIcon />
         </Box>
       )}
-      <Box fontSize="18px" fontWeight="700" color="black" lineHeight="60px">
+      <Box fontSize="20px" fontWeight="500" color="black" lineHeight="24px">
         {title}
       </Box>
     </Box>

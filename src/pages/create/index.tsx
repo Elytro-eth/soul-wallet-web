@@ -3,7 +3,6 @@ import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import InputInviteCode from './InputInviteCode';
 import SetupUsername from './SetupUsername';
-import SetupPasskey from './SetupPasskey';
 import AddPasskey from './AddPasskey';
 import CreateSuccess from './CreateSuccess';
 import usePasskey from '@/hooks/usePasskey';
@@ -15,7 +14,7 @@ import api from '@/lib/api';
 export default function Create() {
   const { register } = usePasskey();
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(3);
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [invitationCode, setInvitationCode] = useState('');
   const [username, setUsername] = useState('');
@@ -161,7 +160,7 @@ export default function Create() {
         height={(step < 3) ? (innerHeight - 64) : innerHeight}
         overflowY="auto"
         display="flex"
-        alignItems="center"
+        alignItems="flex-start"
         justifyContent="center"
       >
         {renderStep()}

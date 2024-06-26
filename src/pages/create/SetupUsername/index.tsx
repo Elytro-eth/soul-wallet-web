@@ -6,26 +6,34 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
   const disabled = !value || nameStatus !== 0;
 
   return (
-    <Box width="100%" padding="30px" height="400px">
-      <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px">
+    <Box width="100%" padding="40px 30px" height="400px">
+      <Box
+        fontWeight="500"
+        fontSize="28px"
+        lineHeight="30px"
+        marginBottom="20px"
+      >
         Set up username
       </Box>
-      <Box width="100%" marginBottom="72px">
+      <Box width="100%" marginBottom="30px">
         <Input
           value={value}
+          onChange={e => onChange(e.target.value)}
+          height="56px"
           spellCheck={false}
-          onChange={(e) => onChange(e.target.value)}
-          fontSize="32px"
+          fontSize="20px"
           lineHeight="24px"
-          padding="0"
-          fontWeight="700"
+          fontWeight="400"
           placeholder="Enter or paste here"
-          borderRadius="0"
           border="none"
           outline="none"
+          background="#F2F3F5"
+          padding="16px"
+          borderRadius="16px"
+          color="#161F36"
+          marginBottom="16px"
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
         />
-        <Box marginTop="10px" width="100%" height="1px" background="rgba(73, 126, 130, 0.2)" />
         <Box mt="1" h="44px" overflow={'hidden'}>
           {checking ? (
             <InputLoading />

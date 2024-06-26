@@ -146,7 +146,7 @@ export default function Landing() {
           <Link to="/create" style={{ width: '100%' }}>
             <Button
               size="xl"
-              type="white"
+              type="gradientBlue"
               minWidth="283px"
               width="100%"
               border="none"
