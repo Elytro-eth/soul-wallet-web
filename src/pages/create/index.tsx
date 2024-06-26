@@ -14,7 +14,7 @@ import api from '@/lib/api';
 export default function Create() {
   const { register } = usePasskey();
   const navigate = useNavigate();
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(0);
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [invitationCode, setInvitationCode] = useState('');
   const [username, setUsername] = useState('');
@@ -153,7 +153,7 @@ export default function Create() {
       {step < 3 && (
         <Fragment>
           <Header title="Create account" showBackButton onBack={onPrev} />
-          <ProgressBar percentage={step >= 3 ? 100 : (((step + 1) / 3) * 100)} />
+          <ProgressBar size={3} activeIndex={step} />
         </Fragment>
       )}
       <Box

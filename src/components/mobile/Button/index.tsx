@@ -103,11 +103,10 @@ const buttonStyles = {
       opacity: '0.4'
     },
   },
-  // background: radial-gradient(343.44% 424.79% at 35.68% -30.21%, #F0EEE6 0%, #F5EDEB 32.08%, #BAD5F5 100%), radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)
-  //
+  // background: radial-gradient(343.44% 424.79% at 35.68% -30.21%, #F0EEE6 0%, #F5EDEB 32.08%, #BAD5F5 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
   gradientBlue: {
     color: '#161F36',
-    background: '-webkit-gradient(radial, 50%, 0, color-stop(0%,#ffffff), color-stop(70%,#b7b7b7))',
+    background: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
     _hover: { bg: '#3042B9' },
     _disabled: {
       cursor: 'not-allowed',
