@@ -45,7 +45,7 @@ export const shareFile = (file: string) => {
 };
 
 export const shareUrl = (url: string) => {
-  if (navigator.canShare && navigator.canShare({url})) {
+  if (navigator.canShare && navigator.canShare({ url })) {
     navigator.share({ url, title: 'Social recovery link' });
   }
 };
@@ -299,7 +299,7 @@ export function toFixed(num: number | string | undefined, maxDecimalPlaces: numb
   }
   let fixedStr = Number(num).toFixed(maxDecimalPlaces);
   let trimmedStr = fixedStr.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.$/, '');
-  return needFormat ? new BN(trimmedStr).toFormat(): new BN(trimmedStr).toString();
+  return needFormat ? new BN(trimmedStr).toFormat() : new BN(trimmedStr).toString();
 }
 
 export const getNetwork = (chainId: number) => {
@@ -390,6 +390,21 @@ export const decodeCalldata = async (
 
   return decoded;
 };
+
+export function isPwaMode() {
+  // 检查是否在 iOS 设备上以 standalone 模式运行
+  if ((window.navigator as any).standalone) {
+    return true;
+  }
+
+  // 检查是否在其他浏览器上以 standalone 模式运行
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    return true;
+  }
+
+  // 如果上述条件都不满足，认为不是在 PWA 模式下
+  return false;
+}
 
 export const getIconMapping = (name: string) => {
   switch (name.toLowerCase()) {

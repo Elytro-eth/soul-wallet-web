@@ -221,7 +221,7 @@ export default function Manage({ onPrev, onNext }: any) {
       </Box>
       <Box marginBottom="40px" position="relative">
         <Box>
-          <Menu isOpen={isGuardianMenuOpen} isLazy>
+          <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
             {() => (
               <Box overflow="auto" ref={guardianMenuRef}>
                 <MenuButton as={Box} onClick={() => { isGuardianMenuOpen ? onGuardianMenuClose() : onGuardianMenuOpen(); }}>

@@ -50,6 +50,7 @@ export default function Intro({ onPrev, onNext }: any) {
             <Menu
               isOpen={isOpen}
               isLazy
+              autoSelect={false}
             >
               {() => (
                 <Box overflow="auto" ref={menuRef}>

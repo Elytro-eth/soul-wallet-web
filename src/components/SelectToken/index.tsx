@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { Box, Image, Menu, MenuList, MenuItem } from '@chakra-ui/react'
 import USDCIcon from '@/assets/mobile/usdc.png'
 import { useBalanceStore } from '@/store/balance'
+import { toFixed } from '@/lib/tools'
 
 const SelectToken = ({ select, isOpen }: any) => {
   const { tokenBalance } = useBalanceStore();
@@ -25,7 +26,7 @@ const SelectToken = ({ select, isOpen }: any) => {
                     <Image width="36px" height="36px" src={token.logoURI} />
                   </Box>
                   <Box fontSize="16px" fontWeight="600">{token.name}</Box>
-                  <Box fontSize="12px" marginLeft="auto">{token.tokenBalanceFormatted} Avail.</Box>
+                  <Box fontSize="12px" marginLeft="auto">{toFixed(token.tokenBalanceFormatted, 6)} Avail.</Box>
                 </MenuItem>
               )}
             </MenuList>

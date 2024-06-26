@@ -22,6 +22,7 @@ import BN from 'bignumber.js'
 import APYCard from '@/components/mobile/APYCard'
 import useScreenSize from '@/hooks/useScreenSize'
 import { useSettingStore } from '@/store/setting';
+import { isPwaMode } from '@/lib/tools';
 
 export default function Landing() {
   const [loaded, setLoaded] = useState(false);
@@ -57,12 +58,11 @@ export default function Landing() {
   }, [loaded])
 
   useEffect(() => {
-    if (!getIsAddedToHomeScreen()) {
+    if (!isPwaMode()) {
       setTimeout(() => {
         onOpen()
       }, 1000)
     }
-
     return () => {
       onClose()
     }
@@ -217,13 +217,14 @@ export default function Landing() {
             background="radial-gradient(476.97% 147.07% at 0% -21.13%, #FBFBF9 0%, #F7F0ED 45.5%, #BAD5F5 100%)"
           >
             <Box
-              background="#D9D9D9"
-              height="120px"
-              width="120px"
-              borderRadius="120px"
-              marginBottom="30px"
-              marginLeft="32px"
-              marginRight="32px"
+              height="96px"
+              width="96px"
+              mb="3"
+              ml="8"
+              // borderRadius="120px"
+              // marginBottom="30px"
+              // marginLeft="32px"
+              // marginRight="32px"
             >
               <Image src={AddHomeIMG} />
             </Box>

@@ -9,6 +9,9 @@ import InterMedium from '@/assets/fonts/inter/Inter-Medium.ttf';
 import InterSemiBold from '@/assets/fonts/inter/Inter-SemiBold.ttf';
 import InterBold from '@/assets/fonts/inter/Inter-Bold.ttf';
 
+import SohneRegular from '@/assets/fonts/Test Söhne/TestSöhne-Buch.otf';
+import SohneMedium from '@/assets/fonts/Test Söhne/TestSöhne-Kräftig.otf';
+
 const Fonts = () => (
   <Global
     styles={`
@@ -17,7 +20,7 @@ const Fonts = () => (
         font-weight: 400;
         src: url(${SfRegular});
     }
-           @font-face {
+    @font-face {
         font-family: 'SF';
         font-weight: 500;
         src: url(${SfMedium});
@@ -51,6 +54,18 @@ const Fonts = () => (
       font-family: 'Inter';
       font-weight: 700;
       src: url(${InterBold});
+    }
+
+    @font-face {
+      font-family: 'Sohne';
+      font-weight: 400;
+      src: url(${SohneRegular});
+    }
+
+      @font-face {
+      font-family: 'Sohne';
+      font-weight: 500;
+      src: url(${SohneMedium});
     }
  `}
   />

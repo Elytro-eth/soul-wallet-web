@@ -25,8 +25,7 @@ const validate = (values: any, props: any, callbackRef: any) => {
   if (!emailReg.test(email)) {
     errors.email = 'Please enter valid email address';
   } else {
-    const address = email.split('@')[1];
-    console.log('validEmailDomains', validEmailDomains, address);
+    const address = email.split('@')[1].toLowerCase();
     if (!validEmailDomains.includes(address)) {
       errors.email = (
         <Box as="p" display="flex">

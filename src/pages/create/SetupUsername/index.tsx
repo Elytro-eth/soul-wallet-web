@@ -18,6 +18,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
       <Box width="100%" marginBottom="30px">
         <Input
           value={value}
+          autoFocus
           onChange={e => onChange(e.target.value)}
           height="56px"
           spellCheck={false}

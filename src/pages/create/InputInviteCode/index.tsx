@@ -32,6 +32,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           height="82px"
           spellCheck={false}
           fontSize="32px"
+          autoFocus
           lineHeight="34px"
           fontWeight="500"
           placeholder="Enter or paste here"

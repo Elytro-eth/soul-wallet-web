@@ -13,11 +13,11 @@ import { toFixed } from '@/lib/tools';
 import { isAddress } from 'ethers';
 import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
 import useScreenSize from '@/hooks/useScreenSize'
+import { useAddressStore } from '@/store/address';
 
 export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo, }: any) {
-  const [withdrawAmount, setWithdrawAmount] = useState<any>('');
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { totalUsdValue, } = useBalanceStore();
+  const { selectedAddress } = useAddressStore();
   const [isENSOpen, setIsENSOpen] = useState(false);
   const [isENSLoading, setIsENSLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -97,7 +97,9 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
     setIsENSOpen(false);
   };
 
-  const disabled = (step === 0) ? (!isAddress(sendTo)) : (!withdrawAmount || withdrawAmount <= 0 || !sendTo || BN(withdrawAmount).isGreaterThan(totalUsdValue) || BN(withdrawAmount).isNaN())
+  const isSelf = sendTo.toLowerCase() === selectedAddress.toLowerCase();
+
+  const disabled = !sendTo || !isAddress(sendTo) || isSelf;
 
   return (
     <Box width="100%" height={innerHeight} overflowY="scroll">
@@ -134,6 +136,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
               fontSize="20px"
               lineHeight="24px"
               fontWeight="400"
+              autoFocus
               placeholder="Enter wallet address or ENS"
               border="none"
               outline="none"
@@ -185,7 +188,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
           marginTop="21px"
           width="100%"
         >
-          <Button disabled={false} size="xl" type="gradientBlue" width="100%" onClick={onNext}>Continue</Button>
+          <Button disabled={disabled} size="xl" type="gradientBlue" width="100%" onClick={onNext}>Continue</Button>
         </Box>
       </Box>
       <Modal
