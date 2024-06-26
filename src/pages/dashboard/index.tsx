@@ -9,6 +9,7 @@ import ActivitiesIcon from '@/components/Icons/mobile/Activities';
 // import USDCIcon from '@/assets/tokens/usdc.png';
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
+import DotsIcon from '@/components/Icons/mobile/Dots';
 import { useBalanceStore } from '@/store/balance';
 import { useHistoryStore } from '@/store/history';
 import BN from 'bignumber.js';
@@ -24,6 +25,7 @@ import { useAddressStore } from '@/store/address';
 import { useGuardianStore } from '@/store/guardian';
 import { ZeroHash } from 'ethers';
 import { toFixed } from '@/lib/tools';
+import USDCIcon from '@/assets/mobile/usdc.png'
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -81,7 +83,9 @@ export function Header({ openMenu, username, ...props }: any) {
       {...props}
     >
       <Box display="flex" gap="2" alignItems="center" justifyContent="center">
-        <Box fontSize="16px" lineHeight={'20px'} fontWeight="700"></Box>
+        <Box fontSize="20px" lineHeight={'24px'} fontWeight="400">
+          Hi, {walletName}
+        </Box>
       </Box>
       <Box fontSize="18px" fontWeight="700" color="black" lineHeight="24px">
         <Box
@@ -103,7 +107,7 @@ export function Header({ openMenu, username, ...props }: any) {
             alignItems="center"
             justifyContent="center"
           >
-            <Image src={IconSetting} />
+            <DotsIcon />
           </Box>
         </Box>
       </Box>
@@ -130,7 +134,7 @@ export default function Dashboard() {
   // const [activeMenu, setActiveMenu] = useState('apps')
 
   const valueLeft = totalUsdValue.split('.')[0];
-  const valueRight = totalUsdValue.split('.')[1];
+  const valueRight = '20' // totalUsdValue.split('.')[1];
 
   const fontSize = getFontSize(valueLeft);
   const smFontSize = getSmallFontSize(valueRight);
@@ -243,272 +247,234 @@ export default function Dashboard() {
         background="transparent"
         openMenu={() => openModal('settings')}
       />
-      <Box padding={{ xs: '20px', sm: '30px' }} height={innerHeight - 64} overflowY="scroll">
+      <Box padding="8px" height={innerHeight - 64} overflowY="scroll">
         <Box
           ref={(v: any) => {
             contentRef.current = v;
           }}
+          display="flex"
+          flexDirection="column"
         >
-          <Box marginBottom="24px">
-            <Box fontWeight="700" fontSize="18px">
-              Hi, {walletName}
-            </Box>
-            <Box fontWeight="700" fontSize="42px" lineHeight="50px" marginTop="8px">
-              Welcome to
-              <br />
-              Ethereum
-            </Box>
-          </Box>
           {(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash) && (
             <Box
-              display="flex"
-              alignItems="center"
-              width="100%"
-              minHeight="38px"
-              borderRadius="38px"
-              background="white"
-              padding="10px 18px"
-              color="#324174"
-              justifyContent="space-between"
-              marginBottom="40px"
-              fontSize="14px"
-              onClick={() => navigate('/verify-email')}
+              paddingLeft="8px"
+              paddingRight="8px"
+              marginBottom="20px"
             >
-              <Box>
-                Verify Email to Get{' '}
-                <Box as="span" fontWeight="700">
-                  10 USDC
-                </Box>{' '}
-                for free
-              </Box>
-              <Box>
-                <Image src={GoToIcon} />
+              <Box
+                display="flex"
+                alignItems="center"
+                width="100%"
+                minHeight="79px"
+                borderRadius="32px"
+                background="white"
+                padding="10px 16px"
+                color="#324174"
+                justifyContent="space-between"
+                fontSize="14px"
+                background="radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)"
+                onClick={() => navigate('/verify-email')}
+              >
+                <Box>
+                  <Box fontSize="32px" fontWeight="500">$10</Box>
+                  <Box fontSize="14px" fontWeight="400" color="#161F36">Setup email recovery to get 10 USDC for free</Box>
+                </Box>
+                <Box>
+                  <Image width="40px" height="40px" src={USDCIcon} />
+                </Box>
               </Box>
             </Box>
           )}
-
-          {/* <Box display="flex" marginBottom="36px">
-            <Box marginRight="24px" fontSize="24px" fontWeight={(activeMenu === 'apps') ? 700 : 400} position="relative" onClick={() => setActiveMenu('apps')}>
-              Apps
-              {(activeMenu === 'apps') && <Box position="absolute" bottom="-10px" left="calc(50% - 12px)" height="4px" width="24px" background="#7386C7" borderRadius="4px" />}
+          <Box
+            width="100%"
+            paddingLeft="16px"
+            paddingRight="16px"
+          >
+            <Box display="flex" alignItems="center">
+              <Box fontSize="56px" fontWeight="500" marginRight="2px">
+                $
+              </Box>
+              <Box
+                fontSize={fontSize}
+                lineHeight={'1'}
+                fontWeight="500"
+                sx={{
+                  '@property --num': {
+                    syntax: `'<integer>'`,
+                    initialValue: '0',
+                    inherits: 'false',
+                  },
+                  '&': {
+                    transition: '--num 1s',
+                    counterReset: 'num var(--num)',
+                    '--num': valueLeft,
+                  },
+                  '&::after': {
+                    content: 'counter(num)',
+                  },
+                }}
+              />
+              {valueRight &&
+               BN(valueRight).isGreaterThan(0) &&
+               Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
+                 <Box
+                   fontSize={fontSize}
+                   lineHeight={'1'}
+                   fontWeight="500"
+                   // marginTop={fontBottomMargin}
+                   // marginLeft="10px"
+                   color="#939393"
+                 >
+                   .
+                   <Box
+                     as="span"
+                     //  sx={{
+                       //    '@property --num': {
+                       //      syntax: `'<integer>'`,
+                       //      initialValue: '0',
+                       //      inherits: 'false',
+                       //    },
+                       //    '&': {
+                       //      transition: '--num 1s',
+                       //      counterReset: 'num var(--num)',
+                       //      '--num': valueRight.slice(0, 4).replace(/0+$/, ''),
+                       //    },
+                       //    '&::after': {
+                       //      content: 'counter(num)',
+                       //    },
+                       //  }}
+                   >
+                     {valueRight.slice(0, 4).replace(/0+$/, '')}
+                   </Box>
+                 </Box>
+                     )}
             </Box>
-            <Box fontSize="24px" position="relative" fontWeight={(activeMenu === 'assets') ? 700 : 400} onClick={() => setActiveMenu('assets')}>
-              Assets
-              {(activeMenu === 'assets') && <Box position="absolute" bottom="-10px" left="calc(50% - 12px)" height="4px" width="24px" background="#7386C7" borderRadius="4px" />}
+          </Box>
+          <Box
+            width="100%"
+            display="flex"
+            paddingLeft="8px"
+            paddingRight="8px"
+            marginTop="8px"
+            marginBottom="20px"
+          >
+            <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+              <Box
+                background="#DCE4F2"
+                borderRadius="32px"
+                color="#161F36"
+                fontSize="18px"
+                fontWeight="400"
+                lineHeight="22.5px"
+                padding="12px 16px"
+                height="47px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                onClick={() => openFullScreenModal('send')}
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginRight="4px"
+                >
+                  <SendIcon />
+                </Box>
+                <Box>Send</Box>
+              </Box>
             </Box>
-          </Box> */}
+            <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+              <Box
+                background="#DCE4F2"
+                borderRadius="32px"
+                color="#161F36"
+                fontSize="18px"
+                fontWeight="400"
+                lineHeight="22.5px"
+                padding="12px 16px"
+                height="47px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                onClick={() => openFullScreenModal('receive')}
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginRight="4px"
+                >
+                  <ReceiveIcon />
+                </Box>
+                <Box>Receive</Box>
+              </Box>
+            </Box>
+            <Box width="calc((100% - 16px) / 3)">
+              <Box
+                background="#DCE4F2"
+                borderRadius="32px"
+                color="#161F36"
+                fontSize="18px"
+                fontWeight="400"
+                lineHeight="22.5px"
+                padding="12px 16px"
+                height="47px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                onClick={() => openFullScreenModal('activity')}
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginRight="4px"
+                >
+                  <ActivitiesIcon />
+                </Box>
+                <Box>Activity</Box>
+              </Box>
+            </Box>
+          </Box>
           <Box
             width="100%"
             background="white"
-            borderRadius="24px"
+            borderRadius="32px"
             boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
-            border="1px solid #EAECF0"
+            // border="1px solid #EAECF0"
             position="relative"
             zIndex="1"
           >
-            <Box display="flex" flexDirection="column" alignItems="flex-start" padding="24px">
-              <Box display="flex" alignItems="center">
-                <Box fontSize="24px" fontWeight="700" marginRight="2px">
-                  $
-                </Box>
-                <Box
-                  fontSize={fontSize}
-                  lineHeight={'1'}
-                  fontWeight="700"
-                  sx={{
-                    '@property --num': {
-                      syntax: `'<integer>'`,
-                      initialValue: '0',
-                      inherits: 'false',
-                    },
-                    '&': {
-                      transition: '--num 1s',
-                      counterReset: 'num var(--num)',
-                      '--num': valueLeft,
-                    },
-                    '&::after': {
-                      content: 'counter(num)',
-                    },
-                  }}
-                />
-                {valueRight &&
-                  BN(valueRight).isGreaterThan(0) &&
-                  Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
-                    <Box
-                      fontSize={smFontSize}
-                      lineHeight={'1'}
-                      fontWeight="700"
-                      marginTop={fontBottomMargin}
-                      // marginLeft="10px"
-                      color="#939393"
-                    >
-                      .
-                      <Box
-                        as="span"
-                        //  sx={{
-                        //    '@property --num': {
-                        //      syntax: `'<integer>'`,
-                        //      initialValue: '0',
-                        //      inherits: 'false',
-                        //    },
-                        //    '&': {
-                        //      transition: '--num 1s',
-                        //      counterReset: 'num var(--num)',
-                        //      '--num': valueRight.slice(0, 4).replace(/0+$/, ''),
-                        //    },
-                        //    '&::after': {
-                        //      content: 'counter(num)',
-                        //    },
-                        //  }}
-                      >
-                        {valueRight.slice(0, 4).replace(/0+$/, '')}
-                      </Box>
-                    </Box>
-                  )}
-              </Box>
-              <Box marginTop="20px" display="flex">
-                <Box
-                  marginRight="30px"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                  onClick={() => openFullScreenModal('send')}
-                >
-                  <Box>
-                    <SendIcon />
-                  </Box>
-                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">
-                    Send
-                  </Box>
-                </Box>
-                <Box
-                  marginRight="30px"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                  onClick={() => openFullScreenModal('receive')}
-                >
-                  <Box>
-                    <ReceiveIcon />
-                  </Box>
-                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">
-                    Receive
-                  </Box>
-                </Box>
-                <Box
-                  marginRight="30px"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                  onClick={() => openFullScreenModal('activity')}
-                >
-                  <Box>
-                    <ActivitiesIcon />
-                  </Box>
-                  <Box color="#5B606D" fontSize="14px" fontWeight="600" marginTop="4px">
-                    Activity
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-            <Box padding="24px 30px" paddingBottom="0" borderTop="1px solid rgba(0, 0, 0, 0.1)">
-              <Box marginBottom="18px" display="flex" alignItems="center" justifyContent="space-between">
-                <Box fontSize="16px" fontWeight="600">
+            <Box padding="12px 16px" paddingBottom="0">
+              {/* <Box marginBottom="18px" display="flex" alignItems="center" justifyContent="space-between">
+                  <Box fontSize="16px" fontWeight="600">
                   Tokens
-                </Box>
-                <Box fontSize="14px" fontWeight="400" color="rgba(0, 0, 0, 0.5)">
-                  ${totalUsdValue}
-                </Box>
-              </Box>
-              {tokenBalance.map((item: any, index: number) => (
-                <Box display="flex" alignItems="center" marginBottom="28px">
-                  <Box marginRight="10px">
-                    <Image src={item.logoURI} w="10" />
                   </Box>
-                  <Box fontWeight="700" fontSize="16px">
+                  <Box fontSize="14px" fontWeight="400" color="rgba(0, 0, 0, 0.5)">
+                  ${totalUsdValue}
+                  </Box>
+                  </Box> */}
+              {tokenBalance.map((item: any, index: number) => (
+                <Box display="flex" alignItems="center" marginBottom="12px">
+                  <Box marginRight="10px">
+                    <Image src={item.logoURI} w="32px" h="32px" />
+                  </Box>
+                  <Box fontWeight="500" fontSize="22px">
                     {item.name}
                   </Box>
                   <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                    <Box fontWeight="700" fontSize="20px">
+                    <Box fontWeight="500" fontSize="22px">
                       {item.tokenBalanceFormatted}
                     </Box>
-                    {/* <Box fontSize="12px" color="rgba(0, 0, 0, 0.5)">$10.11</Box> */}
+                    <Box fontSize="12px" color="rgba(0, 0, 0, 0.5)">$0</Box>
                   </Box>
                 </Box>
               ))}
             </Box>
           </Box>
-          {finalHistoryList && finalHistoryList.length > 0 && (
-            <Box
-              width="100%"
-              background="white"
-              boxShadow="0px -4px 60px 0px rgba(44, 53, 131, 0.08)"
-              padding="24px 0"
-              borderRadius="24px"
-              marginTop="27px"
-            >
-              <Box>
-                <Box
-                  width="100%"
-                  fontSize="18px"
-                  fontWeight="700"
-                  paddingBottom="10px"
-                  paddingLeft="22px"
-                  paddingRight="22px"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <Box>Activity</Box>
-                  <Box onClick={() => openActivity()}>
-                    <HistoryIcon />
-                  </Box>
-                </Box>
-              </Box>
-              <Flex
-                gap="36px"
-                padding="0"
-                flexDir="column"
-                width="100%"
-                overflow="auto"
-                maxHeight={`${40 * 4 + 36 * 3}px`}
-              >
-                {finalHistoryList.map((item, index) => (
-                  <Box
-                    key={index}
-                    display="flex"
-                    alignItems="center"
-                    height="40px"
-                    paddingLeft="22px"
-                    paddingRight="22px"
-                  >
-                    <Box marginRight="12px">
-                      {item.functionName === 'Deposit' ? <ActivityDepositIcon /> : <ActivityTransferIcon />}
-                    </Box>
-                    <Box>
-                      <Box display="flex" alignItems="center">
-                        <Box fontSize="14px" fontWeight="700" textTransform={'capitalize'}>
-                          {item.functionName}
-                        </Box>
-                      </Box>
-                      {/* <Box fontSize="12px">{item.dateFormatted}</Box> */}
-                    </Box>
-                    {item.actualGasCost ? (
-                      <Box marginLeft="auto">
-                        <Box fontSize="14px" fontWeight="700">
-                          {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH
-                        </Box>
-                      </Box>
-                    ) : (
-                      ''
-                    )}
-                  </Box>
-                ))}
-              </Flex>
-            </Box>
-          )}
         </Box>
       </Box>
     </Box>
   );
-}
+                       }
