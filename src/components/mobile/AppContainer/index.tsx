@@ -148,8 +148,7 @@ export default function AppContainer() {
   const { logoutWallet } = useWallet();
   const { innerHeight } = useScreenSize()
   // const innerHeight = window.innerHeight
-  const contentHeight = innerHeight - 56
-  const marginHeight = innerHeight - 250
+  const contentHeight = innerHeight //  - 56
   console.log('isModalOpen', isModalOpen)
   console.log('isFullScreenModalOpen', isFullScreenModalOpen)
 
@@ -159,6 +158,7 @@ export default function AppContainer() {
 
   const getContentStyles = (isOpen: any) => {
     if (isOpen) {
+      return {}
       return {
         'transform': 'perspective(1300px) translateZ(-80px)',
         'transform-style': 'preserve-3d',
@@ -242,59 +242,59 @@ export default function AppContainer() {
             </Box>
           </Box>
         </Box>
-        <Modal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          motionPreset="slideInBottom"
-          blockScrollOnMount={true}
+        <Box
+          position="fixed"
+          width="100vw"
+          height="100vh"
+          top="0"
+          left="0"
+          zIndex="99"
+          pointerEvents={isModalOpen ? 'all' : 'none'}
         >
-          <ModalOverlay zIndex="999" />
-          <ModalContent
-            // onTouchStart={handleTouchStart}
-            // onTouchMove={handleTouchMove}
-            // onMouseDown={handleMouseDown}
-            // onMouseMove={handleMouseMove}
-            zIndex="2"
-            borderRadius={{
-              sm: '20px 20px 0 0',
-              // md: '20px',
-            }}
-            maxW={{
-              sm: '100vw',
-              md: '430px'
-            }}
-            marginTop={{
-              sm: `40px`,
-              // md: 'calc(50vh - 125px)'
-            }}
-            mb="0"
-            height={{
-              sm: innerHeight - 40,
-              // md: '250px'
-            }}
-            overflow="auto"
-            padding="0"
-            boxShadow={"none"}
+          <Box
+            height="100%"
+            width="100%"
+            position="relative"
           >
-            <Box tabIndex={0} />
-            <ModalCloseButton zIndex="1" marginTop="14px" />
-            <ModalBody
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="flex-start"
+            <Box
+              height="100%"
               width="100%"
-              padding="0"
+              position="absolute"
+              background={isModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
+              transition="all 0.3s ease"
+            />
+            <Box
+              height="100%"
+              width="100%"
+              position="absolute"
+              background="white"
+              top={isModalOpen ? '0' : '100%'}
+              transition="all 0.3s ease"
             >
+              <Box
+                height="32px"
+                width="32px"
+                borderRadius="30px"
+                position="absolute"
+                top="20px"
+                right="16px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                onClick={closeModal}
+                zIndex="2"
+              >
+                <CloseIcon />
+              </Box>
               <ModalPage
-                height={innerHeight - 40}
+                height={window.innerHeight}
                 activeModal={activeModal}
                 openModal={openModal}
                 closeModal={closeModal}
               />
-            </ModalBody>
-          </ModalContent>
-        </Modal>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
