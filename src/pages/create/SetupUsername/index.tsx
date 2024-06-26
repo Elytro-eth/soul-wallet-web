@@ -13,7 +13,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
         lineHeight="30px"
         marginBottom="20px"
       >
-        Set up username
+        Username
       </Box>
       <Box width="100%" marginBottom="30px">
         <Input

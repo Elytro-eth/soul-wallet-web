@@ -38,7 +38,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           border="none"
           outline="none"
           background="#F2F3F5"
-          padding="24px 40px"
+          padding="24px 29px"
           borderRadius="24px"
           color="#161F36"
           marginBottom="16px"

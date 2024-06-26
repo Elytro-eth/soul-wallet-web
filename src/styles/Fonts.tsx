@@ -1,6 +1,7 @@
 import { Global } from '@emotion/react';
 import SfRegular from '@/assets/fonts/sf/SF-Pro-Text-Regular.otf';
 import SfSemiBold from '@/assets/fonts/sf/SF-Pro-Text-Semibold.otf';
+import SfMedium from '@/assets/fonts/sf/SF-Pro-Text-Medium.otf';
 import SfBold from '@/assets/fonts/sf/SF-Pro-Text-Bold.otf';
 
 import InterRegular from '@/assets/fonts/inter/Inter-Regular.ttf';
@@ -15,6 +16,11 @@ const Fonts = () => (
         font-family: 'SF';
         font-weight: 400;
         src: url(${SfRegular});
+    }
+           @font-face {
+        font-family: 'SF';
+        font-weight: 500;
+        src: url(${SfMedium});
     }
     @font-face {
       font-family: 'SF';

@@ -40,7 +40,7 @@ const getFontSize = (value: any) => {
     return '50px';
   }
 
-  return '72px';
+  return '56px';
 };
 
 const getSmallFontSize = (value: any) => {
@@ -239,7 +239,7 @@ export default function Dashboard() {
 
   console.log('innerHeight', innerHeight);
   return (
-    <Box height={innerHeight} background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)">
+    <Box height={innerHeight} background="#f2f3f5">
       <Header
         paddingTop="10px"
         paddingBottom="10px"
@@ -267,7 +267,7 @@ export default function Dashboard() {
                 width="100%"
                 minHeight="79px"
                 borderRadius="32px"
-                background="white"
+                // background="white"
                 padding="10px 16px"
                 color="#324174"
                 justifyContent="space-between"
