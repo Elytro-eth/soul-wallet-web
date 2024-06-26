@@ -93,7 +93,7 @@ export default function Landing() {
       width="100%"
       height={innerHeight}
       fontFamily={"SF"}
-      // background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
+      background="radial-gradient(476.97% 147.07% at 0% -21.13%, #FBFBF9 0%, #F7F0ED 45.5%, #BAD5F5 100%)"
     >
       <Header
         showLogo={true}
@@ -110,25 +110,26 @@ export default function Landing() {
         height={innerHeight - 60}
         overflowY="auto"
       >
-        <Box width="100%" fontSize="48px" fontWeight="700" lineHeight="56px" textAlign="left" marginTop="20px">
+        <Box
+          width="100%"
+          fontSize="56px"
+          fontWeight="500"
+          lineHeight="56px"
+          textAlign="left"
+          color="#161F36"
+          marginTop="auto"
+        >
           Democratize access to<br /> Ethereum<br /> for All
         </Box>
         <Box
-          display="flex"
-          alignItems="flex-start"
-          justifyContent="flex-start"
           width="100%"
-          marginTop="36px"
-          marginBottom="36px"
+          fontSize="18px"
+          fontWeight="400"
+          lineHeight="22.5px"
+          marginTop="16px"
+          textAlign="left"
+          marginBottom="48px"
         >
-          <Box
-            height="6px"
-            width="48px"
-            background="#7386C7"
-            borderRadius="6px"
-          />
-        </Box>
-        <Box width="100%" fontSize="16px" fontWeight="500" marginTop="16px" textAlign="left">
           Your first crypto is on us.<br />
           Oh, and no gas fees.<br />
           We even have 24/7 support to help!
@@ -141,15 +142,14 @@ export default function Landing() {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          marginTop="auto"
         >
           <Link to="/create" style={{ width: '100%' }}>
             <Button
               size="xl"
-              type="blue"
+              type="white"
               minWidth="283px"
-              marginTop="50px"
               width="100%"
+              border="none"
             >
               Create account
             </Button>
@@ -164,14 +164,14 @@ export default function Landing() {
             color="black"
             marginBottom="20px"
             onClick={doSignIn}
-            type="white"
+            type="transparent"
             width="100%"
           >
             {logging ? <Image src={IconLoading} width="50px" /> : 'Sign in with passkey'}
           </Button>
         </Box>
-        <Box fontSize="14px" fontWeight="400" color="#324174" marginBottom="20px">
-          Lost access to account? <Box as="span" fontWeight="600" onClick={() =>  navigate('/recover')}>Recover here</Box>
+        <Box fontSize="14px" fontWeight="400" color="#2D3CBD" lineHeight="17.5px" marginBottom="20px">
+          Lost access to account? <Box as="span" fontWeight="500" onClick={() =>  navigate('/recover')}>Recover here</Box>
         </Box>
       </Box>
       <Modal

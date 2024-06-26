@@ -13,11 +13,10 @@ const getSizeStyles = (size?: string) => {
 
   if (size === 'xl') {
     return {
-      height: '63px',
-      borderRadius: '63px',
+      height: '48px',
+      borderRadius: '48px',
       fontSize: '18px',
-      lineHeight: '22.5px',
-      fontWeight: '500',
+      fontWeight: '700',
       ...baseStyles,
     };
   } else if (size === 'lg') {
@@ -62,9 +61,10 @@ const buttonStyles = {
     _disabled: { cursor: 'not-allowed', bg: '#B2B2B2', _hover: { bg: '#B2B2B2' } },
   },
   white: {
-    color: '#161F36',
-    bg: 'white',
-    border: '1px solid #BDC0C7',
+    color: '#101828',
+    bg: '#F6F6F6',
+    border: '1px solid #E4E4E4',
+    // boxShadow: '0px 4px 20px 0px #223C9C1A',
     _hover: { bg: '#eee' },
     _disabled: { cursor: 'not-allowed', color: '#B2B2B2', _hover: { bg: "#fff" } },
   },
@@ -96,28 +96,9 @@ const buttonStyles = {
   },
   blue: {
     color: 'white',
-    bg: '#3042B9',
-    _hover: { bg: '#3042B9' },
-    _disabled: {
-      cursor: 'not-allowed',
-      opacity: '0.4'
-    },
-  },
-  // background: radial-gradient(343.44% 424.79% at 35.68% -30.21%, #F0EEE6 0%, #F5EDEB 32.08%, #BAD5F5 100%), radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)
-  gradientBlue: {
-    color: '#161F36',
-    bg: 'radial-gradient(343.44% 424.79% at 35.68% -30.21%, #F0EEE6 0%, #F5EDEB 32.08%, #BAD5F5 100%), radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
-    _hover: { bg: '#3042B9' },
-    _disabled: {
-      cursor: 'not-allowed',
-      opacity: '0.4'
-    },
-  },
-  transparent: {
-    color: '#161F36',
-    bg: 'transparent',
-    _hover: { bg: 'transparent' },
-    border: '1px solid #BDC0C7',
+    bg: '#324174',
+    boxShadow: '0px 4px 20px 0px #223C9C33',
+    _hover: { bg: '#324174' },
     _disabled: {
       cursor: 'not-allowed',
       opacity: '0.4'

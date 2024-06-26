@@ -24,7 +24,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
         fontWeight="600"
         marginTop="20px"
       >
-        Confirm recovery contact update
+        Confirm update
       </Box>
       <Box
         width="100%"
