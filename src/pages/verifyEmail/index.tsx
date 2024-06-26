@@ -248,7 +248,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
         />
       );
     } else if (step == 1) {
-      return verifyToken && verifyStatus === 2 ? (
+      return (verifyToken && verifyStatus === 2) ? (
         <ConfirmGuardians
           changingGuardian={changingGuardian}
           onPrev={onPrev}
@@ -285,7 +285,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
         height={isModal ? innerHeight - 134 : innerHeight - 60}
         overflowY="auto"
         display="flex"
-        alignItems="center"
+        alignItems="flex-start"
         justifyContent="center"
       >
         {renderStep(isModal)}

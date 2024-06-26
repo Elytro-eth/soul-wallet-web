@@ -356,7 +356,7 @@ export default function Dashboard() {
             paddingLeft="8px"
             paddingRight="8px"
             marginTop="8px"
-            marginBottom="20px"
+            marginBottom="40px"
           >
             <Box width="calc((100% - 16px) / 3)" marginRight="8px">
               <Box

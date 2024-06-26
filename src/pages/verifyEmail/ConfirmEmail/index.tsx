@@ -1,24 +1,27 @@
 import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, onResend, isModal }: any) {
+  const { innerHeight } = useScreenSize()
+
   return (
-    <Box width="100%" height="500px" padding="30px">
-      <Box
-        width="120px"
-        height="120px"
-        borderRadius="120px"
-        margin="0 auto"
-      >
-        <Image src={EmailIcon} />
-      </Box>
+    <Box
+      width="100%"
+      height={innerHeight - 60}
+      padding="30px"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      flexDirection="column"
+    >
       <Box
         width="100%"
         textAlign="center"
-        fontSize="18px"
+        fontSize="14px"
         fontWeight="500"
-        marginTop="42px"
+        color="#3C3F45"
       >
         A verification email has sent to
       </Box>
@@ -26,7 +29,7 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         width="100%"
         textAlign="center"
         fontSize="28px"
-        fontWeight="600"
+        fontWeight="500"
         marginTop="20px"
       >
         {email}
@@ -37,13 +40,14 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         fontSize="14px"
         fontWeight="400"
         marginTop="20px"
+        color="#676B75"
       >
         Please follow the instructions and complete the verification process.
       </Box>
-      <Button disabled={countDown > 0} loading={sendingEmail} size="xl" type="blue" width="100%" marginTop="30px" onClick={onResend}>
+      <Button disabled={countDown > 0} loading={sendingEmail} size="xl" type="gradientBlue" width="100%" marginTop="40px" onClick={onResend}>
         Resend {countDown > 0 ? `(${countDown}s)` : ''}
       </Button>
-      <Button disabled={false} size="xl" type="white" width="100%" onClick={onPrev} marginTop="20px">Use another Email</Button>
+      <Button disabled={false} size="xl" type="white" width="100%" onClick={onPrev} marginTop="8px">Use another Email</Button>
     </Box>
   );
 }
