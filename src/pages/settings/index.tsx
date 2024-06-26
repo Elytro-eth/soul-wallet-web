@@ -106,7 +106,7 @@ export default function Settings({ isModal }: any) {
           >
             <SettingIcon />
           </Box>
-          <Box>Guardian settings</Box>
+          <Box>Recovery contact settings</Box>
         </Box>
         <Box
           width="100%"

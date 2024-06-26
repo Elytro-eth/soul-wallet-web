@@ -46,7 +46,7 @@ export default function Intro({ onPrev, onNext }: any) {
         fontWeight="400"
         marginTop="18px"
       >
-        Guardians are the wallet addresses from your own or trusted friends which will be requested for signature when your wallet is lost. Adding guardians will protect your wallet from potential lose.
+        Recovery contacts are the wallet addresses from your own or trusted friends which will be requested for signature when your wallet is lost. Adding recovery contacts will protect your wallet from potential lose.
       </Box>
       <Box width="100%" display="flex" alignItems="center" justifyContent="center">
         <Box position="relative">
@@ -64,7 +64,7 @@ export default function Intro({ onPrev, onNext }: any) {
                 <Box overflow="auto" ref={menuRef}>
                   <MenuButton width="244px" as={Box} onClick={() => { isOpen ? onClose() : onOpen()}}>
                     <Box display="flex" alignItems="center" justifyContent="center">
-                      <Button  size="xl" type="blue" width="194px">Add guardian</Button>
+                      <Button  size="xl" type="blue" width="194px">Add recovery contact</Button>
                     </Box>
                   </MenuButton>
                   <MenuList

@@ -163,13 +163,13 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
         return res.data.guardianAddress;
       } else {
         toast({
-          title: 'Failed to generate guardian',
+          title: 'Failed to generate recovery contact',
           status: 'error',
         });
       }
     } catch (error: any) {
       toast({
-        title: 'Failed to generate guardian',
+        title: 'Failed to generate recovery contact',
         status: 'error',
       });
       console.log('error', error.message);
@@ -278,7 +278,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
       )}
       {isModal && (
         <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">
-          Add Email Guardian
+          Add Email Recovery Contact
         </Box>
       )}
       <Box

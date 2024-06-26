@@ -138,7 +138,7 @@ export default function VerifySecret() {
                 marginTop="34px"
                 maxWidth={{ base: '300px', md: '500px' }}
               >
-                Your email has been verified. Please continue guardian setup.
+                Your email has been verified. Please continue recovery contact setup.
               </Box>
             </Box>
           </Box>

@@ -29,7 +29,7 @@ export default function GuardianSetting() {
 
   return (
     <Box width="100%" height={innerHeight}>
-      <Header title="Guardian setting" showBackButton onBack={onPrev} />
+      <Header title="Recovery contact setting" showBackButton onBack={onPrev} />
       <Box
         height={innerHeight - 60}
         overflowY="auto"

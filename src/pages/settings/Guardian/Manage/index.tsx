@@ -184,7 +184,7 @@ export default function Manage({ onPrev, onNext }: any) {
   return (
     <Box width="100%" height="100%" padding="30px" display="flex" flexDirection="column">
       <Box fontSize="16px" fontWeight="600">
-        My guardians
+        My recovery contacts
       </Box>
       <Box marginTop="14px">
         {tempGuardians.map((guardianAddress: any, index: number) => (
@@ -202,10 +202,10 @@ export default function Manage({ onPrev, onNext }: any) {
             <Box>
               <Box fontSize="16px" fontWeight="600">
                 {guardianAddressEmail[guardianAddress]
-                ? 'Email guardian'
+                ? 'Email recovery contact'
                 : guardianAddressName[guardianAddress]
                 ? guardianAddressName[guardianAddress]
-                : 'Guardian'}
+                : 'Recovery contact'}
               </Box>
               <Box fontSize="12px" fontWeight="500" marginTop="4px" color="#868686">
                 {guardianAddressEmail[guardianAddress]
@@ -226,7 +226,7 @@ export default function Manage({ onPrev, onNext }: any) {
               <Box overflow="auto" ref={guardianMenuRef}>
                 <MenuButton as={Box} onClick={() => { isGuardianMenuOpen ? onGuardianMenuClose() : onGuardianMenuOpen(); }}>
                   <Button fontSize="14px" size="xl" type="white" color="black">
-                    +Add {tempGuardians.length ? 'another' : ''} guardian
+                    +Add {tempGuardians.length ? 'another' : ''} recovery contact
                   </Button>
                 </MenuButton>
                 <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)" marginTop="0">
@@ -435,10 +435,10 @@ export default function Manage({ onPrev, onNext }: any) {
               <DeleteCircleGuardianIcon />
             </Box>
             <Box fontSize="24px" fontWeight="700" marginBottom="14px">
-              Delete guardian
+              Delete recovery contact
             </Box>
             <Box fontSize="16px" textAlign="center" marginBottom="10px">
-              {`Are you sure to remove <${toShortAddress(tempGuardians[activeGuardianIndex], 6)}> as guardian?`}
+              {`Are you sure to remove <${toShortAddress(tempGuardians[activeGuardianIndex], 6)}> as recovery contact?`}
             </Box>
             <Box width="100%" marginTop="20px">
               <Button size="xl" type="blue" width="100%" onClick={() => doDeleteGuardian()}>
@@ -475,10 +475,10 @@ export default function Manage({ onPrev, onNext }: any) {
           <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
             <Box background="#D9D9D9" height="120px" width="120px" borderRadius="120px" marginBottom="30px"></Box>
             <Box fontSize="24px" fontWeight="700" marginBottom="14px">
-              Confirm guardian update
+              Confirm recovery contact update
             </Box>
             <Box fontSize="16px" textAlign="center" marginBottom="10px">
-              Please confirm guardian updates on your Soul Wallet account.
+              Please confirm recovery contact updates on your Soul Wallet account.
             </Box>
             {/* <Box
                 width="100%"

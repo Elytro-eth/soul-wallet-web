@@ -34,7 +34,7 @@ export default function RecoverProcess({ step }: any) {
           </Box>
           <Box display="flex" alignItems="center">
             <Box marginRight="8px"><Circle active={step >= 3 ? true : false} /></Box>
-            <Box fontSize="14px" fontWeight={step >= 3 ? '600' : '400'}>Step 3: Guardian signature request</Box>
+            <Box fontSize="14px" fontWeight={step >= 3 ? '600' : '400'}>Step 3: Recovery contact signature request</Box>
           </Box>
         </Box>
       )}

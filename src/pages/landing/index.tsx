@@ -31,7 +31,7 @@ export default function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { innerHeight } = useScreenSize()
   const { getIsAddedToHomeScreen, setIsAddedToHomeScreen } = useSettingStore()
-  const marginHeight = innerHeight - (innerHeight < 680 ? innerHeight : 680)
+  const marginHeight = innerHeight - (innerHeight < 720 ? innerHeight : 720)
 
   const navigate = useNavigate();
   const doSignIn = async () => {
@@ -170,7 +170,7 @@ export default function Landing() {
             {logging ? <Image src={IconLoading} width="50px" /> : 'Sign in with passkey'}
           </Button>
         </Box>
-        <Box fontSize="14px" fontWeight="400" color="#324174">
+        <Box fontSize="14px" fontWeight="400" color="#324174" marginBottom="20px">
           Lost access to account? <Box as="span" fontWeight="600" onClick={() =>  navigate('/recover')}>Recover here</Box>
         </Box>
       </Box>
@@ -194,7 +194,7 @@ export default function Landing() {
             sm: `${marginHeight}px`,
             md: 'calc(50vh - 125px)'
           }}
-          height={innerHeight < 680 ? innerHeight : 680}
+          height={innerHeight < 720 ? innerHeight : 720}
           overflow="visible"
           mb="0"
           position="relative"
@@ -209,7 +209,7 @@ export default function Landing() {
             width="100%"
             paddingLeft="0"
             paddingRight="0"
-            paddingTop="20px"
+            paddingTop="60px"
           >
             <Box
               background="#D9D9D9"

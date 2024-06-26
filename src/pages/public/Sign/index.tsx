@@ -347,7 +347,7 @@ export default function Sign() {
           fontWeight="700"
           marginTop="20px"
         >
-          Not the guardian
+          Not the recovery contact
         </Box>
         <Box
           width="100%"
@@ -356,7 +356,7 @@ export default function Sign() {
           fontWeight="400"
           marginTop="20px"
         >
-          The wallet you connected is not the guardian for the recovery wallet. Please double check.
+          The wallet you connected is not the recovery contact for the recovery wallet. Please double check.
         </Box>
         <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={() => {disconnectEOA(); onOpen()}}>Connect another wallet</Button>
         <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F8F8F8">
@@ -452,7 +452,7 @@ export default function Sign() {
           fontWeight="400"
           marginTop="20px"
         >
-          Your friend's wallet is lost. As their guardian, please connect your wallet and confirm request to assist with their wallet recovery.
+          Your friend's wallet is lost. As their recovery contact, please connect your wallet and confirm request to assist with their wallet recovery.
         </Box>
         <Box
           width="100%"
@@ -546,7 +546,7 @@ export default function Sign() {
         fontWeight="400"
         marginTop="20px"
       >
-        Your friend's wallet is lost. As their guardian, please connect your wallet and confirm request to assist with their wallet recovery.
+        Your friend's wallet is lost. As their recovery contact, please connect your wallet and confirm request to assist with their wallet recovery.
       </Box>
       <Box
         width="100%"

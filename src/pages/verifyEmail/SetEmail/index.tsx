@@ -84,7 +84,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
               Why do I need to provide Email
             </Box>
             <Box fontSize="16px" textAlign="center" marginBottom="40px">
-              The email will be used as guardian for your Soul Wallet account for recovery.
+              The email will be used as recovery contact for your Soul Wallet account for recovery.
             </Box>
             <Box
               width="100%"

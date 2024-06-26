@@ -71,16 +71,16 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
     <Box width="100%" height="100%" padding="30px">
       <Box width="120px" height="120px" borderRadius="120px" margin="0 auto" background="#F2F2F2" opacity="0.55"></Box>
       <Box width="100%" textAlign="center" fontSize="23px" fontWeight="700" marginTop="20px" letterSpacing="-1px">
-        Share link with your guardians
+        Share link with your recovery contacts
       </Box>
       <Box width="100%" textAlign="center" fontSize="14px" fontWeight="400" marginTop="12px">
-        Ask your guardians to recover for you
+        Ask your recovery contacts to recover for you
       </Box>
       <Button onClick={onShare} size="xl" type="blue" width="100%" marginTop="30px" marginBottom="60px">
         Share
       </Button>
       <Box fontWeight="700" fontSize="18px" width="100%" paddingBottom="24px" borderBottom="1px solid #F0F0F0">
-        {pendingGuardianNum} more guardians approval needed
+        {pendingGuardianNum} more recovery contacts approval needed
       </Box>
       {guardiansList &&
        guardiansList.map((guardianAddress: any, index: number) => {

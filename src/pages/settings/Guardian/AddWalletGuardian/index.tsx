@@ -130,7 +130,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   return (
     <Box width="100%" height={innerHeight - 40}>
       <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">
-        Add Wallet Guardian
+        Add Wallet Recovery Contact
       </Box>
       <Box
         // height="calc(100% - 94px)"
@@ -187,7 +187,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
               />
             </Box>
             <Box fontWeight="700" fontSize="16px" lineHeight="14px" marginBottom="20px" marginTop="40px">
-              Guardian name (optional)
+              Recovery contact name (optional)
             </Box>
             <Box>
               <Input

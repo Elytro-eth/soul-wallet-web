@@ -24,7 +24,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
         fontWeight="600"
         marginTop="20px"
       >
-        Confirm guardian update
+        Confirm recovery contact update
       </Box>
       <Box
         width="100%"
@@ -33,7 +33,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
         fontWeight="400"
         marginTop="20px"
       >
-        Please confirm guardian updates on your Soul Wallet account.
+        Please confirm recovery contact updates on your Soul Wallet account.
       </Box>
       {/* <Box
         width="100%"
