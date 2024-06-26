@@ -9,8 +9,8 @@ import InterMedium from '@/assets/fonts/inter/Inter-Medium.ttf';
 import InterSemiBold from '@/assets/fonts/inter/Inter-SemiBold.ttf';
 import InterBold from '@/assets/fonts/inter/Inter-Bold.ttf';
 
-import SohneRegular from '@/assets/fonts/Test Söhne/TestSöhne-Buch.otf';
-import SohneMedium from '@/assets/fonts/Test Söhne/TestSöhne-Kräftig.otf';
+import SohneRegular from '@/assets/fonts/Sohne/regular.otf';
+import SohneMedium from '@/assets/fonts/Sohne/medium.otf';
 
 const Fonts = () => (
   <Global
