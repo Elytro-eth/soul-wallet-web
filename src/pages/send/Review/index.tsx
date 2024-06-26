@@ -119,7 +119,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
       <Header title="" showBackButton={!isModal} onBack={onPrev} />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         {isSent && (
-          <Box fontSize="32px" fontWeight="700" display="flex" alignItems="center">
+          <Box fontSize="28px" fontWeight="700" display="flex" alignItems="center">
             <Box marginRight="12px">
               <SentIcon />
             </Box>
@@ -127,7 +127,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         )}
         {isSending && !isSent && (
-          <Box fontSize="32px" fontWeight="700" display="flex" alignItems="center">
+          <Box fontSize="28px" fontWeight="700" display="flex" alignItems="center">
             <Box marginRight="12px">
               <SendingIcon />
             </Box>
@@ -135,69 +135,83 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         )}
         {!isSending && !isSent && (
-          <Box fontSize="32px" fontWeight="700">
+          <Box fontSize="28px" fontWeight="700">
             Review
           </Box>
         )}
-        <Box marginTop="60px">
-          <Box fontSize="14px" fontWeight="700" opacity="0.4">
+        <Box marginTop="24px">
+          <Box
+            fontSize="14px"
+            fontWeight="400"
+            color="#95979C"
+          >
             Send
           </Box>
           <Box marginTop="8px" display="flex" alignItems="center">
             <Box marginRight="8px">
-              <Image w="32px" h="32px" src={selectedToken.logoURI} />
+              <Image w="32px" h="32px" src={selectedToken && selectedToken.logoURI} />
             </Box>
-            <Box fontSize="24px" fontWeight="600">
-              {amount} {selectedToken.symbol}
+            <Box fontSize="22px" fontWeight="500">
+              {amount} {selectedToken && selectedToken.symbol}
             </Box>
           </Box>
         </Box>
-        <Box marginTop="40px">
+        <Box marginTop="24px">
           <Box
             fontSize="14px"
-            fontWeight="700"
-            opacity="0.4"
+            fontWeight="400"
+            color="#95979C"
           >
             To
           </Box>
           <Box marginTop="8px" alignItems="center" width="100%" display="inline-block">
-            <Box as="span" fontSize="24px" fontWeight="600">
+            <Box as="span" fontSize="22px" fontWeight="500">
               {sendTo.slice(0, 6)}
             </Box>
-            <Box as="span" fontSize="24px" fontWeight="600" color="rgba(0, 0, 0, 0.4)">
+            <Box as="span" fontSize="22px" fontWeight="500" color="rgba(0, 0, 0, 0.4)">
               {sendTo.slice(6, 32)}
             </Box>
-            <Box as="span" fontSize="24px" fontWeight="600">
+            <Box as="span" fontSize="22px" fontWeight="500">
               {sendTo.slice(32)}
             </Box>
           </Box>
         </Box>
-        <Box fontSize="14px" fontWeight="700" opacity="0.4" marginTop="40px">
+        <Box
+          fontSize="14px"
+          fontWeight="400"
+          color="#95979C"
+          marginTop="24px"
+        >
           Network
         </Box>
         <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
           <Box marginRight="8px">
             <Image w="32px" h="32px" src={OpIcon} />
           </Box>
-          <Box fontSize="20px" fontWeight="600">
+          <Box fontSize="22px" fontWeight="500">
             Optimism
           </Box>
           <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center">
             <QuestionIcon />
           </Box>
         </Box>
-        <Box fontSize="14px" fontWeight="700" opacity="0.4" marginTop="40px">
+        <Box
+          fontSize="14px"
+          fontWeight="400"
+          color="#95979C"
+          marginTop="24px"
+        >
           Fee
         </Box>
         <Box marginTop="8px" display="flex" alignItems="center">
-          <Box fontSize="20px" fontWeight="600">
+          <Box fontSize="22px" fontWeight="500">
             $0
           </Box>
         </Box>
         {isSent && (
           <Box marginTop="40px" width="100%">
             <Box width="100%" marginBottom="20px">
-              <Button width="calc(100%)" size="xl" type="blue" onClick={()=> closeFullScreenModal()}>
+              <Button width="calc(100%)" size="xl" type="gradientBlue" onClick={()=> closeFullScreenModal()}>
                 Done
               </Button>
             </Box>
@@ -216,7 +230,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
               </Button>
             </Box>
             <Box width="50%" paddingLeft="7px">
-              <Button width="calc(100% - 7px)" disabled={isSending} size="xl" type="blue" onClick={() => onTransfer()}>
+              <Button width="calc(100% - 7px)" disabled={isSending} size="xl" type="gradientBlue" onClick={() => onTransfer()}>
                 {isSending ? 'Sending' : 'Continue'}
               </Button>
             </Box>
@@ -227,8 +241,8 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
+            sm: '32px 32px 0 0',
+            md: '32px',
           }}
           maxW={{
             sm: '100vw',
@@ -255,7 +269,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
               simplicity, pragmatism, sustainability, and optimism.
             </Box>
             <Box width="100%">
-              <Button size="xl" type="blue" width="100%" onClick={onClose}>
+              <Button size="xl" type="black" width="100%" onClick={onClose}>
                 Got it
               </Button>
             </Box>

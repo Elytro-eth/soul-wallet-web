@@ -8,7 +8,7 @@ import { ZeroAddress } from 'ethers';
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Send({ isModal }: any) {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
   const [amount, setAmount] = useState<any>('');
   const [sendTo, setSendTo] = useState('');
   const [tokenAddress, setTokenAddress] = useState();

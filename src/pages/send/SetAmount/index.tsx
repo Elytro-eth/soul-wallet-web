@@ -43,27 +43,31 @@ export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount, 
         onBack={onPrev}
       />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
-        <Box fontSize="32px" fontWeight="700">
+        <Box fontSize="28px" fontWeight="500">
           Amount
         </Box>
-        <Box marginTop="60px">
+        <Box marginTop="24px">
           <Box
             fontSize="14px"
-            fontWeight="700"
-            opacity="0.4"
+            fontWeight="400"
+            color="#95979C"
+            marginBottom="8px"
           >
             Token
           </Box>
           <Box
-            borderBottom="1px solid rgba(73, 126, 130, 0.2)"
-            padding="10px 0"
+            paddingTop="10px"
             display="flex"
             alignItems="center"
             position="relative"
+            background="#F2F3F5"
+            padding="16px"
+            borderRadius="16px"
+            height="56px"
           >
             <Box height="40px" display="flex" alignItems="center" justifyContent="space-between" width="100%" onClick={() => { isOpen ? onClose() : onOpen() }}>
               {!selectedToken && (
-                <Box lineHeight="40px" fontSize="20px" fontWeight="600" color="rgba(0, 0, 0, 0.3)">Select a Token</Box>
+                <Box lineHeight="40px" fontSize="20px" fontWeight="400" color="#95979C">Select a Token</Box>
               )}
               {!!selectedToken && (
                 <Box
@@ -85,7 +89,8 @@ export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount, 
             </Box>
             <Box
               position="absolute"
-              top="70px"
+              top="60px"
+              left="0"
               width="100%"
             >
               <SelectToken isOpen={isOpen} select={(token: any) => { 
@@ -97,41 +102,43 @@ export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount, 
           </Box>
           <Box
             fontSize="14px"
-            fontWeight="700"
-            opacity="0.4"
-            marginTop="40px"
+            fontWeight="400"
+            color="#95979C"
+            marginTop="24px"
           >
             Amount
           </Box>
           <Box marginTop="8px">
             <Box
-              borderBottom="1px solid rgba(73, 126, 130, 0.2)"
-              padding="10px 0"
               display="flex"
               alignItems="center"
+              height="56px"
+              background="#F2F3F5"
+              borderRadius="16px"
             >
               <Input
                 value={amount}
                 onChange={e => onAmountChange(e.target.value)}
+                height="56px"
+                spellCheck={false}
                 fontSize="20px"
-                lineHeight="100%"
-                padding="0"
-                fontWeight="700"
+                lineHeight="24px"
+                fontWeight="400"
                 placeholder="Enter an Amount"
-                borderRadius="0"
                 border="none"
                 outline="none"
+                background="#F2F3F5"
+                padding="16px"
+                borderRadius="16px"
+                color="#161F36"
                 _focusVisible={{ border: 'none', boxShadow: 'none' }}
               />
               <Box
-                fontSize="14px"
-                fontWeight="700"
-                color={selectedToken ? "#332244" : "rgba(51, 34, 68, .3)"}
-                onClick={
-                () => {
-                  selectedToken ? setAmount(selectedToken.tokenBalanceFormatted) : null;
-                }
-                }
+                fontSize="18px"
+                fontWeight="500"
+                color={selectedToken ? "#3C3F45" : "rgba(51, 34, 68, .3)"}
+                onClick={() => { selectedToken ? setAmount(selectedToken.tokenBalanceFormatted) : null; }}
+                paddingRight="16px"
               >
                 MAX
               </Box>
@@ -203,7 +210,7 @@ export default function SetAmount({ isModal, onPrev, onNext, amount, setAmount, 
             <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">Back</Button>
           </Box>
           <Box width="50%" paddingLeft="7px">
-            <Button width="calc(100% - 7px)" disabled={false} size="xl" type="blue" onClick={onNext}>Continue</Button>
+            <Button width="calc(100% - 7px)" disabled={false} size="xl" type="gradientBlue" onClick={onNext}>Continue</Button>
           </Box>
         </Box>
       </Box>

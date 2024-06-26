@@ -107,44 +107,46 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
         onBack={onPrev}
       />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
-        <Box fontSize="32px" fontWeight="700">
+        <Box fontSize="28px" fontWeight="500">
           Recipient
         </Box>
-        <Box marginTop="60px">
+        <Box marginTop="24px">
           <Box
             fontSize="14px"
-            fontWeight="700"
-            opacity="0.4"
+            fontWeight="400"
+            color="#95979C"
           >
             To
           </Box>
           <Box
-            borderBottom="1px solid rgba(73, 126, 130, 0.2)"
-            padding="10px 0"
+            paddingTop="10px"
             display="flex"
             alignItems="center"
             position="relative"
           >
             <Input
-              value={sendTo}
-              spellCheck={false}
               onChange={e => onAddressChange(e.target.value)}
               onFocus={(e: any) => inputOnFocus(e.target.value)}
+              value={sendTo}
               ref={setInputRef}
-              fontSize="18px"
-              lineHeight="100%"
-              padding="0"
-              fontWeight="700"
+              height="56px"
+              spellCheck={false}
+              fontSize="20px"
+              lineHeight="24px"
+              fontWeight="400"
               placeholder="Enter wallet address or ENS"
-              borderRadius="0"
               border="none"
               outline="none"
+              background="#F2F3F5"
+              padding="16px"
+              borderRadius="16px"
+              color="#161F36"
               _focusVisible={{ border: 'none', boxShadow: 'none' }}
             />
             <ENSResolver
               _styles={{
                 width: '100%',
-                top: '65px',
+                top: '75px',
                 left: '0',
                 right: '0',
                 borderRadius: '12px'
@@ -168,9 +170,9 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
         </Box>
         <Box
           fontSize="14px"
-          fontWeight="700"
-          opacity="0.4"
-          marginTop="40px"
+          fontWeight="400"
+          color="#95979C"
+          marginTop="24px"
         >
           Network
         </Box>
@@ -180,10 +182,10 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
           <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center"><QuestionIcon /></Box>
         </Box>
         <Box
-          marginTop="40px"
+          marginTop="21px"
           width="100%"
         >
-          <Button disabled={false} size="xl" type="blue" width="100%" onClick={onNext}>Continue</Button>
+          <Button disabled={false} size="xl" type="gradientBlue" width="100%" onClick={onNext}>Continue</Button>
         </Box>
       </Box>
       <Modal
@@ -238,7 +240,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
               Optimism is a Layer-2 scaling network for Ethereum that operates under a four-pillar design philosophy of simplicity, pragmatism, sustainability, and optimism.
             </Box>
             <Box width="100%">
-              <Button size="xl" type="blue" width="100%" onClick={onClose}>Got it</Button>
+              <Button size="xl" type="black" width="100%" onClick={onClose}>Got it</Button>
             </Box>
           </ModalBody>
         </ModalContent>
