@@ -31,7 +31,7 @@ export default function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { innerHeight } = useScreenSize()
   const { getIsAddedToHomeScreen, setIsAddedToHomeScreen } = useSettingStore()
-  const marginHeight = innerHeight - (innerHeight < 720 ? innerHeight : 720)
+  const marginHeight = innerHeight - (innerHeight < 850 ? innerHeight : 850)
 
   const navigate = useNavigate();
   const doSignIn = async () => {
@@ -57,7 +57,11 @@ export default function Landing() {
   }, [loaded])
 
   useEffect(() => {
-    if (!getIsAddedToHomeScreen()) onOpen()
+    if (!getIsAddedToHomeScreen()) {
+      setTimeout(() => {
+        onOpen()
+      }, 1000)
+    }
 
     return () => {
       onClose()
@@ -183,8 +187,8 @@ export default function Landing() {
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
+            sm: '32px 32px 0 0',
+            md: '32px',
           }}
           maxW={{
             sm: '100vw',
@@ -194,7 +198,7 @@ export default function Landing() {
             sm: `${marginHeight}px`,
             md: 'calc(50vh - 125px)'
           }}
-          height={innerHeight < 720 ? innerHeight : 720}
+          height={innerHeight < 850 ? innerHeight : 850}
           overflow="visible"
           mb="0"
           position="relative"
@@ -204,12 +208,13 @@ export default function Landing() {
           <ModalBody
             display="flex"
             flexDirection="column"
-            alignItems="center"
+            alignItems="flex-start"
             justifyContent="center"
             width="100%"
             paddingLeft="0"
             paddingRight="0"
             paddingTop="60px"
+            background="radial-gradient(476.97% 147.07% at 0% -21.13%, #FBFBF9 0%, #F7F0ED 45.5%, #BAD5F5 100%)"
           >
             <Box
               background="#D9D9D9"
@@ -217,20 +222,28 @@ export default function Landing() {
               width="120px"
               borderRadius="120px"
               marginBottom="30px"
+              marginLeft="32px"
+              marginRight="32px"
             >
               <Image src={AddHomeIMG} />
             </Box>
-            <Box fontSize="24px" fontWeight="700" marginBottom="14px" textAlign="center" letterSpacing="-1px">
+            <Box fontSize="24px" fontWeight="700" marginBottom="14px" padding="0 32px">
               Add to home screen to continue...
+            </Box>
+            <Box fontWeight="700" fontSize="16px" paddingBottom="14px" paddingLeft="32px" paddingRight="32px">
+              <Box fontSize="28px" fontWeight="500">01</Box>
+              <Box fontSize="18px" fontWeight="400">Tap Share icon at toolbar</Box>
             </Box>
             <Box width="100%">
               <Image src={Toolbar1} />
             </Box>
-            <Box fontWeight="700" fontSize="16px" paddingBottom="14px">1. Click this at toolbar</Box>
+            <Box fontWeight="700" fontSize="16px" paddingBottom="14px" paddingLeft="32px" paddingRight="32px">
+              <Box fontSize="28px" fontWeight="500">02</Box>
+              <Box fontSize="18px" fontWeight="400">Tap “Add to Homescreen”</Box>
+            </Box>
             <Box width="100%">
               <Image src={Toolbar2} />
             </Box>
-            <Box fontWeight="700" fontSize="16px" paddingBottom="14px">{`2. Click "Add to Home Screen"`}</Box>
           </ModalBody>
         </ModalContent>
       </Modal>
