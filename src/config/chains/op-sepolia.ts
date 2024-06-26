@@ -24,6 +24,7 @@ export default {
   defaultMaxPriorityFee: '0',
   chainName: 'Optimism Sepolia',
   chainToken: 'ETH',
+  addressPrefix: "opsep:",
   contracts: {
     soulWalletFactory: import.meta.env.VITE_SoulwalletFactory,
     defaultCallbackHandler: import.meta.env.VITE_DefaultCallbackHandler,

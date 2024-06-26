@@ -30,10 +30,12 @@ import QuestionIcon from '@/components/Icons/Question'
 import ReceiveCode from '@/components/ReceiveCode';
 import useTools from '@/hooks/useTools';
 import useScreenSize from '@/hooks/useScreenSize'
+import useConfig from '@/hooks/useConfig';
 
 export default function Receive({ isModal, registerScrollable }: any) {
   const { closeModal } = useWalletContext()
   const navigate = useNavigate();
+  const { chainConfig } = useConfig();
   const [swiper, setSwiper] = useState<any>(null)
   const [step, setStep] = useState(0)
   const { selectedAddress } = useAddressStore();
@@ -123,7 +125,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 <Image width="40px" height="40px" src={OpIcon} />
               </Box>
               <Box>
-                <Box fontSize="20px" fontWeight="500">Optimism network</Box>
+                <Box fontSize="20px" fontWeight="500">{chainConfig.chainName}</Box>
                 <Box fontSize="12px" color="#676B75">Only send Optimism assets to this address</Box>
               </Box>
             </Box>
@@ -150,7 +152,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 maxWidth="205px"
                 marginTop="14px"
               >
-                <Box as="span" fontWeight="700">Op:</Box><br />{selectedAddress}
+                <Box as="span" fontWeight="700">{chainConfig.chainPrefix}</Box><br />{selectedAddress}
               </Box>
               <Box marginTop="24px" width="205px">
                 <Button size="xl" type="white" width="100%" onClick={() => doCopy(selectedAddress)}>Copy address</Button>

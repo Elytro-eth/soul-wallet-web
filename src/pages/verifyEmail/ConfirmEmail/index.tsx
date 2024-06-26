@@ -30,7 +30,7 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         textAlign="center"
         fontSize="28px"
         fontWeight="500"
-        marginTop="20px"
+        marginTop="8px"
       >
         {email}
       </Box>
@@ -39,7 +39,7 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         textAlign="center"
         fontSize="14px"
         fontWeight="400"
-        marginTop="20px"
+        marginTop="8px"
         color="#676B75"
       >
         Please follow the instructions and complete the verification process.

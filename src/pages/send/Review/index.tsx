@@ -164,14 +164,14 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           >
             To
           </Box>
-          <Box marginTop="8px" alignItems="center" width="100%" display="inline-block">
-            <Box as="span" fontSize="22px" fontWeight="500">
+          <Box marginTop="8px" alignItems="center" width="100%" fontWeight={"600"} display="inline-block">
+            <Box as="span" fontSize="22px">
               {sendTo.slice(0, 6)}
             </Box>
-            <Box as="span" fontSize="22px" fontWeight="500" color="rgba(0, 0, 0, 0.4)">
+            <Box as="span" fontSize="22px" color="rgba(0, 0, 0, 0.4)">
               {sendTo.slice(6, 32)}
             </Box>
-            <Box as="span" fontSize="22px" fontWeight="500">
+            <Box as="span" fontSize="22px">
               {sendTo.slice(32)}
             </Box>
           </Box>
@@ -224,11 +224,11 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         )}
         {!isSent && (
           <Box marginTop="40px" width="100%" display="flex">
-            <Box width="50%" paddingRight="7px">
+            {!isSending && <Box width="50%" paddingRight="7px">
               <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
                 Back
               </Button>
-            </Box>
+            </Box>}
             <Box width="50%" paddingLeft="7px">
               <Button width="calc(100% - 7px)" disabled={isSending} size="xl" type="gradientBlue" onClick={() => onTransfer()}>
                 {isSending ? 'Sending' : 'Continue'}

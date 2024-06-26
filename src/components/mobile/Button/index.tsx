@@ -100,7 +100,7 @@ const buttonStyles = {
     _hover: { bg: '#3042B9' },
     _disabled: {
       cursor: 'not-allowed',
-      opacity: '0.4'
+      opacity: '0.6'
     },
   },
   // background: radial-gradient(343.44% 424.79% at 35.68% -30.21%, #F0EEE6 0%, #F5EDEB 32.08%, #BAD5F5 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */

@@ -32,7 +32,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
         textAlign="center"
         fontSize="14px"
         fontWeight="400"
-        marginTop="20px"
+        marginTop="8px"
       >
         Please confirm recovery contact updates on your Soul Wallet account.
       </Box>

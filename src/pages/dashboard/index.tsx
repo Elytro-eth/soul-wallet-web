@@ -134,7 +134,7 @@ export default function Dashboard() {
   // const [activeMenu, setActiveMenu] = useState('apps')
 
   const valueLeft = totalUsdValue.split('.')[0];
-  const valueRight = '20' // totalUsdValue.split('.')[1];
+  const valueRight = totalUsdValue.split('.')[1];
 
   const fontSize = getFontSize(valueLeft);
   const smFontSize = getSmallFontSize(valueRight);
@@ -268,16 +268,16 @@ export default function Dashboard() {
                 minHeight="79px"
                 borderRadius="32px"
                 // background="white"
-                padding="10px 16px"
-                color="#324174"
+                padding="12px 16px"
+                color="#0E1736"
                 justifyContent="space-between"
                 fontSize="14px"
                 background="radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)"
                 onClick={() => navigate('/verify-email')}
               >
                 <Box>
-                  <Box fontSize="32px" fontWeight="500">$10</Box>
-                  <Box fontSize="14px" fontWeight="400" color="#161F36">Setup email recovery to get 10 USDC for free</Box>
+                  <Box fontSize="32px" lineHeight={"1"} fontWeight="500">$10</Box>
+                  <Box fontSize="14px" lineHeight={"17px"} fontWeight="400">Setup email recovery to get 10 USDC for free</Box>
                 </Box>
                 <Box>
                   <Image width="40px" height="40px" src={USDCIcon} />
