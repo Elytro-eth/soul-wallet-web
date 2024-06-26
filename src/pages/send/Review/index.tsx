@@ -257,21 +257,38 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           mb="0"
         >
           <ModalCloseButton />
-          <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
-            <Box background="#D9D9D9" height="80px" width="80px" borderRadius="80px" marginBottom="30px">
-              <Image src={OpIcon} />
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="center"
+            width="100%"
+          >
+            <Box
+              background="#D9D9D9"
+              height="96px"
+              width="96px"
+              borderRadius="80px"
+              marginBottom="30px"
+            >
+              <Image
+                height="96px"
+                width="96px"
+                src={OpIcon}
+              />
             </Box>
-            <Box fontSize="24px" fontWeight="700" marginBottom="14px">
+            <Box fontSize="28px" fontWeight="500" marginBottom="14px" color="#161F36">
               Optimism network
             </Box>
-            <Box fontSize="16px" textAlign="center" marginBottom="40px">
-              Optimism is a Layer-2 scaling network for Ethereum that operates under a four-pillar design philosophy of
-              simplicity, pragmatism, sustainability, and optimism.
+            <Box
+              fontSize="14px"
+              marginBottom="40px"
+              color="#676B75"
+            >
+              Optimism is a Layer-2 scaling network for Ethereum that operates under a four-pillar design philosophy of simplicity, pragmatism, sustainability, and optimism.
             </Box>
             <Box width="100%">
-              <Button size="xl" type="black" width="100%" onClick={onClose}>
-                Got it
-              </Button>
+              <Button size="xl" type="black" width="100%" onClick={onClose}>Got it</Button>
             </Box>
           </ModalBody>
         </ModalContent>
