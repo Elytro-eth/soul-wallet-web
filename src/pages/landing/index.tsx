@@ -96,7 +96,6 @@ export default function Landing() {
     <Box
       width="100%"
       height={innerHeight}
-      fontFamily={"SF"}
       background="radial-gradient(476.97% 147.07% at 0% -21.13%, #FBFBF9 0%, #F7F0ED 45.5%, #BAD5F5 100%)"
     >
       <Header
