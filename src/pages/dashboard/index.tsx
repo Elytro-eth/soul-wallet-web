@@ -90,7 +90,7 @@ export function Header({ openMenu, username, ...props }: any) {
           Hi, {walletName}
         </Box>
       </Box>
-      <Box fontSize="18px" fontWeight="700" color="black" lineHeight="24px">
+      <Box fontSize="18px" fontWeight="500" color="black" lineHeight="24px">
         <Box
           height="36px"
           width="36px"

@@ -120,7 +120,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
       <Header title="" showBackButton={!isModal} onBack={onPrev} />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         {isSent && (
-          <Box fontSize="28px" fontWeight="700" display="flex" alignItems="center">
+          <Box fontSize="28px" fontWeight="500" display="flex" alignItems="center">
             <Box marginRight="12px">
               <SentIcon />
             </Box>
@@ -128,7 +128,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         )}
         {isSending && !isSent && (
-          <Box fontSize="28px" fontWeight="700" display="flex" alignItems="center">
+          <Box fontSize="28px" fontWeight="500" display="flex" alignItems="center">
             <Box marginRight="12px">
               <SendingIcon />
             </Box>
@@ -136,7 +136,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         )}
         {!isSending && !isSent && (
-          <Box fontSize="28px" fontWeight="700">
+          <Box fontSize="28px" fontWeight="500">
             Review
           </Box>
         )}

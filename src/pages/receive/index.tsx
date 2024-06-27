@@ -152,7 +152,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 maxWidth="205px"
                 marginTop="14px"
               >
-                <Box as="span" fontWeight="700">{chainConfig.chainPrefix}</Box><br />{selectedAddress}
+                <Box as="span" fontWeight="500">{chainConfig.chainPrefix}</Box><br />{selectedAddress}
               </Box>
               <Box marginTop="24px" width="205px">
                 <Button size="xl" type="white" width="100%" onClick={() => doCopy(selectedAddress)}>Copy address</Button>

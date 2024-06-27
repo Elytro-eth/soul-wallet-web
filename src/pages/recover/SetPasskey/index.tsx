@@ -9,7 +9,7 @@ export default function SetPasskey({ onNext, addingPasskey }: any) {
         <FadeId />
       </Box>
       <Box
-        fontWeight="700"
+        fontWeight="500"
         fontSize="24px"
         lineHeight="14px"
         marginBottom="32px"

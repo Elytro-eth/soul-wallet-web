@@ -24,7 +24,7 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
       ref={scrollableRef}
     >
       <Box padding="30px">
-        <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
+        <Box width="100%" fontSize="30px" fontWeight="500" textAlign="center" lineHeight="36px" marginTop="20px">
           Make a transfer
         </Box>
         <Box

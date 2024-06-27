@@ -54,14 +54,14 @@ const Pagination = ({ isActive, count, activeIndex, onNext, onFinish }: any) => 
       </Box>
       <Box display="flex" alignItems="center" justifyContent="center">
         {activeIndex !== 3 && (
-          <Box fontWeight="700" fontSize="18px" cursor="pointer" onClick={onNext}>
+          <Box fontWeight="500" fontSize="18px" cursor="pointer" onClick={onNext}>
             What’s next
           </Box>
         )}
         {activeIndex === 3 && (
           <Box display="flex" alignItems="center" justifyContent="center">
             <Link to="/dashboard">
-              <Box fontWeight="700" fontSize="18px" cursor="pointer">I’ve done with all these steps!</Box>
+              <Box fontWeight="500" fontSize="18px" cursor="pointer">I’ve done with all these steps!</Box>
             </Link>
           </Box>
         )}

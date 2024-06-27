@@ -19,7 +19,7 @@ export default function RecoverProcess({ step }: any) {
       zIndex="1"
     >
       <Box onClick={() => setIsOpen(!isOpen)} display="flex" alignItems="center" justifyContent="space-between">
-        <Box fontSize="16px" fontWeight="700">Recovery process ({step}/3)</Box>
+        <Box fontSize="16px" fontWeight="500">Recovery process ({step}/3)</Box>
         <Box transform={isOpen ? '' : 'rotate(180deg)'}><ChevronDown /></Box>
       </Box>
       {isOpen && (

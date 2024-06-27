@@ -22,7 +22,7 @@ export default function SelectToken({
       }}
     >
       <Box padding="30px" paddingBottom="144px">
-        <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
+        <Box width="100%" fontSize="30px" fontWeight="500" textAlign="center" lineHeight="36px" marginTop="20px">
           Send USDC token
         </Box>
         <Box
@@ -65,7 +65,7 @@ export default function SelectToken({
               <Image width="72px" height="72px" src={USDCIcon} className="icon" />
             </Box>
             <Box
-              fontWeight="700"
+              fontWeight="500"
               fontSize="20px"
               marginTop="20px"
             >

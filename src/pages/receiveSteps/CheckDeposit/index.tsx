@@ -73,7 +73,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
         padding="30px"
         marginBottom={isAllChecked ? '80px' : '0px'}
       >
-        <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
+        <Box width="100%" fontSize="30px" fontWeight="500" textAlign="center" lineHeight="36px" marginTop="20px">
           Prior to deposit,<br/> please verify
         </Box>
         <Box
@@ -158,7 +158,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
             marginTop="30px"
             marginBottom="40px"
           >
-            <Box fontWeight="700" background="#F1F1F1" borderRadius="12px" padding="15px 16px">
+            <Box fontWeight="500" background="#F1F1F1" borderRadius="12px" padding="15px 16px">
               {selectedAddress}
             </Box>
             <Box width="100%" display="flex" alignItems="center" justifyContent="space-between" marginTop="17px">
@@ -172,7 +172,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
               </Box>
             </Box>
             <Box fontSize="12px" fontWeight="500" color="#5E5E5E" marginTop="26px">
-              This is your Stable.cash address on <Text as="span" fontWeight="700">OP Mainnet</Text> to transfer assets directly into your account and
+              This is your Stable.cash address on <Text as="span" fontWeight="500">OP Mainnet</Text> to transfer assets directly into your account and
               save into protocol. You can always copy it on homepage.
             </Box>
           </Box>

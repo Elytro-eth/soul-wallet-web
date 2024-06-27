@@ -20,7 +20,7 @@ export default function Intro({ onPrev, onNext }: any) {
         width="100%"
         textAlign="center"
         fontSize="28px"
-        fontWeight="700"
+        fontWeight="500"
         marginTop="20px"
       >
         Recover my wallet
@@ -34,7 +34,7 @@ export default function Intro({ onPrev, onNext }: any) {
       >
         We understand it must be annoying to lose wallet.<br />
         No worries, we got you covered!<br />
-        Just simply recovery your wallet within <Box as="span" fontWeight="700">3 steps</Box>.
+        Just simply recovery your wallet within <Box as="span" fontWeight="500">3 steps</Box>.
       </Box>
       <Button onClick={onNext} size="xl" type="blue" width="100%" marginTop="30px">Get started</Button>
       <Button size="xl" type="white" width="100%" onClick={onPrev} marginTop="20px" background="#F6F6F6">Back</Button>

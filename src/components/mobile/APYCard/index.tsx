@@ -84,7 +84,7 @@ export default function APYCard() {
           <Box marginLeft="10px">
             <Box
               fontSize="24px"
-              fontWeight="700"
+              fontWeight="500"
               lineHeight="30px"
             >
               Earn USDC
@@ -95,7 +95,7 @@ export default function APYCard() {
             >
               <Box
                 fontSize="14px"
-                fontWeight="700"
+                fontWeight="500"
                 lineHeight="18px"
               >
                 on AAVE |
@@ -114,13 +114,13 @@ export default function APYCard() {
         <Box display="flex" alignItems="center" marginTop="16px">
           <Box
             fontSize="72px"
-            fontWeight="700"
+            fontWeight="500"
           >
             {sevenDayApy}
           </Box>
           <Box
             fontSize="24px"
-            fontWeight="700"
+            fontWeight="500"
             marginTop="24px"
             marginLeft="10px"
           >
@@ -128,7 +128,7 @@ export default function APYCard() {
           </Box>
         </Box>
         <Flex align={'center'} gap="1px">
-          <Box  fontSize="18px" fontWeight="600">
+          <Box  fontSize="18px" fontWeight="500">
             7D Average APY
           </Box>
           <Image src={IconQuestion} onClick={()=> onOpen()} />
@@ -215,7 +215,7 @@ export default function APYCard() {
           padding="18px 10px"
         >
           <Box
-            fontWeight="600"
+            fontWeight="500"
             fontSize="14px"
             textAlign="center"
           >
@@ -223,7 +223,7 @@ export default function APYCard() {
           </Box>
           <Box
 
-            fontWeight="600"
+            fontWeight="500"
             fontSize="12px"
             color="rgba(0, 0, 0, 0.5)"
             marginTop="5px"
@@ -242,7 +242,7 @@ export default function APYCard() {
         >
           <Box
 
-            fontWeight="600"
+            fontWeight="500"
             fontSize="14px"
             textAlign="center"
           >
@@ -250,7 +250,7 @@ export default function APYCard() {
           </Box>
           <Box
 
-            fontWeight="600"
+            fontWeight="500"
             fontSize="12px"
             color="rgba(0, 0, 0, 0.5)"
             marginTop="5px"
@@ -269,7 +269,7 @@ export default function APYCard() {
         >
           <Box
 
-            fontWeight="600"
+            fontWeight="500"
             fontSize="14px"
             textAlign="center"
           >
@@ -277,7 +277,7 @@ export default function APYCard() {
           </Box>
           <Box
 
-            fontWeight="600"
+            fontWeight="500"
             fontSize="12px"
             color="rgba(0, 0, 0, 0.5)"
             marginTop="5px"
@@ -326,7 +326,7 @@ export default function APYCard() {
               borderRadius="120px"
               marginBottom="30px"
             />
-            <Box fontSize="24px" fontWeight="700" marginBottom="14px" textAlign={'center'}>
+            <Box fontSize="24px" fontWeight="500" marginBottom="14px" textAlign={'center'}>
               Where does the yield come from
             </Box>
             <Box

@@ -8,7 +8,7 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
 
   return (
     <Box width="100%" height="400px" padding="30px">
-      <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px">
+      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="20px">
         Enter username
       </Box>
       <Box width="100%" marginBottom="72px">
@@ -21,7 +21,7 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
           fontSize="32px"
           lineHeight="24px"
           padding="0"
-          fontWeight="700"
+          fontWeight="500"
           placeholder="Enter username or wallet address"
           borderRadius="0"
           border="none"
@@ -37,13 +37,13 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
             <>
               {accountInfo ? (
                 <Box width="100%" background="#F5FFF4" borderRadius="12px" padding="12px">
-                  <Box color="#0CB700" fontSize="12px" fontWeight="600" display="flex" alignItems="center">
+                  <Box color="#0CB700" fontSize="12px" fontWeight="500" display="flex" alignItems="center">
                     <Box marginRight="4px">
                       <NameChecked />
                     </Box>
                     <Box>Wallet found</Box>
                   </Box>
-                  <Box fontSize="13px" fontWeight="600">
+                  <Box fontSize="13px" fontWeight="500">
                     <Box as="span" color="black">
                       {accountInfo.address.slice(0,6)}
                     </Box>
@@ -57,7 +57,7 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
                 </Box>
               ) : isWalletNotFound ? (
                 <Box width="100%" background="#FFF9F8" borderRadius="12px" padding="12px">
-                  <Box fontSize="12px" fontWeight="600">
+                  <Box fontSize="12px" fontWeight="500">
                     <Box as="span" color="#E83D26">
                       Wallet not found, please enter valid Soul Wallet address
                     </Box>

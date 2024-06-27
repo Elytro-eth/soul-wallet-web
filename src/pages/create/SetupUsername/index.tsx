@@ -38,17 +38,17 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
           {checking ? (
             <InputLoading />
           ) : nameStatus === 0 ? (
-            <Box fontSize="14px" lineHeight="24px" fontWeight="600" minHeight="24px" color="#0CB700">
+            <Box fontSize="14px" lineHeight="24px" fontWeight="500" minHeight="24px" color="#0CB700">
               Coolio, you got a unique name
             </Box>
           ) : nameStatus === 1 ? (
-            <Box fontSize="14px" lineHeight="24px" fontWeight="700" minHeight="24px" color="#E83D26">
+            <Box fontSize="14px" lineHeight="24px" fontWeight="500" minHeight="24px" color="#E83D26">
               {valueIsNotString && 'Please enter a valid name'}
               {lengthNotMatch && 'Name must be between 3 and 24 characters'}
               {valueHasSpecialChar && 'Name must contain only letters, numbers, and underscores'}
             </Box>
           ) : nameStatus === 2 ? (
-            <Box fontSize="14px" lineHeight="24px" fontWeight="700" minHeight="24px" color="#E83D26">
+            <Box fontSize="14px" lineHeight="24px" fontWeight="500" minHeight="24px" color="#E83D26">
               This name has been taken. Please try a new one.
             </Box>
           ) : (

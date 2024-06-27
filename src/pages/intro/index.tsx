@@ -43,11 +43,11 @@ export default function Intro() {
       // background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
     >
       <Box width="100%" padding="30px" display="flex" alignItems="center" flexDirection="column">
-        <Box  fontSize="36px" fontWeight="700" textAlign="center" lineHeight="56px">
+        <Box  fontSize="36px" fontWeight="500" textAlign="center" lineHeight="56px">
           Deposit and earn
         </Box>
         <Box  fontSize="14px" fontWeight="500" textAlign="center" marginTop="14px">
-          Deposit to your Stable.cash account, get <Text as="span" fontWeight="700">auto-saved</Text> into the best interest rate pool and start earning today!
+          Deposit to your Stable.cash account, get <Text as="span" fontWeight="500">auto-saved</Text> into the best interest rate pool and start earning today!
         </Box>
         <Link as={RLink} to="/deposit" mt="50px">
           <Button size="xl" type="black" minWidth="283px">Deposit USDC</Button>
@@ -105,7 +105,7 @@ export default function Intro() {
               marginBottom="30px"
               mt="24px"
             />
-            <Box fontSize="24px" width="100%" textAlign="center" fontWeight="700" marginBottom="14px">
+            <Box fontSize="24px" width="100%" textAlign="center" fontWeight="500" marginBottom="14px">
               Auto-saving
             </Box>
             <Box

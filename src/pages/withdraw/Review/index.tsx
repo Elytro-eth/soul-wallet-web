@@ -85,7 +85,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
         {isTransferingRef.current && (
           <Box
             fontSize="32px"
-            fontWeight="700"
+            fontWeight="500"
             lineHeight="42px"
             textAlign="center"
             height="200px"
@@ -103,7 +103,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
         {isCompletedRef.current && completed && (
           <Box
             fontSize="32px"
-            fontWeight="700"
+            fontWeight="500"
             lineHeight="42px"
             textAlign="center"
             height="200px"
@@ -122,7 +122,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
         {!isCompletedRef.current && !isTransferingRef.current && (
           <Box
             fontSize="32px"
-            fontWeight="700"
+            fontWeight="500"
             lineHeight="42px"
             textAlign="center"
             height="160px"
@@ -147,7 +147,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
             <Box fontSize="16px" color="#818181" marginBottom="16px">
               Transfer
             </Box>
-            <Box fontSize="32px" lineHeight={'1'} fontWeight="700">
+            <Box fontSize="32px" lineHeight={'1'} fontWeight="500">
               {withdrawAmount} USDC
             </Box>
           </Box>
@@ -155,7 +155,7 @@ export default function Review({ onPrev, withdrawAmount, sendTo, isModal }: any)
             <Box fontSize="16px" color="#818181" marginBottom="16px">
               To
             </Box>
-            <Box fontSize="18px" fontWeight="700">
+            <Box fontSize="18px" fontWeight="500">
               {sendTo}
             </Box>
           </Box>

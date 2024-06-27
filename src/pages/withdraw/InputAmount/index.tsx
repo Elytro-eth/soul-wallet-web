@@ -116,7 +116,7 @@ export default function InputAmount({
         <Box marginTop="46px">
           <Box
             fontSize="24px"
-            fontWeight="700"
+            fontWeight="500"
           >
             Amount
           </Box>
@@ -132,7 +132,7 @@ export default function InputAmount({
               fontSize="32px"
               lineHeight="100%"
               padding="0"
-              fontWeight="700"
+              fontWeight="500"
               placeholder="0"
               borderRadius="0"
               border="none"
@@ -141,7 +141,7 @@ export default function InputAmount({
             />
             <Box
               fontSize="32px"
-              fontWeight="700"
+              fontWeight="500"
               color="rgba(0, 0, 0, 0.2)"
             >
               USDC
@@ -156,7 +156,7 @@ export default function InputAmount({
                                                                  marginTop="5px"
                                                                >
             <Box
-              fontWeight="700"
+              fontWeight="500"
               fontSize="14px"
               color="#E83D26"
             >
@@ -170,7 +170,7 @@ export default function InputAmount({
                                                               marginTop="5px"
                                                             >
             <Box
-              fontWeight="700"
+              fontWeight="500"
               fontSize="14px"
               color="#E83D26"
             >
@@ -184,7 +184,7 @@ export default function InputAmount({
             marginTop="5px"
           >
             <Box
-              fontWeight="600"
+              fontWeight="500"
               fontSize="14px"
             >
               Available: {toFixed(totalUsdValue, 3)} USDC
@@ -196,7 +196,7 @@ export default function InputAmount({
               fontSize="14px"
               borderRadius="48px"
               padding="2px 12px"
-              fontWeight="700"
+              fontWeight="500"
               marginLeft="10px"
               onClick={()=> onWithdrawAmountChange(Number(totalUsdValue))}
             >
@@ -208,7 +208,7 @@ export default function InputAmount({
         <Box marginTop="88px">
           <Box
             fontSize="24px"
-            fontWeight="700"
+            fontWeight="500"
           >
             To
           </Box>
@@ -228,7 +228,7 @@ export default function InputAmount({
               fontSize="18px"
               lineHeight="100%"
               padding="0"
-              fontWeight="700"
+              fontWeight="500"
               placeholder="Enter wallet address or ENS"
               borderRadius="0"
               border="none"
@@ -269,7 +269,7 @@ export default function InputAmount({
                                              marginTop="5px"
                                            >
             <Box
-              fontWeight="700"
+              fontWeight="500"
               fontSize="14px"
               color="#E83D26"
             >
@@ -285,7 +285,7 @@ export default function InputAmount({
             fontSize="14px"
             fontWeight="400"
           >
-            Confirm deposit address is on <Box as="span" fontWeight="700">OP Mainnet</Box>; deposit to other networks could result in lost assets.
+            Confirm deposit address is on <Box as="span" fontWeight="500">OP Mainnet</Box>; deposit to other networks could result in lost assets.
           </Box>
         </Box>
         <Box

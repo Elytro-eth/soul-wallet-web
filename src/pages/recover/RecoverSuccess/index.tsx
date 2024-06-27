@@ -30,7 +30,7 @@ export default function RecoverSuccess({ doRecover, isRecovering }: any) {
         {!animated && <Image position="absolute" left="0" top="0" width="200px" height="200px" src={ReadyIcon} />}
         <Image position="absolute" left="50px" top="50px" width="100px" height="100px" src={ReadyStaticIcon} />
       </Box>
-      <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="14px">
+      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="14px">
         Recovery completed
       </Box>
       <Box width="100%" marginBottom="50px" marginTop="14px">

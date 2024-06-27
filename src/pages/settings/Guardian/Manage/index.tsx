@@ -183,7 +183,7 @@ export default function Manage({ onPrev, onNext }: any) {
 
   return (
     <Box width="100%" height="100%" padding="30px" display="flex" flexDirection="column">
-      <Box fontSize="16px" fontWeight="600">
+      <Box fontSize="16px" fontWeight="500">
         My recovery contacts
       </Box>
       <Box marginTop="14px">
@@ -200,7 +200,7 @@ export default function Manage({ onPrev, onNext }: any) {
               <AddressIcon address={guardianAddress} width={48} />
             </Box>
             <Box>
-              <Box fontSize="16px" fontWeight="600">
+              <Box fontSize="16px" fontWeight="500">
                 {guardianAddressEmail[guardianAddress]
                 ? 'Email recovery contact'
                 : guardianAddressName[guardianAddress]
@@ -270,7 +270,7 @@ export default function Manage({ onPrev, onNext }: any) {
       {tempGuardians.length > 0 && (
         <Box>
           <Box width="100%" height="1px" background="#F0F0F0" marginBottom="40px" />
-          <Box fontSize="16px" fontWeight="600">
+          <Box fontSize="16px" fontWeight="500">
             Recovery settings
           </Box>
           <Box marginBottom="14px" marginTop="12px" position="relative">
@@ -377,7 +377,7 @@ export default function Manage({ onPrev, onNext }: any) {
                 <Box marginRight="4px">
                   <EditGuardianIcon />
                 </Box>
-                <Box fontSize="16px" fontWeight="600">
+                <Box fontSize="16px" fontWeight="500">
                   Edit
                 </Box>
               </Box>}
@@ -395,7 +395,7 @@ export default function Manage({ onPrev, onNext }: any) {
                 <Box marginRight="4px">
                   <DeleteGuardianIcon />
                 </Box>
-                <Box fontSize="16px" fontWeight="600">
+                <Box fontSize="16px" fontWeight="500">
                   Delete
                 </Box>
               </Box>
@@ -434,7 +434,7 @@ export default function Manage({ onPrev, onNext }: any) {
             >
               <DeleteCircleGuardianIcon />
             </Box>
-            <Box fontSize="24px" fontWeight="700" marginBottom="14px">
+            <Box fontSize="24px" fontWeight="500" marginBottom="14px">
               Delete recovery contact
             </Box>
             <Box fontSize="16px" textAlign="center" marginBottom="10px">
@@ -474,7 +474,7 @@ export default function Manage({ onPrev, onNext }: any) {
           <ModalCloseButton />
           <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
             <Box background="#D9D9D9" height="120px" width="120px" borderRadius="120px" marginBottom="30px"></Box>
-            <Box fontSize="24px" fontWeight="700" marginBottom="14px">
+            <Box fontSize="24px" fontWeight="500" marginBottom="14px">
               Confirm recovery contact update
             </Box>
             <Box fontSize="16px" textAlign="center" marginBottom="10px">

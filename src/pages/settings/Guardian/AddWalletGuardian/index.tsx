@@ -129,7 +129,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
 
   return (
     <Box width="100%" height={innerHeight - 40}>
-      <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">
+      <Box fontSize="16px" fontWeight="500" padding="10px 30px" paddingTop="60px">
         Add Wallet Recovery Contact
       </Box>
       <Box
@@ -141,7 +141,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
       >
         <Box width="100%">
           <Box padding="30px">
-            <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="20px"  marginTop="50px">
+            <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="20px"  marginTop="50px">
               ENS or wallet address
             </Box>
             <Box
@@ -155,7 +155,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 fontSize="32px"
                 lineHeight="24px"
                 padding="0"
-                fontWeight="700"
+                fontWeight="500"
                 placeholder="Enter or paste here"
                 borderRadius="0"
                 border="none"
@@ -186,7 +186,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 getActiveENSNameRef={getActiveENSNameRef}
               />
             </Box>
-            <Box fontWeight="700" fontSize="16px" lineHeight="14px" marginBottom="20px" marginTop="40px">
+            <Box fontWeight="500" fontSize="16px" lineHeight="14px" marginBottom="20px" marginTop="40px">
               Recovery contact name (optional)
             </Box>
             <Box>
@@ -195,7 +195,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 fontSize="18px"
                 lineHeight="24px"
                 padding="0"
-                fontWeight="700"
+                fontWeight="500"
                 placeholder="Enter or paste here"
                 borderRadius="0"
                 border="none"

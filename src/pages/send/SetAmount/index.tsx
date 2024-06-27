@@ -102,7 +102,7 @@ export default function SetAmount({
                     <Image width="36px" height="36px" src={selectedToken.logoURI} />
                   </Box>
                   <Box>
-                    <Box fontSize="16px" fontWeight="600">
+                    <Box fontSize="16px" fontWeight="500">
                       {selectedToken.name}
                     </Box>
                     <Box>{selectedToken.balance}</Box>
@@ -162,14 +162,14 @@ export default function SetAmount({
           <Box pos="absolute">
             {exceedBalance && (
               <Box display="flex" alignItems="center" justifyContent="flex-start" marginTop="5px">
-                <Box fontWeight="700" fontSize="14px" color="#E83D26">
+                <Box fontWeight="500" fontSize="14px" color="#E83D26">
                   Exceed the available balance
                 </Box>
               </Box>
             )}
             {amount && BN(amount).isNaN() ? (
               <Box display="flex" alignItems="center" justifyContent="flex-start" marginTop="5px">
-                <Box fontWeight="700" fontSize="14px" color="#E83D26">
+                <Box fontWeight="500" fontSize="14px" color="#E83D26">
                   Amount not valid
                 </Box>
               </Box>

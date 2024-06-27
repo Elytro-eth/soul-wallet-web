@@ -25,7 +25,7 @@ const SelectToken = ({ select, isOpen }: any) => {
                   <Box marginRight="8px">
                     <Image width="36px" height="36px" src={token.logoURI} />
                   </Box>
-                  <Box fontSize="16px" fontWeight="600">{token.name}</Box>
+                  <Box fontSize="16px" fontWeight="500">{token.name}</Box>
                   <Box fontSize="12px" marginLeft="auto">{toFixed(token.tokenBalanceFormatted, 6)} Avail.</Box>
                 </MenuItem>
               )}

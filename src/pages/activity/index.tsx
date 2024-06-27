@@ -50,7 +50,7 @@ export default function Activity({ isModal, registerScrollable }: any) {
       <Box
         // fontSize="18px"
         fontSize="32px"
-        fontWeight="700"
+        fontWeight="500"
         lineHeight="24px"
         width="100%"
         paddingLeft="30px"
@@ -147,12 +147,12 @@ export default function Activity({ isModal, registerScrollable }: any) {
           display="flex"
           alignItems="center"
           >
-          <Box fontSize="14px" fontWeight="700">{item.action}</Box>
+          <Box fontSize="14px" fontWeight="500">{item.action}</Box>
           </Box>
           <Box fontSize="12px">{item.dateFormatted}</Box>
           </Box>
           <Box marginLeft="auto">
-          <Box fontSize="14px" fontWeight="700">{item.amountFormatted} USDC</Box>
+          <Box fontSize="14px" fontWeight="500">{item.amountFormatted} USDC</Box>
           </Box>
           </Box>
           ))}

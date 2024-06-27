@@ -54,13 +54,13 @@ export default function ConnectWalletModal({
                     paddingBottom="50px"
                   >
                     <Box
-                      fontWeight="700"
+                      fontWeight="500"
                       fontSize="20px"
                     >
                       Connecting wallet...
                     </Box>
                     <Box
-                      fontWeight="600"
+                      fontWeight="500"
                       fontSize="14px"
                       color="rgba(0, 0, 0, 0.6)"
                       marginTop="6px"

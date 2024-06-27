@@ -23,7 +23,7 @@ export default function RecoverVerifyEmail() {
     >
       <Box
         fontSize="24px"
-        fontWeight="600"
+        fontWeight="500"
         lineHeight="24px"
         width="100%"
         marginTop="60px"
@@ -43,7 +43,7 @@ export default function RecoverVerifyEmail() {
         >
           <Box
             padding="14px 24px"
-            fontWeight="600"
+            fontWeight="500"
             fontSize="16px"
             background="#F2F2F2"
           >

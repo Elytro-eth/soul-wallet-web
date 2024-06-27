@@ -56,7 +56,7 @@ export default function Settings({ isModal }: any) {
     >
       <Box
         fontSize="18px"
-        fontWeight="700"
+        fontWeight="500"
         lineHeight="24px"
         width="100%"
       >
@@ -78,7 +78,7 @@ export default function Settings({ isModal }: any) {
         >
           <AddressIcon address={selectedAddress} width={48} />
         </Box>
-        <Box fontSize="24px" fontWeight="700">{walletName}</Box>
+        <Box fontSize="24px" fontWeight="500">{walletName}</Box>
       </Box>
       <Box
         display="flex"

@@ -94,7 +94,7 @@ export default function VerifySecret() {
               alignItems="center"
               justifyContent="center"
             >
-              <Box fontSize="32px" fontWeight="700" lineHeight={'normal'}>
+              <Box fontSize="32px" fontWeight="500" lineHeight={'normal'}>
                 Loading...
               </Box>
             </Box>
@@ -127,7 +127,7 @@ export default function VerifySecret() {
               >
                 <SuccessIcon size="120" />
               </Box>
-              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'}>
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="500" lineHeight={'normal'}>
                 Email verified successfully!
               </Box>
               <Box
@@ -170,7 +170,7 @@ export default function VerifySecret() {
               >
                 <ErrorIcon size="120" />
               </Box>
-              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="700" lineHeight={'normal'}>
+              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="500" lineHeight={'normal'}>
                 Failed to verify secret.
               </Box>
             </Box>

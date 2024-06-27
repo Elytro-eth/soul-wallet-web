@@ -190,7 +190,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
         </Box>
         <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
           <Box marginRight="8px"><Image w="32px" h="32px" src={OpIcon} /></Box>
-          <Box fontSize="20px" fontWeight="600">Optimism</Box>
+          <Box fontSize="20px" fontWeight="500">Optimism</Box>
           <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center"><QuestionIcon /></Box>
         </Box>
         <Box

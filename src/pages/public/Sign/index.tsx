@@ -99,7 +99,7 @@ export const SignContainer = ({ children, isOpen, onOpen, onClose, connectEOA }:
         >
           <ModalCloseButton />
           <ModalBody display="flex" flexDirection="column" width="100%">
-            <Box fontSize="16px" fontWeight="600" lineHeight="40px">
+            <Box fontSize="16px" fontWeight="500" lineHeight="40px">
               Connect a wallet
             </Box>
             <Box width="100%" display="flex" flexWrap="wrap">
@@ -241,7 +241,7 @@ export default function Sign() {
               alignItems="center"
               justifyContent="center"
             >
-              <Box fontSize="32px" fontWeight="700" lineHeight={'normal'}>
+              <Box fontSize="32px" fontWeight="500" lineHeight={'normal'}>
                 Loading...
               </Box>
             </Box>
@@ -269,7 +269,7 @@ export default function Sign() {
           width="100%"
           textAlign="center"
           fontSize="28px"
-          fontWeight="700"
+          fontWeight="500"
           marginTop="20px"
         >
           Signature received
@@ -293,7 +293,7 @@ export default function Sign() {
           <Box
             color="rgba(0, 0, 0, 0.8)"
             fontSize="12px"
-            fontWeight="600"
+            fontWeight="500"
             display="flex"
             alignItems="center"
             marginBottom="12px"
@@ -302,7 +302,7 @@ export default function Sign() {
           </Box>
           <Box
             fontSize="13px"
-            fontWeight="600"
+            fontWeight="500"
           >
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
             <Box as="span" color="rgba(0, 0, 0, 0.4)">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
@@ -319,7 +319,7 @@ export default function Sign() {
             <Box marginRight="4px">
               <Image width="20px" height="20px" src={chainConfig.icon} />
             </Box>
-            <Box fontWeight="600" fontSize="14px">{chainConfig.chainName}</Box>
+            <Box fontWeight="500" fontSize="14px">{chainConfig.chainName}</Box>
           </Box>
         </Box>
       </SignContainer>
@@ -344,7 +344,7 @@ export default function Sign() {
           width="100%"
           textAlign="center"
           fontSize="28px"
-          fontWeight="700"
+          fontWeight="500"
           marginTop="20px"
         >
           Not the recovery contact
@@ -364,7 +364,7 @@ export default function Sign() {
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
             </Box>
-            {/* <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
+            {/* <Box fontWeight="500" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
             <Box fontSize="14px">{toShortAddress(address)}</Box>
             <Box width="1px" height="20px" background="#E2E2E2" marginLeft="10px" marginRight="10px"></Box>
             <Box onClick={() => disconnectEOA()}><OpenIcon /></Box>
@@ -392,7 +392,7 @@ export default function Sign() {
           width="100%"
           textAlign="center"
           fontSize="28px"
-          fontWeight="700"
+          fontWeight="500"
           marginTop="20px"
         >
           Switch network
@@ -414,7 +414,7 @@ export default function Sign() {
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
             </Box>
-            {/* <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
+            {/* <Box fontWeight="500" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
             <Box fontSize="14px">{toShortAddress(address)}</Box>
             <Box width="1px" height="20px" background="#E2E2E2" marginLeft="10px" marginRight="10px"></Box>
             <Box onClick={() => disconnectEOA()}><OpenIcon /></Box>
@@ -440,7 +440,7 @@ export default function Sign() {
           width="100%"
           textAlign="center"
           fontSize="28px"
-          fontWeight="700"
+          fontWeight="500"
           marginTop="20px"
         >
           Recover request
@@ -464,7 +464,7 @@ export default function Sign() {
           <Box
             color="rgba(0, 0, 0, 0.8)"
             fontSize="12px"
-            fontWeight="600"
+            fontWeight="500"
             display="flex"
             alignItems="center"
             marginBottom="12px"
@@ -473,7 +473,7 @@ export default function Sign() {
           </Box>
           <Box
             fontSize="13px"
-            fontWeight="600"
+            fontWeight="500"
           >
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
             <Box as="span" color="rgba(0, 0, 0, 0.4)">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
@@ -490,7 +490,7 @@ export default function Sign() {
             <Box marginRight="4px">
               <Image width="20px" height="20px" src={chainConfig.icon} />
             </Box>
-            <Box fontWeight="600" fontSize="14px">{chainConfig.chainName}</Box>
+            <Box fontWeight="500" fontSize="14px">{chainConfig.chainName}</Box>
           </Box>
         </Box>
         <Button
@@ -509,7 +509,7 @@ export default function Sign() {
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
             </Box>
-            {/* <Box fontWeight="600" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
+            {/* <Box fontWeight="500" fontSize="14px" marginRight="4px">Wallet_1</Box> */}
             <Box fontSize="14px">{toShortAddress(address)}</Box>
             <Box width="1px" height="20px" background="#E2E2E2" marginLeft="10px" marginRight="10px"></Box>
             <Box onClick={() => disconnectEOA()}><OpenIcon /></Box>
@@ -534,7 +534,7 @@ export default function Sign() {
         width="100%"
         textAlign="center"
         fontSize="28px"
-        fontWeight="700"
+        fontWeight="500"
         marginTop="20px"
       >
         Recover request
@@ -558,7 +558,7 @@ export default function Sign() {
         <Box
           color="rgba(0, 0, 0, 0.8)"
           fontSize="12px"
-          fontWeight="600"
+          fontWeight="500"
           display="flex"
           alignItems="center"
           marginBottom="12px"
@@ -567,7 +567,7 @@ export default function Sign() {
         </Box>
         <Box
           fontSize="13px"
-          fontWeight="600"
+          fontWeight="500"
         >
           <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
           <Box as="span" color="rgba(0, 0, 0, 0.4)">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
@@ -584,7 +584,7 @@ export default function Sign() {
           <Box marginRight="4px">
             <Image width="20px" height="20px" src={chainConfig.icon} />
           </Box>
-          <Box fontWeight="600" fontSize="14px">{chainConfig.chainName}</Box>
+          <Box fontWeight="500" fontSize="14px">{chainConfig.chainName}</Box>
         </Box>
       </Box>
       <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={onOpen}>{isConnecting ? 'Connecting' : 'Connect wallet'}</Button>

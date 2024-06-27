@@ -42,7 +42,7 @@ export default function GuardianCard({
       )}
       <Box
         
-        fontWeight="700"
+        fontWeight="500"
         fontSize="16px"
         marginBottom="10px"
       >

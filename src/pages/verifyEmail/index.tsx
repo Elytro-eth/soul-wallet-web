@@ -276,7 +276,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
         </Fragment>
       )}
       {isModal && (
-        <Box fontSize="16px" fontWeight="600" padding="10px 30px" paddingTop="60px">
+        <Box fontSize="16px" fontWeight="500" padding="10px 30px" paddingTop="60px">
           Add Email Recovery Contact
         </Box>
       )}

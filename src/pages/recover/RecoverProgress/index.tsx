@@ -70,7 +70,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
   return (
     <Box width="100%" height="100%" padding="30px">
       <Box width="120px" height="120px" borderRadius="120px" margin="0 auto" background="#F2F2F2" opacity="0.55"></Box>
-      <Box width="100%" textAlign="center" fontSize="23px" fontWeight="700" marginTop="20px" letterSpacing="-1px">
+      <Box width="100%" textAlign="center" fontSize="23px" fontWeight="500" marginTop="20px" letterSpacing="-1px">
         Share link with your recovery contacts
       </Box>
       <Box width="100%" textAlign="center" fontSize="14px" fontWeight="400" marginTop="12px">
@@ -79,14 +79,14 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
       <Button onClick={onShare} size="xl" type="blue" width="100%" marginTop="30px" marginBottom="60px">
         Share
       </Button>
-      <Box fontWeight="700" fontSize="18px" width="100%" paddingBottom="24px" borderBottom="1px solid #F0F0F0">
+      <Box fontWeight="500" fontSize="18px" width="100%" paddingBottom="24px" borderBottom="1px solid #F0F0F0">
         {pendingGuardianNum} more recovery contacts approval needed
       </Box>
       {guardiansList &&
        guardiansList.map((guardianAddress: any, index: number) => {
          const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) 
          return <Box
-                  fontWeight="600"
+                  fontWeight="500"
                   fontSize="14px"
                   key={index}
                   width="100%"
@@ -108,7 +108,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                  background="#F5FFF4"
                  padding="2px 8px"
                  borderRadius="24px"
-                 fontWeight="600"
+                 fontWeight="500"
                  display="flex"
                  alignItems="center"
                >

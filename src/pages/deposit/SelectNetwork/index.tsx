@@ -20,7 +20,7 @@ export default function SelectNetwork({ onNext }: any) {
       }}
     >
       <Box padding="30px" paddingBottom="144px">
-        <Box width="100%" fontSize="30px" fontWeight="700" textAlign="center" lineHeight="36px" marginTop="20px">
+        <Box width="100%" fontSize="30px" fontWeight="500" textAlign="center" lineHeight="36px" marginTop="20px">
           Select OP Mainnet
         </Box>
         <Box fontSize="14px" fontWeight="500" marginTop="18px" textAlign="center" minHeight="80px">
@@ -57,7 +57,7 @@ export default function SelectNetwork({ onNext }: any) {
               <Image width="72px" height="72px" src={OpIcon} className="icon" />
             </Box>
             <Box
-              fontWeight="700"
+              fontWeight="500"
               fontSize="20px"
               marginTop="20px"
             >

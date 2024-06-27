@@ -56,7 +56,7 @@ export default function Details({ isModal, registerScrollable }: any) {
           </Box>
           <Box
             fontSize="36px"
-            fontWeight="700"
+            fontWeight="500"
             marginTop="10px"
           >
             USDC
@@ -68,7 +68,7 @@ export default function Details({ isModal, registerScrollable }: any) {
             <Box
 
               fontSize="14px"
-              fontWeight="700"
+              fontWeight="500"
               lineHeight="17.5px"
             >
               on AAVE |
@@ -98,20 +98,20 @@ export default function Details({ isModal, registerScrollable }: any) {
               <Box display="flex" alignItems="center" marginTop="16px">
                 <Box
                   fontSize="30px"
-                  fontWeight="700"
+                  fontWeight="500"
                 >
                   {sevenDayApy}
                 </Box>
                 <Box
                   fontSize="16px"
-                  fontWeight="700"
+                  fontWeight="500"
                   marginTop="10px"
                   marginLeft="10px"
                 >
                   %
                 </Box>
               </Box>
-              <Box  fontSize="12px" fontWeight="700">
+              <Box  fontSize="12px" fontWeight="500">
                 7D Average APY
               </Box>
             </Box>
@@ -126,21 +126,21 @@ export default function Details({ isModal, registerScrollable }: any) {
                 <Box
 
                   fontSize="30px"
-                  fontWeight="700"
+                  fontWeight="500"
                 >
                   $825.6
                 </Box>
                 <Box
 
                   fontSize="16px"
-                  fontWeight="700"
+                  fontWeight="500"
                   marginTop="10px"
                   marginLeft="10px"
                 >
                   M
                 </Box>
               </Box>
-              <Box  fontSize="12px" fontWeight="700">
+              <Box  fontSize="12px" fontWeight="500">
                 TVL
               </Box>
             </Box>
@@ -155,7 +155,7 @@ export default function Details({ isModal, registerScrollable }: any) {
           >
             <Box
               fontSize="20px"
-              fontWeight="700"
+              fontWeight="500"
               marginBottom="16px"
             >
               About AAVE
@@ -189,7 +189,7 @@ export default function Details({ isModal, registerScrollable }: any) {
           >
             <Box
               fontSize="20px"
-              fontWeight="700"
+              fontWeight="500"
               marginBottom="16px"
             >
               FAQs
@@ -202,7 +202,7 @@ export default function Details({ isModal, registerScrollable }: any) {
           >
             <Box
               fontSize="16px"
-              fontWeight="700"
+              fontWeight="500"
               width="100%"
             >
               Where does yield come from?
@@ -225,7 +225,7 @@ export default function Details({ isModal, registerScrollable }: any) {
           >
             <Box
               fontSize="16px"
-              fontWeight="700"
+              fontWeight="500"
               width="100%"
             >
               Does Stable.cash charge?
@@ -247,7 +247,7 @@ export default function Details({ isModal, registerScrollable }: any) {
           >
             <Box
               fontSize="16px"
-              fontWeight="700"
+              fontWeight="500"
               width="100%"
             >
               Any waiting period for deposit and withdraw?
@@ -269,7 +269,7 @@ export default function Details({ isModal, registerScrollable }: any) {
           >
             <Box
               fontSize="16px"
-              fontWeight="700"
+              fontWeight="500"
               width="100%"
             >
               Does the APY data accurate?

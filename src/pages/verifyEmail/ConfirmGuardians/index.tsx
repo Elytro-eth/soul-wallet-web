@@ -23,7 +23,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
         width="100%"
         textAlign="center"
         fontSize="28px"
-        fontWeight="600"
+        fontWeight="500"
       >
         Confirm recovery contact update
       </Box>
