@@ -112,6 +112,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
         <Box fontSize="28px" fontWeight="500">
           Recipient
         </Box>
+        <Box pos={"relative"}>
         <Box marginTop="24px">
           <Box
             fontSize="14px"
@@ -171,18 +172,19 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
             />
           </Box>
         </Box>
-        <Box>
-          <Box display="flex" alignItems="center" justifyContent="flex-start" marginTop="5px">
+        {sendTo && disabled && 
+          <Box display="flex" pos={"absolute"} bottom="-20px" alignItems="center" justifyContent="flex-start" marginTop="5px">
             <Box fontWeight="400" fontSize="12px" lineHeight="15px" color="#E83D26">
-              Username has been taken. Please try another.
+              {isSelf ? 'You cannot send to yourself' : disabled ? 'Invalid address' : ''}
             </Box>
           </Box>
-        </Box>
+        }
+       </Box>
         <Box
           fontSize="14px"
           fontWeight="400"
           color="#95979C"
-          marginTop="24px"
+          marginTop="32px"
         >
           Network
         </Box>
