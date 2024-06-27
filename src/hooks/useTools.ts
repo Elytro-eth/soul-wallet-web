@@ -34,7 +34,7 @@ export default function useTools() {
     await navigator.clipboard.writeText(text);
     toast({
       title: 'Copied',
-      status: 'success',
+      status: 'info',
     });
   };
 

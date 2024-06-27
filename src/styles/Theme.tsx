@@ -92,6 +92,36 @@ const theme = extendTheme({
     Modal: modalTheme,
     Link: linkTheme,
     Tooltip: tooltipTheme,
+    Alert: {
+      variants: {
+        solid: (props: any) => {
+          return {
+            container: {
+              bg: `#1E4124`,
+              lineHeight: "24px",
+              padding: "24px",
+              borderRadius: "24px",
+              overflow: 'hidden'
+            },
+            title: {
+              color: "#92EF5A",
+              fontSize: "20px",
+              fontWeight: '400',
+              borderRadius: "24px",
+            },
+            description: {
+              color: "#92EF5A",
+              fontSize: "20px",
+              fontWeight: '400',
+              borderRadius: "24px",
+            },
+            icon: {
+              color: "#92EF5A"
+            },
+          }
+        }
+      },
+    },
     Switch: {
       baseStyle: {
         thumb: {
