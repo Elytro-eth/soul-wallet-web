@@ -60,7 +60,7 @@ const tooltipTheme = defineStyleConfig({
 
 const theme = extendTheme({
   fonts: {
-    body: `'Inter', 'SF', sans-serif`,
+    body: `'Sohne', 'Inter', 'SF', sans-serif`,
   },
   colors: {
     appBg: 'white',
