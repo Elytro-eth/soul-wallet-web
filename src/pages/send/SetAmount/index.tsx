@@ -64,11 +64,17 @@ export default function SetAmount({
     <Box width="100%" height={innerHeight} overflowY="scroll">
       <Header title="" showBackButton={!isModal} onBack={onPrev} />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
-        <Box fontSize="28px" fontWeight="500">
+        <Box fontSize="28px" fontWeight="500" color="#161F36">
           Amount
         </Box>
         <Box marginTop="24px">
-          <Box fontSize="14px" fontWeight="400" color="#95979C" marginBottom="8px">
+          <Box
+            fontSize="14px"
+            lineHeight="17.5px"
+            fontWeight="400"
+            color="#95979C"
+            marginBottom="8px"
+          >
             Token
           </Box>
           <Box
@@ -124,7 +130,13 @@ export default function SetAmount({
               />
             </Box>
           </Box>
-          <Box fontSize="14px" fontWeight="400" color="#95979C" marginTop="24px">
+          <Box
+            fontSize="14px"
+            fontWeight="400"
+            color="#95979C"
+            marginTop="24px"
+            lineHeight="17.5px"
+          >
             Amount
           </Box>
           <Box marginTop="8px">

@@ -20,8 +20,9 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
       <Box
         fontWeight="500"
         fontSize="28px"
-        lineHeight="30px"
+        lineHeight="1"
         marginBottom="20px"
+        color="#161F36"
       >
         Invite code
       </Box>
@@ -47,14 +48,14 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
         />
         <Box mt="1" h="44px" overflow={"hidden"}>
           {checking ? <InputLoading /> : <>
-            {codeStatus === -1 && <Box fontSize="14px" lineHeight="24px" fontWeight="400" color="#2D3CBD" onClick={onOpen}>What if I don’t have one?</Box>}
+            {codeStatus === -1 && <Box fontSize="14px" lineHeight="17.5px" color="#2D3CBD" onClick={onOpen}>What if I don’t have one?</Box>}
             {codeStatus === 0 && (
-              <Box fontSize="14px" lineHeight="24px" fontWeight="500" color="#0CB700">
+              <Box fontSize="14px" lineHeight="17.5px" color="#0CB700">
                 Looks great! Let’s go
               </Box>
             )}
             {(codeStatus === 1 || codeStatus === 2) && (
-              <Box fontSize="14px" lineHeight="24px" fontWeight="500" color="#E83D26">
+              <Box fontSize="14px" lineHeight="17.5px" color="#E8424C">
                 {codeStatus === 1 ? 'This code has been expired or used. Please try another.' : 'Invalid code, please try another'}
               </Box>
             )}

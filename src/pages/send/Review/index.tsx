@@ -120,7 +120,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
       <Header title="" showBackButton={!isModal} onBack={onPrev} />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         {isSent && (
-          <Box fontSize="28px" fontWeight="500" display="flex" alignItems="center">
+          <Box fontSize="28px" fontWeight="500" display="flex" alignItems="center" color="#161F36">
             <Box marginRight="12px">
               <SentIcon />
             </Box>
@@ -128,7 +128,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         )}
         {isSending && !isSent && (
-          <Box fontSize="28px" fontWeight="500" display="flex" alignItems="center">
+          <Box fontSize="28px" fontWeight="500" display="flex" alignItems="center" color="#161F36">
             <Box marginRight="12px">
               <SendingIcon />
             </Box>
@@ -136,13 +136,14 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         )}
         {!isSending && !isSent && (
-          <Box fontSize="28px" fontWeight="500">
+          <Box fontSize="28px" fontWeight="500" color="#161F36">
             Review
           </Box>
         )}
         <Box marginTop="24px">
           <Box
             fontSize="14px"
+            lineHeight="17.5px"
             fontWeight="400"
             color="#95979C"
           >
@@ -160,12 +161,13 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         <Box marginTop="24px">
           <Box
             fontSize="14px"
+            lineHeight="17.5px"
             fontWeight="400"
             color="#95979C"
           >
             To
           </Box>
-          <Box marginTop="8px" alignItems="center" width="100%" fontWeight={"600"} display="inline-block">
+          <Box marginTop="8px" alignItems="center" width="100%" fontWeight={"500"} display="inline-block" lineHeight="24.2px">
             <Box as="span" fontSize="22px">
               {sendTo.slice(0, 6)}
             </Box>
@@ -179,6 +181,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         </Box>
         <Box
           fontSize="14px"
+          lineHeight="17.5px"
           fontWeight="400"
           color="#95979C"
           marginTop="24px"
@@ -198,6 +201,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         </Box>
         <Box
           fontSize="14px"
+          lineHeight="17.5px"
           fontWeight="400"
           color="#95979C"
           marginTop="24px"
@@ -205,13 +209,13 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           Fee
         </Box>
         <Box marginTop="8px" display="flex" alignItems="center">
-          <Box fontSize="22px" fontWeight="500">
+          <Box fontSize="22px" fontWeight="500" lineHeight="24.2px">
             $0
           </Box>
         </Box>
         {isSent && (
-          <Box marginTop="40px" width="100%">
-            <Box width="100%" marginBottom="20px">
+          <Box marginTop="24px" width="100%">
+            <Box width="100%" marginBottom="8px">
               <Button width="calc(100%)" size="xl" type="gradientBlue" onClick={()=> closeFullScreenModal()}>
                 Done
               </Button>
@@ -224,7 +228,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         )}
         {!isSent && (
-          <Box marginTop="40px" width="100%" display="flex">
+          <Box marginTop="24px" width="100%" display="flex">
             {!isSending && <Box width="50%" paddingRight="7px">
               <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
                 Back

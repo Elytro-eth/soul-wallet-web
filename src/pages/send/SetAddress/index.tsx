@@ -109,82 +109,84 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
         onBack={onPrev}
       />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
-        <Box fontSize="28px" fontWeight="500">
+        <Box fontSize="28px" fontWeight="500" color="#161F36">
           Recipient
         </Box>
-        <Box pos={"relative"}>
-        <Box marginTop="24px">
-          <Box
-            fontSize="14px"
-            fontWeight="400"
-            color="#95979C"
-          >
-            To
-          </Box>
-          <Box
-            paddingTop="10px"
-            display="flex"
-            alignItems="center"
-            position="relative"
-          >
-            <Input
-              onChange={e => onAddressChange(e.target.value)}
-              onFocus={(e: any) => inputOnFocus(e.target.value)}
-              value={sendTo}
-              ref={setInputRef}
-              height="56px"
-              spellCheck={false}
-              fontSize="20px"
-              lineHeight="24px"
+        <Box pos={"relative"} marginTop="24px">
+          <Box>
+            <Box
+              fontSize="14px"
+              lineHeight="17.5px"
               fontWeight="400"
-              autoFocus
-              placeholder="Enter wallet address or ENS"
-              border="none"
-              outline="none"
-              background="#F2F3F5"
-              padding="16px"
-              borderRadius="16px"
-              color="#161F36"
-              _focusVisible={{ border: 'none', boxShadow: 'none' }}
-            />
-            <ENSResolver
-              _styles={{
-                width: '100%',
-                top: '75px',
-                left: '0',
-                right: '0',
-                borderRadius: '12px'
-              }}
-              isENSOpen={isENSOpen}
-              setIsENSOpen={setIsENSOpen}
-              isENSLoading={isENSLoading}
-              setIsENSLoading={setIsENSLoading}
-              searchText={searchText}
-              setSearchText={setSearchText}
-              searchAddress={searchAddress}
-              setSearchAddress={setSearchAddress}
-              resolvedAddress={resolvedAddress}
-              setResolvedAddress={setResolvedAddress}
-              setMenuRef={setMenuRef}
-              submitENSName={submitENSName}
-              setActiveENSNameRef={setActiveENSNameRef}
-              getActiveENSNameRef={getActiveENSNameRef}
-            />
-          </Box>
-        </Box>
-        {sendTo && disabled && 
-          <Box display="flex" pos={"absolute"} bottom="-20px" alignItems="center" justifyContent="flex-start" marginTop="5px">
-            <Box fontWeight="400" fontSize="12px" lineHeight="15px" color="#E83D26">
-              {isSelf ? 'You cannot send to yourself' : disabled ? 'Invalid address' : ''}
+              color="#95979C"
+            >
+              To
+            </Box>
+            <Box
+              paddingTop="10px"
+              display="flex"
+              alignItems="center"
+              position="relative"
+            >
+              <Input
+                onChange={e => onAddressChange(e.target.value)}
+                onFocus={(e: any) => inputOnFocus(e.target.value)}
+                value={sendTo}
+                ref={setInputRef}
+                height="56px"
+                spellCheck={false}
+                fontSize="20px"
+                lineHeight="24px"
+                fontWeight="400"
+                autoFocus
+                placeholder="Enter wallet address or ENS"
+                border="none"
+                outline="none"
+                background="#F2F3F5"
+                padding="16px"
+                borderRadius="16px"
+                color="#161F36"
+                _focusVisible={{ border: 'none', boxShadow: 'none' }}
+              />
+              <ENSResolver
+                _styles={{
+                  width: '100%',
+                  top: '75px',
+                  left: '0',
+                  right: '0',
+                  borderRadius: '12px'
+                }}
+                isENSOpen={isENSOpen}
+                setIsENSOpen={setIsENSOpen}
+                isENSLoading={isENSLoading}
+                setIsENSLoading={setIsENSLoading}
+                searchText={searchText}
+                setSearchText={setSearchText}
+                searchAddress={searchAddress}
+                setSearchAddress={setSearchAddress}
+                resolvedAddress={resolvedAddress}
+                setResolvedAddress={setResolvedAddress}
+                setMenuRef={setMenuRef}
+                submitENSName={submitENSName}
+                setActiveENSNameRef={setActiveENSNameRef}
+                getActiveENSNameRef={getActiveENSNameRef}
+              />
             </Box>
           </Box>
-        }
-       </Box>
+          {sendTo && disabled &&
+           <Box display="flex" pos={"absolute"} bottom="-20px" alignItems="center" justifyContent="flex-start" marginTop="5px">
+             <Box fontWeight="400" fontSize="12px" lineHeight="15px" color="#E83D26">
+               {isSelf ? 'You cannot send to yourself' : disabled ? 'Invalid address' : ''}
+             </Box>
+           </Box>
+          }
+        </Box>
         <Box
           fontSize="14px"
           fontWeight="400"
           color="#95979C"
-          marginTop="32px"
+          marginTop="24px"
+          lineHeight="17.5px"
         >
           Network
         </Box>
@@ -194,7 +196,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
           <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center"><QuestionIcon /></Box>
         </Box>
         <Box
-          marginTop="21px"
+          marginTop="40px"
           width="100%"
         >
           <Button disabled={disabled} size="xl" type="gradientBlue" width="100%" onClick={onNext}>Continue</Button>

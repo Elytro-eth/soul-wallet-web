@@ -20,6 +20,7 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         width="100%"
         textAlign="center"
         fontSize="14px"
+        lineHeight="17.5px"
         fontWeight="500"
         color="#3C3F45"
       >
@@ -31,6 +32,7 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         fontSize="28px"
         fontWeight="500"
         marginTop="8px"
+        color="#161F36"
       >
         {email}
       </Box>
@@ -48,6 +50,7 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         Resend {countDown > 0 ? `(${countDown}s)` : ''}
       </Button>
       <Button disabled={false} size="xl" type="white" width="100%" onClick={onPrev} marginTop="8px">Use another Email</Button>
+      <Box height="100px" />
     </Box>
   );
 }

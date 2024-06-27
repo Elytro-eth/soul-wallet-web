@@ -16,8 +16,9 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
       <Box
         fontWeight="500"
         fontSize="28px"
-        lineHeight="30px"
+        lineHeight="1"
         marginBottom="20px"
+        color="#161F36"
       >
         Email
       </Box>
@@ -43,10 +44,10 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
         />
         <Box mt="1" h="44px" overflow={"hidden"}>
-          {!errorMsg && <Box color="#2D3CBD" fontSize="14px" fontWeight="500" width="100%" onClick={onOpen}>
+          {!errorMsg && <Box color="#2D3CBD" fontSize="14px" lineHeight="17.5px" width="100%" onClick={onOpen}>
             Why do I need to provide Email?
           </Box>}
-          {errorMsg && <Box color="#E83D26" fontSize="14px" fontWeight="500" width="100%">{errorMsg}</Box>}
+          {errorMsg && <Box color="#E83D26" fontSize="14px" lineHeight="17.5px" width="100%">{errorMsg}</Box>}
         </Box>
       </Box>
       <Button disabled={disabled} size="xl" type="gradientBlue" width="100%" loading={sendingEmail} onClick={onSendEmail}>Verify Email</Button>
