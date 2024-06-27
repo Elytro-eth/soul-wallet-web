@@ -123,7 +123,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
         {!animated && <Image position="absolute" left="0" top="0" width="200px" height="200px" src={ReadyIcon} />}
         <Image position="absolute" left="50px" top="50px" width="100px" height="100px" src={ReadyStaticIcon} />
       </Box>
-      <Box fontWeight="700" fontSize="24px" lineHeight="14px" marginBottom="14px">
+      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="14px">
         Your account is ready
       </Box>
       <Box width="100%" marginBottom="50px" marginTop="14px">
@@ -132,11 +132,11 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
         </Box>
       </Box>
       <Box style={{width: "100%"}} >
-        <Button width="100%" size="xl" type="blue" minWidth="195px" onClick={() => navigate('/dashboard')}>
+        <Button width="100%" size="xl" type="gradientBlue" minWidth="195px" onClick={() => navigate('/dashboard')}>
           Let’s go
         </Button>
       </Box>
-      <Box height="60px" />
+      <Box height="100px" />
     </Box>
   );
 }

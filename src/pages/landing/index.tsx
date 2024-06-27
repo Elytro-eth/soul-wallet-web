@@ -132,6 +132,7 @@ export default function Landing() {
           marginTop="16px"
           textAlign="left"
           marginBottom="48px"
+          color="rgba(0, 0, 0, 0.6)"
         >
           Your first crypto is on us.<br />
           Oh, and no gas fees.<br />
@@ -227,19 +228,19 @@ export default function Landing() {
             >
               <Image src={AddHomeIMG} />
             </Box>
-            <Box fontSize="24px" fontWeight="700" marginBottom="14px" padding="0 32px">
+            <Box fontSize="24px" fontWeight="500" lineHeight="1" padding="0 32px" marginBottom="40px" marginTop="5px" color="#161F36">
               Add to home screen to continue...
             </Box>
-            <Box fontWeight="700" fontSize="16px" paddingBottom="14px" paddingLeft="32px" paddingRight="32px">
-              <Box fontSize="28px" fontWeight="500">01</Box>
-              <Box fontSize="18px" fontWeight="400">Tap Share icon at toolbar</Box>
+            <Box fontSize="16px" paddingBottom="14px" paddingLeft="32px" paddingRight="32px">
+              <Box fontSize="28px" fontWeight="500" lineHeight="1">01</Box>
+              <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" marginTop="5px" color="#161F36">Tap Share icon at toolbar</Box>
             </Box>
             <Box width="100%">
               <Image src={Toolbar1} />
             </Box>
-            <Box fontWeight="700" fontSize="16px" paddingBottom="14px" paddingLeft="32px" paddingRight="32px">
-              <Box fontSize="28px" fontWeight="500">02</Box>
-              <Box fontSize="18px" fontWeight="400">Tap “Add to Homescreen”</Box>
+            <Box fontSize="16px" paddingBottom="14px" paddingLeft="32px" paddingRight="32px" marginTop="24px">
+              <Box fontSize="28px" fontWeight="500" lineHeight="1">02</Box>
+              <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" marginTop="5px" color="#161F36">Tap “Add to Homescreen”</Box>
             </Box>
             <Box width="100%">
               <Image src={Toolbar2} />

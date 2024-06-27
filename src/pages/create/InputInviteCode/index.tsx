@@ -47,7 +47,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
         />
         <Box mt="1" h="44px" overflow={"hidden"}>
           {checking ? <InputLoading /> : <>
-            {codeStatus === -1 && <Box fontSize="14px" lineHeight="24px" fontWeight="600" onClick={onOpen}>What if I don’t have one?</Box>}
+            {codeStatus === -1 && <Box fontSize="14px" lineHeight="24px" fontWeight="400" color="#2D3CBD" onClick={onOpen}>What if I don’t have one?</Box>}
             {codeStatus === 0 && (
               <Box fontSize="14px" lineHeight="24px" fontWeight="600" color="#0CB700">
                 Looks great! Let’s go
