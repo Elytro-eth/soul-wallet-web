@@ -32,40 +32,40 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
   const scrollTop = useRef(0);
   const [startPosition, setStartPosition] = useState(null);
 
-  /* const handleStart = (position: any) => {
-   *   setStartPosition(position);
-   * };
+  const handleStart = (position: any) => {
+    setStartPosition(position);
+  };
 
-   * const handleMove = (currentPosition: any) => {
-   *   if (startPosition == null) return;
+  const handleMove = (currentPosition: any) => {
+    if (startPosition == null) return;
 
-   *   if (startPosition > currentPosition + 20) {
-   *     // console.log('Moving up');
-   *   } else if (startPosition < currentPosition - 30) {
-   *     console.log('Moving down', scrollTop.current);
-   *     if (scrollTop.current == 0) {
-   *       closeModal()
-   *     }
-   *   }
-   * };
+    if (startPosition > currentPosition + 20) {
+      // console.log('Moving up');
+    } else if (startPosition < currentPosition - 30) {
+      console.log('Moving down', scrollTop.current);
+      if (scrollTop.current == 0 && activeModal.name === 'activity') {
+        closeModal()
+      }
+    }
+  };
 
-   * const handleTouchStart = (e: any) => {
-   *   handleStart(e.touches[0].clientY);
-   * };
+  const handleTouchStart = (e: any) => {
+    handleStart(e.touches[0].clientX);
+  };
 
-   * const handleTouchMove = (e: any) => {
-   *   handleMove(e.touches[0].clientY);
-   * };
+  const handleTouchMove = (e: any) => {
+    handleMove(e.touches[0].clientX);
+  };
 
-   * const handleMouseDown = (e: any) => {
-   *   handleStart(e.clientY);
-   * };
+  const handleMouseDown = (e: any) => {
+    handleStart(e.clientX);
+  };
 
-   * const handleMouseMove = (e: any) => {
-   *   if (e.buttons === 1) {
-   *     handleMove(e.clientY);
-   *   }
-   * }; */
+  const handleMouseMove = (e: any) => {
+    if (e.buttons === 1) {
+      handleMove(e.clientX);
+    }
+  };
 
   const setScrollableRef = (e: any) => {
     scrollableRef.current = e
@@ -81,9 +81,9 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
     } else if (name === 'activity') {
       return <Activity isModal={true} {...props} registerScrollable={registerScrollable} />
     } else if (name === 'details') {
-      return <Details isModal={true} {...props} registerScrollable={registerScrollable} />
+      return <Details isModal={true} {...props} />
     } else if (name === 'deposit') {
-      return <Deposit isModal={true} {...props} registerScrollable={registerScrollable} />
+      return <Deposit isModal={true} {...props} />
     } else if (name === 'withdraw') {
       return <Withdraw isModal={true} {...props} />
     } else if (name === 'send') {
@@ -124,10 +124,10 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
     <Box
       width="100%"
       height={height}
-      // onTouchStart={handleTouchStart}
-      // onTouchMove={handleTouchMove}
-      // onMouseDown={handleMouseDown}
-      // onMouseMove={handleMouseMove}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
     >
       {renderPage(activeModal)}
     </Box>

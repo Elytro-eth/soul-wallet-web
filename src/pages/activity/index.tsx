@@ -78,18 +78,18 @@ export default function Activity({ isModal, registerScrollable }: any) {
                 </Box>
                 <Box>
                   <Box display="flex" alignItems="center">
-                    <Box fontSize="14px" fontWeight="700" textTransform={"capitalize"}>
+                    <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" textTransform={"capitalize"}>
                       {item.functionName}
                     </Box>
                   </Box>
-                  <Box fontSize="12px">{new Date(item.timestamp * 1000).toLocaleString()}</Box>
+                  <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C">{new Date(item.timestamp * 1000).toLocaleString()}</Box>
                 </Box>
                 <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                  <Box fontSize="14px" fontWeight="700" display="flex">
+                  <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" display="flex">
                     <Box marginRight="8px">{toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH</Box>
-                    <Image width="18px" height="18px" src={ETHIcon} />
+                    <Image width="20px" height="20px" src={ETHIcon} />
                   </Box>
-                  <Box fontSize="12px" fontWeight="400" marginTop="4px">{toShortAddress(item.to, 6)}</Box>
+                  <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="4px">{toShortAddress(item.to, 6)}</Box>
                 </Box>
               </Box>
             ))}
