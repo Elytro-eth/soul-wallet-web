@@ -171,6 +171,13 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
             />
           </Box>
         </Box>
+        <Box>
+          <Box display="flex" alignItems="center" justifyContent="flex-start" marginTop="5px">
+            <Box fontWeight="400" fontSize="12px" lineHeight="15px" color="#E83D26">
+              Username has been taken. Please try another.
+            </Box>
+          </Box>
+        </Box>
         <Box
           fontSize="14px"
           fontWeight="400"
