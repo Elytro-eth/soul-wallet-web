@@ -83,13 +83,12 @@ export function Header({ openMenu, username, ...props }: any) {
       {...props}
     >
       <Box display="flex" gap="2" alignItems="center" justifyContent="center">
-        <Box fontSize="20px" lineHeight={'24px'} fontWeight="400">
+        <Box fontSize="20px" lineHeight="24px" fontWeight="400" color="#161F36">
           Hi, {walletName}
         </Box>
       </Box>
       <Box fontSize="18px" fontWeight="700" color="black" lineHeight="24px">
         <Box
-          background="white"
           height="36px"
           width="36px"
           borderRadius="36px"
@@ -102,7 +101,6 @@ export function Header({ openMenu, username, ...props }: any) {
             width="36px"
             height="36px"
             borderRadius="36px"
-            boxShadow="0px 4px 20px 0px rgba(60, 61, 69, 0.1)"
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -239,7 +237,7 @@ export default function Dashboard() {
 
   console.log('innerHeight', innerHeight);
   return (
-    <Box height={innerHeight} background="#f2f3f5">
+    <Box height={innerHeight} background="#F2F3F5">
       <Header
         paddingTop="10px"
         paddingBottom="10px"
@@ -277,7 +275,7 @@ export default function Dashboard() {
               >
                 <Box>
                   <Box fontSize="32px" lineHeight={"1"} fontWeight="500">$10</Box>
-                  <Box fontSize="14px" lineHeight={"17px"} fontWeight="400">Setup email recovery to get 10 USDC for free</Box>
+                  <Box fontSize="14px" lineHeight={"17px"} fontWeight="400" opacity="0.64" color="#161F36">Setup email recovery to get 10 USDC for free</Box>
                 </Box>
                 <Box>
                   <Image width="40px" height="40px" src={USDCIcon} />
@@ -460,14 +458,14 @@ export default function Dashboard() {
                   <Box marginRight="10px">
                     <Image src={item.logoURI} w="32px" h="32px" />
                   </Box>
-                  <Box fontWeight="500" fontSize="22px">
+                  <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
                     {item.name}
                   </Box>
                   <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                    <Box fontWeight="500" fontSize="22px">
+                    <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
                       {item.tokenBalanceFormatted}
                     </Box>
-                    <Box fontSize="12px" color="rgba(0, 0, 0, 0.5)">$0</Box>
+                    <Box fontSize="12px" lineHeight="15px" color="#95979C">$0</Box>
                   </Box>
                 </Box>
               ))}
@@ -477,4 +475,4 @@ export default function Dashboard() {
       </Box>
     </Box>
   );
-                       }
+                     }
