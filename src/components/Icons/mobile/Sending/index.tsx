@@ -1,10 +1,10 @@
 const Sending = () => {
   return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle opacity="0.2" cx="20" cy="20" r="20" fill="#88C4FF"/>
-      <circle cx="12" cy="20" r="2" fill="#497EE6"/>
-      <circle cx="20" cy="20" r="2" fill="#497EE6"/>
-      <circle cx="28" cy="20" r="2" fill="#497EE6"/>
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle opacity="0.2" cx="16" cy="16" r="16" fill="#BDC0C7" />
+      <circle cx="9.6" cy="16.0004" r="1.6" fill="#95979C" />
+      <circle cx="16.0004" cy="16.0004" r="1.6" fill="#95979C" />
+      <circle cx="22.3998" cy="16.0004" r="1.6" fill="#95979C" />
     </svg>
   );
 };
