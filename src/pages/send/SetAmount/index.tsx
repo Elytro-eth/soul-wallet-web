@@ -54,7 +54,7 @@ export default function SetAmount({
     setAmount(val);
   };
 
-  const exceedBalance = BN(amount).isGreaterThan(selectedToken.tokenBalanceFormatted);
+  const exceedBalance = amount && selectedToken && BN(amount).isGreaterThan(selectedToken.tokenBalanceFormatted);
 
   const disabled = !amount || amount <= 0 || exceedBalance || BN(amount).isNaN();
 

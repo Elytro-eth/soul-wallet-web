@@ -105,6 +105,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         executingRef.current = false;
         isTransferingRef.current = false;
         isCompletedRef.current = false;
+        onPrev();
       }
     } else {
       executingRef.current = false;
@@ -229,7 +230,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 Back
               </Button>
             </Box>}
-            <Box width="50%" paddingLeft="7px">
+            <Box width={isSending ? '100%' : "50%"} paddingLeft="7px">
               <Button width="calc(100% - 7px)" disabled={isSending} size="xl" type="gradientBlue" onClick={() => onTransfer()}>
                 {isSending ? 'Sending' : 'Continue'}
               </Button>
