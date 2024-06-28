@@ -9,6 +9,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
 
   const disabled = !value || nameStatus !== 0 || valueIsNotString || lengthNotMatch || valueHasSpecialChar;
 
+  console.log('name status', nameStatus, checking)
   return (
     <Box width="100%" padding="40px 30px" height="400px">
       <Box
@@ -44,17 +45,17 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
           {checking ? (
             <InputLoading />
           ) : nameStatus === 0 ? (
-            <Box fontSize="14px" lineHeight="17.5" color="#0CB700">
+            <Box fontSize="14px" lineHeight="1.75" color="#0CB700">
               Coolio, you got a unique name
             </Box>
           ) : nameStatus === 1 ? (
-            <Box fontSize="14px" lineHeight="17.5" color="#E8424C">
+            <Box fontSize="14px" lineHeight="1.75" color="#E8424C">
               {valueIsNotString && 'Please enter a valid name'}
               {lengthNotMatch && 'Name must be between 3 and 24 characters'}
               {valueHasSpecialChar && 'Name must contain only letters, numbers, and underscores'}
             </Box>
           ) : nameStatus === 2 ? (
-            <Box fontSize="14px" lineHeight="17.5" color="#E8424C">
+            <Box fontSize="14px" lineHeight="1.75" color="#E8424C">
               This name has been taken. Please try a new one.
             </Box>
           ) : (

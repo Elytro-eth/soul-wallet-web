@@ -149,7 +149,7 @@ export default function Create() {
   };
 
   return (
-    <Box width="100%" height={innerHeight}>
+    <Box width="100%" height={innerHeight} bg="#fff">
       {step < 3 && (
         <Fragment>
           <Header title="Create account" showBackButton onBack={onPrev} />
