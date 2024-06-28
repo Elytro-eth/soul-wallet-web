@@ -174,7 +174,7 @@ export default function AppContainer() {
     <Box background="black">
       <Box
         height={innerHeight}
-        background="white"
+        background="#F2F3F5"
         transition="all 0.2s ease"
         sx={getContentStyles(isModalOpen)}
       >

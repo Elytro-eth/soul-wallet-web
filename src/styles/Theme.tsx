@@ -95,19 +95,73 @@ const theme = extendTheme({
     Alert: {
       variants: {
         solid: (props: any) => {
+          console.log('props', props)
+          if (props.status === 'error') {
+            return {
+              container: {
+                bg: `#1E4124`,
+                lineHeight: "24px",
+                padding: "24px",
+                borderRadius: '24px',
+                overflow: 'hidden',
+              },
+              title: {
+                color: "white",
+                fontSize: "20px",
+                fontWeight: '400',
+                width: "calc(100vw - 1rem - 48px - 40px)",
+                // maxWidth: "calc(430px - 1rem - 48px - 40px)",
+              },
+              description: {
+                color: "white",
+                fontSize: "20px",
+                fontWeight: '400',
+              },
+              icon: {
+                color: "white"
+              },
+            }
+          } else if (props.status === 'success') {
+            return {
+              container: {
+                bg: `#1E4124 !important`,
+                lineHeight: "24px",
+                padding: "24px",
+                borderRadius: '24px',
+                overflow: 'hidden',
+              },
+              title: {
+                color: "#92EF5A",
+                fontSize: "20px",
+                fontWeight: '400',
+                width: "calc(100vw - 1rem - 48px - 40px)",
+                // maxWidth: "calc(430px - 1rem - 48px - 40px)",
+              },
+              description: {
+                color: "#92EF5A",
+                fontSize: "20px",
+                fontWeight: '400',
+              },
+              icon: {
+                color: "#92EF5A"
+              },
+            }
+          }
+
           return {
             container: {
               bg: `#1E4124`,
               lineHeight: "24px",
               padding: "24px",
-              borderRadius: '2xl',
-              overflow: 'hidden'
+              borderRadius: '24px',
+              overflow: 'hidden',
             },
             title: {
               color: "#92EF5A",
               fontSize: "20px",
               fontWeight: '400',
-              radii: "24px",
+              width: "calc(100vw - 1rem - 48px - 40px)",
+              // maxWidth: "calc(430px - 1rem - 48px - 40px)",
             },
             description: {
               color: "#92EF5A",

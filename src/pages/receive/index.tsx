@@ -93,13 +93,8 @@ export default function Receive({ isModal, registerScrollable }: any) {
 
   console.log('isModal', isModal)
   return (
-    <Box width="100%" height={innerHeight} overflowY="scroll">
-      <Header
-        title=""
-        showBackButton={!isModal}
-        onBack={onPrev}
-      />
-      <Box padding="30px 8px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
+    <Box width="100%" height={innerHeight} overflowY="scroll" background="#F2F3F5">
+      <Box marginTop="60px" padding="30px 8px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         <Box fontSize="28px" fontWeight="500" padding="0 24px">
           Receive
         </Box>
@@ -155,7 +150,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 <Box as="span" fontWeight="500">{chainConfig.chainPrefix}</Box><br />{selectedAddress}
               </Box>
               <Box marginTop="24px" width="205px">
-                <Button fontWeight={"400"} size="xl" type="white" width="100%" onClick={() => doCopy(selectedAddress)}>Copy address</Button>
+                <Button fontWeight={"400"} size="xl" type="white" width="174px" height="47px" onClick={() => doCopy(selectedAddress)}>Copy address</Button>
               </Box>
             </Box>
           </Box>
@@ -168,7 +163,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            pos="absolute" 
+            pos="absolute"
             bottom="32px"
             onClick={() => openModal('receiveSteps')}
           >
