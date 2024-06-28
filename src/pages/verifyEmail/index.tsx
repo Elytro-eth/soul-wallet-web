@@ -247,7 +247,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
         />
       );
     } else if (step == 1) {
-      return (verifyToken && verifyStatus === 2) ? (
+      return (verifyToken && (verifyStatus === 2 || verifyStatus === 3)) ? (
         <ConfirmGuardians
           changingGuardian={changingGuardian}
           onPrev={onPrev}
