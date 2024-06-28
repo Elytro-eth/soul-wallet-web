@@ -78,7 +78,7 @@ export default function Settings({ isModal }: any) {
         >
           <AddressIcon address={selectedAddress} width={48} />
         </Box>
-        <Box fontSize="24px" fontWeight="500">{walletName}</Box>
+        <Box fontSize="22px" lineHeight={"24pcx"} fontWeight="500">{walletName}</Box>
       </Box>
       <Box
         display="flex"
@@ -171,7 +171,7 @@ export default function Settings({ isModal }: any) {
           onClick={doLogout}
           type="white"
         >
-          <Box><LogoutIcon /></Box>
+          {/* <Box><LogoutIcon /></Box> */}
           Logout
         </Button>
       </Box>
