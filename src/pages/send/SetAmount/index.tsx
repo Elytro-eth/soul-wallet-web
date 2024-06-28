@@ -108,10 +108,10 @@ export default function SetAmount({
                     <Image width="36px" height="36px" src={selectedToken.logoURI} />
                   </Box>
                   <Box>
-                    <Box fontSize="16px" fontWeight="500">
+                    <Box fontSize="18px" color="#161F36" fontWeight="500">
                       {selectedToken.name}
                     </Box>
-                    <Box>{selectedToken.balance}</Box>
+                    <Box color="#95979C" fontSize="14px" fontWeight="400">{selectedToken.balance || 0} Avail.</Box>
                   </Box>
                 </Box>
               )}

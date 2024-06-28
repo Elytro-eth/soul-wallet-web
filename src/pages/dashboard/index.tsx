@@ -516,34 +516,63 @@ export default function Dashboard() {
                   </Box>
                 </Box>
               </Box>
-              <Box
-                width="100%"
-                background="white"
-                borderRadius="32px"
-                boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
-                // border="1px solid #EAECF0"
-                position="relative"
-                zIndex="1"
-              >
-                <Box padding="12px 16px" paddingBottom="0">
-                  {tokenBalance.map((item: any, index: number) => (
-                    <Box display="flex" alignItems="center" marginBottom="12px">
-                      <Box marginRight="10px">
-                        <Image src={item.logoURI} w="32px" h="32px" />
-                      </Box>
-                      <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                        {item.name}
-                      </Box>
-                      <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                        <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                          {item.tokenBalanceFormatted}
+              {tokenBalance && tokenBalance.length && (
+                <Box
+                  width="100%"
+                  background="white"
+                  borderRadius="32px"
+                  boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+                  // border="1px solid #EAECF0"
+                  position="relative"
+                  zIndex="1"
+                >
+                  <Box padding="12px 16px" paddingBottom="0">
+                    {tokenBalance.map((item: any, index: number) => (
+                      <Box display="flex" alignItems="center" marginBottom="12px">
+                        <Box marginRight="10px">
+                          <Image src={item.logoURI} w="32px" h="32px" />
                         </Box>
-                        <Box fontSize="12px" lineHeight="15px" color="#95979C">$0</Box>
+                        <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
+                          {item.name}
+                        </Box>
+                        <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                          <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
+                            {item.tokenBalanceFormatted}
+                          </Box>
+                          <Box fontSize="12px" lineHeight="15px" color="#95979C">$0</Box>
+                        </Box>
                       </Box>
-                    </Box>
-                  ))}
+                    ))}
+                  </Box>
                 </Box>
-              </Box>
+              )}
+              {(!tokenBalance || !tokenBalance.length) && (
+                <Box
+                  width="100%"
+                  background="white"
+                  borderRadius="32px"
+                  height="377px"
+                  boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+                  // border="1px solid #EAECF0"
+                  position="relative"
+                  zIndex="1"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    flexDirection="column"
+                  >
+                    <Box fontSize="14px" fontWeight="400" lineHeight="17.5px" color="#676B75">You don’t have any assets yet</Box>
+                    <Box marginTop="20px">
+                      <Button size="lg" type="white" width="100px" fontSize="17px">Deposit</Button>
+                    </Box>
+                  </Box>
+                </Box>
+              )}
             </Fragment>
           )}
         </Box>

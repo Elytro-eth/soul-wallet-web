@@ -25,7 +25,7 @@ const getSizeStyles = (size?: string) => {
       height: '40px',
       borderRadius: '40px',
       fontSize: '16px',
-      fontWeight: '700',
+      fontWeight: '500',
       ...baseStyles,
     };
   } else if (size === 'mid') {
@@ -33,7 +33,7 @@ const getSizeStyles = (size?: string) => {
       height: '36px',
       borderRadius: '36px',
       fontSize: '14px',
-      fontWeight: '700',
+      fontWeight: '500',
       ...baseStyles,
     };
   } else if (size === 'sm') {
@@ -41,7 +41,7 @@ const getSizeStyles = (size?: string) => {
       height: '24px',
       borderRadius: '24px',
       fontSize: '12px',
-      fontWeight: '700',
+      fontWeight: '500',
       ...baseStyles,
     };
   } else if (size === 'xs') {
