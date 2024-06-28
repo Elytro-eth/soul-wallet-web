@@ -20,7 +20,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
       >
         Username
       </Box>
-      <Box width="100%" marginBottom="30px">
+      <Box width="100%" marginBottom="12px">
         <Input
           value={value}
           autoFocus
@@ -30,7 +30,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
           fontSize="20px"
           lineHeight="24px"
           fontWeight="400"
-          placeholder="Enter or paste here"
+          placeholder="Enter username"
           border="none"
           outline="none"
           background="#F2F3F5"

@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Image, Flex } from '@chakra-ui/react';
+import { Box, Image, Flex, useToast } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import MoreIcon from '@/components/Icons/mobile/More';
 import SendIcon from '@/components/Icons/mobile/Send2';
@@ -76,11 +76,11 @@ export function Header({ openMenu, username, ...props }: any) {
   const { walletName, selectedAddress } = useAddressStore();
   return (
     <Box
-      height="44px"
+      height="56px"
       display="flex"
       alignItems="center"
       justifyContent="space-between"
-      padding="0 30px"
+      padding="0 24px"
       background="white"
       position="relative"
       {...props}
@@ -127,6 +127,7 @@ export default function Dashboard() {
   const [modalPosition, setModalPosition] = useState('bottom');
   const { guardiansInfo } = useGuardianStore();
   const [isMoving, setIsMoving] = useState(false);
+  const toast = useToast();
   const { navigate } = useBrowser();
   const { walletName } = useAddressStore();
   // const { openModal } = useNavigation()
@@ -251,7 +252,7 @@ export default function Dashboard() {
       <Box
         position="fixed"
         width="100vw"
-        bottom="20px"
+        bottom="30px"
         left="0"
         display="flex"
         alignItems="center"
@@ -273,7 +274,7 @@ export default function Dashboard() {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            opacity={(activeMenu === 'apps') ? 1 : 0.6}
+            {...(activeMenu === 'apps' ? { opacity: 1, fontWeight: 500 } : { opacity: .6}) }
             onClick={() => setActiveMenu('apps')}
           >
             <Box marginRight="2px">
@@ -288,7 +289,7 @@ export default function Dashboard() {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            opacity={(activeMenu === 'assets') ? 1 : 0.6}
+            {...(activeMenu === 'assets' ? { opacity: 1, fontWeight: 500 } : { opacity: .6}) }
             onClick={() => setActiveMenu('assets')}
           >
             <Box marginRight="2px">
@@ -340,13 +341,12 @@ export default function Dashboard() {
             <Fragment>
               <Box
                 width="100%"
-                paddingLeft="16px"
-                paddingRight="16px"
+                px="2"
                 marginTop="20px"
               >
                 <Box
                   width="100%"
-                  background="#E7EBED"
+                  background="linear-gradient(to bottom, #E4EaED 0%, #C5DDEF 100%)"
                   borderRadius="24px"
                   padding="24px"
                   height="216px"
@@ -368,7 +368,10 @@ export default function Dashboard() {
                     </Box>
                   </Box>
                   <Box>
-                    <Button size="xl" height="40px" width="110px" type="white">Earn now</Button>
+                    <Button onClick={()=> toast({
+                      title: 'Coming soon',
+                      status: 'info',
+                    })} border="none" size="xl" height="40px" width="110px" type="white">Earn now</Button>
                   </Box>
                 </Box>
                 <Box textAlign="center" width="100%" marginTop="16px" fontSize="14px" lineHeight="17.5px" opacity="0.4">
@@ -381,11 +384,10 @@ export default function Dashboard() {
             <Fragment>
               <Box
                 width="100%"
-                paddingLeft="16px"
-                paddingRight="16px"
+                px="2"
               >
                 <Box display="flex" alignItems="center">
-                  <Box fontSize="56px" fontWeight="500" marginRight="2px">
+                  <Box fontSize="56px" lineHeight={"1"} fontWeight="500" marginRight="2px">
                     $
                   </Box>
                   <Box

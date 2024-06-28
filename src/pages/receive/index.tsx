@@ -155,7 +155,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 <Box as="span" fontWeight="500">{chainConfig.chainPrefix}</Box><br />{selectedAddress}
               </Box>
               <Box marginTop="24px" width="205px">
-                <Button size="xl" type="white" width="100%" onClick={() => doCopy(selectedAddress)}>Copy address</Button>
+                <Button fontWeight={"400"} size="xl" type="white" width="100%" onClick={() => doCopy(selectedAddress)}>Copy address</Button>
               </Box>
             </Box>
           </Box>
@@ -168,6 +168,8 @@ export default function Receive({ isModal, registerScrollable }: any) {
             display="flex"
             alignItems="center"
             justifyContent="center"
+            pos="absolute" 
+            bottom="32px"
             onClick={() => openModal('receiveSteps')}
           >
             <Box as="span" marginRight="4px">How to send crypto to this address?</Box>
