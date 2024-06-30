@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet';
 
 const ThemePage = ({ themeColor, children }: { themeColor: string; children: ReactNode }) => {

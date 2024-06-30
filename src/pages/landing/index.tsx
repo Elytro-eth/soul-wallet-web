@@ -128,7 +128,7 @@ export default function Landing() {
             color="#161F36"
             marginTop="auto"
           >
-            1Democratize access to
+            Democratize access to
             <br /> Ethereum
             <br /> for All
           </Box>
