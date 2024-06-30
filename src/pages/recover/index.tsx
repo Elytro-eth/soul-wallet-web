@@ -224,7 +224,7 @@ export default function Recover() {
   };
 
   return (
-    <Box width="100%" height="100%">
+    <Box width="100%" height="100%" bg="#fff">
       {step < 4 && (
         <Fragment>
           {step === 0 && <Header title="" showLogo />}

@@ -195,6 +195,7 @@ export default function Manage({ onPrev, onNext }: any) {
             display="flex"
             alignItems="center"
             marginBottom="16px"
+            key={index}
           >
             <Box width="48px" height="48px" marginRight="8px">
               <AddressIcon address={guardianAddress} width={48} />

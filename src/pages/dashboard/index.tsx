@@ -29,6 +29,7 @@ import { ZeroHash } from 'ethers';
 import { toFixed } from '@/lib/tools';
 import USDCIcon from '@/assets/mobile/usdc.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
+import ThemePage from '@/components/ThemeChange';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -241,6 +242,7 @@ export default function Dashboard() {
 
   console.log('innerHeight', innerHeight);
   return (
+    <ThemePage themeColor="#F2F3F5">
     <Box height={innerHeight} background="#F2F3F5">
       <Header
         paddingTop="10px"
@@ -580,5 +582,6 @@ export default function Dashboard() {
         </Box>
       </Box>
     </Box>
+    </ThemePage>
   );
 }
