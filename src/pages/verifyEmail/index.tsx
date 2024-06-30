@@ -184,14 +184,10 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
       }else{
         const defaultThreshold = 1;
         await doSetGuardians([guardianAddress], [values.email], defaultThreshold);
-        console.log('1111')
         if(isModal){
-        console.log('2222')
-
           closeModal();
+          navigate('/dashboard');
         }else{
-        console.log('3333')
-
           toast({
             title: '10 USDC reward received',
             status: 'success',
