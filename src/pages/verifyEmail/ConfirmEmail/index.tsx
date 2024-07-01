@@ -9,7 +9,7 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
   return (
     <Box
       width="100%"
-      height={innerHeight - 60}
+      height={isModal ? (innerHeight - 94) : (innerHeight - 60)}
       padding="30px"
       display="flex"
       alignItems="center"

@@ -124,6 +124,8 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
     <Box
       width="100%"
       height={height}
+      borderRadius="32px"
+      overflow="hidden"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onMouseDown={handleMouseDown}

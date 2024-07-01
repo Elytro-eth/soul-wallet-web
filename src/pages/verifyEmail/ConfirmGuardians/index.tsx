@@ -12,7 +12,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
   return (
     <Box
       width="100%"
-      height={innerHeight - 60}
+      height={isModal ? (innerHeight - 94) : (innerHeight - 60)}
       padding="30px"
       display="flex"
       alignItems="center"
