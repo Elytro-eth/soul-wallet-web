@@ -38,10 +38,10 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
           padding="16px"
           borderRadius="16px"
           color="#161F36"
-          marginBottom="8px"
+          marginBottom="6px"
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
         />
-        <Box mt="1" h="44px" overflow={'hidden'}>
+        <Box h="44px" overflow={'hidden'}>
           {checking ? (
             <InputLoading />
           ) : nameStatus === 0 ? (
