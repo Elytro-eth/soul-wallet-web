@@ -124,6 +124,7 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
     <Box
       width="100%"
       height={height}
+      background="white"
       borderTopRightRadius="32px"
       borderTopLeftRadius="32px"
       overflow="hidden"
@@ -210,14 +211,14 @@ export default function AppContainer() {
               height="100%"
               width="100%"
               position="absolute"
-              background={isFullScreenModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
+              // background={isFullScreenModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
               transition="all 0.3s ease"
             />
             <Box
               height="100%"
               width="100%"
               position="absolute"
-              background="white"
+              // background="white"
               top={isFullScreenModalOpen ? '0' : '100%'}
               transition="all 0.3s ease"
             >
@@ -263,14 +264,14 @@ export default function AppContainer() {
               height="100%"
               width="100%"
               position="absolute"
-              background={isModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
+              // background={isModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
               transition="all 0.3s ease"
             />
             <Box
               height="100%"
               width="100%"
               position="absolute"
-              background="white"
+              // background="white"
               top={isModalOpen ? '0' : '100%'}
               transition="all 0.3s ease"
             >
