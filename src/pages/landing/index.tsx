@@ -68,7 +68,7 @@ export default function Landing() {
   }, [loaded]);
 
   useEffect(() => {
-    if (!isPwaMode() || true) {
+    if (!isPwaMode()) {
       setTimeout(() => {
         onOpen();
       }, 1000);
