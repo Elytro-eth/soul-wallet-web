@@ -14,7 +14,7 @@ export default function ProgressBar({ activeIndex, size }: any) {
           <Box
             height="100%"
             width={`calc((100% - 24px - ${(size - 1) * 8}px) / 3)`}
-            background={(i <= activeIndex) ? 'black' : 'rgba(0, 0, 0, 0.4)'}
+            background={(i <= activeIndex) ? 'black' : 'rgba(0, 0, 0, 0.2)'}
             transition="all 0.2s ease"
             marginRight="8px"
             marginLeft="8px"

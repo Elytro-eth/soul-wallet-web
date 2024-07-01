@@ -43,7 +43,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           padding="24px 29px"
           borderRadius="24px"
           color="#161F36"
-          marginBottom="16px"
+          marginBottom="8px"
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
         />
         <Box mt="1" h="44px" overflow={"hidden"}>

@@ -43,7 +43,7 @@ export default function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { innerHeight } = useScreenSize();
   const { getIsAddedToHomeScreen, setIsAddedToHomeScreen } = useSettingStore();
-  const marginHeight = innerHeight - (innerHeight < 850 ? innerHeight : 850);
+  const marginHeight = innerHeight - ((innerHeight - 40) < 850 ? (innerHeight - 40) : 850);
 
   const navigate = useNavigate();
   const doSignIn = async () => {
@@ -68,7 +68,7 @@ export default function Landing() {
   }, [loaded]);
 
   useEffect(() => {
-    if (!isPwaMode()) {
+    if (!isPwaMode() || true) {
       setTimeout(() => {
         onOpen();
       }, 1000);
@@ -109,7 +109,7 @@ export default function Landing() {
         height={innerHeight}
         background="radial-gradient(476.97% 147.07% at 0% -21.13%, #FBFBF9 0%, #F7F0ED 45.5%, #BAD5F5 100%)"
       >
-        <Header showLogo={true} title="" height="60px" background="transparent" />
+        <Header showLogo={false} title="" height="60px" background="transparent" />
         <Box
           width="100%"
           padding="30px"
@@ -208,7 +208,7 @@ export default function Landing() {
               sm: `${marginHeight}px`,
               md: 'calc(50vh - 125px)',
             }}
-            height={innerHeight < 850 ? innerHeight : 850}
+            height={(innerHeight - 40) < 850 ? (innerHeight - 40) : 850}
             overflow="visible"
             mb="0"
             position="relative"

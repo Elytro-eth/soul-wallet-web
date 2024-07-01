@@ -38,7 +38,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
           padding="16px"
           borderRadius="16px"
           color="#161F36"
-          marginBottom="16px"
+          marginBottom="8px"
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
         />
         <Box mt="1" h="44px" overflow={'hidden'}>

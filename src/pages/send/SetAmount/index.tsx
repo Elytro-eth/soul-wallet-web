@@ -172,14 +172,14 @@ export default function SetAmount({
             </Box>
           </Box>
           <Box pos="absolute">
-            {exceedBalance && (
+            {!!exceedBalance && (
               <Box display="flex" alignItems="center" justifyContent="flex-start" marginTop="5px">
                 <Box fontWeight="500" fontSize="14px" color="#E83D26">
                   Exceed the available balance
                 </Box>
               </Box>
             )}
-            {amount && BN(amount).isNaN() ? (
+            {!!amount && BN(amount).isNaN() ? (
               <Box display="flex" alignItems="center" justifyContent="flex-start" marginTop="5px">
                 <Box fontWeight="500" fontSize="14px" color="#E83D26">
                   Amount not valid
