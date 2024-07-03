@@ -8,6 +8,7 @@ import useWallet from '@/hooks/useWallet';
 import { Link, useNavigate } from 'react-router-dom';
 import useBrowser from '@/hooks/useBrowser';
 import useScreenSize from '@/hooks/useScreenSize'
+import WelcomeIcon from '@/assets/welcome.svg'
 
 export default function CreateSuccess({ credential, username, invitationCode }: any) {
   const { getActivateOp, signAndSend } = useWallet();
@@ -119,9 +120,8 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       justifyContent="center"
       flexDirection="column"
     >
-      <Box width="200px" height="200px" marginBottom="30px" position="relative">
-        {!animated && <Image position="absolute" left="0" top="0" width="200px" height="200px" src={ReadyIcon} />}
-        <Image position="absolute" left="50px" top="50px" width="100px" height="100px" src={ReadyStaticIcon} />
+      <Box marginBottom="40px">
+        <Image src={WelcomeIcon} />
       </Box>
       <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="14px">
         Your account is ready

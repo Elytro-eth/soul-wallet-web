@@ -6,7 +6,7 @@ import Button from '@/components/mobile/Button'
 
 export default function SelectNetwork({ onNext }: any) {
   const { innerHeight } = useScreenSize()
-  const contentHeight = innerHeight - 64 - 120
+  const contentHeight = innerHeight - 82
 
   return (
     <Box
@@ -19,9 +19,18 @@ export default function SelectNetwork({ onNext }: any) {
           display: 'none'
         }
       }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
     >
-      <Box padding="30px">
-        <Box paddingTop="10px">
+      <Box
+        padding="0 32px"
+        height="360px"
+        display="flex"
+        flexDirection="column"
+        width="100%"
+      >
+        <Box>
           <Box
             width="96px"
             height="96px"
@@ -42,7 +51,7 @@ export default function SelectNetwork({ onNext }: any) {
         <Box fontSize="14px" fontWeight="400" marginTop="18px" textAlign="center" color="#676B75">
           Please note that the network is Optimism. Selecting other network means your assets will be lost.
         </Box>
-        <Box marginTop="40px">
+        <Box marginTop="auto">
           <Button size="xl" type="gradientBlue" width="100%" onClick={onNext}>Next</Button>
         </Box>
       </Box>

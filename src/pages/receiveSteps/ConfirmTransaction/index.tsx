@@ -4,12 +4,13 @@ import USDCIcon from '@/assets/mobile/usdc.png'
 import CheckedIcon from '@/components/Icons/Success';
 import useScreenSize from '@/hooks/useScreenSize'
 import Button from '@/components/mobile/Button'
+import CompleteIcon from '@/assets/mobile/complete.svg'
 
 export default function ConfirmTransaction({
   onFinish,
 }: any) {
   const { innerHeight } = useScreenSize()
-  const contentHeight = innerHeight - 64 - 120
+  const contentHeight = innerHeight - 82
 
   return (
     <Box
@@ -22,9 +23,18 @@ export default function ConfirmTransaction({
           display: 'none'
         }
       }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
     >
-      <Box padding="30px">
-        <Box paddingTop="10px">
+      <Box
+        padding="0 32px"
+        height="360px"
+        display="flex"
+        flexDirection="column"
+        width="100%"
+      >
+        <Box>
           <Box
             width="135px"
             height="96px"
@@ -36,7 +46,7 @@ export default function ConfirmTransaction({
             justifyContent="center"
             margin="0 auto"
           >
-            <CheckedIcon size="135px" />
+            <Image width="96px" height="96px" src={CompleteIcon} className="icon" />
           </Box>
         </Box>
         <Box width="100%" fontSize="28px" fontWeight="500" lineHeight="36px" marginTop="20px" textAlign="center">
@@ -45,7 +55,7 @@ export default function ConfirmTransaction({
         <Box fontSize="14px" fontWeight="400" marginTop="18px" textAlign="center" color="#676B75">
           Review the info you provided, and confirm the transactions.
         </Box>
-        <Box marginTop="40px">
+        <Box marginTop="auto">
           <Button size="xl" type="gradientBlue" width="100%" onClick={onFinish}>Done</Button>
         </Box>
       </Box>

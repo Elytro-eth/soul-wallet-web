@@ -11,7 +11,7 @@ import Button from '@/components/mobile/Button'
 export default function MakeTransfer({ onNext, registerScrollable }: any) {
   const scrollableRef = useRef<any>()
   const { innerHeight } = useScreenSize()
-  const contentHeight = innerHeight - 64 - 120
+  const contentHeight = innerHeight - 82
 
   useEffect(() => {
     if (registerScrollable) registerScrollable(scrollableRef.current)
@@ -23,9 +23,18 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
       height={contentHeight}
       position="relative"
       ref={scrollableRef}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
     >
-      <Box padding="30px">
-        <Box width="100%" fontSize="28px" fontWeight="500" lineHeight="36px" marginTop="20px" color="#161F36">
+      <Box
+        padding="0 32px"
+        height="360px"
+        display="flex"
+        flexDirection="column"
+        width="100%"
+      >
+        <Box width="100%" fontSize="28px" fontWeight="500" lineHeight="36px" marginTop="20px" color="#161F36" textAlign="center">
           Initiate a transfer
         </Box>
         <Box
@@ -33,6 +42,7 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
           fontWeight="400"
           marginTop="18px"
           color="#676B75"
+          textAlign="center"
         >
           {`Find the “Send” or “Transfer button” in your wallet or exchange account. And paste the address you copied from last step.`}
         </Box>
@@ -40,17 +50,17 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
           width="100%"
           display="flex"
           alignItems="center"
-          justifyContent="center"
+          justifyContent="space-between"
           marginTop="40px"
-          gap="6"
+          gap="4"
           transition="0.6s all ease"
         >
           <Box
-            width="48px"
-            height="48px"
-            borderRadius="12px"
+            width="56px"
+            height="56px"
+            borderRadius="28px"
             transition="0.6s all ease"
-            border="1px solid rgba(0, 0, 0, 0.10)"
+            background="#F2F3F5"
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -58,11 +68,11 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
             <Image width="32px" src={MetamaskIcon} className="icon" />
           </Box>
           <Box
-            width="48px"
-            height="48px"
-            borderRadius="12px"
+            width="56px"
+            height="56px"
+            borderRadius="28px"
             transition="0.6s all ease"
-            border="1px solid rgba(0, 0, 0, 0.10)"
+            background="#F2F3F5"
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -70,11 +80,11 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
             <Image width="32px" src={OKEXIcon} className="icon" />
           </Box>
           <Box
-            width="48px"
-            height="48px"
-            borderRadius="12px"
+            width="56px"
+            height="56px"
+            borderRadius="28px"
             transition="0.6s all ease"
-            border="1px solid rgba(0, 0, 0, 0.10)"
+            background="#F2F3F5"
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -82,11 +92,11 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
             <Image width="32px" src={CoinbaseIcon} className="icon" />
           </Box>
           <Box
-            width="48px"
-            height="48px"
-            borderRadius="12px"
+            width="56px"
+            height="56px"
+            borderRadius="28px"
             transition="0.6s all ease"
-            border="1px solid rgba(0, 0, 0, 0.10)"
+            background="#F2F3F5"
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -94,21 +104,23 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
             <Image width="32px" src={BinanceIcon} className="icon" />
           </Box>
           <Box
-            width="48px"
-            height="48px"
-            borderRadius="12px"
+            width="56px"
+            height="56px"
+            borderRadius="28px"
             marginLeft="6px"
             marginRight="6px"
             transition="0.6s all ease"
-            border="1px solid rgba(0, 0, 0, 0.10)"
+            background="#F2F3F5"
             display="flex"
             alignItems="center"
             justifyContent="center"
+            lineHeight="56px"
+            paddingBottom="10px"
           >
             {`...`}
           </Box>
         </Box>
-        <Box marginTop="40px">
+        <Box marginTop="auto">
           <Button size="xl" type="gradientBlue" width="100%" onClick={onNext}>Next</Button>
         </Box>
       </Box>

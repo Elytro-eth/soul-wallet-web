@@ -7,11 +7,14 @@ import EmailGuardianIcon from '@/components/Icons/mobile/EmailGuardian';
 import WalletGuardianIcon from '@/components/Icons/mobile/WalletGuardian';
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import IntroGuardianIcon from '@/assets/guardian.svg'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Intro({ onPrev, onNext }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const menuRef = useRef<any>()
   const { openModal } = useWalletContext()
+  const { innerHeight } = useScreenSize()
 
   useOutsideClick({
     ref: menuRef,
@@ -19,7 +22,21 @@ export default function Intro({ onPrev, onNext }: any) {
   })
 
   return (
-    <Box width="100%" height="400px" padding="30px">
+    <Box
+      width="100%"
+      height={innerHeight - 60}
+      padding="30px"
+      paddingTop="40px"
+    >
+      <Box
+        marginBottom="40px"
+        height="120px"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Image src={IntroGuardianIcon} />
+      </Box>
       <Box
         width="100%"
         textAlign="center"

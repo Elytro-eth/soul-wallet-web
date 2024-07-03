@@ -1,13 +1,17 @@
-import { Box, Input } from '@chakra-ui/react';
+import { Box, Input, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import FadeId from '@/components/Icons/mobile/FaceId'
+import PasskeyIcon from '@/assets/passkey.svg'
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function AddPasskey({ addingPasskey, onNext}: any) {
   const { innerHeight } = useScreenSize()
 
   return (
-    <Box width="100%" padding="30px" height={innerHeight - 64} display="flex" alignItems="flex-start" justifyContent="center" flexDirection="column">
+    <Box width="100%" padding="30px" height={innerHeight - 64} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+      <Box marginBottom="44px">
+        <Image src={PasskeyIcon} />
+      </Box>
       <Box
         fontWeight="500"
         fontSize="28px"
