@@ -19,6 +19,7 @@ import useScreenSize from '@/hooks/useScreenSize'
 import { toShortAddress } from '@/lib/tools';
 import { supportedEoas } from '@/config/constants'
 import { getWalletIcon } from '@/lib/tools'
+import RecoverSuccessIcon from '@/assets/recover-success.svg'
 
 const validateSigner = (recoveryRecord: any, address: any) => {
   if (!recoveryRecord) return;
@@ -263,7 +264,7 @@ export default function Sign() {
           alignItems="center"
           justifyContent="center"
         >
-          <SuccessIcon size="120" />
+          <SuccessIcon size="96" />
         </Box>
         <Box
           width="100%"
@@ -271,6 +272,7 @@ export default function Sign() {
           fontSize="28px"
           fontWeight="500"
           marginTop="20px"
+          color="#161F36"
         >
           Signature received
         </Box>
@@ -280,6 +282,7 @@ export default function Sign() {
           fontSize="14px"
           fontWeight="400"
           marginTop="20px"
+          color="#676B75"
         >
           Thank you! Your signature is received.
         </Box>
@@ -338,7 +341,7 @@ export default function Sign() {
           alignItems="center"
           justifyContent="center"
         >
-          <WarningIcon size="80" />
+          <WarningIcon size="96" />
         </Box>
         <Box
           width="100%"
@@ -346,6 +349,7 @@ export default function Sign() {
           fontSize="28px"
           fontWeight="500"
           marginTop="20px"
+          color="#161F36"
         >
           Not the recovery contact
         </Box>
@@ -355,11 +359,12 @@ export default function Sign() {
           fontSize="14px"
           fontWeight="400"
           marginTop="20px"
+          color="#676B75"
         >
           The wallet you connected is not the recovery contact for the recovery wallet. Please double check.
         </Box>
-        <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={() => {disconnectEOA(); onOpen()}}>Connect another wallet</Button>
-        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F8F8F8">
+        <Button size="xl" type="gradientBlue" width="100%" marginTop="30px" onClick={() => {disconnectEOA(); onOpen()}}>Connect another wallet</Button>
+        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
@@ -386,7 +391,7 @@ export default function Sign() {
           alignItems="center"
           justifyContent="center"
         >
-          <WarningIcon size="80" />
+          <WarningIcon size="96" />
         </Box>
         <Box
           width="100%"
@@ -394,6 +399,7 @@ export default function Sign() {
           fontSize="28px"
           fontWeight="500"
           marginTop="20px"
+          color="#161F36"
         >
           Switch network
         </Box>
@@ -403,13 +409,14 @@ export default function Sign() {
           fontSize="14px"
           fontWeight="400"
           marginTop="20px"
+          color="#676B75"
         >
           The wallet you connected is not on the Optism network, please switch network to continue sign,
         </Box>
-        <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={() => switchChain({ chainId: targetChainId })}>
+        <Button size="xl" type="gradientBlue" width="100%" marginTop="30px" onClick={() => switchChain({ chainId: targetChainId })}>
           Switch to {targetChainName} network
         </Button>
-        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F8F8F8">
+        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
@@ -427,21 +434,15 @@ export default function Sign() {
   if (isConnected) {
     return (
       <SignContainer isOpen={isOpen} onOpen={onOpen} onClose={onClose} connectEOA={connectEOA} isConnecting={isConnecting}>
-        <Box
-          width="120px"
-          height="120px"
-          borderRadius="120px"
-          margin="0 auto"
-          background="#F2F2F2"
-          opacity="0.55"
-        >
+        <Box width="144px" height="144px" marginBottom="16px" position="relative">
+          <Image src={RecoverSuccessIcon} />
         </Box>
         <Box
           width="100%"
           textAlign="center"
           fontSize="28px"
           fontWeight="500"
-          marginTop="20px"
+          color="#161F36"
         >
           Recover request
         </Box>
@@ -451,29 +452,31 @@ export default function Sign() {
           fontSize="14px"
           fontWeight="400"
           marginTop="20px"
+          color="#676B75"
         >
           Your friend's wallet is lost. As their recovery contact, please connect your wallet and confirm request to assist with their wallet recovery.
         </Box>
         <Box
           width="100%"
-          background="#F8F8F8"
-          borderRadius="12px"
-          padding="12px"
+          background="#F2F3F5"
+          borderRadius="16px"
+          padding="24px"
           marginTop="18px"
         >
           <Box
-            color="rgba(0, 0, 0, 0.8)"
-            fontSize="12px"
+            // color="rgba(0, 0, 0, 0.8)"
+            fontSize="18px"
             fontWeight="500"
             display="flex"
             alignItems="center"
             marginBottom="12px"
+            color="#161F36"
           >
             <Box>Wallet to recover:</Box>
           </Box>
           <Box
-            fontSize="13px"
-            fontWeight="500"
+            fontSize="18px"
+            fontWeight="400"
           >
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
             <Box as="span" color="rgba(0, 0, 0, 0.4)">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
@@ -481,7 +484,6 @@ export default function Sign() {
           </Box>
           <Box
             borderRadius="4px"
-            background="white"
             display="flex"
             width="fit-content"
             padding="4px"
@@ -495,7 +497,7 @@ export default function Sign() {
         </Box>
         <Button
           size="xl"
-          type="blue"
+          type="gradientBlue"
           width="100%"
           marginTop="30px"
           onClick={sign}
@@ -504,7 +506,7 @@ export default function Sign() {
         >
           Confirm and Sign
         </Button>
-        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F8F8F8">
+        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
@@ -521,21 +523,15 @@ export default function Sign() {
 
   return (
     <SignContainer isOpen={isOpen} onOpen={onOpen} onClose={onClose} connectEOA={connectEOA} isConnecting={isConnecting}>
-      <Box
-        width="120px"
-        height="120px"
-        borderRadius="120px"
-        margin="0 auto"
-        background="#F2F2F2"
-        opacity="0.55"
-      >
+      <Box width="144px" height="144px" marginBottom="16px" position="relative">
+        <Image src={RecoverSuccessIcon} />
       </Box>
       <Box
         width="100%"
         textAlign="center"
         fontSize="28px"
         fontWeight="500"
-        marginTop="20px"
+        color="#161F36"
       >
         Recover request
       </Box>
@@ -545,29 +541,31 @@ export default function Sign() {
         fontSize="14px"
         fontWeight="400"
         marginTop="20px"
+        color="#676B75"
       >
         Your friend's wallet is lost. As their recovery contact, please connect your wallet and confirm request to assist with their wallet recovery.
       </Box>
       <Box
         width="100%"
-        background="#F8F8F8"
-        borderRadius="12px"
-        padding="12px"
+        background="#F2F3F5"
+        borderRadius="16px"
+        padding="24px"
         marginTop="18px"
       >
         <Box
-          color="rgba(0, 0, 0, 0.8)"
-          fontSize="12px"
+          // color="rgba(0, 0, 0, 0.8)"
+          fontSize="18px"
           fontWeight="500"
           display="flex"
           alignItems="center"
           marginBottom="12px"
+          color="#161F36"
         >
           <Box>Wallet to recover:</Box>
         </Box>
         <Box
-          fontSize="13px"
-          fontWeight="500"
+          fontSize="18px"
+          fontWeight="400"
         >
           <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
           <Box as="span" color="rgba(0, 0, 0, 0.4)">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
@@ -575,7 +573,6 @@ export default function Sign() {
         </Box>
         <Box
           borderRadius="4px"
-          background="white"
           display="flex"
           width="fit-content"
           padding="4px"
@@ -587,7 +584,7 @@ export default function Sign() {
           <Box fontWeight="500" fontSize="14px">{chainConfig.chainName}</Box>
         </Box>
       </Box>
-      <Button size="xl" type="blue" width="100%" marginTop="30px" onClick={onOpen}>{isConnecting ? 'Connecting' : 'Connect wallet'}</Button>
+      <Button size="xl" type="gradientBlue" width="100%" marginTop="30px" onClick={onOpen}>{isConnecting ? 'Connecting' : 'Connect wallet'}</Button>
     </SignContainer>
   );
 }
