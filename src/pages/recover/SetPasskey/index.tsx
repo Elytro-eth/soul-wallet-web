@@ -1,27 +1,38 @@
-import { Box, Input } from '@chakra-ui/react';
+import { Box, Input, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import FadeId from '@/components/Icons/mobile/FaceId'
+import PasskeyIcon from '@/assets/passkey.svg'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function SetPasskey({ onNext, addingPasskey }: any) {
+  const { innerHeight } = useScreenSize()
+
   return (
-    <Box width="100%" height="600px" padding="30px" display="flex" alignItems="flex-start" justifyContent="center" flexDirection="column" paddingBottom="100px">
+    <Box width="100%" padding="30px" height={innerHeight - 64} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
       <Box marginBottom="44px">
-        <FadeId />
+        <Image src={PasskeyIcon} />
       </Box>
       <Box
         fontWeight="500"
-        fontSize="24px"
-        lineHeight="14px"
-        marginBottom="32px"
+        fontSize="28px"
+        marginBottom="8px"
+        textAlign="center"
+        width="100%"
+        color="#161F36"
+        lineHeight="1"
       >
         Add passkey
       </Box>
-      <Box width="100%" marginBottom="50px">
-        <Box width="100%" fontSize="16px" lineHeight="24px" fontWeight="400" textAlign="left">
+      <Box
+        marginBottom="40px"
+        textAlign="center"
+        width="100%"
+      >
+        <Box width="100%" fontSize="14px" lineHeight="17.5px" fontWeight="400" textAlign="center" color="#676B75">
           Passkeys will be used to sign in to your account in a safer and more secure way. You can always change your passkeys in Settings later.
         </Box>
       </Box>
-      <Button width="100%" size="xl" type="blue" onClick={onNext} minWidth="195px" loading={addingPasskey}>Add</Button>
+      <Button width="100%" size="xl" type="gradientBlue" onClick={onNext} minWidth="195px" loading={addingPasskey}>Add</Button>
     </Box>
   );
 }

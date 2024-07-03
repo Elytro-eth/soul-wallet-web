@@ -19,22 +19,22 @@ export default function RecoverProcess({ step }: any) {
       zIndex="1"
     >
       <Box onClick={() => setIsOpen(!isOpen)} display="flex" alignItems="center" justifyContent="space-between">
-        <Box fontSize="16px" fontWeight="500">Recovery process ({step}/3)</Box>
+        <Box fontSize="16px" fontWeight="500">Recovery process ({step+1}/3)</Box>
         <Box transform={isOpen ? '' : 'rotate(180deg)'}><ChevronDown /></Box>
       </Box>
       {isOpen && (
         <Box display="flex" gap="8px" flexDirection="column" marginTop="14px">
           <Box display="flex" alignItems="center">
+            <Box marginRight="8px"><Circle active={step >= 0 ? true : false} /></Box>
+            <Box fontSize="14px" fontWeight={step >= 0 ? '600' : '400'}>Step 1: Enter username</Box>
+          </Box>
+          <Box display="flex" alignItems="center">
             <Box marginRight="8px"><Circle active={step >= 1 ? true : false} /></Box>
-            <Box fontSize="14px" fontWeight={step >= 1 ? '600' : '400'}>Step 1: Enter username</Box>
+            <Box fontSize="14px" fontWeight={step >= 1 ? '600' : '400'}>Step 2: Add passkey</Box>
           </Box>
           <Box display="flex" alignItems="center">
             <Box marginRight="8px"><Circle active={step >= 2 ? true : false} /></Box>
-            <Box fontSize="14px" fontWeight={step >= 2 ? '600' : '400'}>Step 2: Add passkey</Box>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Box marginRight="8px"><Circle active={step >= 3 ? true : false} /></Box>
-            <Box fontSize="14px" fontWeight={step >= 3 ? '600' : '400'}>Step 3: Recovery contact signature request</Box>
+            <Box fontSize="14px" fontWeight={step >= 2 ? '600' : '400'}>Step 3: Recovery contact signature request</Box>
           </Box>
         </Box>
       )}

@@ -7,58 +7,66 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
   const disabled = !username;
 
   return (
-    <Box width="100%" height="400px" padding="30px">
-      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="20px">
+    <Box width="100%" padding="40px 30px" height="400px">
+      <Box
+        fontWeight="500"
+        fontSize="28px"
+        lineHeight="1"
+        marginBottom="20px"
+        color="#161F36"
+      >
         Enter username
       </Box>
-      <Box width="100%" marginBottom="72px">
+      <Box width="100%" marginBottom="30px">
         <Input
           value={username}
+          onChange={(e) => { setUsername(e.target.value); }}
+          height="82px"
           spellCheck={false}
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
           fontSize="32px"
-          lineHeight="24px"
-          padding="0"
+          autoFocus
+          lineHeight="34px"
           fontWeight="500"
           placeholder="Enter username or wallet address"
-          borderRadius="0"
           border="none"
           outline="none"
+          background="#F2F3F5"
+          padding="24px 29px"
+          borderRadius="24px"
+          color="#161F36"
+          marginBottom="8px"
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
         />
-        <Box marginTop="10px" width="100%" height="1px" background="rgba(73, 126, 130, 0)" />
-        <Box mt="1" h="44px">
+        <Box mt="1" minH="44px">
           {checking && (
             <InputLoading />
           )}
           {(!checking && username) && (
             <>
-              {accountInfo ? (
-                <Box width="100%" background="#F5FFF4" borderRadius="12px" padding="12px">
-                  <Box color="#0CB700" fontSize="12px" fontWeight="500" display="flex" alignItems="center">
-                    <Box marginRight="4px">
+              {(accountInfo) ? (
+                <Box width="100%" background="#1E4124" borderRadius="12px" padding="12px">
+                  <Box color="#92EF5A" fontSize="18px" fontWeight="500" display="flex" alignItems="center">
+                    <Box marginRight="8px">
                       <NameChecked />
                     </Box>
                     <Box>Wallet found</Box>
                   </Box>
-                  <Box fontSize="13px" fontWeight="500">
-                    <Box as="span" color="black">
+                  <Box fontSize="18px" fontWeight="400">
+                    <Box as="span" color="rgba(255, 255, 255, 0.9)">
                       {accountInfo.address.slice(0,6)}
                     </Box>
-                    <Box as="span" color="rgba(0, 0, 0, 0.4)">
+                    <Box as="span" color="rgba(255, 255, 255, 0.4)">
                       {accountInfo.address.slice(6, -6)}
                     </Box>
-                    <Box as="span" color="black">
+                    <Box as="span" color="rgba(255, 255, 255, 0.9)">
                       {accountInfo.address.slice(-6)}
                     </Box>
                   </Box>
                 </Box>
               ) : isWalletNotFound ? (
-                <Box width="100%" background="#FFF9F8" borderRadius="12px" padding="12px">
-                  <Box fontSize="12px" fontWeight="500">
-                    <Box as="span" color="#E83D26">
+                <Box width="100%" background="#612024" borderRadius="16px" padding="16px">
+                  <Box fontSize="18px" fontWeight="400">
+                    <Box as="span" color="#E8424C">
                       Wallet not found, please enter valid Soul Wallet address
                     </Box>
                   </Box>
@@ -68,7 +76,7 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
           )}
         </Box>
       </Box>
-      <Button disabled={!accountInfo||disabled} size="xl" type="blue" width="100%" onClick={onNext}>
+      <Button disabled={!accountInfo||disabled} size="xl" type="gradientBlue" width="100%" onClick={onNext}>
         Continue
       </Button>
     </Box>

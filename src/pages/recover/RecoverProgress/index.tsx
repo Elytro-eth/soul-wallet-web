@@ -27,6 +27,7 @@ import { useGuardianStore } from '@/store/guardian';
 import { shareUrl, toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
 import AddressIcon from '@/components/AddressIcon';
+import GuardianIcon from '@/assets/guardian.svg'
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function RecoverProgress({ onNext, signedGuardians }: any) {
@@ -68,18 +69,26 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
   const pendingGuardianNum = guardianInfo && guardianInfo.threshold ? guardianInfo.threshold - signedGuardians.length : 0;
 
   return (
-    <Box width="100%" height="100%" padding="30px">
-      <Box width="120px" height="120px" borderRadius="120px" margin="0 auto" background="#F2F2F2" opacity="0.55"></Box>
-      <Box width="100%" textAlign="center" fontSize="23px" fontWeight="500" marginTop="20px" letterSpacing="-1px">
+    <Box width="100%" height="100%" padding="30px" paddingTop="40px">
+      <Box
+        marginBottom="40px"
+        height="120px"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Image src={GuardianIcon} />
+      </Box>
+      <Box width="100%" textAlign="center" fontSize="28px" fontWeight="500" marginTop="20px" letterSpacing="-1px" color="#161F36">
         Share link with your recovery contacts
       </Box>
-      <Box width="100%" textAlign="center" fontSize="14px" fontWeight="400" marginTop="12px">
+      <Box width="100%" textAlign="center" fontSize="14px" fontWeight="400" marginTop="12px" color="#676B75">
         Ask your recovery contacts to recover for you
       </Box>
-      <Button onClick={onShare} size="xl" type="blue" width="100%" marginTop="30px" marginBottom="60px">
+      <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="30px" marginBottom="40px">
         Share
       </Button>
-      <Box fontWeight="500" fontSize="18px" width="100%" paddingBottom="24px" borderBottom="1px solid #F0F0F0">
+      <Box fontWeight="500" fontSize="14px" width="100%" paddingTop="12px" paddingBottom="12px" borderTop="1px solid #BDC0C7" color="#161F36">
         {pendingGuardianNum} more recovery contacts approval needed
       </Box>
       {guardiansList &&
@@ -90,27 +99,29 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                   fontSize="14px"
                   key={index}
                   width="100%"
-                  padding="24px 0"
+                  padding="16px 0"
+                  height="64px"
                   borderBottom="1px solid #F0F0F0"
                   display="flex"
                   alignItems="center"
                 >
            <AddressIcon width={32} address={guardianAddress} />
-           {/* <Box width="32px" height="32px" background="#D9D9D9" borderRadius="32px" marginRight="8px" /> */}
            <Flex align={'center'} gap="2" ml={"2"}>
-             <Box wordBreak={"break-all"} fontFamily={"monospace"}>{label}</Box>
+             <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
              <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>
            </Flex>
            <Box marginLeft="auto">
-             {signedGuardians.includes(guardianAddress) ? (
+             {(signedGuardians.includes(guardianAddress)) ? (
                <Box
-                 color="#0CB700"
-                 background="#F5FFF4"
+                 color="#92EF5A"
+                 background="#1E4124"
                  padding="2px 8px"
                  borderRadius="24px"
-                 fontWeight="500"
+                 fontWeight="400"
                  display="flex"
                  alignItems="center"
+                 fontSize="12px"
+                 height="31px"
                >
                  <Box marginRight="4px">
                    <ApprovedIcon />
@@ -118,7 +129,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                  <Box>Approved</Box>
                </Box>
              ) : guardianAddressEmail[guardianAddress] ? (
-               <Button size="sm" type="blue" height="32px" onClick={() => doOpenModal(guardianAddress)}>
+               <Button size="sm" type="lightBlue" height="31px" onClick={() => doOpenModal(guardianAddress)} color="#161F36">
                  Verify Email
                </Button>
              ) : (
@@ -129,6 +140,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                  borderRadius="24px"
                  display="flex"
                  alignItems="center"
+                 height="31px"
                >
                  <Box marginRight="4px">
                    <WaitingIcon />

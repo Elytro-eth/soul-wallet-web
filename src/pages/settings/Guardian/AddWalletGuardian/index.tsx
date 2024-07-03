@@ -130,7 +130,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   return (
     <Box width="100%" height={innerHeight - 40}>
       <Box fontSize="16px" fontWeight="500" padding="10px 30px" paddingTop="60px">
-        Add Wallet Recovery Contact
+
       </Box>
       <Box
         // height="calc(100% - 94px)"
@@ -140,27 +140,30 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
         justifyContent="center"
       >
         <Box width="100%">
-          <Box padding="30px">
-            <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="20px"  marginTop="50px">
+          <Box padding="30px" paddingTop="40px">
+            <Box fontSize="28px" fontWeight="500" color="#161F36">
+              Add Wallet Recovery Contact
+            </Box>
+            <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px"  marginTop="24px" color="#95979C">
               ENS or wallet address
             </Box>
-            <Box
-              position="relative"
-            >
+            <Box position="relative">
               <Input
                 ref={setInputRef}
                 spellCheck={false}
                 value={guardianAddress}
                 onChange={e => onAddressChange(e.target.value)}
-                fontSize="32px"
+                fontSize="20px"
                 lineHeight="24px"
-                padding="0"
-                fontWeight="500"
+                fontWeight="400"
                 placeholder="Enter or paste here"
-                borderRadius="0"
                 border="none"
                 outline="none"
                 _focusVisible={{ border: 'none', boxShadow: 'none' }}
+                background="#F2F3F5"
+                borderRadius="16px"
+                padding="16px"
+                height="56px"
               />
               <ENSResolver
                 _styles={{
@@ -186,26 +189,28 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 getActiveENSNameRef={getActiveENSNameRef}
               />
             </Box>
-            <Box fontWeight="500" fontSize="16px" lineHeight="14px" marginBottom="20px" marginTop="40px">
+            <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px"  marginTop="24px" color="#95979C">
               Recovery contact name (optional)
             </Box>
             <Box>
               <Input
                 spellCheck={false}
-                fontSize="18px"
+                fontSize="20px"
                 lineHeight="24px"
-                padding="0"
-                fontWeight="500"
+                fontWeight="400"
                 placeholder="Enter or paste here"
-                borderRadius="0"
                 border="none"
                 value={guardianName}
                 onChange={e=> setGuardianName(e.target.value)}
                 outline="none"
                 _focusVisible={{ border: 'none', boxShadow: 'none' }}
+                background="#F2F3F5"
+                borderRadius="16px"
+                padding="16px"
+                height="56px"
               />
             </Box>
-            <Button size="xl" type="blue" width="100%" marginTop="60px" loading={changingGuardian} onClick={onConfirm}>
+            <Button size="xl" type="gradientBlue" width="100%" marginTop="60px" loading={changingGuardian} onClick={onConfirm}>
               Add
             </Button>
           </Box>

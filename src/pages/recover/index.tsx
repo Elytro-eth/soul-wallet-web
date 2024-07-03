@@ -22,7 +22,7 @@ export default function Recover() {
   const { registerForRecover } = usePasskey();
   const toast = useToast();
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(-1);
   const [username, setUsername] = useState('');
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [accountInfo, setAccountInfo] = useState<any>(null);
@@ -72,7 +72,7 @@ export default function Recover() {
         recoveryID: createRecordRes.data.recoveryID,
         credential,
       });
-      setStep(3);
+      setStep(2);
     } catch (err: any) {
       console.log('createerrrrr', err);
       toast({
@@ -175,10 +175,10 @@ export default function Recover() {
 
       if (status == 0) {
         // record submitted
-        setStep(3);
+        setStep(2);
       } else if (status == 1) {
         // signatured gathered
-        setStep(4);
+        setStep(3);
       }
 
       return recoveryRecordRes.data;
@@ -198,9 +198,9 @@ export default function Recover() {
   }, [recoveryID]);
 
   const renderStep = () => {
-    if (step == 0) {
+    if (step == -1) {
       return <Intro onPrev={onPrev} onNext={onNext} />;
-    } else if (step == 1) {
+    } else if (step == 0) {
       return (
         <SetUsername
           onPrev={onPrev}
@@ -212,11 +212,11 @@ export default function Recover() {
           setUsername={setUsername}
         />
       );
-    } else if (step == 2) {
+    } else if (step == 1) {
       return <SetPasskey onPrev={onPrev} onNext={onCreatePasskey} addingPasskey={addingPasskey} />;
-    } else if (step == 3) {
+    } else if (step == 2) {
       return <RecoverProgress onNext={onNext} signedGuardians={signedGuardians} />;
-    } else if (step == 4) {
+    } else if (step == 3) {
       return <RecoverSuccess isRecovering={isRecovering} doRecover={doRecover} />;
     }
 
@@ -227,16 +227,17 @@ export default function Recover() {
     <Box width="100%" height="100%" bg="#fff">
       {step < 4 && (
         <Fragment>
-          {step === 0 && <Header title="" showLogo />}
-          {step > 0 && <Header title="Recover account" showBackButton={step < 3} step={step} onBack={onPrev} />}
+          {step === -1 && <Header title="" showLogo={false} />}
+          {step > -1 && <Header title="" showBackButton={step < 3} step={step} onBack={onPrev} />}
         </Fragment>
       )}
-      {step > 0 && step < 4 && <RecoverProcess step={step} />}
+      {step > -1 && step < 3 && <ProgressBar size={3} activeIndex={step} />}
+      {step > -1 && step < 3 && <RecoverProcess step={step} />}
       <Box
         height={(step < 4) ? (innerHeight - 64) : innerHeight}
         overflowY="auto"
         display="flex"
-        alignItems="center"
+        alignItems="flex-start"
         justifyContent="center"
       >
         {renderStep()}

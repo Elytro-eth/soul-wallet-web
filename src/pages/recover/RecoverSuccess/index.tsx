@@ -6,39 +6,26 @@ import ReadyStaticIcon from '@/assets/mobile/ready_static.svg';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 import { Link, useNavigate } from 'react-router-dom';
+import RecoverSuccessIcon from '@/assets/recover-success.svg'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function RecoverSuccess({ doRecover, isRecovering }: any) {
-  const [animated, setAnimated] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAnimated(true);
-    }, 1300);
-  }, []);
+  const { innerHeight } = useScreenSize()
 
   return (
-    <Box
-      width="100%"
-      padding="30px"
-      height="500px"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      flexDirection="column"
-    >
-      <Box width="200px" height="200px" marginBottom="30px" position="relative">
-        {!animated && <Image position="absolute" left="0" top="0" width="200px" height="200px" src={ReadyIcon} />}
-        <Image position="absolute" left="50px" top="50px" width="100px" height="100px" src={ReadyStaticIcon} />
+    <Box width="100%" height={innerHeight - 60 - 20} padding="30px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
+      <Box width="144px" height="144px" marginBottom="40px" position="relative">
+        <Image src={RecoverSuccessIcon} />
       </Box>
-      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="14px">
+      <Box fontWeight="500" fontSize="28px" lineHeight="1" marginBottom="14px" color="#161F36">
         Recovery completed
       </Box>
-      <Box width="100%" marginBottom="50px" marginTop="14px">
-        <Box fontSize="16px" lineHeight="24px" fontWeight="400" textAlign="center">
+      <Box width="100%" marginBottom="40px" marginTop="8px">
+        <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" textAlign="center" color="#676B75">
           Your account has been recovered. Free to check it out!
         </Box>
       </Box>
-      <Button width="100%" size="xl" type="blue" minWidth="195px" onClick={doRecover} loading={isRecovering}>
+      <Button width="100%" size="xl" type="gradientBlue" minWidth="195px" onClick={doRecover} loading={isRecovering}>
         Go to account
       </Button>
     </Box>
