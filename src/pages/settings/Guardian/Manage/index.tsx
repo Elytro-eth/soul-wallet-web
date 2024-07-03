@@ -37,6 +37,8 @@ import { toShortAddress } from '@/lib/tools';
 import { useNavigate } from 'react-router-dom';
 import useRecover from '@/hooks/useRecover';
 import useWalletContract from '@/hooks/useWalletContract';
+import MinusIcon from '@/components/Icons/mobile/Minus';
+import AddIcon from '@/components/Icons/mobile/Add';
 
 export default function Manage({ onPrev, onNext }: any) {
   const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
@@ -182,156 +184,144 @@ export default function Manage({ onPrev, onNext }: any) {
   const isActiveGuardianEmail = guardianAddressEmail[tempGuardians[activeGuardianIndex]];
 
   return (
-    <Box width="100%" height="100%" padding="30px" display="flex" flexDirection="column">
-      <Box fontSize="16px" fontWeight="500">
-        My recovery contacts
-      </Box>
-      <Box marginTop="14px">
-        {tempGuardians.map((guardianAddress: any, index: number) => (
-          <Box
-            border="1px solid #DFDFDF"
-            borderRadius="12px"
-            padding="22px 24px"
-            display="flex"
-            alignItems="center"
-            marginBottom="16px"
-            key={index}
-          >
-            <Box width="48px" height="48px" marginRight="8px">
-              <AddressIcon address={guardianAddress} width={48} />
-            </Box>
-            <Box>
-              <Box fontSize="16px" fontWeight="500">
-                {guardianAddressEmail[guardianAddress]
-                ? 'Email recovery contact'
-                : guardianAddressName[guardianAddress]
-                ? guardianAddressName[guardianAddress]
-                : 'Recovery contact'}
-              </Box>
-              <Box fontSize="12px" fontWeight="500" marginTop="4px" color="#868686">
-                {guardianAddressEmail[guardianAddress]
-                ? guardianAddressEmail[guardianAddress]
-                : toShortAddress(guardianAddress)}
-              </Box>
-            </Box>
-            <Box marginLeft="auto" onClick={() => doHandleGuardian(index)}>
-              <EditIcon />
-            </Box>
-          </Box>
-        ))}
-      </Box>
-      <Box marginBottom="40px" position="relative">
-        <Box>
-          <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
-            {() => (
-              <Box overflow="auto" ref={guardianMenuRef}>
-                <MenuButton as={Box} onClick={() => { isGuardianMenuOpen ? onGuardianMenuClose() : onGuardianMenuOpen(); }}>
-                  <Button fontSize="14px" size="xl" type="white" color="black">
-                    +Add {tempGuardians.length ? 'another' : ''} recovery contact
-                  </Button>
-                </MenuButton>
-                <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)" marginTop="0">
-                  <MenuItem
-                    width="calc(100vw - 60px)"
-                    position="relative"
-                    padding="18px 27px"
-                    borderBottom="1px solid #E4E4E4"
-                    onClick={() => {
-                      onCreateGuardianOpen(0)
-                    }}
-                  >
-                    <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                      <Box marginRight="8px">
-                        <EmailGuardianIcon />
-                      </Box>
-                      <Box>Email</Box>
-                    </Box>
-                  </MenuItem>
-                  <MenuItem
-                    width="calc(100vw - 60px)"
-                    position="relative"
-                    padding="18px 27px"
-                    onClick={() => {
-                      onCreateGuardianOpen(1);
-                    }}
-                  >
-                    <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                      <Box marginRight="8px">
-                        <WalletGuardianIcon />
-                      </Box>
-                      <Box>Wallet</Box>
-                    </Box>
-                  </MenuItem>
-                </MenuList>
-              </Box>
-            )}
-          </Menu>
+    <Box width="100%" height="100%" display="flex" flexDirection="column">
+      <Box padding="30px">
+        <Box fontSize="14px" fontWeight="500" color="#161F36" lineHeight="17.5px">
+          MY RECOVERY CONTACTS
         </Box>
-      </Box>
-      {tempGuardians.length > 0 && (
-        <Box>
-          <Box width="100%" height="1px" background="#F0F0F0" marginBottom="40px" />
-          <Box fontSize="16px" fontWeight="500">
-            Recovery settings
-          </Box>
-          <Box marginBottom="14px" marginTop="12px" position="relative">
-            <Box top="60px" width="100%">
-              <Menu isOpen={isThresholdMenuOpen} isLazy>
-                {() => (
-                  <Box overflow="auto" ref={thresholdMenuRef}>
-                    <MenuButton
-                      as={Box}
+        <Box marginTop="14px">
+          {tempGuardians.map((guardianAddress: any, index: number) => (
+            <Box
+              // border="1px solid #DFDFDF"
+              background="#F2F3F5"
+              borderRadius="16px"
+              padding="22px 24px"
+              display="flex"
+              alignItems="center"
+              marginBottom="16px"
+              key={index}
+            >
+              <Box width="48px" height="48px" marginRight="8px">
+                <AddressIcon address={guardianAddress} width={48} />
+              </Box>
+              <Box>
+                <Box fontSize="18px" fontWeight="400" color="#161F36" lineHeight="22.5px">
+                  {guardianAddressEmail[guardianAddress]
+                  ? 'Email recovery contact'
+                  : guardianAddressName[guardianAddress]
+                  ? guardianAddressName[guardianAddress]
+                  : 'Recovery contact'}
+                </Box>
+                <Box fontSize="12px" fontWeight="500" marginTop="4px" lineHeight="18px" color="#676B75">
+                  {guardianAddressEmail[guardianAddress]
+                  ? guardianAddressEmail[guardianAddress]
+                  : toShortAddress(guardianAddress)}
+                </Box>
+              </Box>
+              <Box marginLeft="auto" onClick={() => doHandleGuardian(index)}>
+                <EditIcon />
+              </Box>
+            </Box>
+          ))}
+        </Box>
+        <Box marginBottom="40px" position="relative">
+          <Box>
+            <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
+              {() => (
+                <Box overflow="auto" ref={guardianMenuRef}>
+                  <MenuButton as={Box} onClick={() => { isGuardianMenuOpen ? onGuardianMenuClose() : onGuardianMenuOpen(); }}>
+                    <Button fontSize="14px" size="lg" type="white" color="#161F36" fontWeight="400">
+                      +Add {tempGuardians.length ? 'another' : ''} recovery contact
+                    </Button>
+                  </MenuButton>
+                  <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)" marginTop="0">
+                    <MenuItem
+                      width="calc(100vw - 60px)"
                       position="relative"
+                      padding="18px 27px"
+                      borderBottom="1px solid #E4E4E4"
                       onClick={() => {
-                        isThresholdMenuOpen ? onThresholdMenuClose() : onThresholdMenuOpen();
+                        onCreateGuardianOpen(0)
                       }}
                     >
-                      <Button
-                        borderRadius="8px"
-                        width="100%"
-                        size="xl"
-                        type="white"
-                        color="black"
-                      >
-                        {tempThreshold}
-                      </Button>
-                      <Box position="absolute" right="16px" top="calc(50% - 6px)">
-                        <ArrowDownIcon />
+                      <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
+                        <Box marginRight="8px">
+                          <EmailGuardianIcon />
+                        </Box>
+                        <Box>Email</Box>
                       </Box>
-                    </MenuButton>
-                    <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)" marginTop="20px" marginBottom="20px">
-                      {Array.from({ length: tempGuardians.length }, (_, i) => (
-                        <MenuItem
-                          position="relative"
-                          padding="18px 27px"
-                          w="calc(100vw - 60px)"
-                          maxW="370px"
-                          onClick={() => onSetThreshold(i + 1)}
-                        >
-                          <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                            <Box>{i + 1}</Box>
-                          </Box>
-                        </MenuItem>
-                      ))}
-                    </MenuList>
-                  </Box>
-                )}
-              </Menu>
-            </Box>
-          </Box>
-          <Box marginBottom="20px">
-            out of {tempGuardians.length} recovery contact(s) confirmation is needed for wallet recovery.
+                    </MenuItem>
+                    <MenuItem
+                      width="calc(100vw - 60px)"
+                      position="relative"
+                      padding="18px 27px"
+                      onClick={() => {
+                        onCreateGuardianOpen(1);
+                      }}
+                    >
+                      <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
+                        <Box marginRight="8px">
+                          <WalletGuardianIcon />
+                        </Box>
+                        <Box>Wallet</Box>
+                      </Box>
+                    </MenuItem>
+                  </MenuList>
+                </Box>
+              )}
+            </Menu>
           </Box>
         </Box>
-      )}
-      <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px">
+        {tempGuardians.length > 0 && (
+          <Box>
+            <Box fontSize="14px" fontWeight="500" color="#161F36" lineHeight="17.5px">
+              RECOVERY SETTINGS
+            </Box>
+            <Box background="#F2F3F5" padding="16px" marginTop="16px" borderRadius="16px">
+              <Box marginBottom="14px" marginTop="12px" position="relative">
+                <Box display="flex" alignItems="center" justifyContent="space-between">
+                  <Box
+                    width="72px"
+                    height="48px"
+                    borderRadius="8px"
+                    background="white"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    onClick={() => { if (tempThreshold - 1 > 0) { onSetThreshold(tempThreshold - 1) } }}
+                  >
+                    <MinusIcon />
+                  </Box>
+                  <Box fontWeight="500" fontSize="32px" color="#161F36">{tempThreshold}</Box>
+                  <Box
+                    width="72px"
+                    height="48px"
+                    borderRadius="8px"
+                    background="white"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    onClick={() => { if (tempThreshold + 1 <= tempGuardians.length) { onSetThreshold(tempThreshold + 1) } }}
+                  >
+                    <AddIcon />
+                  </Box>
+                </Box>
+              </Box>
+              <Box marginTop="8px" marginBottom="20px" fontSize="12px" fontWeight="400" textAlign="center" color="#3C3F45">
+                out of {tempGuardians.length} recovery contact(s) confirmation is needed for wallet recovery.
+              </Box>
+            </Box>
+          </Box>
+        )}
+      </Box>
+      <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
         <Box width="50%" paddingRight="7px">
           <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
             Back
           </Button>
         </Box>
         <Box width="50%" paddingLeft="7px">
-          <Button width="calc(100% - 7px)" disabled={false} size="xl" type="blue" onClick={onConfirmOpen}>
+          <Button width="calc(100% - 7px)" disabled={false} size="xl" type="gradientBlue" onClick={onConfirmOpen}>
             Continue
           </Button>
         </Box>
