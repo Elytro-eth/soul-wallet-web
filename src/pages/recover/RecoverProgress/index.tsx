@@ -115,7 +115,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                <Box
                  color="#92EF5A"
                  background="#1E4124"
-                 padding="2px 8px"
+                 padding="2px 12px"
                  borderRadius="24px"
                  fontWeight="400"
                  display="flex"
@@ -136,7 +136,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                <Box
                  color="#848488"
                  background="#F3F3F3"
-                 padding="2px 8px"
+                 padding="2px 12px"
                  borderRadius="24px"
                  display="flex"
                  alignItems="center"

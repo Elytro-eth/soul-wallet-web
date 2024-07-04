@@ -550,7 +550,7 @@ export default function Dashboard() {
                   >
                     <Box padding="12px 16px" paddingBottom="0">
                       {tokenBalance.map((item: any, index: number) => (
-                        <Box display="flex" alignItems="center" marginBottom="12px">
+                        <Box key={index} display="flex" alignItems="center" marginBottom="12px">
                           <Box marginRight="10px">
                             <Image src={item.logoURI} w="32px" h="32px" />
                           </Box>

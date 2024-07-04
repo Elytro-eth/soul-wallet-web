@@ -39,9 +39,11 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   const [resolvedAddress, setResolvedAddress] = useState('');
   const [guardianAddress, setGuardianAddress] = useState<string>(defaultGuardianAddress || '');
   const [guardianName, setGuardianName] = useState(defaultGuardianName || '');
+  const [addressStatus, setAddressStatus] = useState(0);
   console.log('callback', callback)
 
   const onAddressChange = (val: string) => {
+    setAddressStatus(1)
     setGuardianAddress(val)
     setSearchText(val);
 
@@ -193,6 +195,13 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 getActiveENSNameRef={getActiveENSNameRef}
               />
             </Box>
+            {!!addressStatus && !!guardianAddress && !isValidAddress &&
+             <Box display="flex" bottom="-20px" alignItems="center" justifyContent="flex-start" marginTop="5px">
+               <Box fontWeight="400" fontSize="12px" lineHeight="15px" color="#E83D26">
+                 Invalid address
+               </Box>
+             </Box>
+            }
             <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px"  marginTop="24px" color="#95979C">
               Recovery contact name (optional)
             </Box>
