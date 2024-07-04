@@ -12,6 +12,7 @@ export default function ProgressBar({ activeIndex, size }: any) {
       {Array(size).fill(0).map((item: any, i: number) => {
         return (
           <Box
+            key={i}
             height="100%"
             width={`calc((100% - 24px - ${(size - 1) * 8}px) / 3)`}
             background={(i <= activeIndex) ? 'black' : 'rgba(0, 0, 0, 0.2)'}
