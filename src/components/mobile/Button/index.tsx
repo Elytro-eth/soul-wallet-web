@@ -74,18 +74,6 @@ const buttonStyles = {
     _hover: { bg: '#e8e8e8' },
     _disabled: { cursor: 'not-allowed', bg: '#B2B2B2', _hover: { bg: '#B2B2B2' } },
   },
-  red: {
-    color: '#fff',
-    bg: 'brand.red',
-    _hover: {
-      bg: '#FF689E',
-    },
-    _disabled: {
-      cursor: 'not-allowed',
-      bg: '#B2B2B2',
-      _hover: { bg: '#B2B2B2' },
-    },
-  },
   purple: {
     color: 'brand.purple',
     bg: 'rgba(225, 220, 252, 0.80)',
@@ -103,7 +91,15 @@ const buttonStyles = {
       opacity: '0.6'
     },
   },
-  // background: radial-gradient(343.44% 424.79% at 35.68% -30.21%, #F0EEE6 0%, #F5EDEB 32.08%, #BAD5F5 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
+  red: {
+    color: '#E8424C',
+    bg: '#FCE9EA',
+    _hover: { bg: '#FCE9EA' },
+    _disabled: {
+      cursor: 'not-allowed',
+      opacity: '0.6'
+    },
+  },
   gradientBlue: {
     color: '#161F36',
     background: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',

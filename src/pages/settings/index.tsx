@@ -169,7 +169,7 @@ export default function Settings({ isModal }: any) {
           width="100%"
           color="#E83D26"
           onClick={doLogout}
-          type="white"
+          type="red"
         >
           {/* <Box><LogoutIcon /></Box> */}
           Logout

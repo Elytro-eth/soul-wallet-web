@@ -39,6 +39,8 @@ import useRecover from '@/hooks/useRecover';
 import useWalletContract from '@/hooks/useWalletContract';
 import MinusIcon from '@/components/Icons/mobile/Minus';
 import AddIcon from '@/components/Icons/mobile/Add';
+import IntroGuardianIcon from '@/assets/guardian.svg'
+import WarningIcon from '@/components/Icons/Warning';
 
 export default function Manage({ onPrev, onNext }: any) {
   const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
@@ -423,7 +425,7 @@ export default function Manage({ onPrev, onNext }: any) {
               borderRadius="100px"
               marginBottom="24px"
             >
-              <DeleteCircleGuardianIcon />
+              <WarningIcon size="96" />
             </Box>
             <Box fontSize="24px" fontWeight="500" marginBottom="14px">
               Delete recovery contact
@@ -432,10 +434,10 @@ export default function Manage({ onPrev, onNext }: any) {
               {`Are you sure to remove <${toShortAddress(tempGuardians[activeGuardianIndex], 6)}> as recovery contact?`}
             </Box>
             <Box width="100%" marginTop="20px">
-              <Button size="xl" type="blue" width="100%" onClick={() => doDeleteGuardian()}>
+              <Button size="xl" type="red" width="100%" onClick={() => doDeleteGuardian()}>
                 Delete
               </Button>
-              <Button size="xl" type="white" width="100%" marginTop="20px" onClick={onDeleteClose}>
+              <Button size="xl" type="white" width="100%" marginTop="8px" onClick={onDeleteClose}>
                 Cancel
               </Button>
             </Box>
@@ -464,11 +466,13 @@ export default function Manage({ onPrev, onNext }: any) {
         >
           <ModalCloseButton />
           <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
-            <Box background="#D9D9D9" height="120px" width="120px" borderRadius="120px" marginBottom="30px"></Box>
-            <Box fontSize="24px" fontWeight="500" marginBottom="14px">
-              Confirm recovery contact update
+            <Box height="144px" width="144px" borderRadius="120px" marginBottom="30px">
+              <Image height="144px" width="144px" src={IntroGuardianIcon} />
             </Box>
-            <Box fontSize="16px" textAlign="center" marginBottom="10px">
+            <Box fontSize="28px" fontWeight="500" marginBottom="14px" color="#161F36" textAlign="center">
+              Confirm update
+            </Box>
+            <Box fontSize="14px" lineHeight="17.5px" textAlign="center" marginBottom="10px" color="#676B75">
               Please confirm recovery contact updates on your Soul Wallet account.
             </Box>
             {/* <Box
@@ -498,10 +502,10 @@ export default function Manage({ onPrev, onNext }: any) {
                 </Box>
                 )} */}
             <Box width="100%" marginTop="20px">
-              <Button size="xl" loading={changingGuardian} type="blue" width="100%" onClick={() => doChangeGuardian()}>
+              <Button size="xl" loading={changingGuardian} type="gradientBlue" width="100%" onClick={() => doChangeGuardian()}>
                 Confirm
               </Button>
-              <Button size="xl" type="white" width="100%" marginTop="20px" onClick={onConfirmClose}>
+              <Button size="xl" type="white" width="100%" marginTop="8px" onClick={onConfirmClose}>
                 Cancel
               </Button>
             </Box>
