@@ -20,6 +20,7 @@ import { toShortAddress } from '@/lib/tools';
 import { supportedEoas } from '@/config/constants'
 import { getWalletIcon } from '@/lib/tools'
 import RecoverSuccessIcon from '@/assets/recover-success.svg'
+import OPIcon from '@/assets/op.svg'
 
 const validateSigner = (recoveryRecord: any, address: any) => {
   if (!recoveryRecord) return;
@@ -391,7 +392,7 @@ export default function Sign() {
           alignItems="center"
           justifyContent="center"
         >
-          <WarningIcon size="96" />
+          <Image height="96" src={OPIcon} />
         </Box>
         <Box
           width="100%"
