@@ -71,7 +71,7 @@ export default function Manage() {
   const navigate = useNavigate();
   const guardianMenuRef = useRef<any>()
   const thresholdMenuRef = useRef<any>()
-  const [onPrev] = useOutletContext()
+  const [onPrev] = useOutletContext<any>()
 
   useOutsideClick({
     ref: guardianMenuRef,
