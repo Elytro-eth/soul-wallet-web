@@ -22,7 +22,7 @@ export default function Recover() {
   const { registerForRecover } = usePasskey();
   const toast = useToast();
   const navigate = useNavigate();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(-1);
   const [username, setUsername] = useState('');
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [accountInfo, setAccountInfo] = useState<any>(null);
@@ -228,7 +228,7 @@ export default function Recover() {
       {step < 4 && (
         <Fragment>
           {step === -1 && <Header title="" showLogo={true} />}
-          {step > -1 && <Header title="Recover account" showBackButton={step < 3} step={step} onBack={onPrev} />}
+          {step > -1 && <Header title={step < 3 ? 'Recover account' : ''} showBackButton={step < 3} step={step} onBack={onPrev} />}
         </Fragment>
       )}
       {step > -1 && step < 3 && <ProgressBar size={3} activeIndex={step} />}
