@@ -43,7 +43,6 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   console.log('callback', callback)
 
   const onAddressChange = (val: string) => {
-    setAddressStatus(1)
     setGuardianAddress(val)
     setSearchText(val);
 
@@ -159,6 +158,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 spellCheck={false}
                 value={guardianAddress}
                 onChange={e => onAddressChange(e.target.value)}
+                onBlur={() => setAddressStatus(1)}
                 fontSize="20px"
                 lineHeight="24px"
                 fontWeight="400"
