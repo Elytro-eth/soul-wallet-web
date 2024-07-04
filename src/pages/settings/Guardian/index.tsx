@@ -37,7 +37,7 @@ export default function GuardianSetting() {
         alignItems="center"
         justifyContent="center"
       >
-        <Outlet />
+        <Outlet context={[onPrev]} />
       </Box>
     </Box>
   );

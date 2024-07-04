@@ -21,7 +21,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
       flexDirection="column"
     >
       <Box marginBottom="40px" height="120px">
-        <Image src={GuardianIcon} />
+        <Image height="120px" src={GuardianIcon} />
       </Box>
       <Box
         width="100%"

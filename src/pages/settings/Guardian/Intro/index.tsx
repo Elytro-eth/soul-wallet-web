@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image, Menu, MenuList, MenuItem, useOutsideClick, MenuButton } from '@chakra-ui/react';
+import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalHeader, ModalBody, useDisclosure, Link, Image, Menu, MenuList, MenuItem, useOutsideClick, MenuButton } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 import GuardianIcon from '@/assets/mobile/guardian.svg'
@@ -30,12 +30,12 @@ export default function Intro({ onPrev, onNext }: any) {
     >
       <Box
         marginBottom="40px"
-        height="120px"
+        height="116px"
         display="flex"
         alignItems="center"
         justifyContent="center"
       >
-        <Image src={IntroGuardianIcon} />
+        <Image height="116px" src={IntroGuardianIcon} />
       </Box>
       <Box
         width="100%"
@@ -76,42 +76,91 @@ export default function Intro({ onPrev, onNext }: any) {
                       <Button  size="xl" type="gradientBlue" width="calc(100vw - 64px)" maxWidth="calc(430px - 64px)">Add</Button>
                     </Box>
                   </MenuButton>
-                  <MenuList
-                    background="white"
-                    boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)"
-                  >
-                    <MenuItem
-                      width="calc(100vw - 64px)"
-                      maxWidth="calc(430px - 64px)"
-                      position="relative"
-                      padding="18px 27px"
-                      borderBottom="1px solid #E4E4E4"
-                      onClick={() => { openModal('verifyEmail'); onClose(); }}
-                    >
-                      <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                        <Box marginRight="8px"><EmailGuardianIcon /></Box>
-                        <Box>Email</Box>
-                      </Box>
-                    </MenuItem>
-                    <MenuItem
-                      width="calc(100vw - 64px)"
-                      maxWidth="calc(430px - 64px)"
-                      position="relative"
-                      padding="18px 27px"
-                      onClick={() => { openModal('addWalletGuardian'); onClose(); }}
-                    >
-                      <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                        <Box marginRight="8px"><WalletGuardianIcon /></Box>
-                        <Box>Wallet</Box>
-                      </Box>
-                    </MenuItem>
-                  </MenuList>
                 </Box>
               )}
             </Menu>
           </Box>
         </Box>
       </Box>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        motionPreset="slideInBottom"
+        blockScrollOnMount={true}
+      >
+        <ModalOverlay height="100vh" background="transparent" />
+        <ModalContent
+          borderRadius="24px"
+          justifyContent="flex-end"
+          maxW={{
+            sm: 'calc(100vw - 32px)',
+            md: '430px',
+          }}
+          marginTop={{
+            sm: `auto`,
+            md: 'calc(50vh - 125px)',
+          }}
+          overflow="visible"
+          mb="0"
+          bottom="30px"
+          position="relative"
+          overflowY="scroll"
+          boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+        >
+          <ModalCloseButton />
+          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add recovery contact via...</ModalHeader>
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="center"
+            width="100%"
+            paddingLeft="0"
+            paddingRight="0"
+          >
+            <Box
+              background="white"
+              width="100%"
+              padding="0 16px"
+            >
+              <Box
+                width="calc(100%)"
+                position="relative"
+                padding="0 16px"
+                display="flex"
+                alignItems="center"
+                height="48px"
+                background="#F2F3F5"
+                borderRadius="16px"
+                marginBottom="8px"
+                onClick={() => { openModal('addWalletGuardian'); onClose(); }}
+              >
+                <Box marginRight="8px"><WalletGuardianIcon /></Box>
+                <Box fontWeight="500" fontSize="18px" color="#161F36">
+                  Wallet
+                </Box>
+              </Box>
+              <Box
+                width="calc(100%)"
+                position="relative"
+                padding="0 16px"
+                display="flex"
+                alignItems="center"
+                height="48px"
+                background="#F2F3F5"
+                borderRadius="16px"
+                marginBottom="8px"
+                onClick={() => { openModal('verifyEmail'); onClose(); }}
+              >
+                <Box marginRight="8px"><EmailGuardianIcon /></Box>
+                <Box fontWeight="500" fontSize="18px" color="#161F36">
+                  Mail
+                </Box>
+              </Box>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

@@ -435,7 +435,7 @@ export default function Sign() {
     return (
       <SignContainer isOpen={isOpen} onOpen={onOpen} onClose={onClose} connectEOA={connectEOA} isConnecting={isConnecting}>
         <Box width="144px" height="144px" marginBottom="16px" position="relative">
-          <Image src={RecoverSuccessIcon} />
+          <Image height="144px" src={RecoverSuccessIcon} />
         </Box>
         <Box
           width="100%"
@@ -524,7 +524,7 @@ export default function Sign() {
   return (
     <SignContainer isOpen={isOpen} onOpen={onOpen} onClose={onClose} connectEOA={connectEOA} isConnecting={isConnecting}>
       <Box width="144px" height="144px" marginBottom="16px" position="relative">
-        <Image src={RecoverSuccessIcon} />
+        <Image height="144px" src={RecoverSuccessIcon} />
       </Box>
       <Box
         width="100%"

@@ -103,7 +103,11 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
               borderRadius="96px"
               marginBottom="16px"
             >
-              <Image src={XIcon} />
+              <Image
+                height="96px"
+                width="96px"
+                src={XIcon}
+              />
             </Box>
             <Box fontSize="28px" fontWeight="500" marginBottom="8px">
               Thanks for your interest

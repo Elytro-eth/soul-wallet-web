@@ -121,7 +121,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       flexDirection="column"
     >
       <Box marginBottom="40px">
-        <Image src={WelcomeIcon} />
+        <Image height="198px" src={WelcomeIcon} />
       </Box>
       <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="14px">
         Your account is ready

@@ -21,10 +21,9 @@ import useBrowser from '@/hooks/useBrowser';
 import { useGuardianStore } from '@/store/guardian';
 import { ZeroHash } from 'ethers';
 
-export default function Settings({ isModal }: any) {
+export default function Settings({ isModal, closeModal }: any) {
   const { walletName, selectedAddress } = useAddressStore();
   const { guardiansInfo, } = useGuardianStore();
-  const { closeModal } = useWalletContext()
   const { navigate } = useBrowser();
   const { logoutWallet } = useWallet();
 
@@ -50,25 +49,14 @@ export default function Settings({ isModal }: any) {
       justifyContent="flex-start"
       width="100%"
       height="100%"
-      paddingTop="34px"
       paddingLeft="30px"
       paddingRight="30px"
     >
       <Box
-        fontSize="18px"
-        fontWeight="500"
-        lineHeight="24px"
-        width="100%"
-      >
-
-      </Box>
-      <Box
         width="100%"
         display="flex"
         alignItems="center"
-        paddingTop="30px"
         paddingBottom="24px"
-        // borderBottom="1px solid #E7E7E7"
       >
         <Box
           display="flex"
@@ -163,7 +151,7 @@ export default function Settings({ isModal }: any) {
           </Box>
         </a>
       </Box>
-      <Box width="100%" marginTop="auto" marginBottom="40px">
+      <Box width="100%" marginTop="auto" marginBottom="20px">
         <Button
           size="xl"
           width="100%"

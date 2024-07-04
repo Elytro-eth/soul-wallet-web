@@ -122,6 +122,7 @@ export default function SetAmount({
             <Box position="absolute" top="60px" left="0" width="100%">
               <SelectToken
                 isOpen={isOpen}
+                onClose={onClose}
                 select={(token: any) => {
                   setSelectedToken(token);
                   setTokenAddress(token.contractAddress);

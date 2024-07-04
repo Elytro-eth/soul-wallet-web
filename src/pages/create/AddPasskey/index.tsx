@@ -9,8 +9,19 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
 
   return (
     <Box width="100%" padding="30px" height={innerHeight - 64} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-      <Box marginBottom="44px">
-        <Image src={PasskeyIcon} />
+      <Box
+        marginBottom="24px"
+        width="144px"
+        height="144px"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Image
+          width="105px"
+          height="105px"
+          src={PasskeyIcon}
+        />
       </Box>
       <Box
         fontWeight="500"

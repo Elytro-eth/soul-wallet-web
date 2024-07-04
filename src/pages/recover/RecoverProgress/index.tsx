@@ -72,12 +72,12 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
     <Box width="100%" height="100%" padding="30px" paddingTop="40px">
       <Box
         marginBottom="40px"
-        height="120px"
+        height="116px"
         display="flex"
         alignItems="center"
         justifyContent="center"
       >
-        <Image src={GuardianIcon} />
+        <Image height="116px" src={GuardianIcon} />
       </Box>
       <Box width="100%" textAlign="center" fontSize="28px" fontWeight="500" marginTop="20px" letterSpacing="-1px" color="#161F36">
         Share link with your recovery contacts

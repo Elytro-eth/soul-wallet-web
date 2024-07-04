@@ -15,7 +15,7 @@ export default function RecoverSuccess({ doRecover, isRecovering }: any) {
   return (
     <Box width="100%" height={innerHeight - 60 - 20} padding="30px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
       <Box width="144px" height="144px" marginBottom="40px" position="relative">
-        <Image src={RecoverSuccessIcon} />
+        <Image height="144px" src={RecoverSuccessIcon} />
       </Box>
       <Box fontWeight="500" fontSize="28px" lineHeight="1" marginBottom="14px" color="#161F36">
         Recovery completed

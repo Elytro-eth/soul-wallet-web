@@ -106,7 +106,7 @@ export default function Activity({ isModal, registerScrollable }: any) {
             height="100%"
           >
             <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-              <Image src={ActivityEmptyIcon} />
+              <Image height="108px" src={ActivityEmptyIcon} />
               <Box color="rgba(0, 0, 0, 0.5)" marginTop="18px">
                 You don’t have any activity yet
               </Box>

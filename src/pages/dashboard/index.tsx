@@ -1,6 +1,17 @@
 import { useState, useCallback, useRef, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Image, Flex, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Image,
+  Flex,
+  useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  useDisclosure,
+} from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import MoreIcon from '@/components/Icons/mobile/More';
 import SendIcon from '@/components/Icons/mobile/Send2';
@@ -32,6 +43,7 @@ import AAVEIcon from '@/assets/mobile/aave.png'
 import ThemePage from '@/components/ThemeChange';
 import AddressIcon from '@/components/AddressIcon';
 import EmptyIcon from '@/assets/empty2.svg'
+import SettingPage from '@/pages/settings'
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -140,6 +152,7 @@ export default function Dashboard() {
   const [openModal] = useOutletContext<any>();
   const contentRef = useRef();
   const [activeMenu, setActiveMenu] = useState('apps')
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const valueLeft = totalUsdValue.split('.')[0];
   const valueRight = totalUsdValue.split('.')[1];
@@ -254,7 +267,7 @@ export default function Dashboard() {
           paddingBottom="10px"
           height="64px"
           background="transparent"
-          openMenu={() => openModal('settings')}
+          openMenu={onOpen}
         />
         <Box
           position="fixed"
@@ -576,7 +589,7 @@ export default function Dashboard() {
                       flexDirection="column"
                     >
                       <Box marginBottom="20px">
-                        <Image src={EmptyIcon} />
+                        <Image height="108px" src={EmptyIcon} />
                       </Box>
                       <Box fontSize="14px" fontWeight="400" lineHeight="17.5px" color="#676B75">You don’t have any assets yet</Box>
                       <Box marginTop="20px">
@@ -589,6 +602,47 @@ export default function Dashboard() {
             )}
           </Box>
         </Box>
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+          motionPreset="slideInBottom"
+          blockScrollOnMount={true}
+        >
+          <ModalOverlay height="100vh" />
+          <ModalContent
+            borderRadius={{
+              sm: '32px 32px 0 0',
+              md: '32px',
+            }}
+            maxW={{
+              sm: '100vw',
+              md: '430px',
+            }}
+            marginTop={{
+              sm: `${innerHeight - 444}px`,
+              md: 'calc(50vh - 125px)',
+            }}
+            height={444}
+            overflow="visible"
+            mb="0"
+            position="relative"
+            overflowY="scroll"
+          >
+            <ModalCloseButton />
+            <ModalBody
+              display="flex"
+              flexDirection="column"
+              alignItems="flex-start"
+              justifyContent="center"
+              width="100%"
+              paddingLeft="0"
+              paddingRight="0"
+              paddingTop="60px"
+            >
+              <SettingPage closeModal={onClose} />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </Box>
     </ThemePage>
   );

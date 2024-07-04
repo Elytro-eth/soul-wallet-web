@@ -6,6 +6,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalCloseButton,
+  ModalHeader,
   ModalBody,
   useDisclosure,
   Link,
@@ -22,10 +23,12 @@ import EmailIcon from '@/assets/mobile/email-guardian.svg';
 import GuardianIcon from '@/assets/mobile/guardian.svg';
 import EmailGuardianIcon from '@/components/Icons/mobile/EmailGuardian';
 import WalletGuardianIcon from '@/components/Icons/mobile/WalletGuardian';
+import EditGuardianIcon from '@/components/Icons/mobile/EditGuardian';
+import DeleteGuardianIcon from '@/components/Icons/mobile/DeleteGuardian';
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import EditIcon from '@/components/Icons/mobile/Edit';
-import EditGuardianIcon from '@/components/Icons/mobile/Guardian/Edit';
-import DeleteGuardianIcon from '@/components/Icons/mobile/Guardian/Delete';
+// import EditGuardianIcon from '@/components/Icons/mobile/Guardian/Edit';
+// import DeleteGuardianIcon from '@/components/Icons/mobile/Guardian/Delete';
 import DeleteCircleGuardianIcon from '@/components/Icons/mobile/Guardian/DeleteCircle';
 import ArrowDownIcon from '@/components/Icons/mobile/Guardian/ArrowDown';
 import AddressIcon from '@/components/AddressIcon';
@@ -41,8 +44,9 @@ import MinusIcon from '@/components/Icons/mobile/Minus';
 import AddIcon from '@/components/Icons/mobile/Add';
 import IntroGuardianIcon from '@/assets/guardian.svg'
 import WarningIcon from '@/components/Icons/Warning';
+import { useOutletContext } from "react-router-dom"
 
-export default function Manage({ onPrev, onNext }: any) {
+export default function Manage() {
   const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
 
   const { isOpen: isSelectOpen, onOpen: onSelectOpen, onClose: onSelectClose } = useDisclosure();
@@ -67,6 +71,7 @@ export default function Manage({ onPrev, onNext }: any) {
   const navigate = useNavigate();
   const guardianMenuRef = useRef<any>()
   const thresholdMenuRef = useRef<any>()
+  const [onPrev] = useOutletContext()
 
   useOutsideClick({
     ref: guardianMenuRef,
@@ -236,39 +241,6 @@ export default function Manage({ onPrev, onNext }: any) {
                       +Add {tempGuardians.length ? 'another' : ''} recovery contact
                     </Button>
                   </MenuButton>
-                  <MenuList background="white" boxShadow="0px 4px 20px 0px rgba(0, 0, 0, 0.05)" marginTop="0">
-                    <MenuItem
-                      width="calc(100vw - 60px)"
-                      position="relative"
-                      padding="18px 27px"
-                      borderBottom="1px solid #E4E4E4"
-                      onClick={() => {
-                        onCreateGuardianOpen(0)
-                      }}
-                    >
-                      <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                        <Box marginRight="8px">
-                          <EmailGuardianIcon />
-                        </Box>
-                        <Box>Email</Box>
-                      </Box>
-                    </MenuItem>
-                    <MenuItem
-                      width="calc(100vw - 60px)"
-                      position="relative"
-                      padding="18px 27px"
-                      onClick={() => {
-                        onCreateGuardianOpen(1);
-                      }}
-                    >
-                      <Box fontSize="16px" fontWeight="500" display="flex" alignItems="center">
-                        <Box marginRight="8px">
-                          <WalletGuardianIcon />
-                        </Box>
-                        <Box>Wallet</Box>
-                      </Box>
-                    </MenuItem>
-                  </MenuList>
                 </Box>
               )}
             </Menu>
@@ -328,74 +300,6 @@ export default function Manage({ onPrev, onNext }: any) {
           </Button>
         </Box>
       </Box>
-      <Modal isOpen={isSelectOpen} onClose={onSelectClose} motionPreset="slideInBottom">
-        <ModalOverlay height="100vh" />
-        <ModalContent
-          borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
-          }}
-          maxW={{
-            sm: '100vw',
-            md: '430px',
-          }}
-          marginTop={{
-            sm: `${innerHeight - (isActiveGuardianEmail ? 110 : 154)}px`,
-            md: 'calc(50vh - 125px)',
-          }}
-          height={isActiveGuardianEmail ? "110px" : "154px"}
-          overflow="auto"
-          mb="0"
-        >
-          <ModalCloseButton />
-          <ModalBody
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            width="100%"
-            padding="0"
-          >
-            <Box width="100%">
-              {!isActiveGuardianEmail && <Box
-                                           height="48px"
-                                           display="flex"
-                                           alignItems="center"
-                                           padding="0 23px"
-                                           onClick={() => {
-                                             onSelectClose();
-                                             onEditGuardianOpen();
-                                           }}
-                                         >
-                <Box marginRight="4px">
-                  <EditGuardianIcon />
-                </Box>
-                <Box fontSize="16px" fontWeight="500">
-                  Edit
-                </Box>
-              </Box>}
-              <Box
-                height="48px"
-                display="flex"
-                alignItems="center"
-                padding="0 23px"
-                marginTop="8px"
-                onClick={() => {
-                  onSelectClose();
-                  onDeleteOpen();
-                }}
-              >
-                <Box marginRight="4px">
-                  <DeleteGuardianIcon />
-                </Box>
-                <Box fontSize="16px" fontWeight="500">
-                  Delete
-                </Box>
-              </Box>
-            </Box>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
 
       <Modal isOpen={isDeleteOpen} onClose={onDeleteClose} motionPreset="slideInBottom" blockScrollOnMount={true}>
         <ModalOverlay height="100vh" />
@@ -457,10 +361,10 @@ export default function Manage({ onPrev, onNext }: any) {
             md: '430px',
           }}
           marginTop={{
-            sm: `${innerHeight - 468}px`,
+            sm: `${innerHeight - 508}px`,
             md: 'calc(50vh - 125px)',
           }}
-          height="468px"
+          height="508px"
           overflow="auto"
           mb="0"
         >
@@ -508,6 +412,166 @@ export default function Manage({ onPrev, onNext }: any) {
               <Button size="xl" type="white" width="100%" marginTop="8px" onClick={onConfirmClose}>
                 Cancel
               </Button>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={isGuardianMenuOpen}
+        onClose={onGuardianMenuClose}
+        motionPreset="slideInBottom"
+        blockScrollOnMount={true}
+      >
+        <ModalOverlay height="100vh" background="transparent" />
+        <ModalContent
+          borderRadius="24px"
+          justifyContent="flex-end"
+          maxW={{
+            sm: 'calc(100vw - 32px)',
+            md: '430px',
+          }}
+          marginTop={{
+            sm: `auto`,
+            md: 'calc(50vh - 125px)',
+          }}
+          overflow="visible"
+          mb="0"
+          bottom="30px"
+          position="relative"
+          overflowY="scroll"
+          boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+        >
+          <ModalCloseButton />
+          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add recovery contact via...</ModalHeader>
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="center"
+            width="100%"
+            paddingLeft="0"
+            paddingRight="0"
+          >
+            <Box
+              background="white"
+              width="100%"
+              padding="0 16px"
+            >
+              <Box
+                width="calc(100%)"
+                position="relative"
+                padding="0 16px"
+                display="flex"
+                alignItems="center"
+                height="48px"
+                background="#F2F3F5"
+                borderRadius="16px"
+                marginBottom="8px"
+                onClick={() => { openModal('addWalletGuardian'); onGuardianMenuClose(); }}
+              >
+                <Box marginRight="8px"><WalletGuardianIcon /></Box>
+                <Box fontWeight="500" fontSize="18px" color="#161F36">
+                  Wallet
+                </Box>
+              </Box>
+              <Box
+                width="calc(100%)"
+                position="relative"
+                padding="0 16px"
+                display="flex"
+                alignItems="center"
+                height="48px"
+                background="#F2F3F5"
+                borderRadius="16px"
+                marginBottom="8px"
+                onClick={() => { openModal('verifyEmail'); onGuardianMenuClose(); }}
+              >
+                <Box marginRight="8px"><EmailGuardianIcon /></Box>
+                <Box fontWeight="500" fontSize="18px" color="#161F36">
+                  Mail
+                </Box>
+              </Box>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={isSelectOpen}
+        onClose={onSelectClose}
+        motionPreset="slideInBottom"
+        blockScrollOnMount={true}
+      >
+        <ModalOverlay height="100vh" background="transparent" />
+        <ModalContent
+          borderRadius="24px"
+          justifyContent="flex-end"
+          maxW={{
+            sm: 'calc(100vw - 32px)',
+            md: '430px',
+          }}
+          marginTop={{
+            sm: `auto`,
+            md: 'calc(50vh - 125px)',
+          }}
+          overflow="visible"
+          mb="0"
+          bottom="30px"
+          position="relative"
+          overflowY="scroll"
+          boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+        >
+          <ModalCloseButton />
+          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Edit recovery contact</ModalHeader>
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="center"
+            width="100%"
+            paddingLeft="0"
+            paddingRight="0"
+          >
+            <Box
+              background="white"
+              width="100%"
+              padding="0 16px"
+            >
+              <Box
+                width="calc(100%)"
+                position="relative"
+                padding="0 16px"
+                display="flex"
+                alignItems="center"
+                height="48px"
+                background="#F2F3F5"
+                borderRadius="16px"
+                marginBottom="8px"
+                onClick={() => { onSelectClose(); onEditGuardianOpen(); }}
+              >
+                <Box marginRight="8px"><EditGuardianIcon /></Box>
+                <Box fontWeight="500" fontSize="18px" color="#161F36">
+                  Edit
+                </Box>
+              </Box>
+              <Box
+                width="calc(100%)"
+                position="relative"
+                padding="0 16px"
+                display="flex"
+                alignItems="center"
+                height="48px"
+                background="#FCE9EA"
+                borderRadius="16px"
+                marginBottom="8px"
+                onClick={() => { onDeleteOpen(); onSelectClose(); }}
+              >
+                <Box marginRight="8px"><DeleteGuardianIcon /></Box>
+                <Box fontWeight="500" fontSize="18px" color="#E8424C">
+                  Delete
+                </Box>
+              </Box>
             </Box>
           </ModalBody>
         </ModalContent>

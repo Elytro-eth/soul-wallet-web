@@ -17,8 +17,8 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
       justifyContent="center"
       flexDirection="column"
     >
-      <Box marginBottom="40px" height="120px">
-        <Image src={EmailGuardianIcon} />
+      <Box marginBottom="40px" height="116px">
+        <Image height="116px" src={EmailGuardianIcon} />
       </Box>
       <Box
         width="100%"

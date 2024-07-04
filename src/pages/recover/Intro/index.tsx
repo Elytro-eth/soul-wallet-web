@@ -19,7 +19,7 @@ export default function Intro({ onPrev, onNext }: any) {
         background="#F2F2F2"
         opacity="0.55"
       >
-        <Image src={RecoverIcon} />
+        <Image height="144px" src={RecoverIcon} />
       </Box>
       <Box
         width="100%"
