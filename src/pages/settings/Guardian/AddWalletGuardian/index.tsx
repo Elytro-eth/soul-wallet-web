@@ -19,6 +19,7 @@ import useScreenSize from '@/hooks/useScreenSize'
 import useRecover from '@/hooks/useRecover';
 import { useSettingStore } from '@/store/setting';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import { isAddress } from 'viem';
 
 export default function AddWalletGuardian({isModal, callback, defaultGuardianAddress, defaultGuardianName}: any) {
   // const toast = useToast();
@@ -127,6 +128,10 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
     }
   }
 
+  const isValidAddress = guardianAddress && isAddress(guardianAddress);
+
+  console.log('isvalid!!!', isValidAddress)
+
   return (
     <Box width="100%" height={innerHeight - 40}>
       <Box fontSize="16px" fontWeight="500" padding="10px 30px" paddingTop="60px">
@@ -210,7 +215,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 height="56px"
               />
             </Box>
-            <Button size="xl" type="gradientBlue" width="100%" marginTop="60px" loading={changingGuardian} onClick={onConfirm}>
+            <Button size="xl" type="gradientBlue" width="100%" marginTop="60px" disabled={!isValidAddress} loading={changingGuardian} onClick={onConfirm}>
               Add
             </Button>
           </Box>
