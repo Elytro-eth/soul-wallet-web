@@ -130,8 +130,6 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
 
   const isValidAddress = guardianAddress && isAddress(guardianAddress);
 
-  console.log('isvalid!!!', isValidAddress)
-
   return (
     <Box width="100%" height={innerHeight - 40}>
       <Box fontSize="16px" fontWeight="500" padding="10px 30px" paddingTop="60px">
