@@ -468,7 +468,7 @@ export default function Manage() {
                 background="#F2F3F5"
                 borderRadius="16px"
                 marginBottom="8px"
-                onClick={() => { openModal('addWalletGuardian'); onGuardianMenuClose(); }}
+                onClick={() => { onCreateGuardianOpen(1); onGuardianMenuClose(); }}
               >
                 <Box marginRight="8px"><WalletGuardianIcon /></Box>
                 <Box fontWeight="500" fontSize="18px" color="#161F36">
@@ -485,7 +485,7 @@ export default function Manage() {
                 background="#F2F3F5"
                 borderRadius="16px"
                 marginBottom="8px"
-                onClick={() => { openModal('verifyEmail'); onGuardianMenuClose(); }}
+                onClick={() => { onCreateGuardianOpen(0); onGuardianMenuClose(); }}
               >
                 <Box marginRight="8px"><EmailGuardianIcon /></Box>
                 <Box fontWeight="500" fontSize="18px" color="#161F36">

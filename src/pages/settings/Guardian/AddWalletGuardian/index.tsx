@@ -39,6 +39,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   const [resolvedAddress, setResolvedAddress] = useState('');
   const [guardianAddress, setGuardianAddress] = useState<string>(defaultGuardianAddress || '');
   const [guardianName, setGuardianName] = useState(defaultGuardianName || '');
+  console.log('callback', callback)
 
   const onAddressChange = (val: string) => {
     setGuardianAddress(val)

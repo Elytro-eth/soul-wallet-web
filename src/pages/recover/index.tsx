@@ -227,8 +227,8 @@ export default function Recover() {
     <Box width="100%" height="100%" bg="#fff">
       {step < 4 && (
         <Fragment>
-          {step === -1 && <Header title="" showLogo={false} />}
-          {step > -1 && <Header title="" showBackButton={step < 3} step={step} onBack={onPrev} />}
+          {step === -1 && <Header title="" showLogo={true} />}
+          {step > -1 && <Header title={step < 3 ? 'Recover account' : ''} showBackButton={step < 3} step={step} onBack={onPrev} />}
         </Fragment>
       )}
       {step > -1 && step < 3 && <ProgressBar size={3} activeIndex={step} />}

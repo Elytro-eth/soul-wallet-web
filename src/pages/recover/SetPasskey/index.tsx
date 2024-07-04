@@ -44,6 +44,7 @@ export default function SetPasskey({ onNext, addingPasskey }: any) {
         </Box>
       </Box>
       <Button width="100%" size="xl" type="gradientBlue" onClick={onNext} minWidth="195px" loading={addingPasskey}>Add</Button>
+      <Box height="80px" width="1" />
     </Box>
   );
 }
