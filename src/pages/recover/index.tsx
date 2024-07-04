@@ -57,30 +57,34 @@ export default function Recover() {
   }, [step]);
 
   const onCreatePasskey = async () => {
-    setAddingPasskey(true);
-    // create credential
-    const credential = await registerForRecover(accountInfo.name);
-    // create recover record
-    try {
-      const createRecordRes = await api.recovery.createRecord({
-        chainID: accountInfo.chainID,
-        address: accountInfo.address,
-        newOwners: [credential.onchainPublicKey],
-      });
-      await fetchPublicGuardianInfo(accountInfo.address);
-      updateRecoverInfo({
-        recoveryID: createRecordRes.data.recoveryID,
-        credential,
-      });
-      setStep(2);
-    } catch (err: any) {
-      console.log('createerrrrr', err);
-      toast({
-        title: 'Error',
-        description: err.response.data.msg,
-        status: 'error',
-      });
-    } finally {
+    try{
+      setAddingPasskey(true);
+      // create credential
+      const credential = await registerForRecover(accountInfo.name);
+      // create recover record
+      try {
+        const createRecordRes = await api.recovery.createRecord({
+          chainID: accountInfo.chainID,
+          address: accountInfo.address,
+          newOwners: [credential.onchainPublicKey],
+        });
+        await fetchPublicGuardianInfo(accountInfo.address);
+        updateRecoverInfo({
+          recoveryID: createRecordRes.data.recoveryID,
+          credential,
+        });
+        setStep(2);
+      } catch (err: any) {
+        console.log('createerrrrr', err);
+        toast({
+          title: 'Error',
+          description: err.response.data.msg,
+          status: 'error',
+        });
+      } finally {
+        setAddingPasskey(false);
+      }
+    }catch(err){
       setAddingPasskey(false);
     }
   };
