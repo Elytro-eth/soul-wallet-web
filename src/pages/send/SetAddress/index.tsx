@@ -138,7 +138,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
                 fontSize="20px"
                 lineHeight="24px"
                 fontWeight="400"
-                autoFocus
+                // autoFocus
                 placeholder="Enter wallet address or ENS"
                 border="none"
                 outline="none"
