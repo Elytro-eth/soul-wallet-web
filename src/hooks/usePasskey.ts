@@ -108,76 +108,78 @@ export default function usePasskey() {
   };
 
   const register = async (walletName: string = 'Wallet', invitationCode: string) => {
-    // get challenge
-    const challengeRes = await api.auth.challenge({});
-    const challenge = challengeRes.data.challenge;
+    try {
+      // get challenge
+      const challengeRes = await api.auth.challenge({});
+      const challenge = challengeRes.data.challenge;
 
-    // const randomChallenge = btoa('1234567890');
-    // const finalCredentialName = `${credentialName}_${getCurrentTimeFormatted()}`;
-    const finalCredentialName = `${walletName}_${getCurrentTimeFormatted()}`;
-    const registration = await client.register(finalCredentialName, challenge, {
-      authenticatorType: 'both',
-    });
-
-    console.log('Registered: ', JSON.stringify(registration, null, 2));
-
-    const verifiedRegistration = await server.verifyRegistration(registration, {
-      challenge,
-      origin: location.origin,
-    });
-
-    const onchainPublicKey = await getPublicKey(registration.credential);
-
-    const credential = {
-      challenge,
-      registrationData: registration,
-      id: registration.credential.id,
-      credentialID: registration.credential.id,
-      publicKey: registration.credential.publicKey,
-      onchainPublicKey,
-      algorithm: registration.credential.algorithm,
-      name: finalCredentialName,
-    };
-
-    // backup credential info
-    const res: any = await api.backup.publicBackupCredentialId(credential);
-
-    if (res.code !== 200) {
-      toast({
-        title: 'Failed to backup credential',
-        description: res.msg,
-        status: 'error',
+      const finalCredentialName = `${walletName}_${getCurrentTimeFormatted()}`;
+      const registration = await client.register(finalCredentialName, challenge, {
+        authenticatorType: 'both',
       });
-      throw new Error('Failed to backup credential');
-    }
 
-    // trigger init wallet
-    const { address, selectedChainId } = await initWallet(credential, walletName, invitationCode);
+      console.log('Registered: ', JSON.stringify(registration, null, 2));
 
-    // get jwt
-    const resJwt = await api.auth.getJwt({
-      address,
-      chainID: selectedChainId,
-      challenge,
-      responseData: {
-        isRegistration: true,
+      const verifiedRegistration = await server.verifyRegistration(registration, {
+        challenge,
+        origin: location.origin,
+      });
+
+      const onchainPublicKey = await getPublicKey(registration.credential);
+
+      const credential = {
+        challenge,
+        registrationData: registration,
+        id: registration.credential.id,
+        credentialID: registration.credential.id,
+        publicKey: registration.credential.publicKey,
+        onchainPublicKey,
+        algorithm: registration.credential.algorithm,
+        name: finalCredentialName,
+      };
+
+      // backup credential info
+      const res: any = await api.backup.publicBackupCredentialId(credential);
+
+      if (res.code !== 200) {
+        toast({
+          title: 'Failed to backup credential',
+          description: res.msg,
+          status: 'error',
+        });
+        throw new Error('Failed to backup credential');
+      }
+
+      // trigger init wallet
+      const { address, selectedChainId } = await initWallet(credential, walletName, invitationCode);
+
+      // get jwt
+      const resJwt = await api.auth.getJwt({
+        address,
+        chainID: selectedChainId,
+        challenge,
+        responseData: {
+          isRegistration: true,
+          credentialID: credential.credentialID,
+          data: registration,
+        },
+      });
+
+      localStorage.setItem('token', resJwt.data.token);
+
+      // private backup key
+      const resSaveKey = await api.authenticated.saveKey({
         credentialID: credential.credentialID,
-        data: registration,
-      },
-    });
+        name: finalCredentialName,
+        platform: verifiedRegistration.authenticator.name,
+        backedUp: verifiedRegistration.authenticator.flags.backupState,
+      });
 
-    localStorage.setItem('token', resJwt.data.token);
-
-    // private backup key
-    const resSaveKey = await api.authenticated.saveKey({
-      credentialID: credential.credentialID,
-      name: finalCredentialName,
-      platform: verifiedRegistration.authenticator.name,
-      backedUp: verifiedRegistration.authenticator.flags.backupState,
-    });
-
-    console.log('res save key', resSaveKey);
-    return credential;
+      console.log('res save key', resSaveKey);
+      return credential;
+    } catch (err) {
+      throw new Error('Error when registering passkey');
+    }
   };
 
   const registerForRecover = async (walletName: string = 'Wallet') => {
