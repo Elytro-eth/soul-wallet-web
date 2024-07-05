@@ -151,7 +151,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
            </Box>
          </Box>
       })}
-      <Box height="80px" />
+      <Box height="90px" />
     </Box>
   );
 }
