@@ -43,7 +43,7 @@ export default function RecoverVerifyEmail() {
         color="#676B75"
         textAlign="center"
       >
-        Please go to your email and send the following content. This email will be used for approve your recovery request on chain.
+        Please send the following content via recovery email.
       </Box>
       <Box width="100%" padding="0 30px">
         <Box
@@ -61,8 +61,8 @@ export default function RecoverVerifyEmail() {
             New Message
           </Box>
           <Box
-            padding="0 8px"
-            marginBottom="24px"
+            padding="8px"
+            // marginBottom="24px"
           >
             <Box
               display="flex"
@@ -103,6 +103,22 @@ export default function RecoverVerifyEmail() {
               </Box>
               <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
                 <Box width="100%">{emailTemplate.subject}</Box>
+              </Box>
+            </Box>
+            <Box
+              marginTop="8px"
+              display="flex"
+              alignItems="flex-start"
+              background="#F2F3F5"
+              padding="14.5px 12px"
+              borderRadius="12px"
+              flexDirection="column"
+            >
+              <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
+                <Box>CONTENT</Box>
+              </Box>
+              <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
+                <Box width="100%" color="#95979C">(Empty)</Box>
               </Box>
             </Box>
           </Box>
