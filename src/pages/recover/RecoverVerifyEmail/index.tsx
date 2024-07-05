@@ -6,10 +6,12 @@ import CopyIcon from '@/components/Icons/mobile/Copy';
 import { useTempStore } from '@/store/temp';
 import useTools from '@/hooks/useTools';
 import EmailGuardianIcon from '@/assets/verify-email.svg'
+import useScreenSize from '@/hooks/useScreenSize'
 
 export default function RecoverVerifyEmail() {
   const { emailTemplate } = useTempStore();
   const { doCopy } = useTools();
+  const { innerHeight } = useScreenSize()
 
   return (
     <Box
@@ -20,7 +22,8 @@ export default function RecoverVerifyEmail() {
       width="100%"
       marginTop="100px"
       position="relative"
-      height={window.innerHeight - 80}
+      height={innerHeight - 60}
+      overflowY="scroll"
     >
       <Box marginBottom="8px" height="96px" width="96px">
         <Image height="96px" width="96px" src={EmailGuardianIcon} />
