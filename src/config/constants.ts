@@ -8,12 +8,12 @@ import IconDapps from '@/assets/icons/sidebar/dapps.svg';
 import IconDappsActive from '@/assets/icons/sidebar/dapps-active.svg';
 import IconSettings from '@/assets/icons/sidebar/settings.svg';
 import IconSettingsActive from '@/assets/icons/sidebar/settings-active.svg';
-import IconEmailGmail from '@/assets/emails/gmail.svg';
-import IconEmailOutlook from '@/assets/emails/outlook.svg';
-import IconEmailYahoo from '@/assets/emails/yahoo.svg';
-import IconEmailIcloud from '@/assets/emails/icloud.svg';
-import IconEmailProton from '@/assets/emails/proton.svg';
-import IconEmailGMX from '@/assets/emails/gmx.svg';
+import IconEmailGmail from '@/assets/emails/gmail.png';
+import IconEmailOutlook from '@/assets/emails/outlook.png';
+import IconEmailYahoo from '@/assets/emails/yahoo.png';
+import IconEmailIcloud from '@/assets/emails/icloud.png';
+import IconEmailProton from '@/assets/emails/proton.png';
+import IconEmailGMX from '@/assets/emails/gmx.png';
 
 export const sidebarLinks = [
   {
@@ -63,24 +63,19 @@ export const forbiddenEmailProviders = ['qq.com', '163.com', '126.com'];
 
 export const validEmailProviders = [
   {
+    icon: IconEmailIcloud,
+    title: 'Icloud',
+    domain: 'icloud.com',
+  },
+  {
     icon: IconEmailGmail,
     title: 'Gmail',
     domain: 'gmail.com',
   },
   {
-    icon: IconEmailOutlook,
-    title: 'Outlook',
-    domain: 'outlook.com',
-  },
-  {
     icon: IconEmailYahoo,
     title: 'Yahoo mail',
     domain: 'yahoo.com',
-  },
-  {
-    icon: IconEmailIcloud,
-    title: 'Icloud',
-    domain: 'icloud.com',
   },
   {
     icon: IconEmailProton,
@@ -91,6 +86,11 @@ export const validEmailProviders = [
     icon: IconEmailGMX,
     title: 'GMX',
     domain: 'gmx.com',
+  },
+  {
+    icon: IconEmailOutlook,
+    title: 'Outlook',
+    domain: 'outlook.com',
   },
 ];
 
