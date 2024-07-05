@@ -83,14 +83,14 @@ export const validEmailProviders = [
     domain: 'proton.me',
   },
   {
-    icon: IconEmailGMX,
-    title: 'GMX',
-    domain: 'gmx.com',
-  },
-  {
     icon: IconEmailOutlook,
     title: 'Outlook',
     domain: 'outlook.com',
+  },
+  {
+    icon: IconEmailGMX,
+    title: 'GMX',
+    domain: 'gmx.com',
   },
 ];
 
