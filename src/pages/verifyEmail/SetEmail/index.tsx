@@ -103,7 +103,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
                       minHeight="36px"
                       marginRight="8px"
                     >
-                      <Image width="36px" minHeight="36px" src={email.icon} />
+                      <Image width="36px" height="36px" src={email.icon} />
                     </Box>
                   </Box>
                 ))}

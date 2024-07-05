@@ -13,7 +13,7 @@ import IconEmailOutlook from '@/assets/emails/outlook.svg';
 import IconEmailYahoo from '@/assets/emails/yahoo.svg';
 import IconEmailIcloud from '@/assets/emails/icloud.svg';
 import IconEmailProton from '@/assets/emails/proton.svg';
-import IconEmailGMX from '@/assets/emails/gmx.png';
+import IconEmailGMX from '@/assets/emails/gmx.svg';
 
 export const sidebarLinks = [
   {
