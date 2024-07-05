@@ -20,10 +20,10 @@ export default function RecoverVerifyEmail() {
       alignItems="center"
       justifyContent="flex-start"
       width="100%"
-      marginTop="100px"
+      marginTop="60px"
       position="relative"
       height={innerHeight - 60}
-      overflowY="scroll"
+      overflowY="auto"
     >
       <Box marginBottom="8px" height="96px" width="96px">
         <Image height="96px" width="96px" src={EmailGuardianIcon} />
@@ -127,7 +127,7 @@ export default function RecoverVerifyEmail() {
           </Box>
         </Box>
       </Box>
-      <Box padding="0 30px" width="100%" marginTop="40px">
+      <Box padding="0 30px" width="100%" marginTop="40px" marginBottom="20px">
         <Link href={emailTemplate.mailToLink}>
           <Button size="xl" type="gradientBlue" width="100%">Send via default email app</Button>
         </Link>
