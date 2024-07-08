@@ -185,7 +185,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
           fontSize="14px"
           fontWeight="400"
           color="#95979C"
-          marginTop="24px"
+          marginTop="32px"
           lineHeight="17.5px"
         >
           Network

@@ -42,9 +42,10 @@ import USDCIcon from '@/assets/mobile/usdc.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import ThemePage from '@/components/ThemeChange';
 import AddressIcon from '@/components/AddressIcon';
-import EmptyIcon from '@/assets/empty2.svg'
+import EmptyIcon from '@/assets/mobile/activity-empty.png'
 import SettingPage from '@/pages/settings'
 import useConfig from '@/hooks/useConfig';
+import op from '@/config/chains/op';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -261,7 +262,8 @@ export default function Dashboard() {
   const finalHistoryList = showFullHistory ? historyList : historyList.slice(0, 2);
   // const finalHistoryList = historyList
 
-  console.log('innerHeight', innerHeight);
+  const tokenBalanceValid = tokenBalance && tokenBalance.length && tokenBalance.some((item) => BN(item.tokenBalance).isGreaterThan(0));
+
   return (
     <ThemePage themeColor="#F2F3F5">
       <Box height={innerHeight} background="#F2F3F5">
@@ -476,7 +478,7 @@ export default function Dashboard() {
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
-                      onClick={() => openFullScreenModal('send')}
+                      onClick={() => tokenBalanceValid ? openFullScreenModal('send') : openFullScreenModal('receive')}
                     >
                       <Box
                         display="flex"
@@ -542,7 +544,7 @@ export default function Dashboard() {
                     </Box>
                   </Box>
                 </Box>
-                {tokenBalance && tokenBalance.length && (
+                {tokenBalanceValid ? (
                   <Box
                     width="100%"
                     background="white"
@@ -571,37 +573,34 @@ export default function Dashboard() {
                       ))}
                     </Box>
                   </Box>
-                )}
-                {(!tokenBalance || !tokenBalance.length) && (
-                  <Box
-                    width="100%"
-                    background="white"
-                    borderRadius="32px"
-                    height="377px"
-                    boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
-                    // border="1px solid #EAECF0"
-                    position="relative"
-                    zIndex="1"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      flexDirection="column"
-                    >
-                      <Box marginBottom="20px">
-                        <Image height="108px" src={EmptyIcon} />
-                      </Box>
-                      <Box fontSize="14px" fontWeight="400" lineHeight="17.5px" color="#676B75">You don’t have any assets yet</Box>
-                      <Box marginTop="20px">
-                        <Button size="lg" type="white" width="100px" fontSize="17px">Deposit</Button>
-                      </Box>
-                    </Box>
+                ) : <Box
+                width="100%"
+                background="white"
+                borderRadius="32px"
+                height="377px"
+                boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+                // border="1px solid #EAECF0"
+                position="relative"
+                zIndex="1"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  flexDirection="column"
+                >
+                  <Box marginBottom="20px">
+                    <Image height="108px" w="216px" src={EmptyIcon} />
                   </Box>
-                )}
+                  <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">You don’t have any assets yet</Box>
+                  <Box marginTop="12px">
+                    <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openFullScreenModal('receive')}>Deposit</Button>
+                  </Box>
+                </Box>
+              </Box>}
               </Fragment>
             )}
           </Box>
