@@ -2,7 +2,7 @@ import api from '@/lib/api';
 import {
   base64ToBigInt,
   base64ToBuffer,
-  getCurrentTimeFormatted,
+  getCurrentDateFormatted,
   uint8ArrayToHexString,
   parseBase64url,
   arrayBufferToHex,
@@ -113,7 +113,7 @@ export default function usePasskey() {
       const challengeRes = await api.auth.challenge({});
       const challenge = challengeRes.data.challenge;
 
-      const finalCredentialName = `${walletName}_${getCurrentTimeFormatted()}`;
+      const finalCredentialName = `${walletName}_${getCurrentDateFormatted()}`;
       const registration = await client.register(finalCredentialName, challenge, {
         authenticatorType: 'both',
       });
@@ -189,8 +189,8 @@ export default function usePasskey() {
       const challenge = challengeRes.data.challenge;
 
       // const randomChallenge = btoa('1234567890');
-      // const finalCredentialName = `${credentialName}_${getCurrentTimeFormatted()}`;
-      const finalCredentialName = `${walletName}_${getCurrentTimeFormatted()}`;
+      // const finalCredentialName = `${credentialName}_${getCurrentDateFormatted()}`;
+      const finalCredentialName = `${walletName}_${getCurrentDateFormatted()}`;
       const registration = await client.register(finalCredentialName, challenge, {
         authenticatorType: 'both',
       });

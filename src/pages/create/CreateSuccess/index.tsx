@@ -123,7 +123,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       <Box marginBottom="40px">
         <Image height="198px" src={WelcomeIcon} />
       </Box>
-      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="24px">
+      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="32px">
         Your account is ready
       </Box>
       <Box style={{width: "100%"}} >

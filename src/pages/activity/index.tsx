@@ -24,7 +24,7 @@ import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
 import SendIcon from '@/components/Icons/mobile/Send';
 import ReceiveIcon from '@/components/Icons/mobile/Receive';
-import ActivityEmptyIcon from '@/assets/mobile/activity-empty.svg';
+import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
 
 export default function Activity({ isModal, registerScrollable }: any) {
   const { historyList } = useHistoryStore();
@@ -106,8 +106,8 @@ export default function Activity({ isModal, registerScrollable }: any) {
             height="100%"
           >
             <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-              <Image height="108px" src={ActivityEmptyIcon} />
-              <Box color="rgba(0, 0, 0, 0.5)" marginTop="18px">
+              <Image src={ActivityEmptyIcon} w={"216px"} h="108px" />
+              <Box color="#676B75" marginTop="8px">
                 You don’t have any activity yet
               </Box>
             </Box>

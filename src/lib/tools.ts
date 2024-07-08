@@ -196,6 +196,14 @@ export const getCurrentTimeFormatted = () => {
   return `${year}-${month}-${day}-${hour}:${minute}:${second}`;
 };
 
+export const getCurrentDateFormatted = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export const isNativeMethod = (fn: any) => {
   return /\{\s*\[native code\]\s*\}/.test('' + fn);
 };
