@@ -290,7 +290,7 @@ export default function Dashboard() {
             fontWeight="400"
             lineHeight="22.5px"
           >
-            <Box
+            {/* <Box
               color="white"
               padding="16px 32px"
               paddingRight="12px"
@@ -304,7 +304,7 @@ export default function Dashboard() {
                 <AppsIcon />
               </Box>
               <Box>Apps</Box>
-            </Box>
+            </Box> */}
             <Box
               color="white"
               padding="16px 32px"
