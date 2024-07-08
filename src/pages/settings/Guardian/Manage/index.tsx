@@ -67,6 +67,7 @@ export default function Manage() {
   const [tempThreshold, setTempThreshold] = useState(guardiansInfo.guardianDetails.threshold);
   const [changingGuardian, setChangingGuardian] = useState(false);
   const { doSetGuardians } = useRecover();
+  const [isEditing, setIsEditing] = useState(false)
   const toast = useToast();
   const navigate = useNavigate();
   const guardianMenuRef = useRef<any>()
@@ -225,27 +226,34 @@ export default function Manage() {
                   : toShortAddress(guardianAddress)}
                 </Box>
               </Box>
-              <Box marginLeft="auto" onClick={() => doHandleGuardian(index)}>
-                <EditIcon />
-              </Box>
+              {isEditing && (
+                <Box marginLeft="auto" onClick={() => doHandleGuardian(index)}>
+                  <EditIcon />
+                </Box>
+              )}
             </Box>
           ))}
         </Box>
-        <Box marginBottom="40px" position="relative">
-          <Box>
-            <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
-              {() => (
-                <Box overflow="auto" ref={guardianMenuRef}>
-                  <MenuButton as={Box} onClick={() => { isGuardianMenuOpen ? onGuardianMenuClose() : onGuardianMenuOpen(); }}>
-                    <Button fontSize="14px" size="lg" type="white" color="#161F36" fontWeight="400">
-                      +Add {tempGuardians.length ? 'another' : ''} recovery contact
-                    </Button>
-                  </MenuButton>
-                </Box>
-              )}
-            </Menu>
+        {isEditing && (
+          <Box marginBottom="40px" position="relative">
+            <Box>
+              <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
+                {() => (
+                  <Box overflow="auto" ref={guardianMenuRef}>
+                    <MenuButton as={Box} onClick={() => { isGuardianMenuOpen ? onGuardianMenuClose() : onGuardianMenuOpen(); }}>
+                      <Button fontSize="14px" size="lg" type="white" color="#161F36" fontWeight="400">
+                        +Add {tempGuardians.length ? 'another' : ''} recovery contact
+                      </Button>
+                    </MenuButton>
+                  </Box>
+                )}
+              </Menu>
+            </Box>
           </Box>
-        </Box>
+        )}
+        {!isEditing && (
+          <Box height="40px" width="1px" />
+        )}
         {tempGuardians.length > 0 && (
           <Box>
             <Box fontSize="14px" fontWeight="500" color="#161F36" lineHeight="17.5px">
@@ -254,31 +262,47 @@ export default function Manage() {
             <Box background="#F2F3F5" padding="16px" marginTop="16px" borderRadius="16px">
               <Box marginBottom="14px" marginTop="12px" position="relative">
                 <Box display="flex" alignItems="center" justifyContent="space-between">
-                  <Box
-                    width="72px"
-                    height="48px"
-                    borderRadius="8px"
-                    background="white"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    onClick={() => { if (tempThreshold - 1 > 0) { onSetThreshold(tempThreshold - 1) } }}
-                  >
-                    <MinusIcon />
-                  </Box>
+                  {isEditing && (
+                    <Box
+                      width="72px"
+                      height="48px"
+                      borderRadius="8px"
+                      background="white"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      onClick={() => { if (tempThreshold - 1 > 0) { onSetThreshold(tempThreshold - 1) } }}
+                    >
+                      <MinusIcon />
+                    </Box>
+                  )}
+                  {!isEditing && (
+                    <Box
+                      width="72px"
+                      height="48px"
+                    />
+                  )}
                   <Box fontWeight="500" fontSize="32px" color="#161F36">{tempThreshold}</Box>
-                  <Box
-                    width="72px"
-                    height="48px"
-                    borderRadius="8px"
-                    background="white"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    onClick={() => { if (tempThreshold + 1 <= tempGuardians.length) { onSetThreshold(tempThreshold + 1) } }}
-                  >
-                    <AddIcon />
-                  </Box>
+                  {isEditing && (
+                    <Box
+                      width="72px"
+                      height="48px"
+                      borderRadius="8px"
+                      background="white"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      onClick={() => { if (tempThreshold + 1 <= tempGuardians.length) { onSetThreshold(tempThreshold + 1) } }}
+                    >
+                      <AddIcon />
+                    </Box>
+                  )}
+                  {!isEditing && (
+                    <Box
+                      width="72px"
+                      height="48px"
+                    />
+                  )}
                 </Box>
               </Box>
               <Box marginTop="8px" marginBottom="20px" fontSize="12px" fontWeight="400" textAlign="center" color="#3C3F45">
@@ -288,18 +312,27 @@ export default function Manage() {
           </Box>
         )}
       </Box>
-      <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
-        <Box width="50%" paddingRight="7px">
-          <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
-            Back
+      {isEditing && (
+        <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
+          <Box width="50%" paddingRight="7px">
+            <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={() => setIsEditing(false)} color="black">
+              Cancel
+            </Button>
+          </Box>
+          <Box width="50%" paddingLeft="7px">
+            <Button width="calc(100% - 7px)" disabled={false} size="xl" type="gradientBlue" onClick={onConfirmOpen}>
+              Save
+            </Button>
+          </Box>
+        </Box>
+      )}
+      {!isEditing && (
+        <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
+          <Button width="100%" disabled={false} size="xl" type="white" onClick={() => setIsEditing(true)} color="black">
+            Edit
           </Button>
         </Box>
-        <Box width="50%" paddingLeft="7px">
-          <Button width="calc(100% - 7px)" disabled={false} size="xl" type="gradientBlue" onClick={onConfirmOpen}>
-            Continue
-          </Button>
-        </Box>
-      </Box>
+      )}
 
       <Modal isOpen={isDeleteOpen} onClose={onDeleteClose} motionPreset="slideInBottom" blockScrollOnMount={true}>
         <ModalOverlay height="100vh" />
