@@ -44,6 +44,7 @@ import ThemePage from '@/components/ThemeChange';
 import AddressIcon from '@/components/AddressIcon';
 import EmptyIcon from '@/assets/empty2.svg'
 import SettingPage from '@/pages/settings'
+import useConfig from '@/hooks/useConfig';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -89,6 +90,7 @@ const getFontBottomMargin = (value: any) => {
 
 export function Header({ openMenu, username, ...props }: any) {
   const { walletName, selectedAddress } = useAddressStore();
+  const { chainConfig } = useConfig();
   return (
     <Box
       height="56px"
@@ -101,9 +103,10 @@ export function Header({ openMenu, username, ...props }: any) {
       {...props}
     >
       <Box display="flex" gap="2" alignItems="center" justifyContent="center">
-        <Box width="40px" height="40px">
+        {/* <Box width="40px" height="40px">
           <AddressIcon address={selectedAddress} width={40} />
-        </Box>
+        </Box> */}
+        <Image src={chainConfig.icon} width="40px" height="40px" />
         <Box fontSize="20px" lineHeight="24px" fontWeight="400" color="#161F36">
           {walletName}
         </Box>

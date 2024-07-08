@@ -134,7 +134,7 @@ export default function RecoverVerifyEmail() {
         width="100%"
         paddingTop="20px"
         paddingBottom="20px"
-        background="white"
+        // background="white"
         left="0"
         bottom="0"
       >

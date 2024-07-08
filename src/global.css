@@ -28,3 +28,7 @@ a, button{
         transform: rotate(360deg);
     }
 }
+
+button, a {
+    -webkit-tap-highlight-color: transparent;
+  }

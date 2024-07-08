@@ -49,7 +49,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
     console.log('template info');
     setEmailTemplate({
       ...res.data,
-      mailToLink: `mailto:${res.data.to}?subject=${res.data.subject}&body=${res.data.body}`,
+      mailToLink: `mailto:${res.data.to}?subject=${res.data.subject}`,
     });
     openModal('recoverVerifyEmail');
   };

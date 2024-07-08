@@ -18,7 +18,6 @@ import IntroItem2Icon from '@/components/Icons/mobile/Intro/Item2';
 import IntroItem3Icon from '@/components/Icons/mobile/Intro/Item3';
 import USDCIcon from '@/assets/tokens/usdc.png';
 import IconLoading from '@/assets/mobile/loading.gif';
-import IntroIMG from '@/assets/landing-intro.png';
 import Toolbar1 from '@/assets/toolbar1.png';
 import Toolbar2 from '@/assets/toolbar2.png';
 import AddHomeIMG from '@/assets/add-home.svg';
