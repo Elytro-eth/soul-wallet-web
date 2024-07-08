@@ -43,7 +43,7 @@ export default function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { innerHeight } = useScreenSize();
   const { getIsAddedToHomeScreen, setIsAddedToHomeScreen } = useSettingStore();
-  const marginHeight = innerHeight - ((innerHeight - 40) < 850 ? (innerHeight - 40) : 850);
+  const marginHeight = innerHeight - ((innerHeight - 40) < 800 ? (innerHeight - 40) : 800);
 
   const navigate = useNavigate();
   const doSignIn = async () => {
@@ -208,7 +208,7 @@ export default function Landing() {
               sm: `${marginHeight}px`,
               md: 'calc(50vh - 125px)',
             }}
-            height={(innerHeight - 40) < 850 ? (innerHeight - 40) : 850}
+            height={(innerHeight - 40) < 800 ? (innerHeight - 40) : 800}
             overflow="visible"
             mb="0"
             position="relative"
@@ -223,7 +223,7 @@ export default function Landing() {
               width="100%"
               paddingLeft="0"
               paddingRight="0"
-              paddingTop="60px"
+              paddingTop="0px"
               background="radial-gradient(476.97% 147.07% at 0% -21.13%, #FBFBF9 0%, #F7F0ED 45.5%, #BAD5F5 100%)"
             >
               <Box
@@ -239,7 +239,7 @@ export default function Landing() {
                 <Image src={AddHomeIMG} />
               </Box>
               <Box
-                fontSize="24px"
+                fontSize="30px"
                 fontWeight="500"
                 lineHeight="1"
                 padding="0 32px"
@@ -247,13 +247,13 @@ export default function Landing() {
                 marginTop="5px"
                 color="#161F36"
               >
-                Add to home screen to continue...
+                Add to home screen
               </Box>
               <Box fontSize="16px" paddingBottom="14px" paddingLeft="32px" paddingRight="32px">
                 <Box fontSize="28px" fontWeight="500" lineHeight="1">
                   01
                 </Box>
-                <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" marginTop="5px" color="#161F36">
+                <Box fontSize="20px" fontWeight="500" lineHeight="22.5px" marginTop="5px" color="#161F36">
                   Tap Share icon at toolbar
                 </Box>
               </Box>
@@ -264,7 +264,7 @@ export default function Landing() {
                 <Box fontSize="28px" fontWeight="500" lineHeight="1">
                   02
                 </Box>
-                <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" marginTop="5px" color="#161F36">
+                <Box fontSize="20px" fontWeight="500" lineHeight="22.5px" marginTop="5px" color="#161F36">
                   Tap “Add to Homescreen”
                 </Box>
               </Box>

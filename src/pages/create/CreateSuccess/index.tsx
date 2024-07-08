@@ -123,13 +123,8 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       <Box marginBottom="40px">
         <Image height="198px" src={WelcomeIcon} />
       </Box>
-      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="14px">
+      <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="24px">
         Your account is ready
-      </Box>
-      <Box width="100%" marginBottom="50px" marginTop="14px">
-        <Box fontSize="16px" lineHeight="24px" fontWeight="400" textAlign="center">
-          Thanks for setting up your Stable.cash account. Start saving from now on!
-        </Box>
       </Box>
       <Box style={{width: "100%"}} >
         <Button width="100%" size="xl" type="gradientBlue" minWidth="195px" onClick={() => navigate('/dashboard')}>

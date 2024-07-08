@@ -65,7 +65,7 @@ const buttonStyles = {
     color: '#161F36',
     bg: 'white',
     border: '1px solid #BDC0C7',
-    _hover: { bg: '#eee' },
+    _hover: { bg: 'white' },
     _disabled: { cursor: 'not-allowed', color: '#B2B2B2', _hover: { bg: "#fff" } },
   },
   grey: {

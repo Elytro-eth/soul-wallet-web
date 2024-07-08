@@ -105,7 +105,7 @@ export function Header({ openMenu, username, ...props }: any) {
           <AddressIcon address={selectedAddress} width={40} />
         </Box>
         <Box fontSize="20px" lineHeight="24px" fontWeight="400" color="#161F36">
-          Hi, {walletName}
+          {walletName}
         </Box>
       </Box>
       <Box fontSize="18px" fontWeight="500" color="black" lineHeight="24px">
