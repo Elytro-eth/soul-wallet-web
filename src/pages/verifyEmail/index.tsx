@@ -271,15 +271,10 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
 
   return (
     <Box width="100%" bg="#fff" height={innerHeight}>
-      {!isModal && step < 3 && (
+      {step < 3 && (
         <Fragment>
-          <Header title="Verify email" showBackButton onBack={onPrev} />
+          <Header title={!(isModal && step === 0) ? 'Verify email' : ''} showBackButton={!(isModal && step === 0)} onBack={onPrev} />
         </Fragment>
-      )}
-      {isModal && (
-        <Box fontSize="16px" fontWeight="500" padding="10px 30px" paddingTop="60px">
-
-        </Box>
       )}
       <Box
         height={isModal ? innerHeight - 94 : innerHeight - 60}

@@ -175,7 +175,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
           </Box>
           {sendTo && disabled &&
            <Box display="flex" bottom="-20px" position="absolute" alignItems="center" justifyContent="flex-start" marginTop="5px">
-             <Box fontWeight="400" fontSize="18px" lineHeight="15px" color="#E8424C">
+             <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
                {isSelf ? 'You cannot send to yourself' : disabled ? 'Invalid address' : ''}
              </Box>
            </Box>

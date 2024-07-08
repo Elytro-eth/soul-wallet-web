@@ -361,15 +361,14 @@ export default function Manage() {
             md: '430px',
           }}
           marginTop={{
-            sm: `${innerHeight - 508}px`,
+            sm: `${innerHeight - 528}px`,
             md: 'calc(50vh - 125px)',
           }}
-          height="508px"
+          height="528px"
           overflow="auto"
           mb="0"
         >
-          <ModalCloseButton />
-          <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
+          <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%" paddingTop="30px">
             <Box height="144px" width="144px" borderRadius="120px" marginBottom="30px">
               <Image height="144px" width="144px" src={IntroGuardianIcon} />
             </Box>

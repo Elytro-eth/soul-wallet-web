@@ -197,7 +197,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
             </Box>
             {!!addressStatus && !!guardianAddress && !isValidAddress &&
              <Box display="flex" bottom="-20px" position="absolute" alignItems="center" justifyContent="flex-start" marginTop="5px">
-               <Box fontWeight="400" fontSize="18px" lineHeight="15px" color="#E8424C">
+               <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
                  Invalid address
                </Box>
              </Box>

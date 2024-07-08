@@ -211,7 +211,7 @@ export default function AppContainer() {
               height="100%"
               width="100%"
               position="absolute"
-              // background={isFullScreenModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
+            // background={isFullScreenModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
               transition="all 0.3s ease"
             />
             <Box
@@ -227,7 +227,7 @@ export default function AppContainer() {
                 width="32px"
                 borderRadius="30px"
                 position="absolute"
-                top="20px"
+                top="12px"
                 right="16px"
                 display="flex"
                 alignItems="center"
@@ -264,7 +264,7 @@ export default function AppContainer() {
               height="100%"
               width="100%"
               position="absolute"
-              // background={isModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
+            // background={isModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
               transition="all 0.3s ease"
             />
             <Box
@@ -280,7 +280,7 @@ export default function AppContainer() {
                 width="32px"
                 borderRadius="30px"
                 position="absolute"
-                top="20px"
+                top="12px"
                 right="16px"
                 display="flex"
                 alignItems="center"
