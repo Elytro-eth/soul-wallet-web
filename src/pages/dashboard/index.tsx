@@ -290,21 +290,7 @@ export default function Dashboard() {
             fontWeight="400"
             lineHeight="22.5px"
           >
-            {/* <Box
-              color="white"
-              padding="16px 32px"
-              paddingRight="12px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              {...(activeMenu === 'apps' ? { opacity: 1, fontWeight: 500 } : { opacity: .6}) }
-              onClick={() => setActiveMenu('apps')}
-            >
-              <Box marginRight="2px">
-                <AppsIcon />
-              </Box>
-              <Box>Apps</Box>
-            </Box> */}
+           
             <Box
               color="white"
               padding="16px 32px"
@@ -319,6 +305,21 @@ export default function Dashboard() {
                 <AssetsIcon />
               </Box>
               <Box>Assets</Box>
+            </Box>
+            <Box
+              color="white"
+              padding="16px 32px"
+              paddingRight="12px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              {...(activeMenu === 'apps' ? { opacity: 1, fontWeight: 500 } : { opacity: .6}) }
+              onClick={() => setActiveMenu('apps')}
+            >
+              <Box marginRight="2px">
+                <AppsIcon />
+              </Box>
+              <Box>Apps</Box>
             </Box>
           </Box>
         </Box>
