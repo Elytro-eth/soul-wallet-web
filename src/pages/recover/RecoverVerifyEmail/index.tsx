@@ -126,8 +126,18 @@ export default function RecoverVerifyEmail() {
             </Box>
           </Box>
         </Box>
+        <Box height="120px" width="1px" />
       </Box>
-      <Box padding="0 30px" width="100%" marginTop="40px" marginBottom="20px">
+      <Box
+        position="fixed"
+        padding="0 30px"
+        width="100%"
+        paddingTop="20px"
+        paddingBottom="20px"
+        background="white"
+        left="0"
+        bottom="0"
+      >
         <Link href={emailTemplate.mailToLink}>
           <Button size="xl" type="gradientBlue" width="100%">Send via default email app</Button>
         </Link>
