@@ -23,9 +23,9 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
   const [searchText, setSearchText] = useState('');
   const [searchAddress, setSearchAddress] = useState('');
   const [resolvedAddress, setResolvedAddress] = useState('');
-  const [step, setStep] = useState(0);
-  const [isSending, setIsSending] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  // const [step, setStep] = useState(0);
+  // const [isSending, setIsSending] = useState(false);
+  // const [isSent, setIsSent] = useState(false);
   const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 468
 
@@ -42,7 +42,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
 
   const activeENSNameRef = useRef();
   const menuRef = useRef();
-  const inputRef = useRef();
+  const inputRef = useRef<any>();
 
   const inputOnFocus = (value: any) => {
     setSearchText(value);
@@ -89,6 +89,14 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
     };
   }, []);
 
+
+  const handleBlur = () => {
+    const input = inputRef.current;
+    if (input) {
+      input.scrollLeft = input.scrollWidth;
+    }
+  };
+
   const submitENSName = (name: any) => {
     console.log('submitENSName', resolvedAddress);
     setSendTo(resolvedAddress)
@@ -133,6 +141,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
                 value={sendTo}
                 ref={setInputRef}
                 height="56px"
+                onBlur={handleBlur}
                 spellCheck={false}
                 fontSize="20px"
                 lineHeight="24px"

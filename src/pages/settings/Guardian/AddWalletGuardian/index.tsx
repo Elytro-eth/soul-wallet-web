@@ -40,7 +40,6 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   const [guardianAddress, setGuardianAddress] = useState<string>(defaultGuardianAddress || '');
   const [guardianName, setGuardianName] = useState(defaultGuardianName || '');
   const [addressStatus, setAddressStatus] = useState(0);
-  console.log('callback', callback)
 
   const onAddressChange = (val: string) => {
     setGuardianAddress(val)
@@ -55,7 +54,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
 
   const activeENSNameRef = useRef();
   const menuRef = useRef();
-  const inputRef = useRef();
+  const inputRef = useRef<any>();
 
   // const inputOnFocus = (value: any) => {
   //   setSearchText(value);
@@ -122,6 +121,14 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
     }
   };
 
+
+  const handleBlur = () => {
+    const input = inputRef.current;
+    if (input) {
+      input.scrollLeft = input.scrollWidth;
+    }
+  };
+
   const onConfirm = async () => {
     if(callback){
       callback(guardianAddress, guardianName)
@@ -158,7 +165,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 spellCheck={false}
                 value={guardianAddress}
                 onChange={e => onAddressChange(e.target.value)}
-                onBlur={() => setAddressStatus(1)}
+                onBlur={() => {setAddressStatus(1); handleBlur();}}
                 fontSize="20px"
                 lineHeight="24px"
                 fontWeight="400"
