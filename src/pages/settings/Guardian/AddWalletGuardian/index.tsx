@@ -113,8 +113,8 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
     setChangingGuardian(true);
     try {
       const defaultThreshold = 1;
-      await doSetGuardians([searchText], [guardianName], defaultThreshold);
-      saveGuardianAddressName(searchText, guardianName);
+      await doSetGuardians([guardianAddress], [guardianName], defaultThreshold);
+      saveGuardianAddressName(guardianAddress, guardianName);
       closeModal();
       navigate('/dashboard')
     } finally {

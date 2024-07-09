@@ -40,7 +40,6 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
     }
   }
 
-
   const activeENSNameRef = useRef();
   const menuRef = useRef();
   const inputRef = useRef();

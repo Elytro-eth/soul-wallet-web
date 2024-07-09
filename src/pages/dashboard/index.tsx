@@ -478,7 +478,7 @@ export default function Dashboard() {
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
-                      onClick={() => tokenBalanceValid ? openFullScreenModal('send') : openFullScreenModal('receive')}
+                      onClick={() => openFullScreenModal('send')}
                     >
                       <Box
                         display="flex"
