@@ -197,7 +197,7 @@ export default function Button({
       {...moreProps}
       {...restProps}
     >
-      {loading ? <Image src={IconLoading} w="18px" h="18px" /> : children}
+      {loading ? <Image src={IconLoading} w="24px" h="24px" /> : children}
     </CButton>
   );
 }

@@ -5,6 +5,7 @@ import EmailIcon from '@/assets/mobile/email-guardian.svg'
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import useScreenSize from '@/hooks/useScreenSize'
 import GuardianIcon from '@/assets/guardian.svg'
+import FadeId from '@/components/Icons/mobile/FaceId'
 
 export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGuardian, isModal }: any) {
   const { innerHeight } = useScreenSize()
@@ -43,7 +44,12 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
       >
         Please confirm recovery contact updates on your Soul Wallet account.
       </Box>
-      <Button onClick={onChangeGuardian} loading={changingGuardian} size="xl" type="gradientBlue" width="100%" marginTop="30px">Continue</Button>
+      <Button onClick={onChangeGuardian} loading={changingGuardian} size="xl" type="gradientBlue" width="100%" marginTop="30px">
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <Box marginRight="8px"><FadeId /></Box>
+          <Box>Confirm</Box>
+        </Box>
+      </Button>
       <Button size="xl" type="white" width="100%" onClick={onPrev} marginTop="8px">Back</Button>
       <Box height="100px" />
     </Box>

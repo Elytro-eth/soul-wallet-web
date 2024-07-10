@@ -27,6 +27,7 @@ import useWallet from '@/hooks/useWallet';
 import useTools from '@/hooks/useTools';
 import useConfig from '@/hooks/useConfig';
 import useScreenSize from '@/hooks/useScreenSize'
+import FadeId from '@/components/Icons/mobile/FaceId'
 
 export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, selectedToken }: any) {
   const { closeModal, closeFullScreenModal } = useWalletContext();
@@ -236,7 +237,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
             </Box>}
             <Box width={isSending ? '100%' : "50%"} paddingLeft="7px">
               <Button width="calc(100% - 7px)" disabled={isSending} size="xl" type="gradientBlue" onClick={() => onTransfer()}>
-                {isSending ? 'Sending' : 'Continue'}
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <Box marginRight="8px"><FadeId /></Box>
+                  <Box>{isSending ? 'Sending' : 'Continue'}</Box>
+                </Box>
               </Button>
             </Box>
           </Box>

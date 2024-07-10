@@ -45,6 +45,7 @@ import AddIcon from '@/components/Icons/mobile/Add';
 import IntroGuardianIcon from '@/assets/guardian.svg'
 import WarningIcon from '@/components/Icons/Warning';
 import { useOutletContext } from "react-router-dom"
+import FadeId from '@/components/Icons/mobile/FaceId'
 
 export default function Manage() {
   const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
@@ -439,7 +440,10 @@ export default function Manage() {
                 )} */}
             <Box width="100%" marginTop="20px">
               <Button size="xl" loading={changingGuardian} type="gradientBlue" width="100%" onClick={() => doChangeGuardian()}>
-                Confirm
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <Box marginRight="8px"><FadeId /></Box>
+                  <Box>Confirm</Box>
+                </Box>
               </Button>
               <Button size="xl" type="white" width="100%" marginTop="8px" onClick={onConfirmClose}>
                 Cancel

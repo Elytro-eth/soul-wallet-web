@@ -43,7 +43,12 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
           Passkeys will be used to sign in to your account in a safer and more secure way. You can always change your passkeys in Settings later.
         </Box>
       </Box>
-      <Button width="100%" loading={addingPasskey} disabled={addingPasskey} size="xl" type="gradientBlue" onClick={onNext} minWidth="195px">Add</Button>
+      <Button width="100%" loading={addingPasskey} disabled={addingPasskey} size="xl" type="gradientBlue" onClick={onNext} minWidth="195px">
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <Box marginRight="8px"><FadeId /></Box>
+          <Box>Add</Box>
+        </Box>
+      </Button>
       <Box height="100px" />
     </Box>
   );
