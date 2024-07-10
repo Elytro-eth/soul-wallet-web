@@ -12,6 +12,7 @@ import useWallet from '@/hooks/useWallet';
 import SettingIcon from '@/components/Icons/mobile/Setting'
 import FaceIdIcon from '@/components/Icons/FaceId'
 import TelegramIcon from '@/components/Icons/mobile/Telegram'
+import LicenseIcon from '@/components/Icons/mobile/License'
 import { headerHeight, tgLink } from '@/config';
 import { useAddressStore } from '@/store/address';
 import AddressIcon from '@/components/AddressIcon';
@@ -148,6 +149,29 @@ export default function Settings({ isModal, closeModal }: any) {
               <TelegramIcon />
             </Box>
             <Box>Join Telegram group</Box>
+          </Box>
+        </a>
+        <a style={{width: "100%"}}>
+          <Box
+            width="100%"
+            height="56px"
+            fontSize="18px"
+            fontWeight="500"
+            py="10px"
+            display="flex"
+            alignItems="center"
+            justifyContent="flex-start"
+          >
+            <Box
+              marginRight="12px"
+              height="32px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <LicenseIcon />
+            </Box>
+            <Box>Third party software license</Box>
           </Box>
         </a>
       </Box>

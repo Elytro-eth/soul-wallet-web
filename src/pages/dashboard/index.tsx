@@ -622,10 +622,10 @@ export default function Dashboard() {
               md: '430px',
             }}
             marginTop={{
-              sm: `${innerHeight - 444}px`,
+              sm: `${innerHeight - 474}px`,
               md: 'calc(50vh - 125px)',
             }}
-            height={444}
+            height={474}
             overflow="visible"
             mb="0"
             position="relative"
