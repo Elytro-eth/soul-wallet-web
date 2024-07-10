@@ -282,6 +282,7 @@ export default function Dashboard() {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          zIndex="2"
         >
           <Box
             display="flex"
@@ -585,6 +586,7 @@ export default function Dashboard() {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                marginBottom="40px"
               >
                 <Box
                   display="flex"
