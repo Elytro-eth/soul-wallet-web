@@ -154,7 +154,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
         <Box width="100%">
           <Box padding="30px" paddingTop="40px">
             <Box fontSize="28px" fontWeight="500" color="#161F36">
-              Add Wallet Recovery Contact
+            Add wallet address
             </Box>
             <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px"  marginTop="24px" color="#95979C">
               ENS or wallet address

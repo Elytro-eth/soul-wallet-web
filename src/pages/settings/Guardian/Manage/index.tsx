@@ -307,7 +307,7 @@ export default function Manage() {
                 </Box>
               </Box>
               <Box marginTop="8px" marginBottom="20px" fontSize="12px" fontWeight="400" textAlign="center" color="#3C3F45">
-                out of {tempGuardians.length} recovery contact(s) confirmation is needed for wallet recovery.
+                You need {tempThreshold} recovery contracts to confirm to help you get your account back
               </Box>
             </Box>
           </Box>
@@ -321,8 +321,11 @@ export default function Manage() {
             </Button>
           </Box>
           <Box width="50%" paddingLeft="7px">
-            <Button width="calc(100% - 7px)" disabled={false} size="xl" type="gradientBlue" onClick={onConfirmOpen}>
-              Save
+            <Button width="calc(100% - 7px)" loading={changingGuardian} disabled={changingGuardian} size="xl" type="gradientBlue"  onClick={() => doChangeGuardian()}>
+               <Box display="flex" alignItems="center" justifyContent="center">
+                  <Box marginRight="8px"><FadeId /></Box>
+                  <Box>Confirm</Box>
+                </Box>
             </Button>
           </Box>
         </Box>
@@ -479,7 +482,7 @@ export default function Manage() {
           boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
         >
           <ModalCloseButton />
-          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add recovery contact via...</ModalHeader>
+          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add via...</ModalHeader>
           <ModalBody
             display="flex"
             flexDirection="column"
@@ -508,7 +511,7 @@ export default function Manage() {
               >
                 <Box marginRight="8px"><WalletGuardianIcon /></Box>
                 <Box fontWeight="500" fontSize="18px" color="#161F36">
-                  Wallet
+                  Wallet address
                 </Box>
               </Box>
               <Box
@@ -525,7 +528,7 @@ export default function Manage() {
               >
                 <Box marginRight="8px"><EmailGuardianIcon /></Box>
                 <Box fontWeight="500" fontSize="18px" color="#161F36">
-                  Mail
+                  Email
                 </Box>
               </Box>
             </Box>

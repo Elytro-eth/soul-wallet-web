@@ -44,7 +44,7 @@ export default function Intro({ onPrev, onNext }: any) {
         fontWeight="500"
         color="#161F36"
       >
-        What’s recovery contact?
+        Recovery contact
       </Box>
       <Box
         width="100%"
@@ -54,7 +54,7 @@ export default function Intro({ onPrev, onNext }: any) {
         marginTop="18px"
         color="#676B75"
       >
-        Recovery contacts are the wallet addresses from your own or trusted friends which will be requested for signature when your wallet is lost. Adding recovery contacts will protect your wallet from potential lose.
+        If you lose access to your account, recovery contacts can help you get your account back.
       </Box>
       <Box width="100%" display="flex" alignItems="center" justifyContent="center">
         <Box position="relative">
@@ -73,7 +73,7 @@ export default function Intro({ onPrev, onNext }: any) {
                 <Box overflow="auto" ref={menuRef}>
                   <MenuButton width="100%" as={Box} onClick={() => { isOpen ? onClose() : onOpen()}}>
                     <Box display="flex" alignItems="center" justifyContent="center">
-                      <Button  size="xl" type="gradientBlue" width="calc(100vw - 64px)" maxWidth="calc(430px - 64px)">Add</Button>
+                      <Button  size="xl" type="gradientBlue" width="calc(100vw - 64px)" maxWidth="calc(430px - 64px)">Add recovery contact </Button>
                     </Box>
                   </MenuButton>
                 </Box>
@@ -108,7 +108,7 @@ export default function Intro({ onPrev, onNext }: any) {
           boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
         >
           <ModalCloseButton />
-          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add recovery contact via...</ModalHeader>
+          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add via...</ModalHeader>
           <ModalBody
             display="flex"
             flexDirection="column"
@@ -137,7 +137,7 @@ export default function Intro({ onPrev, onNext }: any) {
               >
                 <Box marginRight="8px"><WalletGuardianIcon /></Box>
                 <Box fontWeight="500" fontSize="18px" color="#161F36">
-                  Wallet
+                  Wallet address
                 </Box>
               </Box>
               <Box
@@ -154,7 +154,7 @@ export default function Intro({ onPrev, onNext }: any) {
               >
                 <Box marginRight="8px"><EmailGuardianIcon /></Box>
                 <Box fontWeight="500" fontSize="18px" color="#161F36">
-                  Mail
+                  Email
                 </Box>
               </Box>
             </Box>

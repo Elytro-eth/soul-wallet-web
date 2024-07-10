@@ -23,24 +23,25 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
       <Box
         width="100%"
         textAlign="center"
-        fontSize="14px"
-        lineHeight="17.5px"
+        fontSize="24px"
+        lineHeight="25px"
         fontWeight="500"
-        color="#3C3F45"
+        color="#161F36"
+        mb="3"
       >
-        A verification email has sent to
+        Verification sent. <br/>
+        Please confirm in your email.
       </Box>
       <Box
         width="100%"
         textAlign="center"
-        fontSize="28px"
-        fontWeight="500"
-        marginTop="8px"
-        color="#161F36"
+        fontSize="14px"
+        lineHeight={"17px"}
+        color="#3C3F45"
       >
         {email}
       </Box>
-      <Box
+      {/* <Box
         width="100%"
         textAlign="center"
         fontSize="14px"
@@ -49,12 +50,12 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         color="#676B75"
       >
         Please follow the instructions and complete the verification process.
-      </Box>
+      </Box> */}
       <Button disabled={countDown > 0} loading={sendingEmail} size="xl" type="gradientBlue" width="100%" marginTop="40px" onClick={onResend}>
         Resend {countDown > 0 ? `(${countDown}s)` : ''}
       </Button>
-      <Button disabled={false} size="xl" type="white" width="100%" onClick={onPrev} marginTop="8px">Use another Email</Button>
-      <Box height="100px" />
+      {/* <Button disabled={false} size="xl" type="white" width="100%" onClick={onPrev} marginTop="8px">Use another Email</Button> */}
+      {/* <Box height="100px" /> */}
     </Box>
   );
 }
