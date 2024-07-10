@@ -32,7 +32,7 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
         color="#161F36"
         lineHeight="1"
       >
-        Add passkey
+        Setup passkey
       </Box>
       <Box
         marginBottom="40px"
@@ -40,13 +40,14 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
         width="100%"
       >
         <Box width="100%" fontSize="14px" lineHeight="17.5px" fontWeight="400" textAlign="center" color="#676B75">
-          Passkeys will be used to sign in to your account in a safer and more secure way. You can always change your passkeys in Settings later.
+        Setup with your fingerprint, Face, or Lock ID.<br/><br/>
+        Use passkey to sent transaction in a safer and more secure way. You can change it later.
         </Box>
       </Box>
       <Button width="100%" loading={addingPasskey} disabled={addingPasskey} size="xl" type="gradientBlue" onClick={onNext} minWidth="195px">
         <Box display="flex" alignItems="center" justifyContent="center">
           <Box marginRight="8px"><FadeId /></Box>
-          <Box>Add</Box>
+          <Box>Setup</Box>
         </Box>
       </Button>
       <Box height="100px" />

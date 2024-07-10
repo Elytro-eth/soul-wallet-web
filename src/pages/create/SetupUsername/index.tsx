@@ -31,7 +31,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
           fontSize="20px"
           lineHeight="24px"
           fontWeight="400"
-          placeholder="Enter username"
+          // placeholder="Enter username"
           border="none"
           outline="none"
           background="#F2F3F5"
@@ -56,7 +56,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
             </Box>
           ) : nameStatus === 2 ? (
             <Box fontSize="14px" lineHeight="1.75" color="#E8424C">
-              This name has been taken. Please try a new one.
+              This username is not available. Choose another one.
             </Box>
           ) : (
             ''

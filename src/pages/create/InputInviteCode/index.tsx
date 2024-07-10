@@ -36,7 +36,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           autoFocus
           lineHeight="34px"
           fontWeight="500"
-          placeholder="Enter or paste here"
+          // placeholder="Enter or paste here"
           border="none"
           outline="none"
           background="#F2F3F5"
@@ -48,7 +48,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
         />
         <Box mt="1" h="44px" overflow={"hidden"}>
           {checking ? <InputLoading /> : <>
-            {codeStatus === -1 && <Box fontSize="14px" lineHeight="17.5px" color="#2D3CBD" onClick={onOpen}>What if I don’t have one?</Box>}
+            {codeStatus === -1 && <Box fontSize="14px" lineHeight="17.5px" color="#2D3CBD" onClick={onOpen}>Don’t have one yet?</Box>}
             {codeStatus === 0 && (
               <Box fontSize="14px" lineHeight="17.5px" color="#0CB700">
                 Looks great! Let’s go
@@ -119,11 +119,11 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
               textAlign="center"
               marginBottom="40px"
             >
-              We are currently under internal testing. Please be patient and join our Telegram group. We’ll send out more invitations very soon. Thanks again for your patience.
+              We are currently under internal testing. We’ll send out more invitations soon. 
             </Box>
             <Box width="100%">
               <Link target='_blank' href={xLink}>
-                <Button size="xl" type="black" width="100%">Follow SoulWallet on X</Button>
+                <Button size="xl" type="black" width="100%">Follow us on Twitter</Button>
               </Link>
             </Box>
           </ModalBody>

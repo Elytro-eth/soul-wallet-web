@@ -50,7 +50,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
           {errorMsg && <Box color="#E83D26" fontSize="14px" lineHeight="17.5px" width="100%">{errorMsg}</Box>}
         </Box>
       </Box>
-      <Button disabled={disabled} size="xl" type="gradientBlue" width="100%" loading={sendingEmail} onClick={onSendEmail}>Verify Email</Button>
+      <Button disabled={disabled} size="xl" type="gradientBlue" width="100%" loading={sendingEmail} onClick={onSendEmail}>Continue</Button>
       <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom" blockScrollOnMount={true}>
         <ModalOverlay height="100vh" />
         <ModalContent

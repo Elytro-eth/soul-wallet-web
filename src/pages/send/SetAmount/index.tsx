@@ -111,7 +111,7 @@ export default function SetAmount({
                     <Box fontSize="18px" color="#161F36" fontWeight="500">
                       {selectedToken.name}
                     </Box>
-                    <Box color="#95979C" fontSize="14px" fontWeight="400">{selectedToken.balance || 0} Avail.</Box>
+                    <Box color="#95979C" fontSize="14px" fontWeight="400">{toFixed(selectedToken.tokenBalanceFormatted, 6)} Avail.</Box>
                   </Box>
                 </Box>
               )}
@@ -164,7 +164,7 @@ export default function SetAmount({
                 fontWeight="500"
                 color={selectedToken ? '#3C3F45' : 'rgba(51, 34, 68, .3)'}
                 onClick={() => {
-                  selectedToken ? setAmount(parseFloat(selectedToken.tokenBalanceFormatted)) : null;
+                  selectedToken ? setAmount(selectedToken.tokenBalanceFormatted) : null;
                 }}
                 paddingRight="16px"
               >

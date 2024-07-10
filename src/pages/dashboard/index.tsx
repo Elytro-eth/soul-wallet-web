@@ -356,7 +356,7 @@ export default function Dashboard() {
                 >
                   <Box>
                     <Box fontSize="32px" lineHeight={"1"} fontWeight="500">$10</Box>
-                    <Box fontSize="14px" lineHeight={"17px"} fontWeight="400" opacity="0.64" color="#161F36">Setup email recovery to get 10 USDC for free</Box>
+                    <Box fontSize="14px" lineHeight={"17px"} fontWeight="400" opacity="0.64" color="#161F36">Setup email recovery to get 10 USDC</Box>
                   </Box>
                   <Box>
                     <Image width="40px" height="40px" src={USDCIcon} />
@@ -597,7 +597,7 @@ export default function Dashboard() {
                   <Box marginBottom="20px">
                     <Image height="108px" w="216px" src={EmptyIcon} />
                   </Box>
-                  <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">You don’t have any assets yet</Box>
+                  <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
                   <Box marginTop="12px">
                     <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openFullScreenModal('receive')}>Deposit</Button>
                   </Box>

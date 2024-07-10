@@ -95,7 +95,7 @@ export default function Settings({ isModal, closeModal }: any) {
           >
             <SettingIcon />
           </Box>
-          <Box>Recovery contact settings</Box>
+          <Box>Account Recovery</Box>
         </Box>
         <Box
           width="100%"

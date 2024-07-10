@@ -52,10 +52,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   const prepareAction = async () => {
     try {
       if (tokenAddress === ZeroAddress) {
-        const _userOp = await getTransferEthOp(amount, sendTo);
+        const _userOp = await getTransferEthOp(String(amount), sendTo);
         userOpRef.current = _userOp;
       } else {
-        const _userOp = await getTransferErc20Op(amount, sendTo, tokenAddress);
+        const _userOp = await getTransferErc20Op(String(amount), sendTo, tokenAddress);
         userOpRef.current = _userOp;
       }
     } catch (e) {

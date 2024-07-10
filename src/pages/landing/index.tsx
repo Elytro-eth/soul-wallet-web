@@ -135,9 +135,9 @@ export default function Landing() {
             color="#161F36"
             marginTop="auto"
           >
-            Democratize access to
-            <br /> Ethereum
-            <br /> for All
+           Simplified<br/>
+            Ethereum<br/>
+           Experience
           </Box>
           <Box
             width="100%"
@@ -149,11 +149,8 @@ export default function Landing() {
             marginBottom="48px"
             color="rgba(0, 0, 0, 0.6)"
           >
-            Your first crypto is on us.
-            <br />
-            Oh, and no gas fees.
-            <br />
-            We even have 24/7 support to help!
+            Setup up new account to receive 
+            10 USDC
           </Box>
           <Box
             ref={observingElementRef}
@@ -186,7 +183,7 @@ export default function Landing() {
             </Button>
           </Box>
           <Box fontSize="14px" fontWeight="400" color="#2D3CBD" lineHeight="17.5px" marginBottom="20px">
-            Lost access to account?{' '}
+            Lost account?{' '}
             <Box as="span" fontWeight="500" onClick={goRecover}>
               Recover here
             </Box>
