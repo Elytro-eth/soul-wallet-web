@@ -417,7 +417,6 @@ export function isPwaMode() {
 export const getIconMapping = (name: string) => {
   switch (name.toLowerCase()) {
     case 'transfer erc20':
-      return IconSend;
     case 'transfer eth':
       return IconSend;
     case 'mint':

@@ -5,7 +5,7 @@ import Button from '@/components/mobile/Button';
 import { Link as Rlink } from 'react-router-dom';
 import DetailsIMG from '@/components/Icons/mobile/Details';
 import TabIcon from '@/components/Icons/mobile/Tab';
-import { toFixed, toShortAddress } from '@/lib/tools';
+import { getIconMapping, toFixed, toShortAddress } from '@/lib/tools';
 import BN from 'bignumber.js'
 import { useNavigate } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc_lg.png';
@@ -74,7 +74,7 @@ export default function Activity({ isModal, registerScrollable }: any) {
             {historyList.map((item) => (
               <Box display="flex" alignItems="center" height="52px">
                 <Box marginRight="12px">
-                  <ReceiveIcon />
+                  <Image src={getIconMapping(item.functionName)} />
                 </Box>
                 <Box>
                   <Box display="flex" alignItems="center">
