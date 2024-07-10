@@ -94,6 +94,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
                 {validEmailProviders.map((email: any) => (
                   <Box
                     display="flex"
+                    key={email.domain}
                     alignItems="center"
                     // marginRight="24px"
                     marginBottom="18px"

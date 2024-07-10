@@ -93,7 +93,8 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
       </Box>
       {guardiansList &&
        guardiansList.map((guardianAddress: any, index: number) => {
-         const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6) 
+          const isEmail = guardianAddressEmail[guardianAddress] ? true : false;
+         const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
          return <Box
                   fontWeight="500"
                   fontSize="14px"
@@ -108,7 +109,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
            <AddressIcon width={32} address={guardianAddress} />
            <Flex align={'center'} gap="2" ml={"2"}>
              <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
-             <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>
+             {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
            </Flex>
            <Box marginLeft="auto">
              {(signedGuardians.includes(guardianAddress)) ? (

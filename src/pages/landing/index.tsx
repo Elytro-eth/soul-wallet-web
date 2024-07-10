@@ -33,12 +33,14 @@ import useScreenSize from '@/hooks/useScreenSize';
 import { useSettingStore } from '@/store/setting';
 import { isPwaMode } from '@/lib/tools';
 import ThemePage from '@/components/ThemeChange';
+import { useTempStore } from '@/store/temp';
 
 export default function Landing() {
   const [loaded, setLoaded] = useState(false);
   const { loginWallet } = useWallet();
   const { sevenDayApy } = useBalanceStore();
   const [logging, setLogging] = useState(false);
+  const { clearTempInfo } = useTempStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { innerHeight } = useScreenSize();
   const { getIsAddedToHomeScreen, setIsAddedToHomeScreen } = useSettingStore();
@@ -100,6 +102,12 @@ export default function Landing() {
       }
     };
   }, []);
+
+  const goRecover = () => {
+    // clear previous recover info
+    clearTempInfo();
+    navigate('/recover')
+  }
 
   return (
     <ThemePage themeColor="#f9f5f2">
@@ -179,7 +187,7 @@ export default function Landing() {
           </Box>
           <Box fontSize="14px" fontWeight="400" color="#2D3CBD" lineHeight="17.5px" marginBottom="20px">
             Lost access to account?{' '}
-            <Box as="span" fontWeight="500" onClick={() => navigate('/recover')}>
+            <Box as="span" fontWeight="500" onClick={goRecover}>
               Recover here
             </Box>
           </Box>
