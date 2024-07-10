@@ -10,7 +10,7 @@ export default function Intro({ onPrev, onNext }: any) {
   const { innerHeight } = useScreenSize()
 
   return (
-    <Box width="100%" height={innerHeight - 60 - 20} padding="30px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
+    <Box width="100%" height={innerHeight - 64} padding="30px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
       <Box
         width="144px"
         height="144px"
@@ -44,7 +44,7 @@ export default function Intro({ onPrev, onNext }: any) {
         Just simply recovery your wallet within <Box as="span" fontWeight="500">3 steps</Box>.
       </Box>
       <Button onClick={onNext} size="xl" type="gradientBlue" width="100%" marginTop="30px">Get started</Button>
-      <Button size="xl" type="white" width="100%" onClick={onPrev} marginTop="8px" background="#F6F6F6">Back</Button>
+      <Button size="xl" type="white" width="100%" onClick={onPrev} marginTop="8px">Back</Button>
     </Box>
   );
 }

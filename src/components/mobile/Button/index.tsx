@@ -14,6 +14,7 @@ const getSizeStyles = (size?: string) => {
   if (size === 'xl') {
     return {
       height: '63px',
+      minHeight: '63px',
       borderRadius: '63px',
       fontSize: '18px',
       lineHeight: '22.5px',
@@ -23,6 +24,7 @@ const getSizeStyles = (size?: string) => {
   } else if (size === 'lg') {
     return {
       height: '40px',
+      minHeight: '40px',
       borderRadius: '40px',
       fontSize: '16px',
       fontWeight: '500',
@@ -31,6 +33,7 @@ const getSizeStyles = (size?: string) => {
   } else if (size === 'mid') {
     return {
       height: '36px',
+      minHeight: '36px',
       borderRadius: '36px',
       fontSize: '14px',
       fontWeight: '500',
@@ -39,6 +42,7 @@ const getSizeStyles = (size?: string) => {
   } else if (size === 'sm') {
     return {
       height: '24px',
+      minHeight: '24px',
       borderRadius: '24px',
       fontSize: '12px',
       fontWeight: '500',
@@ -47,6 +51,7 @@ const getSizeStyles = (size?: string) => {
   } else if (size === 'xs') {
     return {
       height: '18px',
+      minHeight: '18px',
       borderRadius: '18px',
       fontSize: '12px',
       ...baseStyles,

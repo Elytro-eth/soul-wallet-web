@@ -44,7 +44,7 @@ export default function Recover() {
   };
 
   const onPrev = useCallback(() => {
-    if (step >= 1) {
+    if (step >= 0) {
       setStep((prev) => prev - 1);
     } else {
       navigate(-1);
@@ -228,7 +228,7 @@ export default function Recover() {
   };
 
   return (
-    <Box width="100%" height="100%" bg="#fff">
+    <Box width="100%" height={innerHeight} bg="#fff">
       {step < 4 && (
         <Fragment>
           {step === -1 && <Header title="" showLogo={true} />}
