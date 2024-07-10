@@ -43,7 +43,7 @@ export default function Landing() {
   const { clearTempInfo } = useTempStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { innerHeight } = useScreenSize();
-  const { getIsAddedToHomeScreen, setIsAddedToHomeScreen } = useSettingStore();
+  const { getShouldShowAddedToHomeScreen, setLastAddedToHomeScreenTime} = useSettingStore();
   const marginHeight = innerHeight - ((innerHeight - 40) < 800 ? (innerHeight - 40) : 800);
 
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ export default function Landing() {
   }, [loaded]);
 
   useEffect(() => {
-    if (!isPwaMode()) {
+    if (!isPwaMode() && getShouldShowAddedToHomeScreen()) {
       setTimeout(() => {
         onOpen();
       }, 1000);
@@ -195,7 +195,7 @@ export default function Landing() {
         <Modal
           isOpen={isOpen}
           onClose={() => {
-            setIsAddedToHomeScreen(true);
+            setLastAddedToHomeScreenTime(new Date().valueOf())
             onClose();
           }}
           motionPreset="slideInBottom"
@@ -260,7 +260,7 @@ export default function Landing() {
                 <Box fontSize="28px" fontWeight="500" lineHeight="1">
                   01
                 </Box>
-                <Box fontSize="20px" fontWeight="500" lineHeight="22.5px" marginTop="5px" color="#161F36">
+                <Box fontSize="20px" lineHeight="22.5px" marginTop="5px" color="#161F36">
                   Tap Share icon at toolbar
                 </Box>
               </Box>
@@ -271,7 +271,7 @@ export default function Landing() {
                 <Box fontSize="28px" fontWeight="500" lineHeight="1">
                   02
                 </Box>
-                <Box fontSize="20px" fontWeight="500" lineHeight="22.5px" marginTop="5px" color="#161F36">
+                <Box fontSize="20px" lineHeight="22.5px" marginTop="5px" color="#161F36">
                   Tap “Add to Homescreen”
                 </Box>
               </Box>

@@ -5,15 +5,15 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
+import { get } from 'http';
 
 export interface ISettingStore {
   ignoreWebauthnOverride: boolean;
   setIgnoreWebauthnOverride: (val: boolean) => void;
   isDepositAllChecked: boolean;
-  setIsDepositAllChecked: (val: boolean) => void;
-  isAddedToHomeScreen: boolean;
-  setIsAddedToHomeScreen: (val: boolean) => void;
-  getIsAddedToHomeScreen: () => boolean;
+  lastAddedToHomeScreenTime: number;
+  setLastAddedToHomeScreenTime: (val: number) => void;
+  getShouldShowAddedToHomeScreen: () => boolean;
   // for lasting data
   guardianAddressEmail: { [address: string]: string };
   saveGuardianAddressEmail: (address: string, email: string) => void;
@@ -26,7 +26,7 @@ export interface ISettingStore {
 
 const createSettingSlice = immer<ISettingStore>((set, get) => ({
   isDepositAllChecked: false,
-  isAddedToHomeScreen: false,
+  lastAddedToHomeScreenTime: 0,
   guardianAddressEmail: {},
   guardianAddressName: {},
   saveGuardianAddressEmail: (address, email) => {
@@ -67,18 +67,14 @@ const createSettingSlice = immer<ISettingStore>((set, get) => ({
       };
     });
   },
-  setIsDepositAllChecked: (val: boolean) => {
-    set({
-      isDepositAllChecked: val,
-    });
+  getShouldShowAddedToHomeScreen: () => {
+    const now = new Date().getTime();
+    return now - get().lastAddedToHomeScreenTime > 24 * 60 * 60 * 1000;
   },
-  setIsAddedToHomeScreen: (val: boolean) => {
+  setLastAddedToHomeScreenTime: (val) => {
     set({
-      isAddedToHomeScreen: val,
+      lastAddedToHomeScreenTime: val,
     });
-  },
-  getIsAddedToHomeScreen: () => {
-    return get().isAddedToHomeScreen
   },
   ignoreWebauthnOverride: false,
   setIgnoreWebauthnOverride: (val: boolean) => {

@@ -40,7 +40,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
-  const { isDepositAllChecked, setIsDepositAllChecked } = useSettingStore();
+  const { isDepositAllChecked } = useSettingStore();
   const isAllChecked = (checked1 && checked2 && checked3) || isDepositAllChecked;
   const screenSize = useScreenSize()
   const contentHeight = isModal ? (screenSize.innerHeight - 140) : (screenSize.innerHeight - 64)
