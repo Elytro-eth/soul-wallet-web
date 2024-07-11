@@ -83,13 +83,13 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
         Share link with your recovery contacts
       </Box>
       <Box width="100%" textAlign="center" fontSize="14px" fontWeight="400" marginTop="12px" color="#676B75">
-        Ask your recovery contacts to recover for you
+        Ask them to connect wallet and sign the signature to recover for you.
       </Box>
-      <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="30px" marginBottom="40px">
+      <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="24px" marginBottom="40px">
         Share
       </Button>
       <Box fontWeight="500" fontSize="14px" width="100%" paddingTop="12px" paddingBottom="12px" borderTop="1px solid #BDC0C7" color="#161F36">
-        {pendingGuardianNum} more recovery contacts approval needed
+        {pendingGuardianNum} more confirmations needed
       </Box>
       {guardiansList &&
        guardiansList.map((guardianAddress: any, index: number) => {

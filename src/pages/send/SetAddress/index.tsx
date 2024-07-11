@@ -117,7 +117,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
       />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         <Box fontSize="28px" fontWeight="500" color="#161F36">
-          Recipient
+          Send
         </Box>
         <Box pos={"relative"} marginTop="24px">
           <Box>
@@ -184,7 +184,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
           {sendTo && disabled &&
            <Box display="flex" bottom="-20px" position="absolute" alignItems="center" justifyContent="flex-start" marginTop="5px">
              <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
-               {isSelf ? 'You cannot send to yourself' : disabled ? 'Invalid address' : ''}
+               {isSelf ? 'You cannot send to yourself' : disabled ? 'Invalid wallet address' : ''}
              </Box>
            </Box>
           }

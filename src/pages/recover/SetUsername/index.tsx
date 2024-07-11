@@ -10,12 +10,12 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
     <Box width="100%" padding="40px 30px" height="400px">
       <Box
         fontWeight="500"
-        fontSize="28px"
+        fontSize="22px"
         lineHeight="1"
         marginBottom="20px"
         color="#161F36"
       >
-        Enter username
+        Enter username/wallet address
       </Box>
       <Box width="100%" marginBottom="30px">
         <Input
@@ -27,7 +27,6 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
           autoFocus
           lineHeight="34px"
           fontWeight="500"
-          placeholder="Enter username or wallet address"
           border="none"
           outline="none"
           background="#F2F3F5"

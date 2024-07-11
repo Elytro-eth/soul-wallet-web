@@ -17,14 +17,14 @@ export default function RecoverSuccess({ doRecover, isRecovering }: any) {
       <Box width="144px" height="144px" marginBottom="40px" position="relative">
         <Image height="144px" src={RecoverSuccessIcon} />
       </Box>
-      <Box fontWeight="500" fontSize="28px" lineHeight="1" marginBottom="14px" color="#161F36">
+      <Box fontWeight="500" fontSize="28px" lineHeight="1" marginBottom="40px" color="#161F36">
         Recovery completed
       </Box>
-      <Box width="100%" marginBottom="40px" marginTop="8px">
+      {/* <Box width="100%" marginBottom="40px" marginTop="8px">
         <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" textAlign="center" color="#676B75">
           Your account has been recovered. Free to check it out!
         </Box>
-      </Box>
+      </Box> */}
       <Button width="100%" size="xl" type="gradientBlue" minWidth="195px" onClick={doRecover} loading={isRecovering}>
         Go to account
       </Button>
