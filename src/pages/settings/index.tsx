@@ -60,14 +60,14 @@ export default function Settings({ isModal, closeModal }: any) {
         alignItems="center"
         paddingBottom="24px"
       >
-        <Box
+        {/* <Box
           display="flex"
           alignItems="center"
           justifyContent="center"
           marginRight="12px"
         >
           <AddressIcon address={selectedAddress} width={48} />
-        </Box>
+        </Box> */}
         <Box fontSize="22px" lineHeight={"24pcx"} fontWeight="500">{walletName}</Box>
       </Box>
       <Box

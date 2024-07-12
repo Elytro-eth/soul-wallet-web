@@ -109,7 +109,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                   //  marginTop="12px"
                  >
             {/* <AddressIcon width={32} address={guardianAddress} /> */}
-            <Flex align={'center'} gap="2" ml={"2"}>
+            <Flex align={'center'} gap="2">
               <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
               {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
             </Flex>
@@ -129,7 +129,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                   <Box marginRight="4px">
                     <ApprovedIcon />
                   </Box>
-                  <Box>Approved</Box>
+                  <Box>Confirmed</Box>
                 </Box>
               ) : guardianAddressEmail[guardianAddress] ? (
                 <Button size="sm" type="lightBlue" height="31px" onClick={() => doOpenModal(guardianAddress)} color="#161F36">
@@ -185,7 +185,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                    alignItems="center"
                  >
             {/* <AddressIcon width={32} address={guardianAddress} /> */}
-            <Flex align={'center'} gap="2" ml={"2"}>
+            <Flex align={'center'} gap="2">
               <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
               {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
             </Flex>
@@ -205,24 +205,22 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                   <Box marginRight="4px">
                     <ApprovedIcon />
                   </Box>
-                  <Box>Approved</Box>
+                  <Box>Confirmed</Box>
                 </Box>
-              ) : guardianAddressEmail[guardianAddress] ? null : (
-                <Box
-                  color="#848488"
-                  background="#F3F3F3"
-                  padding="2px 12px"
-                  borderRadius="24px"
-                  display="flex"
-                  alignItems="center"
-                  height="31px"
-                >
-                  <Box marginRight="4px">
-                    <WaitingIcon />
-                  </Box>
-                  <Box>Waiting</Box>
-                </Box>
-              )}
+              ) : <Box
+              color="#848488"
+              background="#F3F3F3"
+              padding="2px 12px"
+              borderRadius="24px"
+              display="flex"
+              alignItems="center"
+              height="31px"
+            >
+              <Box marginRight="4px">
+                <WaitingIcon />
+              </Box>
+              <Box>Waiting</Box>
+            </Box>}
             </Box>
           </Box>
         })}
