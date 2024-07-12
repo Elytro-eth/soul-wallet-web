@@ -113,7 +113,7 @@ const buttonStyles = {
     },
     _disabled: {
       cursor: 'not-allowed',
-      opacity: '0.4'
+      opacity: '0.6'
     },
   },
   transparent: {
@@ -123,7 +123,7 @@ const buttonStyles = {
     border: '1px solid #BDC0C7',
     _disabled: {
       cursor: 'not-allowed',
-      opacity: '0.4'
+      opacity: '0.6'
     },
   },
   lightBlue: {
@@ -132,7 +132,7 @@ const buttonStyles = {
     _hover: { bg: '#DCE4F2' },
     _disabled: {
       cursor: 'not-allowed',
-      opacity: '0.4'
+      opacity: '0.6'
     },
   },
   text: {
@@ -141,7 +141,7 @@ const buttonStyles = {
     _hover: { bg: 'transparent' },
     _disabled: {
       cursor: 'not-allowed',
-      opacity: '0.4'
+      opacity: '0.6'
     },
   },
 };

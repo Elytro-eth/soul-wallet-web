@@ -44,7 +44,7 @@ export default function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { innerHeight } = useScreenSize();
   const { getShouldShowAddedToHomeScreen, setLastAddedToHomeScreenTime} = useSettingStore();
-  const marginHeight = innerHeight - ((innerHeight - 40) < 800 ? (innerHeight - 40) : 800);
+  const marginHeight = innerHeight - ((innerHeight - 40) < 620 ? (innerHeight - 40) : 620);
 
   const navigate = useNavigate();
   const doSignIn = async () => {
@@ -149,7 +149,7 @@ export default function Landing() {
             marginBottom="48px"
             color="rgba(0, 0, 0, 0.6)"
           >
-            Setup up new account to receive 
+            Setup up new account to receive
             10 USDC
           </Box>
           <Box
@@ -212,7 +212,7 @@ export default function Landing() {
               sm: `${marginHeight}px`,
               md: 'calc(50vh - 125px)',
             }}
-            height={(innerHeight - 40) < 800 ? (innerHeight - 40) : 800}
+            height={(innerHeight - 40) < 620 ? (innerHeight - 40) : 620}
             overflow="visible"
             mb="0"
             position="relative"

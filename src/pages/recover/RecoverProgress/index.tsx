@@ -28,6 +28,7 @@ import { shareUrl, toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
 import AddressIcon from '@/components/AddressIcon';
 import GuardianIcon from '@/assets/guardian.svg'
+import Guardian2Icon from '@/assets/guardian2.svg'
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function RecoverProgress({ onNext, signedGuardians }: any) {
@@ -71,88 +72,163 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
   return (
     <Box width="100%" height="100%" padding="30px" paddingTop="40px">
       <Box
-        marginBottom="40px"
-        height="116px"
+        padding="16px 24px"
+        borderRadius="20px"
         display="flex"
-        alignItems="center"
-        justifyContent="center"
+        background="radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)"
       >
-        <Image height="116px" src={GuardianIcon} />
+        <Box paddingRight="20px">
+          <Box fontSize="40px" fontWeight="500">{pendingGuardianNum}</Box>
+          <Box fontSize="18px" fontWeight="500" marginTop="4px">more confirmations needed to recover</Box>
+        </Box>
+        <Box>
+          <Image height="116px" src={Guardian2Icon} />
+        </Box>
       </Box>
-      <Box width="100%" textAlign="center" fontSize="28px" fontWeight="500" marginTop="20px" letterSpacing="-1px" color="#161F36">
-        Share link with your recovery contacts
-      </Box>
-      <Box width="100%" textAlign="center" fontSize="14px" fontWeight="400" marginTop="12px" color="#676B75">
-        Ask your recovery contacts to recover for you
-      </Box>
-      <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="30px" marginBottom="40px">
-        Share
-      </Button>
-      <Box fontWeight="500" fontSize="14px" width="100%" paddingTop="12px" paddingBottom="12px" borderTop="1px solid #BDC0C7" color="#161F36">
-        {pendingGuardianNum} more recovery contacts approval needed
-      </Box>
-      {guardiansList &&
-       guardiansList.map((guardianAddress: any, index: number) => {
-          const isEmail = guardianAddressEmail[guardianAddress] ? true : false;
-         const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
-         return <Box
-                  fontWeight="500"
-                  fontSize="14px"
-                  key={index}
-                  width="100%"
-                  padding="16px 0"
-                  height="64px"
-                  borderBottom="1px solid #F0F0F0"
-                  display="flex"
-                  alignItems="center"
-                >
-           <AddressIcon width={32} address={guardianAddress} />
-           <Flex align={'center'} gap="2" ml={"2"}>
-             <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
-             {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
-           </Flex>
-           <Box marginLeft="auto">
-             {(signedGuardians.includes(guardianAddress)) ? (
-               <Box
-                 color="#92EF5A"
-                 background="#1E4124"
-                 padding="2px 12px"
-                 borderRadius="24px"
-                 fontWeight="400"
-                 display="flex"
-                 alignItems="center"
-                 fontSize="12px"
-                 height="31px"
-               >
-                 <Box marginRight="4px">
-                   <ApprovedIcon />
+      <Box marginTop="40px">
+        <Box fontSize="20px" fontWeight="500" color="#161F36">
+          Wallet recovery contact
+        </Box>
+        {guardiansList &&
+         guardiansList.map((guardianAddress: any, index: number) => {
+           const isEmail = guardianAddressEmail[guardianAddress] ? true : false;
+           const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
+           return <Box
+                    fontWeight="500"
+                    fontSize="14px"
+                    key={index}
+                    width="100%"
+                    padding="16px 0"
+                    height="64px"
+                    borderBottom="1px solid #F0F0F0"
+                    display="flex"
+                    alignItems="center"
+                    marginTop="12px"
+                  >
+             <AddressIcon width={32} address={guardianAddress} />
+             <Flex align={'center'} gap="2" ml={"2"}>
+               <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
+               {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
+             </Flex>
+             <Box marginLeft="auto">
+               {(signedGuardians.includes(guardianAddress)) ? (
+                 <Box
+                   color="#92EF5A"
+                   background="#1E4124"
+                   padding="2px 12px"
+                   borderRadius="24px"
+                   fontWeight="400"
+                   display="flex"
+                   alignItems="center"
+                   fontSize="12px"
+                   height="31px"
+                 >
+                   <Box marginRight="4px">
+                     <ApprovedIcon />
+                   </Box>
+                   <Box>Approved</Box>
                  </Box>
-                 <Box>Approved</Box>
-               </Box>
-             ) : guardianAddressEmail[guardianAddress] ? (
-               <Button size="sm" type="lightBlue" height="31px" onClick={() => doOpenModal(guardianAddress)} color="#161F36">
-                 Verify Email
-               </Button>
-             ) : (
-               <Box
-                 color="#848488"
-                 background="#F3F3F3"
-                 padding="2px 12px"
-                 borderRadius="24px"
-                 display="flex"
-                 alignItems="center"
-                 height="31px"
-               >
-                 <Box marginRight="4px">
-                   <WaitingIcon />
+               ) : guardianAddressEmail[guardianAddress] ? (
+                 <Button size="sm" type="lightBlue" height="31px" onClick={() => doOpenModal(guardianAddress)} color="#161F36">
+                   Verify Email
+                 </Button>
+               ) : (
+                 <Box
+                   color="#848488"
+                   background="#F3F3F3"
+                   padding="2px 12px"
+                   borderRadius="24px"
+                   display="flex"
+                   alignItems="center"
+                   height="31px"
+                 >
+                   <Box marginRight="4px">
+                     <WaitingIcon />
+                   </Box>
+                   <Box>Waiting</Box>
                  </Box>
-                 <Box>Waiting</Box>
-               </Box>
-             )}
+               )}
+             </Box>
            </Box>
-         </Box>
-      })}
-      <Box height="90px" />
+        })}
+        <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="8px">
+          Share link
+        </Button>
+        <Box width="100%" fontSize="14px" fontWeight="400" marginTop="8px" color="#676B75">
+          Ask them to connect wallet and sign the signature to recover for you.
+        </Box>
+      </Box>
+      <Box marginTop="24px" borderTop="1px solid #BDC0C7" paddingTop="24px">
+        <Box fontSize="20px" fontWeight="500" color="#161F36">
+          Email recovery contact
+        </Box>
+        {guardiansList &&
+         guardiansList.map((guardianAddress: any, index: number) => {
+           const isEmail = guardianAddressEmail[guardianAddress] ? true : false;
+           const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
+           return <Box
+                    fontWeight="500"
+                    fontSize="14px"
+                    key={index}
+                    width="100%"
+                    padding="16px 0"
+                    height="64px"
+                    borderBottom="1px solid #F0F0F0"
+                    display="flex"
+                    alignItems="center"
+                    marginTop="12px"
+                  >
+             <AddressIcon width={32} address={guardianAddress} />
+             <Flex align={'center'} gap="2" ml={"2"}>
+               <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
+               {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
+             </Flex>
+             <Box marginLeft="auto">
+               {(signedGuardians.includes(guardianAddress)) ? (
+                 <Box
+                   color="#92EF5A"
+                   background="#1E4124"
+                   padding="2px 12px"
+                   borderRadius="24px"
+                   fontWeight="400"
+                   display="flex"
+                   alignItems="center"
+                   fontSize="12px"
+                   height="31px"
+                 >
+                   <Box marginRight="4px">
+                     <ApprovedIcon />
+                   </Box>
+                   <Box>Approved</Box>
+                 </Box>
+               ) : guardianAddressEmail[guardianAddress] ? (
+                 <Button size="sm" type="lightBlue" height="31px" onClick={() => doOpenModal(guardianAddress)} color="#161F36">
+                   Verify Email
+                 </Button>
+               ) : (
+                 <Box
+                   color="#848488"
+                   background="#F3F3F3"
+                   padding="2px 12px"
+                   borderRadius="24px"
+                   display="flex"
+                   alignItems="center"
+                   height="31px"
+                 >
+                   <Box marginRight="4px">
+                     <WaitingIcon />
+                   </Box>
+                   <Box>Waiting</Box>
+                 </Box>
+               )}
+             </Box>
+           </Box>
+        })}
+        <Button onClick={() => {}} size="xl" type="gradientBlue" width="100%" marginTop="8px">
+          Verify Email
+        </Button>
+      </Box>
+      <Box height="100px" />
     </Box>
   );
 }
