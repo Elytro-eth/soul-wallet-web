@@ -14,6 +14,7 @@ import Recover from '@/pages/recover';
 import Public from '@/pages/public';
 // import RecoverSign from '@/pages/public/RecoverSign';
 import Sign from '@/pages/public/Sign';
+import Lisence from '@/pages/public/Lisence';
 import GuardianSetting from '@/pages/settings/Guardian';
 import ManageGuardian from '@/pages/settings/Guardian/Manage';
 import IntroGuardian from '@/pages/settings/Guardian/Intro';
@@ -89,6 +90,10 @@ export const router = createBrowserRouter([
         path: 'sign/:recoverId',
         element: <Sign />
       },
+      {
+        path: 'lisence',
+        element: <Lisence />
+      }
     ],
   },
 ]);

@@ -7,6 +7,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalCloseButton,
+  ModalHeader,
   ModalBody,
   useDisclosure,
   Link,
@@ -28,6 +29,7 @@ import useTools from '@/hooks/useTools';
 import useConfig from '@/hooks/useConfig';
 import useScreenSize from '@/hooks/useScreenSize'
 import FadeId from '@/components/Icons/mobile/FaceId'
+import Circle from '@/components/Icons/mobile/Circle';
 
 export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, selectedToken }: any) {
   const { closeModal, closeFullScreenModal } = useWalletContext();
@@ -45,6 +47,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   const isTransferingRef = useRef(false);
   const { innerHeight } = useScreenSize()
   const marginHeight = innerHeight - 468;
+  const { isOpen: isSelectOpen, onOpen: onSelectOpen, onClose: onSelectClose } = useDisclosure();
 
   const [animated, setAnimated] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -209,10 +212,12 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         >
           Fee
         </Box>
-        <Box marginTop="8px" display="flex" alignItems="center">
-          <Box fontSize="22px" fontWeight="500" lineHeight="24.2px">
+        <Box marginTop="8px" display="flex" justifyContent="center" flexDirection="column">
+          <Box fontSize="22px" fontWeight="500" lineHeight="24.2px" textDecoration="line-through" onClick={onSelectOpen}>
             $0
           </Box>
+          <Box fontWeight="400" fontSize="12px" color="#2D3CBD">Sponsored by Soul Wallet</Box>
+          {false && <Box fontWeight="400" fontSize="12px" color="#E8424C">Insufficient ETH balance</Box>}
         </Box>
         {isSent && (
           <Box marginTop="24px" width="100%">
@@ -298,6 +303,122 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
             </Box>
             <Box width="100%">
               <Button size="xl" type="black" width="100%" onClick={onClose}>Got it</Button>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <Modal
+        isOpen={isSelectOpen}
+        onClose={onSelectClose}
+        motionPreset="slideInBottom"
+        blockScrollOnMount={true}
+      >
+        <ModalOverlay height="100vh" background="transparent" />
+        <ModalContent
+          borderRadius="24px"
+          justifyContent="flex-end"
+          maxW={{
+            sm: 'calc(100vw - 32px)',
+            md: '430px',
+          }}
+          marginTop={{
+            sm: `auto`,
+            md: 'calc(50vh - 125px)',
+          }}
+          overflow="visible"
+          mb="0"
+          bottom="30px"
+          position="relative"
+          overflowY="scroll"
+          boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+        >
+          <ModalCloseButton />
+          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Fee</ModalHeader>
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="center"
+            width="100%"
+            paddingLeft="0"
+            paddingRight="0"
+          >
+            <Box
+              background="white"
+              width="100%"
+              padding="0 16px"
+            >
+              <Box
+                width="calc(100%)"
+                position="relative"
+                display="flex"
+                alignItems="center"
+                height="72px"
+                background="#F2F3F5"
+                borderRadius="16px"
+                marginBottom="8px"
+                padding="16px"
+                onClick={() => { onSelectClose(); }}
+              >
+                <Box
+                  height="24px"
+                  width="24px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginRight="8px"
+                >
+                  <Circle active={true} />
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                >
+                  <Box fontWeight="500" fontSize="18px" color="#161F36">
+                    Sponsored by Soul Wallet
+                  </Box>
+                  <Box fontWeight="400" fontSize="12px" color="#161F36">
+                    Upto 0.4 ETH per day
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                width="calc(100%)"
+                position="relative"
+                display="flex"
+                alignItems="center"
+                height="72px"
+                background="#F2F3F5"
+                borderRadius="16px"
+                marginBottom="8px"
+                padding="16px"
+                onClick={() => { onSelectClose(); }}
+                opacity="0.6"
+              >
+                <Box
+                  height="24px"
+                  width="24px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginRight="8px"
+                >
+                  <Circle active={false} />
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                >
+                  <Box fontWeight="500" fontSize="18px" color="#161F36">
+                    Pay with ETH
+                  </Box>
+                  <Box fontWeight="400" fontSize="12px" color="#161F36">
+                    Balance: 0.001 ETH
+                  </Box>
+                </Box>
+              </Box>
             </Box>
           </ModalBody>
         </ModalContent>
