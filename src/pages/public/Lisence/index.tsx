@@ -112,7 +112,7 @@ const dependencies = [
 
 export default function Lisence() {
   return (
-    <Box overflowX="auto" overflowY={'auto'}>
+    <Box overflowX="auto" height="100%" overflowY={'auto'}>
       <Box mt="16" px="6">
         This page shows what third-party software is used in SoulWallet, including the respective licenses and versions.
         Thanks to all open source authors for their efforts to make the world better 😸
