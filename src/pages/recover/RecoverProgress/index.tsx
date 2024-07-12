@@ -156,7 +156,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
         })}
         {walletGurdians && walletGurdians.length && (
           <Box>
-            <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="8px">
+            <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="8px" height="50px" minHeight="50px">
               Share link
             </Button>
             <Box width="100%" fontSize="14px" fontWeight="400" marginTop="8px" color="#676B75">
@@ -228,12 +228,12 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           </Box>
         })}
         {emailGurdians && emailGurdians.length && (
-          <Button onClick={() => doOpenModal(emailGurdians[0].guardianAddress)} size="xl" type="gradientBlue" width="100%" marginTop="8px">
+          <Button onClick={() => doOpenModal(emailGurdians[0].guardianAddress)} size="xl" type="gradientBlue" width="100%" marginTop="8px" height="50px" minHeight="50px">
             Verify Email
           </Button>
         )}
       </Box>
-      <Box height="100px" />
+      <Box height="110px" />
     </Box>
   );
 }

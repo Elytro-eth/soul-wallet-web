@@ -151,7 +151,7 @@ export default function Settings({ isModal, closeModal }: any) {
             <Box>Join Telegram group</Box>
           </Box>
         </a>
-        <a style={{width: "100%"}}>
+        <Box width="100%" onClick={() => navigate('/public/lisence')}>
           <Box
             width="100%"
             height="56px"
@@ -173,7 +173,7 @@ export default function Settings({ isModal, closeModal }: any) {
             </Box>
             <Box>Third party software license</Box>
           </Box>
-        </a>
+        </Box>
       </Box>
       <Box width="100%" marginTop="auto" marginBottom="20px">
         <Button
