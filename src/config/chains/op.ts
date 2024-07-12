@@ -17,6 +17,7 @@ export default {
   bundlerUrl: `${import.meta.env.VITE_BACKEND_URL}/walletapi/bundler/optimism/rpc`,
   maxCostMultiplier: 120,
   chainId,
+  chainPrefix: 'oeth:',
   chainIdHex: `0x${(chainId).toString(16)}`,
   defaultMaxFee: '0.135',
   defaultMaxPriorityFee: '0',

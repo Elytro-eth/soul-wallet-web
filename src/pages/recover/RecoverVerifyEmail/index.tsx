@@ -46,7 +46,7 @@ export default function RecoverVerifyEmail() {
         color="#676B75"
         textAlign="center"
       >
-        Please send the following content via recovery email.
+        Please send the following content from your email recovery contact.
       </Box>
       <Box width="100%" padding="0 30px">
         <Box
@@ -74,7 +74,7 @@ export default function RecoverVerifyEmail() {
               padding="14.5px 12px"
               borderRadius="12px"
             >
-              <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">FROM</Box>
+              <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">From</Box>
               <Box fontSize="18px" color="#161F36">{emailTemplate.from || '...'}</Box>
             </Box>
             <Box
@@ -85,7 +85,7 @@ export default function RecoverVerifyEmail() {
               borderRadius="12px"
               marginTop="8px"
             >
-              <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">TO</Box>
+              <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">To</Box>
               <Box display="flex" alignItems="center" fontSize="18px" color="#161F36">
                 <Box>{emailTemplate.to || '...'}</Box>
                 <Box marginLeft="4px" onClick={()=> doCopy(emailTemplate.to)}><CopyIcon /></Box>
@@ -101,7 +101,7 @@ export default function RecoverVerifyEmail() {
               flexDirection="column"
             >
               <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
-                <Box>SUBJECT</Box>
+                <Box>Subject</Box>
                 <Box onClick={()=> doCopy(emailTemplate.subject)}><CopyIcon /></Box>
               </Box>
               <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
@@ -118,7 +118,7 @@ export default function RecoverVerifyEmail() {
               flexDirection="column"
             >
               <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
-                <Box>CONTENT</Box>
+                <Box>Content</Box>
               </Box>
               <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
                 <Box width="100%" color="#95979C">(Empty)</Box>

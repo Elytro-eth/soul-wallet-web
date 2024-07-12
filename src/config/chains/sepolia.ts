@@ -21,6 +21,7 @@ export default {
   bundlerUrl: `https://api-dev.stable.cash/bundler/eth-sepolia/rpc`,
   maxCostMultiplier: 110,
   chainId,
+  chainPrefix: 'sep:',
   chainIdHex: `0x${(chainId).toString(16)}`,
   defaultMaxFee: '1700000000',
   defaultMaxPriorityFee: '1500000000',

@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { ethers, Contract } from 'ethers';
 import BN from 'bignumber.js';
 import { chainIdMapping, chainMapping } from '@/config';
@@ -125,10 +124,6 @@ export const getMessageType = (msg: string) => {
   } else {
     return 'text';
   }
-};
-
-export const nextRandomId = () => {
-  return nanoid();
 };
 
 export const formatIPFS = (url: string) => {

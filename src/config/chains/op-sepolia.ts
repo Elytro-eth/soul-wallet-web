@@ -19,6 +19,7 @@ export default {
   bundlerUrl: `https://api-dev.soulwallet.io/walletapi/bundler/optimism-sepolia/rpc`,
   maxCostMultiplier: 120,
   chainId,
+  chainPrefix: 'opsep:',
   chainIdHex: `0x${(chainId).toString(16)}`,
   defaultMaxFee: '0.135',
   defaultMaxPriorityFee: '0',

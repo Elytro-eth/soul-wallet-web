@@ -17,6 +17,7 @@ export default {
   bundlerUrl: `https://api-dev.stable.cash/walletapi/bundler/base-sepolia/rpc`,
   maxCostMultiplier: 120,
   chainId,
+  chainPrefix: 'basesep:',
   chainIdHex: `0x${chainId.toString(16)}`,
   defaultMaxFee: '0.135',
   defaultMaxPriorityFee: '0',

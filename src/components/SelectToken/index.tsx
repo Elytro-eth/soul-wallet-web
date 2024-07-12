@@ -78,7 +78,7 @@ const SelectToken = ({ select, isOpen, onClose }: any) => {
                   <Image width="36px" height="36px" src={token.logoURI} />
                 </Box>
                 <Box fontSize="16px" fontWeight="500">{token.name}</Box>
-                <Box fontSize="12px" marginLeft="auto">{toFixed(token.tokenBalanceFormatted, 6)} Avail.</Box>
+                <Box fontSize="12px" marginLeft="auto" color="#95979C">Balance: {toFixed(token.tokenBalanceFormatted, 6)}</Box>
               </Box>
             )}
           </Box>

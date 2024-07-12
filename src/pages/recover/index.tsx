@@ -22,7 +22,7 @@ export default function Recover() {
   const { registerForRecover } = usePasskey();
   const toast = useToast();
   const navigate = useNavigate();
-  const [step, setStep] = useState(-1);
+  const [step, setStep] = useState(0);
   const [username, setUsername] = useState('');
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [accountInfo, setAccountInfo] = useState<any>(null);
@@ -44,10 +44,10 @@ export default function Recover() {
   };
 
   const onPrev = useCallback(() => {
-    if (step >= 0) {
+    if (step > 0) {
       setStep((prev) => prev - 1);
     } else {
-      navigate(-1);
+      navigate('/landing');
     }
   }, [step]);
 
@@ -202,9 +202,10 @@ export default function Recover() {
   }, [recoveryID]);
 
   const renderStep = () => {
-    if (step == -1) {
-      return <Intro onPrev={onPrev} onNext={onNext} />;
-    } else if (step == 0) {
+    // if (step == -1) {
+    //   return <Intro onPrev={onPrev} onNext={onNext} />;
+    // } else 
+    if (step == 0) {
       return (
         <SetUsername
           onPrev={onPrev}
