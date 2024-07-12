@@ -106,7 +106,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                   display="flex"
                   alignItems="center"
                 >
-           <AddressIcon width={32} address={guardianAddress} />
+           {/* <AddressIcon width={32} address={guardianAddress} /> */}
            <Flex align={'center'} gap="2" ml={"2"}>
              <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
              {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
