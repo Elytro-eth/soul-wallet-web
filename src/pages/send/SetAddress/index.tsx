@@ -14,6 +14,7 @@ import { isAddress } from 'ethers';
 import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
 import useScreenSize from '@/hooks/useScreenSize'
 import { useAddressStore } from '@/store/address';
+import useConfig from '@/hooks/useConfig';
 
 export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo, }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -22,6 +23,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
   const [isENSLoading, setIsENSLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [searchAddress, setSearchAddress] = useState('');
+  const { chainConfig } = useConfig();
   const [resolvedAddress, setResolvedAddress] = useState('');
   // const [step, setStep] = useState(0);
   // const [isSending, setIsSending] = useState(false);
@@ -200,7 +202,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
         </Box>
         <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
           <Box marginRight="8px"><Image w="32px" h="32px" src={OpIcon} /></Box>
-          <Box fontSize="20px" fontWeight="500">Optimism</Box>
+          <Box fontSize="20px" fontWeight="500">{chainConfig.chainName}</Box>
           <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center"><QuestionIcon /></Box>
         </Box>
         <Box
