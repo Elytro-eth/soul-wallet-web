@@ -213,7 +213,9 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           Fee
         </Box>
         <Box marginTop="8px" display="flex" justifyContent="center" flexDirection="column">
-          <Box fontSize="22px" fontWeight="500" lineHeight="24.2px" textDecoration="line-through" onClick={onSelectOpen}>
+          <Box fontSize="22px" fontWeight="500" lineHeight="24.2px" textDecoration="line-through"
+          //  onClick={onSelectOpen}
+           >
             $0
           </Box>
           <Box fontWeight="400" fontSize="12px" color="#2D3CBD">Sponsored by Soul Wallet</Box>
