@@ -89,7 +89,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
         </Box>
       </Box>
       <Box marginTop="40px">
-        <Box fontSize="20px" fontWeight="500" color="#161F36">
+        <Box fontSize="20px" fontWeight="500" mb="3" color="#161F36">
           Wallet recovery contact
         </Box>
         {walletGurdians.map((guardianAddress: any, index: number) => {
@@ -106,9 +106,9 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                    borderBottom={isLast ? '1px solid #F0F0F0' : ''}
                    display="flex"
                    alignItems="center"
-                   marginTop="12px"
+                  //  marginTop="12px"
                  >
-            <AddressIcon width={32} address={guardianAddress} />
+            {/* <AddressIcon width={32} address={guardianAddress} /> */}
             <Flex align={'center'} gap="2" ml={"2"}>
               <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
               {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
@@ -166,7 +166,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
         )}
       </Box>
       <Box marginTop="24px" borderTop="1px solid #BDC0C7" paddingTop="24px">
-        <Box fontSize="20px" fontWeight="500" color="#161F36">
+        <Box fontSize="20px" fontWeight="500" color="#161F36" mb="3">
           Email recovery contact
         </Box>
         {emailGurdians.map((guardianAddress: any, index: number) => {
@@ -183,9 +183,8 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                    borderBottom={isLast ? '1px solid #F0F0F0' : ''}
                    display="flex"
                    alignItems="center"
-                   marginTop="12px"
                  >
-            <AddressIcon width={32} address={guardianAddress} />
+            {/* <AddressIcon width={32} address={guardianAddress} /> */}
             <Flex align={'center'} gap="2" ml={"2"}>
               <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
               {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
@@ -228,7 +227,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           </Box>
         })}
         {emailGurdians && emailGurdians.length && (
-          <Button onClick={() => doOpenModal(emailGurdians[0].guardianAddress)} size="xl" type="gradientBlue" width="100%" marginTop="8px">
+          <Button onClick={() => doOpenModal(emailGurdians[0])} size="xl" type="gradientBlue" width="100%" marginTop="8px">
             Verify Email
           </Button>
         )}
