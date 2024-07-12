@@ -23,6 +23,7 @@ import { useGuardianStore } from '@/store/guardian';
 import { ZeroHash } from 'ethers';
 
 export default function Settings({ isModal, closeModal }: any) {
+  const { openFullScreenModal } = useWalletContext();
   const { walletName, selectedAddress } = useAddressStore();
   const { guardiansInfo, } = useGuardianStore();
   const { navigate } = useBrowser();
@@ -151,7 +152,7 @@ export default function Settings({ isModal, closeModal }: any) {
             <Box>Join Telegram group</Box>
           </Box>
         </a>
-        <Box width="100%" onClick={() => navigate('/public/lisence')}>
+        <Box width="100%" onClick={() => { closeModal(); openFullScreenModal('lisence')}}>
           <Box
             width="100%"
             height="56px"
