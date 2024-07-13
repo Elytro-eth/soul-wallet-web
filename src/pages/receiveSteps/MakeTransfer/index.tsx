@@ -44,7 +44,7 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
           color="#676B75"
           textAlign="center"
         >
-          {`Find the “Send” or “Transfer button” in your wallet or exchange account. And paste the address you copied from last step.`}
+          {`Find the “Send” or “Transfer” button in your wallet or exchange account. And paste the address you copied from last step.`}
         </Box>
         <Box
           width="100%"

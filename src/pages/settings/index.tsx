@@ -54,22 +54,22 @@ export default function Settings({ isModal, closeModal }: any) {
       paddingLeft="30px"
       paddingRight="30px"
     >
-      <Box
+      {/* <Box
         width="100%"
         display="flex"
         alignItems="center"
         paddingBottom="24px"
       >
-        {/* <Box
+        <Box
           display="flex"
           alignItems="center"
           justifyContent="center"
           marginRight="12px"
         >
           <AddressIcon address={selectedAddress} width={48} />
-        </Box> */}
+        </Box>
         <Box fontSize="22px" lineHeight={"24pcx"} fontWeight="500">{walletName}</Box>
-      </Box>
+      </Box> */}
       <Box
         display="flex"
         flexDirection="column"

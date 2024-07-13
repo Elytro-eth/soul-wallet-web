@@ -155,7 +155,7 @@ export default function Dashboard() {
   // const { openModal } = useNavigation()
   const [openModal] = useOutletContext<any>();
   const contentRef = useRef();
-  const [activeMenu, setActiveMenu] = useState('apps')
+  const [activeMenu, setActiveMenu] = useState('assets')
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const valueLeft = totalUsdValue.split('.')[0];
@@ -274,7 +274,7 @@ export default function Dashboard() {
           background="transparent"
           openMenu={onOpen}
         />
-        <Box
+        {/* <Box
           position="fixed"
           width="100vw"
           bottom="30px"
@@ -325,7 +325,7 @@ export default function Dashboard() {
               <Box>Assets</Box>
             </Box>
           </Box>
-        </Box>
+        </Box> */}
         <Box padding="8px" height={innerHeight - 64} overflowY="scroll">
           <Box
             ref={(v: any) => {
