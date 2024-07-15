@@ -25,7 +25,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
       <Box width="100%" marginBottom="30px">
         <Input
           // autoFocus
-          onChange={(e: any) => onChange(e.target.value)}
+          onChange={(e: any) => onChange((e.target.value).toLowerCase())}
           onBlur={(e: any) => onBlur(e.target.value)}
           value={email}
           height="56px"

@@ -73,7 +73,8 @@ export default function Manage() {
   const navigate = useNavigate();
   const guardianMenuRef = useRef<any>()
   const thresholdMenuRef = useRef<any>()
-  const [onPrev] = useOutletContext<any>()
+
+  // each user can have max up to 1 email guardian and 9 wallet guardian
 
   useOutsideClick({
     ref: guardianMenuRef,
@@ -190,7 +191,9 @@ export default function Manage() {
     }
   }, [tempGuardians])
 
-  const isActiveGuardianEmail = guardianAddressEmail[tempGuardians[activeGuardianIndex]];
+  // const isActiveGuardianEmail = guardianAddressEmail[tempGuardians[activeGuardianIndex]];
+  const emailGuardianCount = tempGuardians.filter((guardianAddress:any) => guardianAddressEmail[guardianAddress]).length;
+  const walletGuardianCount = tempGuardians.length - emailGuardianCount;
 
   return (
     <Box width="100%" height="100%" display="flex" flexDirection="column">
@@ -235,7 +238,7 @@ export default function Manage() {
             </Box>
           ))}
         </Box>
-        {isEditing && (
+        {isEditing && tempGuardians.length < 10 && (
           <Box marginBottom="40px" position="relative">
             <Box>
               <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
@@ -497,7 +500,7 @@ export default function Manage() {
               width="100%"
               padding="0 16px"
             >
-              <Box
+              {walletGuardianCount < 9 && <Box
                 width="calc(100%)"
                 position="relative"
                 padding="0 16px"
@@ -513,8 +516,8 @@ export default function Manage() {
                 <Box fontWeight="500" fontSize="18px" color="#161F36">
                   Wallet address
                 </Box>
-              </Box>
-              <Box
+              </Box>}
+              {emailGuardianCount < 1 && <Box
                 width="calc(100%)"
                 position="relative"
                 padding="0 16px"
@@ -530,7 +533,7 @@ export default function Manage() {
                 <Box fontWeight="500" fontSize="18px" color="#161F36">
                   Email
                 </Box>
-              </Box>
+              </Box>}
             </Box>
           </ModalBody>
         </ModalContent>

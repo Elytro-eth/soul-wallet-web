@@ -3,6 +3,7 @@ import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import SetEmail from './SetEmail';
 import ConfirmEmail from './ConfirmEmail';
+import ConfirmTempEmail from './ConfirmTempEmail';
 import ConfirmGuardians from './ConfirmGuardians';
 import { useNavigate } from 'react-router-dom';
 import api from '@/lib/api';
@@ -249,7 +250,11 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
       );
     } else if (step == 1) {
       return (verifyToken && (verifyStatus === 2 || verifyStatus === 3)) ? (
-        <ConfirmGuardians
+        callback ? <ConfirmTempEmail  changingGuardian={changingGuardian}
+        onPrev={onPrev}
+        onChangeGuardian={doChangeGuardian}
+        isModal={isModal}/> :
+         <ConfirmGuardians
           changingGuardian={changingGuardian}
           onPrev={onPrev}
           onChangeGuardian={doChangeGuardian}

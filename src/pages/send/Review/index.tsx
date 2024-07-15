@@ -27,8 +27,8 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 import useWallet from '@/hooks/useWallet';
 import useTools from '@/hooks/useTools';
 import useConfig from '@/hooks/useConfig';
-import useScreenSize from '@/hooks/useScreenSize'
-import FadeId from '@/components/Icons/mobile/FaceId'
+import useScreenSize from '@/hooks/useScreenSize';
+import FadeId from '@/components/Icons/mobile/FaceId';
 import Circle from '@/components/Icons/mobile/Circle';
 
 export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, selectedToken }: any) {
@@ -45,7 +45,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);
   const isTransferingRef = useRef(false);
-  const { innerHeight } = useScreenSize()
+  const { innerHeight } = useScreenSize();
   const marginHeight = innerHeight - 468;
   const { isOpen: isSelectOpen, onOpen: onSelectOpen, onClose: onSelectClose } = useDisclosure();
 
@@ -90,9 +90,9 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
     if (userOpRef.current) {
       try {
         setIsSending(true);
-        const res:any = await signAndSend(userOpRef.current);
-        console.log('tx result', res)
-        setTxHash(res.transactionHash)
+        const res: any = await signAndSend(userOpRef.current);
+        console.log('tx result', res);
+        setTxHash(res.transactionHash);
         isTransferingRef.current = false;
         isCompletedRef.current = true;
         setAnimated(false);
@@ -145,12 +145,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         )}
         <Box marginTop="24px">
-          <Box
-            fontSize="14px"
-            lineHeight="17.5px"
-            fontWeight="400"
-            color="#95979C"
-          >
+          <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" color="#95979C">
             Send
           </Box>
           <Box marginTop="8px" display="flex" alignItems="center">
@@ -163,16 +158,19 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           </Box>
         </Box>
         <Box marginTop="24px">
-          <Box
-            fontSize="14px"
-            lineHeight="17.5px"
-            fontWeight="400"
-            color="#95979C"
-          >
+          <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" color="#95979C">
             To
           </Box>
-          <Box marginTop="8px" alignItems="center" width="100%" fontWeight={"500"} display="inline-block" lineHeight="24.2px">
+          <Box
+            marginTop="8px"
+            alignItems="center"
+            width="100%"
+            fontWeight={'500'}
+            display="inline-block"
+            lineHeight="24.2px"
+          >
             <Box as="span" fontSize="22px">
+              {chainConfig.chainPrefix}
               {sendTo.slice(0, 6)}
             </Box>
             <Box as="span" fontSize="22px" color="rgba(0, 0, 0, 0.4)">
@@ -183,13 +181,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
             </Box>
           </Box>
         </Box>
-        <Box
-          fontSize="14px"
-          lineHeight="17.5px"
-          fontWeight="400"
-          color="#95979C"
-          marginTop="24px"
-        >
+        <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" color="#95979C" marginTop="24px">
           Network
         </Box>
         <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
@@ -203,33 +195,42 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
             <QuestionIcon />
           </Box>
         </Box>
-        <Box
-          fontSize="14px"
-          lineHeight="17.5px"
-          fontWeight="400"
-          color="#95979C"
-          marginTop="24px"
-        >
+        <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" color="#95979C" marginTop="24px">
           Fee
         </Box>
         <Box marginTop="8px" display="flex" justifyContent="center" flexDirection="column">
-          <Box fontSize="22px" fontWeight="500" lineHeight="24.2px" textDecoration="line-through"
-          //  onClick={onSelectOpen}
-           >
+          <Box
+            fontSize="22px"
+            fontWeight="500"
+            lineHeight="24.2px"
+            textDecoration="line-through"
+            //  onClick={onSelectOpen}
+          >
             $0
           </Box>
-          <Box fontWeight="400" fontSize="12px" color="#2D3CBD">Sponsored by Soul Wallet</Box>
-          {false && <Box fontWeight="400" fontSize="12px" color="#E8424C">Insufficient ETH balance</Box>}
+          <Box fontWeight="400" fontSize="12px" color="#2D3CBD">
+            Sponsored by Soul Wallet
+          </Box>
+          {false && (
+            <Box fontWeight="400" fontSize="12px" color="#E8424C">
+              Insufficient ETH balance
+            </Box>
+          )}
         </Box>
         {isSent && (
           <Box marginTop="24px" width="100%">
             <Box width="100%" marginBottom="8px">
-              <Button width="calc(100%)" size="xl" type="gradientBlue" onClick={()=> closeFullScreenModal()}>
+              <Button width="calc(100%)" size="xl" type="gradientBlue" onClick={() => closeFullScreenModal()}>
                 Done
               </Button>
             </Box>
             <Box width="100%">
-              <Button width="calc(100%)" onClick={()=>doCopy(`${chainConfig.scanUrl}/tx/${txHash}`)} size="xl" type="white">
+              <Button
+                width="calc(100%)"
+                onClick={() => doCopy(`${chainConfig.scanUrl}/tx/${txHash}`)}
+                size="xl"
+                type="white"
+              >
                 Copy transaction link
               </Button>
             </Box>
@@ -237,15 +238,25 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         )}
         {!isSent && (
           <Box marginTop="24px" width="100%" display="flex">
-            {!isSending && <Box width="50%" paddingRight="7px">
-              <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
-                Back
-              </Button>
-            </Box>}
-            <Box width={isSending ? '100%' : "50%"} paddingLeft="7px">
-              <Button width="calc(100% - 7px)" disabled={isSending} size="xl" type="gradientBlue" onClick={() => onTransfer()}>
+            {!isSending && (
+              <Box width="50%" paddingRight="7px">
+                <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
+                  Back
+                </Button>
+              </Box>
+            )}
+            <Box width={isSending ? '100%' : '50%'} paddingLeft="7px">
+              <Button
+                width="calc(100% - 7px)"
+                disabled={isSending}
+                size="xl"
+                type="gradientBlue"
+                onClick={() => onTransfer()}
+              >
                 <Box display="flex" alignItems="center" justifyContent="center">
-                  <Box marginRight="8px"><FadeId /></Box>
+                  <Box marginRight="8px">
+                    <FadeId />
+                  </Box>
                   <Box>{isSending ? 'Sending' : 'Continue'}</Box>
                 </Box>
               </Button>
@@ -273,48 +284,26 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           mb="0"
         >
           <ModalCloseButton />
-          <ModalBody
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            justifyContent="center"
-            width="100%"
-          >
-            <Box
-              background="#D9D9D9"
-              height="96px"
-              width="96px"
-              borderRadius="80px"
-              marginBottom="30px"
-            >
-              <Image
-                height="96px"
-                width="96px"
-                src={OpIcon}
-              />
+          <ModalBody display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center" width="100%">
+            <Box background="#D9D9D9" height="96px" width="96px" borderRadius="80px" marginBottom="30px">
+              <Image height="96px" width="96px" src={OpIcon} />
             </Box>
             <Box fontSize="28px" fontWeight="500" marginBottom="14px" color="#161F36">
               Optimism network
             </Box>
-            <Box
-              fontSize="14px"
-              marginBottom="40px"
-              color="#676B75"
-            >
-              Optimism is a Layer-2 scaling network for Ethereum that operates under a four-pillar design philosophy of simplicity, pragmatism, sustainability, and optimism.
+            <Box fontSize="14px" marginBottom="40px" color="#676B75">
+              Optimism is a Layer-2 scaling network for Ethereum that operates under a four-pillar design philosophy of
+              simplicity, pragmatism, sustainability, and optimism.
             </Box>
             <Box width="100%">
-              <Button size="xl" type="black" width="100%" onClick={onClose}>Got it</Button>
+              <Button size="xl" type="black" width="100%" onClick={onClose}>
+                Got it
+              </Button>
             </Box>
           </ModalBody>
         </ModalContent>
       </Modal>
-      <Modal
-        isOpen={isSelectOpen}
-        onClose={onSelectClose}
-        motionPreset="slideInBottom"
-        blockScrollOnMount={true}
-      >
+      <Modal isOpen={isSelectOpen} onClose={onSelectClose} motionPreset="slideInBottom" blockScrollOnMount={true}>
         <ModalOverlay height="100vh" background="transparent" />
         <ModalContent
           borderRadius="24px"
@@ -335,7 +324,9 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
         >
           <ModalCloseButton />
-          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Fee</ModalHeader>
+          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">
+            Fee
+          </ModalHeader>
           <ModalBody
             display="flex"
             flexDirection="column"
@@ -345,11 +336,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
             paddingLeft="0"
             paddingRight="0"
           >
-            <Box
-              background="white"
-              width="100%"
-              padding="0 16px"
-            >
+            <Box background="white" width="100%" padding="0 16px">
               <Box
                 width="calc(100%)"
                 position="relative"
@@ -360,7 +347,9 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 borderRadius="16px"
                 marginBottom="8px"
                 padding="16px"
-                onClick={() => { onSelectClose(); }}
+                onClick={() => {
+                  onSelectClose();
+                }}
               >
                 <Box
                   height="24px"
@@ -372,11 +361,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 >
                   <Circle active={true} />
                 </Box>
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column"
-                >
+                <Box display="flex" justifyContent="center" flexDirection="column">
                   <Box fontWeight="500" fontSize="18px" color="#161F36">
                     Sponsored by Soul Wallet
                   </Box>
@@ -395,7 +380,9 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 borderRadius="16px"
                 marginBottom="8px"
                 padding="16px"
-                onClick={() => { onSelectClose(); }}
+                onClick={() => {
+                  onSelectClose();
+                }}
                 opacity="0.6"
               >
                 <Box
@@ -408,11 +395,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 >
                   <Circle active={false} />
                 </Box>
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column"
-                >
+                <Box display="flex" justifyContent="center" flexDirection="column">
                   <Box fontWeight="500" fontSize="18px" color="#161F36">
                     Pay with ETH
                   </Box>
