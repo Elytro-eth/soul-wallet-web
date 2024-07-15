@@ -34,10 +34,12 @@ import { useSettingStore } from '@/store/setting';
 import { isPwaMode } from '@/lib/tools';
 import ThemePage from '@/components/ThemeChange';
 import { useTempStore } from '@/store/temp';
+import { useAddressStore } from '@/store/address';
 
 export default function Landing() {
   const [loaded, setLoaded] = useState(false);
   const { loginWallet } = useWallet();
+  const { selectedAddress } = useAddressStore();
   const { sevenDayApy } = useBalanceStore();
   const [logging, setLogging] = useState(false);
   const { clearTempInfo } = useTempStore();
@@ -110,6 +112,12 @@ export default function Landing() {
     clearTempInfo();
     navigate('/recover')
   }
+
+  useEffect(()=>{
+    if(selectedAddress){
+      navigate('/dashboard')
+    }
+  }, [selectedAddress])
 
   return (
     <ThemePage themeColor="#f9f5f2">
