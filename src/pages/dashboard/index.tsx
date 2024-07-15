@@ -334,7 +334,7 @@ export default function Dashboard() {
             display="flex"
             flexDirection="column"
           >
-            {(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash) && (
+            {(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash) && (
               <Box
                 paddingLeft="8px"
                 paddingRight="8px"

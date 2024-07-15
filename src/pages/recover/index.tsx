@@ -16,7 +16,7 @@ import { useSettingStore } from '@/store/setting';
 import useWallet from '@/hooks/useWallet';
 import useQuery from '@/hooks/useQuery';
 import RecoverProcess from './RecoverProcess';
-import useScreenSize from '@/hooks/useScreenSize'
+import useScreenSize from '@/hooks/useScreenSize';
 
 export default function Recover() {
   const { registerForRecover } = usePasskey();
@@ -27,13 +27,13 @@ export default function Recover() {
   const [addingPasskey, setAddingPasskey] = useState(false);
   const [accountInfo, setAccountInfo] = useState<any>(null);
   const [isWalletNotFound, setIsWalletNotFound] = useState(false);
-  const { boostAfterRecovered } = useWallet();
+  const { loginWallet, boostAfterRecovered } = useWallet();
   const { fetchPublicGuardianInfo } = useQuery();
   const [timer, setTimer] = useState<any>();
   const [checkingUsername, setCheckingUsername] = useState(false);
   const [isRecovering, setIsRecovering] = useState(false);
   const [signedGuardians, setSignedGuardians] = useState<any>([]);
-  const { innerHeight } = useScreenSize()
+  const { innerHeight } = useScreenSize();
 
   const { recoverInfo, updateRecoverInfo } = useTempStore();
   const { recoveryID } = recoverInfo;
@@ -57,7 +57,7 @@ export default function Recover() {
   }, [step]);
 
   const onCreatePasskey = async () => {
-    try{
+    try {
       setAddingPasskey(true);
       // create credential
       const credential = await registerForRecover(accountInfo.name);
@@ -84,7 +84,7 @@ export default function Recover() {
       } finally {
         setAddingPasskey(false);
       }
-    }catch(err){
+    } catch (err) {
       setAddingPasskey(false);
     }
   };
@@ -131,7 +131,7 @@ export default function Recover() {
   };
 
   useEffect(() => {
-    if(!username) return
+    if (!username) return;
     setCheckingUsername(true);
     debounce(() => {
       checkUsername();
@@ -146,7 +146,9 @@ export default function Recover() {
         if (res.msg === 'executeRecovery tirggered' || res.msg === 'recovery already executed') {
           const recoverRecord = await getPreviousRecord();
           await boostAfterRecovered(recoverRecord);
-          // todo, need to get jwt again
+          // trigger login again, and use current credential id
+          // await loginWallet();
+          // navigate('/dashboard');
           navigate('/landing');
           break;
         }
@@ -204,7 +206,7 @@ export default function Recover() {
   const renderStep = () => {
     // if (step == -1) {
     //   return <Intro onPrev={onPrev} onNext={onNext} />;
-    // } else 
+    // } else
     if (step == 0) {
       return (
         <SetUsername
@@ -233,13 +235,15 @@ export default function Recover() {
       {step < 4 && (
         <Fragment>
           {step === -1 && <Header title="" showLogo={true} />}
-          {step > -1 && <Header title={step < 3 ? 'Recover account' : ''} showBackButton={step < 3} step={step} onBack={onPrev} />}
+          {step > -1 && (
+            <Header title={step < 3 ? 'Recover account' : ''} showBackButton={step < 3} step={step} onBack={onPrev} />
+          )}
         </Fragment>
       )}
       {step > -1 && step < 3 && <ProgressBar size={3} activeIndex={step} />}
       {step > -1 && step < 3 && <RecoverProcess step={step} />}
       <Box
-        height={(step < 4) ? (innerHeight - 64) : innerHeight}
+        height={step < 4 ? innerHeight - 64 : innerHeight}
         overflowY="auto"
         display="flex"
         alignItems="flex-start"
