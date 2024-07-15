@@ -8,7 +8,7 @@ import useWallet from '@/hooks/useWallet';
 import { Link, useNavigate } from 'react-router-dom';
 import useBrowser from '@/hooks/useBrowser';
 import useScreenSize from '@/hooks/useScreenSize'
-import WelcomeIcon from '@/assets/welcome.svg'
+import WelcomeIcon from '@/assets/account-ready.png'
 
 export default function CreateSuccess({ credential, username, invitationCode }: any) {
   const { getActivateOp, signAndSend } = useWallet();

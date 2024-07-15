@@ -47,8 +47,8 @@ export default function useWallet() {
   const { clearLogData } = useTools();
   const { selectedAddress, setSelectedAddress, setWalletName, setAddressList } = useAddressStore();
 
-  const loginWallet = async () => {
-    const { credential, challenge, authentication } = await authenticateLogin();
+  const loginWallet = async (credentialId?: string) => {
+    const { credential, challenge, authentication } = await authenticateLogin(credentialId);
     try {
       const res: any = await api.account.get({
         ownerKey: credential.onchainPublicKey,

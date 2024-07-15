@@ -197,10 +197,10 @@ export default function usePasskey() {
 
       console.log('Registered: ', JSON.stringify(registration, null, 2));
 
-      const verifiedRegistration = await server.verifyRegistration(registration, {
-        challenge,
-        origin: location.origin,
-      });
+      // const verifiedRegistration = await server.verifyRegistration(registration, {
+      //   challenge,
+      //   origin: location.origin,
+      // });
 
       const onchainPublicKey = await getPublicKey(registration.credential);
 
@@ -325,12 +325,12 @@ export default function usePasskey() {
     };
   };
 
-  const authenticateLogin = async () => {
+  const authenticateLogin = async (desiredCredentialId?: string) => {
     // get challenge
     const challengeRes = await api.auth.challenge({});
     const challenge = challengeRes.data.challenge;
 
-    let authentication = await client.authenticate([], challenge, {
+    let authentication = await client.authenticate(desiredCredentialId ? [desiredCredentialId] : [], challenge, {
       userVerification: 'required',
     });
     // authentication method will return credentialId, but not id.

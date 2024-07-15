@@ -147,10 +147,13 @@ export default function Recover() {
           const recoverRecord = await getPreviousRecord();
           await boostAfterRecovered(recoverRecord);
           // trigger login again, and use current credential id
-          // await loginWallet();
-          // navigate('/dashboard');
-          navigate('/landing');
-          break;
+          try{
+            // with credential id
+            await loginWallet();
+          }finally{
+            navigate('/dashboard');
+            break;
+          }
         }
       }
     } catch (err: any) {

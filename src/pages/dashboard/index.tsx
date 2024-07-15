@@ -142,6 +142,7 @@ export default function Dashboard() {
   const { openFullScreenModal } = useWalletContext();
   const { totalUsdValue, totalTrialValue, tokenBalance } = useBalanceStore();
   const { historyList } = useHistoryStore();
+  const { selectedAddress } = useAddressStore();
   const { innerHeight } = useScreenSize();
   const [modalMargin, setModalMargin] = useState(494);
   const [modalHeight, setModalHeight] = useState(innerHeight - 494);
@@ -176,14 +177,21 @@ export default function Dashboard() {
     console.log('contentRef', contentRef);
   }, []);
 
-  const handleStart = (position: any) => {
-    setStartPosition(position);
-  };
+  useEffect(()=>{
+    if(!selectedAddress){
+      navigate('/landing')
+    }
 
-  const openActivity = () => {
-    console.log('openActivity');
-    openModal('activity');
-  };
+  }, [selectedAddress])
+
+  // const handleStart = (position: any) => {
+  //   setStartPosition(position);
+  // };
+
+  // const openActivity = () => {
+  //   console.log('openActivity');
+  //   openModal('activity');
+  // };
 
   const handleMove = (currentPosition: any) => {
     if (startPosition == null) return;
