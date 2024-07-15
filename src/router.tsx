@@ -4,7 +4,6 @@ import PublicWrapper from './wrapper/PublicWrapper';
 import Dashboard from '@/pages/dashboard';
 import Create from '@/pages/create';
 import Deposit from '@/pages/deposit';
-import Withdraw from '@/pages/withdraw';
 import VerifySecret from '@/pages/public/VerifySecret';
 import Landing from '@/pages/landing';
 import VerifyEmail from '@/pages/verifyEmail';
@@ -46,10 +45,6 @@ export const router = createBrowserRouter([
           {
             path: '/deposit',
             element: <Deposit />,
-          },
-          {
-            path: '/withdraw',
-            element: <Withdraw />,
           },
           {
             path: '/landing',

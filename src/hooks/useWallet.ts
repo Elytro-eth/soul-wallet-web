@@ -110,7 +110,7 @@ export default function useWallet() {
     navigate('/landing');
   };
 
-  const getTransferEthOp = async (amount: string, to: string) => {
+  const getTransferEthOp = async (amount: string, to: string, skipSponsor: boolean) => {
     const ethBalance = getTokenBalance(ZeroAddress)?.tokenBalanceFormatted;
 
     let txs = [];
@@ -130,10 +130,10 @@ export default function useWallet() {
       value: parseEther(amount).toString(),
     });
 
-    return await getUserOp(txs);
+    return await getUserOp(txs, skipSponsor);
   };
 
-  const getTransferErc20Op = async (amount: string, to: string, tokenAddress: string) => {
+  const getTransferErc20Op = async (amount: string, to: string, skipSponsor: boolean, tokenAddress: string) => {
     const erc20 = new ethers.Interface(erc20Abi);
 
     const erc20Balance = getTokenBalance(tokenAddress)?.tokenBalanceFormatted;
@@ -154,7 +154,7 @@ export default function useWallet() {
       data: erc20.encodeFunctionData('transfer', [to, ethers.parseUnits(String(amount), 6)]),
     });
 
-    return await getUserOp(txs);
+    return await getUserOp(txs, skipSponsor);
   };
 
   const getChangeGuardianOp = async (newGuardianHash: string) => {
@@ -219,7 +219,7 @@ export default function useWallet() {
     return userOp;
   };
 
-  const getUserOp: any = async (txns: any) => {
+  const getUserOp: any = async (txns: any, skipSponsor: boolean) => {
     try {
       const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
 
@@ -231,7 +231,9 @@ export default function useWallet() {
 
       let userOp = userOpRet.OK;
 
-      userOp = await getSponsor(userOp);
+      if(!skipSponsor){
+        userOp = await getSponsor(userOp);
+      }
 
       return userOp;
     } catch (err: any) {

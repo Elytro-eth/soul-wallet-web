@@ -15,7 +15,6 @@ import AddressIcon from '@/components/AddressIcon';
 import Settings from '@/pages/settings'
 import Activity from '@/pages/activity'
 import Deposit from '@/pages/deposit'
-import Withdraw from '@/pages/withdraw'
 import Send from '@/pages/send'
 import Receive from '@/pages/receive'
 import ReceiveSteps from '@/pages/receiveSteps'
@@ -85,8 +84,6 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
       return <Details isModal={true} {...props} />
     } else if (name === 'deposit') {
       return <Deposit isModal={true} {...props} />
-    } else if (name === 'withdraw') {
-      return <Withdraw isModal={true} {...props} />
     } else if (name === 'send') {
       return <Send isModal={true} {...props} />
     } else if (name === 'receive') {

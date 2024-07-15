@@ -11,10 +11,12 @@ import {
   ModalBody,
   useDisclosure,
   Link,
+  Flex,
 } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import Header from '@/components/mobile/Header';
 import QuestionIcon from '@/components/Icons/Question';
+import IconChevronRight from '@/assets/icons/chevron-right-fee.svg';
 import SendingIcon from '@/components/Icons/mobile/Sending';
 import SentIcon from '@/components/Icons/mobile/Sent';
 import { useBalanceStore } from '@/store/balance';
@@ -39,6 +41,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   const [txHash, setTxHash] = useState('');
   const [isSending, setIsSending] = useState(false);
   const { doCopy } = useTools();
+  const [useSponsor, setUseSponsor] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const { getTokenBalance } = useBalanceStore();
   const executingRef = useRef(false);
@@ -55,10 +58,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   const prepareAction = async () => {
     try {
       if (tokenAddress === ZeroAddress) {
-        const _userOp = await getTransferEthOp(String(amount), sendTo);
+        const _userOp = await getTransferEthOp(String(amount), sendTo, !useSponsor);
         userOpRef.current = _userOp;
       } else {
-        const _userOp = await getTransferErc20Op(String(amount), sendTo, tokenAddress);
+        const _userOp = await getTransferErc20Op(String(amount), sendTo, !useSponsor, tokenAddress);
         userOpRef.current = _userOp;
       }
     } catch (e) {
@@ -199,23 +202,24 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           Fee
         </Box>
         <Box marginTop="8px" display="flex" justifyContent="center" flexDirection="column">
-          <Box
-            fontSize="22px"
-            fontWeight="500"
-            lineHeight="24.2px"
-            textDecoration="line-through"
-            //  onClick={onSelectOpen}
-          >
-            $0
-          </Box>
-          <Box fontWeight="400" fontSize="12px" color="#2D3CBD">
-            Sponsored by Soul Wallet
-          </Box>
-          {false && (
-            <Box fontWeight="400" fontSize="12px" color="#E8424C">
-              Insufficient ETH balance
+          <Flex gap="1" align="center" onClick={() => !isSent && onSelectOpen()}>
+            <Box fontSize="22px" fontWeight="500" lineHeight="24.2px" textDecoration={useSponsor ? 'line-through' : ''}>
+              $0
             </Box>
-          )}
+            {!isSent && <Image src={IconChevronRight} />}
+          </Flex>
+          <Box h="32px">
+            {useSponsor && (
+              <Box fontWeight="400" fontSize="12px" color="#2D3CBD">
+                Sponsored by Soul Wallet
+              </Box>
+            )}
+            {false && (
+              <Box fontWeight="400" fontSize="12px" color="#E8424C">
+                Insufficient ETH balance
+              </Box>
+            )}
+          </Box>
         </Box>
         {isSent && (
           <Box marginTop="24px" width="100%">
@@ -348,8 +352,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 marginBottom="8px"
                 padding="16px"
                 onClick={() => {
+                  setUseSponsor(true);
                   onSelectClose();
                 }}
+                opacity={useSponsor ? 1 : 0.6}
               >
                 <Box
                   height="24px"
@@ -359,7 +365,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                   justifyContent="center"
                   marginRight="8px"
                 >
-                  <Circle active={true} />
+                  <Circle active={useSponsor} />
                 </Box>
                 <Box display="flex" justifyContent="center" flexDirection="column">
                   <Box fontWeight="500" fontSize="18px" color="#161F36">
@@ -381,9 +387,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 marginBottom="8px"
                 padding="16px"
                 onClick={() => {
+                  setUseSponsor(false);
                   onSelectClose();
                 }}
-                opacity="0.6"
+                opacity={useSponsor ? 0.6 : 1}
               >
                 <Box
                   height="24px"
@@ -393,7 +400,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                   justifyContent="center"
                   marginRight="8px"
                 >
-                  <Circle active={false} />
+                  <Circle active={!useSponsor} />
                 </Box>
                 <Box display="flex" justifyContent="center" flexDirection="column">
                   <Box fontWeight="500" fontSize="18px" color="#161F36">
