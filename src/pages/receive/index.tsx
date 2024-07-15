@@ -31,6 +31,7 @@ import ReceiveCode from '@/components/ReceiveCode';
 import useTools from '@/hooks/useTools';
 import useScreenSize from '@/hooks/useScreenSize';
 import useConfig from '@/hooks/useConfig';
+import { isPwaMode } from '@/lib/tools';
 
 export default function Receive({ isModal, registerScrollable }: any) {
   const { closeModal } = useWalletContext();
@@ -45,6 +46,8 @@ export default function Receive({ isModal, registerScrollable }: any) {
   const { selectedChainId } = useChainStore();
   const { openModal } = useWalletContext();
   const { innerHeight } = useScreenSize();
+
+  const isPwa = isPwaMode();
 
   const onPrev = useCallback(async () => {
     console.log('prev');
@@ -173,8 +176,12 @@ export default function Receive({ isModal, registerScrollable }: any) {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            pos="absolute"
-            bottom="32px"
+            {...isPwa ? {
+              position: "absolute",
+              bottom: "32px"
+            } : {
+              marginTop: "64px",
+            }}
             onClick={() => openModal('receiveSteps')}
           >
             <Box as="span" marginRight="4px">
