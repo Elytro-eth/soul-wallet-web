@@ -7,7 +7,7 @@ import EmailGuardianIcon from '@/components/Icons/mobile/EmailGuardian';
 import WalletGuardianIcon from '@/components/Icons/mobile/WalletGuardian';
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import useWalletContext from '@/context/hooks/useWalletContext';
-import IntroGuardianIcon from '@/assets/guardian.svg'
+import IntroGuardianIcon from '@/assets/guardian.png'
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Intro({ onPrev, onNext }: any) {

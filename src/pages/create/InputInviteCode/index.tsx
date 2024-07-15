@@ -2,7 +2,7 @@ import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalB
 import Button from '@/components/mobile/Button'
 import InputLoading from '@/components/InputLoading';
 import { xLink } from '@/config';
-import XIcon from '@/assets/x.svg';
+import XIcon from '@/assets/x.png';
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function InputInviteCode({value, onChange, codeStatus, checking, onNext}: any) {

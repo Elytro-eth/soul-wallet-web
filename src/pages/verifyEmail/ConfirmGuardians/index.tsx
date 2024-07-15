@@ -4,7 +4,7 @@ import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import useScreenSize from '@/hooks/useScreenSize'
-import GuardianIcon from '@/assets/guardian.svg'
+import GuardianIcon from '@/assets/guardian.png'
 import FadeId from '@/components/Icons/mobile/FaceId'
 
 export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGuardian, isModal }: any) {

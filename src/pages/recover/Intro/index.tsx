@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
-import RecoverIcon from '@/assets/recover.svg'
+import RecoverIcon from '@/assets/recover-success.svg'
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import useScreenSize from '@/hooks/useScreenSize'
 

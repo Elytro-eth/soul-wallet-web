@@ -19,7 +19,7 @@ import useScreenSize from '@/hooks/useScreenSize'
 import { toShortAddress } from '@/lib/tools';
 import { supportedEoas } from '@/config/constants'
 import { getWalletIcon } from '@/lib/tools'
-import RecoverSuccessIcon from '@/assets/recover-success.svg'
+import RecoverSuccessIcon from '@/assets/recover-success.png'
 import OPIcon from '@/assets/op.svg'
 
 const validateSigner = (recoveryRecord: any, address: any) => {

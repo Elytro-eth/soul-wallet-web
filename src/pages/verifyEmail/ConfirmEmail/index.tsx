@@ -2,7 +2,7 @@ import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalB
 import Button from '@/components/mobile/Button'
 import EmailIcon from '@/assets/mobile/email-guardian.svg'
 import useScreenSize from '@/hooks/useScreenSize'
-import EmailGuardianIcon from '@/assets/email-guardian.svg'
+import EmailGuardianIcon from '@/assets/email-guardian.png'
 
 export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, onResend, isModal }: any) {
   const { innerHeight } = useScreenSize()

@@ -5,7 +5,7 @@ import Button from '@/components/mobile/Button';
 import CopyIcon from '@/components/Icons/mobile/Copy';
 import { useTempStore } from '@/store/temp';
 import useTools from '@/hooks/useTools';
-import EmailGuardianIcon from '@/assets/verify-email.svg'
+import EmailGuardianIcon from '@/assets/verify-email.png'
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function RecoverVerifyEmail() {

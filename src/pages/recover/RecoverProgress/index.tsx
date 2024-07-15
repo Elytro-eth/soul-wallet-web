@@ -27,7 +27,7 @@ import { useGuardianStore } from '@/store/guardian';
 import { shareUrl, toShortAddress } from '@/lib/tools';
 import useTools from '@/hooks/useTools';
 import AddressIcon from '@/components/AddressIcon';
-import GuardianIcon from '@/assets/guardian.svg'
+import GuardianIcon from '@/assets/guardian.png'
 import Guardian2Icon from '@/assets/guardian2.svg'
 import useScreenSize from '@/hooks/useScreenSize'
 

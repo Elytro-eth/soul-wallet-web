@@ -42,7 +42,7 @@ import useRecover from '@/hooks/useRecover';
 import useWalletContract from '@/hooks/useWalletContract';
 import MinusIcon from '@/components/Icons/mobile/Minus';
 import AddIcon from '@/components/Icons/mobile/Add';
-import IntroGuardianIcon from '@/assets/guardian.svg'
+import IntroGuardianIcon from '@/assets/guardian.png'
 import WarningIcon from '@/components/Icons/Warning';
 import { useOutletContext } from "react-router-dom"
 import FadeId from '@/components/Icons/mobile/FaceId'

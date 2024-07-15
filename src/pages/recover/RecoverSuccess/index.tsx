@@ -6,7 +6,7 @@ import ReadyStaticIcon from '@/assets/mobile/ready_static.svg';
 import { useEffect, useRef, useState } from 'react';
 import useWallet from '@/hooks/useWallet';
 import { Link, useNavigate } from 'react-router-dom';
-import RecoverSuccessIcon from '@/assets/recover-success.svg'
+import RecoverSuccessIcon from '@/assets/recover-success.png'
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function RecoverSuccess({ doRecover, isRecovering }: any) {
