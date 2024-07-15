@@ -131,7 +131,7 @@ export default function Landing() {
           width="100%"
           padding="30px"
           {...isPwa ? {
-            paddingBottom: "64px"
+            paddingBottom: "120px"
           } : {}}
           display="flex"
           alignItems="center"
