@@ -69,6 +69,6 @@ export const useChainStore = create<IChainStore>()(
   persist((...set) => ({ ...createChainSlice(...set) }), {
     name: 'chain-storage',
     version: 5,
-    // partialize: (state) => ({ selectedChainId: state.selectedChainId }),
+    partialize: (state) => ({ selectedChainId: state.selectedChainId }),
   }),
 );
