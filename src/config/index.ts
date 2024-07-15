@@ -81,7 +81,7 @@ export const chainMapping = {
   },
 };
 // This is an important store switch which will clear all users' data
-export const storeVersion = '10';
+export const storeVersion = '12';
 
 export const defaultGuardianSafePeriod = 1;
 
@@ -113,16 +113,6 @@ export default {
       iconActivated: IconTwitterActivated,
       link: xLink,
     },
-    // {
-    //   icon: IconTelegram,
-    //   iconActivated: IconTelegramActivated,
-    //   link: tgLink,
-    // },
-    // {
-    //   icon: IconGithub,
-    //   iconActivated: IconGithubActivated,
-    //   link: 'https://github.com/SoulWallet',
-    // },
   ],
   magicValue: '0x1626ba7e',
   backendURL: `${import.meta.env.VITE_BACKEND_URL}`,

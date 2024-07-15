@@ -11,7 +11,7 @@ export default {
   icon: IconOpSquare,
   iconFaded: IconOpFaded,
   iconSquare: IconOpSquare,
-  provider: `https://optimism.drpc.org`,
+  provider: `https://opt-mainnet.g.alchemy.com/v2/goJmtHHi_XBjXsLhpgRHwjkCd4rKy2ra`,
   scanUrl: 'https://optimistic.etherscan.io',
   scanName: 'Etherscan',
   bundlerUrl: `${import.meta.env.VITE_BACKEND_URL}/walletapi/bundler/optimism/rpc`,
@@ -28,5 +28,6 @@ export default {
     defaultCallbackHandler: import.meta.env.VITE_DefaultCallbackHandler,
     entryPoint: import.meta.env.VITE_EntryPoint,
     defaultValidator: import.meta.env.VITE_SoulWalletDefaultValidator,
+    socialRecoveryModule: import.meta.env.VITE_SocialRecoveryModule,
   },
 };
