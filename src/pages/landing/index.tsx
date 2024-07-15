@@ -46,6 +46,8 @@ export default function Landing() {
   const { getShouldShowAddedToHomeScreen, setLastAddedToHomeScreenTime} = useSettingStore();
   const marginHeight = innerHeight - ((innerHeight - 40) < 620 ? (innerHeight - 40) : 620);
 
+  const isPwa = isPwaMode();
+
   const navigate = useNavigate();
   const doSignIn = async () => {
     try {
@@ -120,6 +122,9 @@ export default function Landing() {
         <Box
           width="100%"
           padding="30px"
+          {...isPwa ? {
+            paddingBottom: "64px"
+          } : {}}
           display="flex"
           alignItems="center"
           flexDirection="column"
