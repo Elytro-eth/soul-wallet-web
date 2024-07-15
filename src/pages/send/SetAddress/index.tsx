@@ -1,22 +1,33 @@
-import { useEffect, useRef, useState, useCallback, Fragment } from 'react'
-import { Box, Input, Image, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure, Link } from '@chakra-ui/react';
-import Button from '@/components/mobile/Button'
-import Header from '@/components/mobile/Header'
-import QuestionIcon from '@/components/Icons/Question'
-import SendingIcon from '@/components/Icons/mobile/Sending'
-import SentIcon from '@/components/Icons/mobile/Sent'
+import { useEffect, useRef, useState, useCallback, Fragment } from 'react';
+import {
+  Box,
+  Input,
+  Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  useDisclosure,
+  Link,
+} from '@chakra-ui/react';
+import Button from '@/components/mobile/Button';
+import Header from '@/components/mobile/Header';
+import QuestionIcon from '@/components/Icons/Question';
+import SendingIcon from '@/components/Icons/mobile/Sending';
+import SentIcon from '@/components/Icons/mobile/Sent';
 import { useBalanceStore } from '@/store/balance';
-import BN from 'bignumber.js'
-import OpIcon from '@/assets/mobile/op.png'
-import USDCIcon from '@/assets/mobile/usdc.png'
+import BN from 'bignumber.js';
+import OpIcon from '@/assets/mobile/op.png';
+import USDCIcon from '@/assets/mobile/usdc.png';
 import { toFixed } from '@/lib/tools';
 import { isAddress } from 'ethers';
 import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
-import useScreenSize from '@/hooks/useScreenSize'
+import useScreenSize from '@/hooks/useScreenSize';
 import { useAddressStore } from '@/store/address';
 import useConfig from '@/hooks/useConfig';
 
-export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo, }: any) {
+export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { selectedAddress } = useAddressStore();
   const [isENSOpen, setIsENSOpen] = useState(false);
@@ -28,8 +39,8 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
   // const [step, setStep] = useState(0);
   // const [isSending, setIsSending] = useState(false);
   // const [isSent, setIsSent] = useState(false);
-  const { innerHeight } = useScreenSize()
-  const marginHeight = innerHeight - 468
+  const { innerHeight } = useScreenSize();
+  const marginHeight = innerHeight - 468;
 
   const onAddressChange = (val: string) => {
     setSendTo(val);
@@ -40,7 +51,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
     } else {
       setIsENSOpen(false);
     }
-  }
+  };
 
   const activeENSNameRef = useRef();
   const menuRef = useRef();
@@ -91,7 +102,6 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
     };
   }, []);
 
-
   const handleBlur = () => {
     const input = inputRef.current;
     if (input) {
@@ -101,44 +111,34 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
 
   const submitENSName = (name: any) => {
     console.log('submitENSName', resolvedAddress);
-    setSendTo(resolvedAddress)
+    setSendTo(resolvedAddress);
     // setErrors(({ receiverAddress, ...rest }: any) => rest);
     setIsENSOpen(false);
   };
 
+  const isInvalidNetwork = sendTo && sendTo.includes(':') && `${sendTo.split(':')[0]}:` !== chainConfig.chainPrefix;
+
   const isSelf = sendTo.toLowerCase() === selectedAddress.toLowerCase();
 
-  const disabled = !sendTo || !isAddress(sendTo) || isSelf;
+  const disabled = !sendTo || isSelf || (sendTo.includes(':') ? isInvalidNetwork : !isAddress(sendTo));
+
+  console.log('sendto is', sendTo.split(':')[0], chainConfig.chainPrefix);
 
   return (
     <Box width="100%" height={innerHeight} overflowY="scroll">
-      <Header
-        title=""
-        showBackButton={!isModal}
-        onBack={onPrev}
-      />
+      <Header title="" showBackButton={!isModal} onBack={onPrev} />
       <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
         <Box fontSize="28px" fontWeight="500" color="#161F36">
           Send
         </Box>
-        <Box pos={"relative"} marginTop="24px">
+        <Box pos={'relative'} marginTop="24px">
           <Box>
-            <Box
-              fontSize="14px"
-              lineHeight="17.5px"
-              fontWeight="400"
-              color="#95979C"
-            >
+            <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" color="#95979C">
               To
             </Box>
-            <Box
-              paddingTop="10px"
-              display="flex"
-              alignItems="center"
-              position="relative"
-            >
+            <Box paddingTop="10px" display="flex" alignItems="center" position="relative">
               <Input
-                onChange={e => onAddressChange(e.target.value)}
+                onChange={(e) => onAddressChange(e.target.value)}
                 onFocus={(e: any) => inputOnFocus(e.target.value)}
                 value={sendTo}
                 ref={setInputRef}
@@ -164,7 +164,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
                   top: '75px',
                   left: '0',
                   right: '0',
-                  borderRadius: '12px'
+                  borderRadius: '12px',
                 }}
                 isENSOpen={isENSOpen}
                 setIsENSOpen={setIsENSOpen}
@@ -183,41 +183,48 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
               />
             </Box>
           </Box>
-          {sendTo && disabled &&
-           <Box display="flex" bottom="-20px" position="absolute" alignItems="center" justifyContent="flex-start" marginTop="5px">
-             <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
-               {isSelf ? 'You cannot send to yourself' : disabled ? 'Invalid wallet address' : ''}
-             </Box>
-           </Box>
-          }
+          {sendTo && disabled && (
+            <Box
+              display="flex"
+              bottom="-20px"
+              position="absolute"
+              alignItems="center"
+              justifyContent="flex-start"
+              marginTop="5px"
+            >
+              <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
+                {isSelf
+                  ? 'You cannot send to yourself'
+                  : isInvalidNetwork
+                    ? 'Invalid network'
+                    : disabled
+                      ? 'Invalid wallet address'
+                      : ''}
+              </Box>
+            </Box>
+          )}
         </Box>
-        <Box
-          fontSize="14px"
-          fontWeight="400"
-          color="#95979C"
-          marginTop="32px"
-          lineHeight="17.5px"
-        >
+        <Box fontSize="14px" fontWeight="400" color="#95979C" marginTop="32px" lineHeight="17.5px">
           Network
         </Box>
         <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
-          <Box marginRight="8px"><Image w="32px" h="32px" src={OpIcon} /></Box>
-          <Box fontSize="20px" fontWeight="500">{chainConfig.chainName}</Box>
-          <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center"><QuestionIcon /></Box>
+          <Box marginRight="8px">
+            <Image w="32px" h="32px" src={OpIcon} />
+          </Box>
+          <Box fontSize="20px" fontWeight="500">
+            {chainConfig.chainName}
+          </Box>
+          <Box width="40px" height="40px" display="flex" alignItems="center" justifyContent="center">
+            <QuestionIcon />
+          </Box>
         </Box>
-        <Box
-          marginTop="40px"
-          width="100%"
-        >
-          <Button disabled={disabled} size="xl" type="gradientBlue" width="100%" onClick={onNext}>Continue</Button>
+        <Box marginTop="40px" width="100%">
+          <Button disabled={disabled} size="xl" type="gradientBlue" width="100%" onClick={onNext}>
+            Continue
+          </Button>
         </Box>
       </Box>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        motionPreset="slideInBottom"
-        blockScrollOnMount={true}
-      >
+      <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom" blockScrollOnMount={true}>
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
@@ -226,49 +233,32 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo,
           }}
           maxW={{
             sm: '100vw',
-            md: '430px'
+            md: '430px',
           }}
           marginTop={{
             sm: `${marginHeight}px`,
-            md: 'calc(50vh - 125px)'
+            md: 'calc(50vh - 125px)',
           }}
           height="468px"
           overflow="auto"
           mb="0"
         >
           <ModalCloseButton />
-          <ModalBody
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            justifyContent="center"
-            width="100%"
-          >
-            <Box
-              background="#D9D9D9"
-              height="96px"
-              width="96px"
-              borderRadius="80px"
-              marginBottom="30px"
-            >
-              <Image
-                height="96px"
-                width="96px"
-                src={OpIcon}
-              />
+          <ModalBody display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center" width="100%">
+            <Box background="#D9D9D9" height="96px" width="96px" borderRadius="80px" marginBottom="30px">
+              <Image height="96px" width="96px" src={OpIcon} />
             </Box>
             <Box fontSize="28px" fontWeight="500" marginBottom="14px" color="#161F36">
               Optimism network
             </Box>
-            <Box
-              fontSize="14px"
-              marginBottom="40px"
-              color="#676B75"
-            >
-              Optimism is a Layer-2 scaling network for Ethereum that operates under a four-pillar design philosophy of simplicity, pragmatism, sustainability, and optimism.
+            <Box fontSize="14px" marginBottom="40px" color="#676B75">
+              Optimism is a Layer-2 scaling network for Ethereum that operates under a four-pillar design philosophy of
+              simplicity, pragmatism, sustainability, and optimism.
             </Box>
             <Box width="100%">
-              <Button size="xl" type="black" width="100%" onClick={onClose}>Got it</Button>
+              <Button size="xl" type="black" width="100%" onClick={onClose}>
+                Got it
+              </Button>
             </Box>
           </ModalBody>
         </ModalContent>

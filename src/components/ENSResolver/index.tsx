@@ -74,7 +74,7 @@ export const isENSAddress = (address: string) => {
 export const extractENSAddress = (address: any) => {
   if (!address) return
 
-  if (ethers.isAddress(address)) {
+  if (ethers.isAddress(address) || address.includes(':')) {
     return null
   } else if (isENSAddress(address)) {
     return address
