@@ -87,7 +87,7 @@ export default function RecoverVerifyEmail() {
             >
               <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">To</Box>
               <Box display="flex" alignItems="center" fontSize="18px" color="#161F36">
-                <Box>{emailTemplate.to || '...'}</Box>
+                <Box wordBreak={"break-word"}>{emailTemplate.to || '...'}</Box>
                 <Box marginLeft="4px" onClick={()=> doCopy(emailTemplate.to)}><CopyIcon /></Box>
               </Box>
             </Box>

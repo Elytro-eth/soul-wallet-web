@@ -21,6 +21,7 @@ import { supportedEoas } from '@/config/constants'
 import { getWalletIcon } from '@/lib/tools'
 import RecoverSuccessIcon from '@/assets/recover-success.png'
 import OPIcon from '@/assets/op.svg'
+import { chainIdConfigs } from '@/config';
 
 const validateSigner = (recoveryRecord: any, address: any) => {
   if (!recoveryRecord) return;
@@ -147,7 +148,6 @@ export default function Sign() {
 
   const isValidSigner = validateSigner(recoveryRecord, address)
   const recoveryAddress = recoveryRecord && recoveryRecord.address
-  const targetChainName = 'Optimism Sepolia'
   console.log('recoverId', recoveryRecord, isSigned);
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -228,7 +228,7 @@ export default function Sign() {
 
   const targetChainId = parseInt(recoveryRecord?.chainID);
 
-  console.log('target chain', targetChainId)
+  const targetChainName = chainIdConfigs[targetChainId]?.chainName;
 
   if (!loaded) {
     return (

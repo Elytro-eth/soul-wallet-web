@@ -88,7 +88,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           <Image height="116px" src={Guardian2Icon} />
         </Box>
       </Box>
-      <Box marginTop="40px">
+      {walletGurdians && walletGurdians.length ?  <Box marginTop="40px">
         <Box fontSize="20px" fontWeight="500" mb="3" color="#161F36">
           Wallet recovery contact
         </Box>
@@ -164,8 +164,9 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
             </Box>
           </Box>
         )}
-      </Box>
-      <Box marginTop="24px" borderTop="1px solid #BDC0C7" paddingTop="24px">
+      </Box> : ''}
+
+      {emailGurdians && emailGurdians.length > 0 ? <Box marginTop="24px" borderTop="1px solid #BDC0C7" paddingTop="24px">
         <Box fontSize="20px" fontWeight="500" color="#161F36" mb="3">
           Email recovery contact
         </Box>
@@ -229,7 +230,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
             Verify Email
           </Button>
         )}
-      </Box>
+      </Box> : ''}
       <Box height="110px" />
     </Box>
   );

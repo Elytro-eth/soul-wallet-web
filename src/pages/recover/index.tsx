@@ -36,7 +36,7 @@ export default function Recover() {
   const { innerHeight } = useScreenSize();
 
   const { recoverInfo, updateRecoverInfo } = useTempStore();
-  const { recoveryID } = recoverInfo;
+  const { recoveryID, credential: newCredential } = recoverInfo;
 
   const debounce = (fn: Function, delay: number) => {
     clearTimeout(timer);
@@ -148,8 +148,7 @@ export default function Recover() {
           await boostAfterRecovered(recoverRecord);
           // trigger login again, and use current credential id
           try{
-            // with credential id
-            await loginWallet();
+            await loginWallet(newCredential.id);
           }finally{
             navigate('/dashboard');
             break;
