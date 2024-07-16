@@ -16,6 +16,7 @@ export default function RecoverProcess({ step }: any) {
       borderRadius="20px"
       background="white"
       boxShadow="0px 0px 20px 0px rgba(0, 0, 0, 0.1)"
+      border="1px solid #F2F3F5"
       zIndex="1"
     >
       <Box onClick={() => setIsOpen(!isOpen)} display="flex" alignItems="center" justifyContent="space-between">
@@ -35,9 +36,9 @@ export default function RecoverProcess({ step }: any) {
           <Box display="flex" alignItems="center">
             <Box marginRight="8px"><Circle active={step >= 2 ? true : false} /></Box>
             <Box fontSize="14px" fontWeight={500} color="#161F36">Step 3: <Box as="span" fontWeight="400">Recovery contact confirmation</Box></Box>
-            </Box>
           </Box>
-      )}
         </Box>
+      )}
+    </Box>
   )
 }

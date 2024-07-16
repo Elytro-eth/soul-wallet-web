@@ -325,10 +325,10 @@ export default function Manage() {
           </Box>
           <Box width="50%" paddingLeft="7px">
             <Button width="calc(100% - 7px)" loading={changingGuardian} disabled={changingGuardian} size="xl" type="gradientBlue"  onClick={() => doChangeGuardian()}>
-               <Box display="flex" alignItems="center" justifyContent="center">
-                  <Box marginRight="8px"><FadeId /></Box>
-                  <Box>Confirm</Box>
-                </Box>
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Box marginRight="8px"><FadeId /></Box>
+                <Box>Confirm</Box>
+              </Box>
             </Button>
           </Box>
         </Box>
@@ -483,6 +483,7 @@ export default function Manage() {
           position="relative"
           overflowY="scroll"
           boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+          border="1px solid #F2F3F5"
         >
           <ModalCloseButton />
           <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add via...</ModalHeader>
@@ -500,40 +501,44 @@ export default function Manage() {
               width="100%"
               padding="0 16px"
             >
-              {walletGuardianCount < 9 && <Box
-                width="calc(100%)"
-                position="relative"
-                padding="0 16px"
-                display="flex"
-                alignItems="center"
-                height="56px"
-                background="#F2F3F5"
-                borderRadius="16px"
-                marginBottom="8px"
-                onClick={() => { onCreateGuardianOpen(1); onGuardianMenuClose(); }}
-              >
-                <Box marginRight="8px"><WalletGuardianIcon /></Box>
-                <Box fontWeight="500" fontSize="18px" color="#161F36">
-                  Wallet address
+              {walletGuardianCount < 9 && (
+                <Box
+                  width="calc(100%)"
+                  position="relative"
+                  padding="0 16px"
+                  display="flex"
+                  alignItems="center"
+                  height="56px"
+                  background="#F2F3F5"
+                  borderRadius="16px"
+                  marginBottom="8px"
+                  onClick={() => { onCreateGuardianOpen(1); onGuardianMenuClose(); }}
+                >
+                  <Box marginRight="8px"><WalletGuardianIcon /></Box>
+                  <Box fontWeight="500" fontSize="18px" color="#161F36">
+                    Wallet address
+                  </Box>
                 </Box>
-              </Box>}
-              {emailGuardianCount < 1 && <Box
-                width="calc(100%)"
-                position="relative"
-                padding="0 16px"
-                display="flex"
-                alignItems="center"
-                height="56px"
-                background="#F2F3F5"
-                borderRadius="16px"
-                marginBottom="8px"
-                onClick={() => { onCreateGuardianOpen(0); onGuardianMenuClose(); }}
-              >
-                <Box marginRight="8px"><EmailGuardianIcon /></Box>
-                <Box fontWeight="500" fontSize="18px" color="#161F36">
-                  Email
+              )}
+              {emailGuardianCount < 1 && (
+                <Box
+                  width="calc(100%)"
+                  position="relative"
+                  padding="0 16px"
+                  display="flex"
+                  alignItems="center"
+                  height="56px"
+                  background="#F2F3F5"
+                  borderRadius="16px"
+                  marginBottom="8px"
+                  onClick={() => { onCreateGuardianOpen(0); onGuardianMenuClose(); }}
+                >
+                  <Box marginRight="8px"><EmailGuardianIcon /></Box>
+                  <Box fontWeight="500" fontSize="18px" color="#161F36">
+                    Email
+                  </Box>
                 </Box>
-              </Box>}
+              )}
             </Box>
           </ModalBody>
         </ModalContent>
@@ -563,6 +568,7 @@ export default function Manage() {
           position="relative"
           overflowY="scroll"
           boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+          border="1px solid #F2F3F5"
         >
           <ModalCloseButton />
           <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Edit recovery contact</ModalHeader>

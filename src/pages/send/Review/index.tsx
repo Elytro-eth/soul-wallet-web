@@ -326,6 +326,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           position="relative"
           overflowY="scroll"
           boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+          border="1px solid #F2F3F5"
         >
           <ModalCloseButton />
           <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">
