@@ -84,6 +84,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   }, []);
 
   const onTransfer = async (skipExecutingCheck = false) => {
+    setIsSending(true);
     isTransferingRef.current = true;
     if (executingRef.current && !skipExecutingCheck) {
       return;
@@ -92,7 +93,6 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
     isTransferingRef.current = true;
     if (userOpRef.current) {
       try {
-        setIsSending(true);
         const res: any = await signAndSend(userOpRef.current);
         console.log('tx result', res);
         setTxHash(res.transactionHash);
@@ -112,6 +112,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         executingRef.current = false;
         isTransferingRef.current = false;
         isCompletedRef.current = false;
+        setIsSending(false);
         onPrev();
       }
     } else {
