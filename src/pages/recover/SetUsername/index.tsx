@@ -51,13 +51,13 @@ export default function SetUsername({ checking, username, isWalletNotFound, setU
                     <Box>Wallet found</Box>
                   </Box>
                   <Box fontSize="18px" fontWeight="400">
-                    <Box as="span" color="rgba(255, 255, 255, 0.9)">
+                    <Box as="span" color="#161F36">
                       {accountInfo.address.slice(0,6)}
                     </Box>
-                    <Box as="span" color="rgba(255, 255, 255, 0.4)">
+                    <Box as="span" color="#95979C">
                       {accountInfo.address.slice(6, -6)}
                     </Box>
-                    <Box as="span" color="rgba(255, 255, 255, 0.9)">
+                    <Box as="span" color="#161F36">
                       {accountInfo.address.slice(-6)}
                     </Box>
                   </Box>

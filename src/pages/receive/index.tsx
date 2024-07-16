@@ -148,7 +148,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
                   {chainConfig.chainPrefix}
                   {selectedAddress.slice(0, 6)}
                 </Text>
-                <Text as="span" color="#95975c">
+                <Text as="span" color="#95979C">
                   {selectedAddress.slice(6, 36)}
                 </Text>
                 <Text as="span">{selectedAddress.slice(-6)}</Text>

@@ -177,7 +177,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
               {chainConfig.chainPrefix}
               {sendTo.slice(0, 6)}
             </Box>
-            <Box as="span" fontSize="22px" color="rgba(0, 0, 0, 0.4)">
+            <Box as="span" fontSize="22px" color="#95979C">
               {sendTo.slice(6, 32)}
             </Box>
             <Box as="span" fontSize="22px">

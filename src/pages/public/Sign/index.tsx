@@ -309,7 +309,7 @@ export default function Sign() {
             fontWeight="500"
           >
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
-            <Box as="span" color="rgba(0, 0, 0, 0.4)">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
+            <Box as="span" color="#95979C">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(-6)}</Box>
           </Box>
           <Box
@@ -480,7 +480,7 @@ export default function Sign() {
             fontWeight="400"
           >
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
-            <Box as="span" color="rgba(0, 0, 0, 0.4)">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
+            <Box as="span" color="#95979C">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(-6)}</Box>
           </Box>
           <Box
@@ -569,7 +569,7 @@ export default function Sign() {
           fontWeight="400"
         >
           <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
-          <Box as="span" color="rgba(0, 0, 0, 0.4)">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
+          <Box as="span" color="#95979C">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
           <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(-6)}</Box>
         </Box>
         <Box
