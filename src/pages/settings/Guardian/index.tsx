@@ -4,8 +4,8 @@ import Header from '@/components/mobile/Header';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate, Outlet } from 'react-router-dom';
 import useScreenSize from '@/hooks/useScreenSize'
-import Intro from './Intro'
-import Manage from './Manage'
+// import Intro from './Intro'
+// import Manage from './Manage'
 
 export default function GuardianSetting() {
   const { registerForRecover } = usePasskey();
@@ -22,10 +22,10 @@ export default function GuardianSetting() {
     }
   }, [step]);
 
-  const onNext = useCallback(() => {
-    console.log('next');
-    setStep(step + 1);
-  }, [step]);
+  // const onNext = useCallback(() => {
+  //   console.log('next');
+  //   setStep(step + 1);
+  // }, [step]);
 
   return (
     <Box width="100%" height={innerHeight} bg="#fff">

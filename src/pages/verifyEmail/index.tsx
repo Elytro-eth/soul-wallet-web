@@ -253,6 +253,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
         callback ? <ConfirmTempEmail  changingGuardian={changingGuardian}
         onPrev={onPrev}
         onChangeGuardian={doChangeGuardian}
+        email={values.email}
         isModal={isModal}/> :
          <ConfirmGuardians
           changingGuardian={changingGuardian}

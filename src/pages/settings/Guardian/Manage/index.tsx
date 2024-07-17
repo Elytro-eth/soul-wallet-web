@@ -195,6 +195,18 @@ export default function Manage() {
   const emailGuardianCount = tempGuardians.filter((guardianAddress:any) => guardianAddressEmail[guardianAddress]).length;
   const walletGuardianCount = tempGuardians.length - emailGuardianCount;
 
+  const onAddRecoveryContact = () => { 
+    if(isGuardianMenuOpen){
+      onGuardianMenuClose();
+    }else{
+      if(emailGuardianCount === 1){
+        onCreateGuardianOpen(1);
+      }else{
+        onGuardianMenuOpen();
+      }
+    }
+  }
+
   return (
     <Box width="100%" height="100%" display="flex" flexDirection="column">
       <Box padding="30px">
@@ -244,7 +256,7 @@ export default function Manage() {
               <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
                 {() => (
                   <Box overflow="auto" ref={guardianMenuRef}>
-                    <MenuButton as={Box} onClick={() => { isGuardianMenuOpen ? onGuardianMenuClose() : onGuardianMenuOpen(); }}>
+                    <MenuButton as={Box} onClick={onAddRecoveryContact}>
                       <Button fontSize="14px" size="lg" type="white" color="#161F36" fontWeight="400">
                         +Add {tempGuardians.length ? 'another' : ''} recovery contact
                       </Button>
