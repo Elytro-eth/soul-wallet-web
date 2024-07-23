@@ -32,3 +32,7 @@ a, button{
 * {
     -webkit-tap-highlight-color: transparent;
   }
+
+  *:focus-visible{
+    box-shadow: none !important;
+  }
