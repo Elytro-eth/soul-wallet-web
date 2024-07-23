@@ -12,6 +12,7 @@ export default {
   iconFaded: IconArbFaded,
   iconSquare: IconArbSquare,
   provider: `https://base-sepolia-rpc.publicnode.com`,
+  mainnetProvider: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_KEY}`,
   scanUrl: 'https://base-sepolia.blockscout.com',
   scanName: 'Arbiscan',
   bundlerUrl: `https://api-dev.stable.cash/walletapi/bundler/base-sepolia/rpc`,
