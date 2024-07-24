@@ -14,7 +14,10 @@ export default function Wrapper() {
       <FindRoute>
         <WalletContextProvider>
           <AnimatePresence>
-            <Box maxW={'430px'} pos={'relative'} color="#000" mx="auto">
+            <Box
+            // todo, adapt to pc later
+            //  maxW={'430px'}
+              pos={'relative'} color="#000" mx="auto">
               <FadeSwitch key={location.pathname}>
                 <Outlet />
               </FadeSwitch>

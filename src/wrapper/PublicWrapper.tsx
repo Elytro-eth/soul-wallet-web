@@ -8,7 +8,10 @@ export default function PublicWrapper() {
   return (
     <CommonWrapper>
       <WagmiContext>
-        <Box maxWidth="430px" margin="0 auto">
+        <Box
+        // todo, adapt pc later
+        // maxWidth="430px" margin="0 auto"
+        >
           <Outlet />
         </Box>
       </WagmiContext>
