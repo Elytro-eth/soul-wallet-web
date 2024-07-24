@@ -396,17 +396,17 @@ export const decodeCalldata = async (
 };
 
 export function isPwaMode() {
-  // 检查是否在 iOS 设备上以 standalone 模式运行
+  // for iOS detection
   if ((window.navigator as any).standalone) {
     return true;
   }
 
-  // 检查是否在其他浏览器上以 standalone 模式运行
+  // for other device detection
   if (window.matchMedia('(display-mode: standalone)').matches) {
     return true;
   }
 
-  // 如果上述条件都不满足，认为不是在 PWA 模式下
+  // otherwise not PWA mode
   return false;
 }
 

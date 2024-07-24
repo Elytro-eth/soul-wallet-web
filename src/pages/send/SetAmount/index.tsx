@@ -71,7 +71,6 @@ export default function SetAmount({
     const regex = /^\d*(\.\d{0,6})?$/;
 
     while (val.length > 0 && !regex.test(val)) {
-      // 逐步缩短字符串长度，直到找到一个合法的数值或字符串为空
       val = val.slice(0, -1);
     }
 
