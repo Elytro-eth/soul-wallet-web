@@ -41,6 +41,30 @@ export default function SetAmount({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { totalUsdValue } = useBalanceStore();
   const { innerHeight } = useScreenSize();
+  const menuRef = useRef();
+  const inputRef = useRef();
+
+  const setMenuRef = (value: any) => {
+    menuRef.current = value;
+  };
+
+  const setInputRef = (value: any) => {
+    inputRef.current = value;
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (inputRef.current && !(inputRef.current as any).contains(event.target) && menuRef.current && !(menuRef.current as any).contains(event.target)) {
+        onClose()
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const onAmountChange = (val: string) => {
     // validate decimals
@@ -93,6 +117,7 @@ export default function SetAmount({
               alignItems="center"
               justifyContent="space-between"
               width="100%"
+              ref={setInputRef}
               onClick={() => {
                 isOpen ? onClose() : onOpen();
               }}
@@ -123,6 +148,7 @@ export default function SetAmount({
               <SelectToken
                 isOpen={isOpen}
                 onClose={onClose}
+                setMenuRef={setMenuRef}
                 select={(token: any) => {
                   setSelectedToken(token);
                   setTokenAddress(token.contractAddress);
