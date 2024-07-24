@@ -10,7 +10,7 @@ import USDCIcon from '@/assets/mobile/usdc_lg.png'
 import { aaveLink } from '@/config';
 import useWallet from '@/hooks/useWallet';
 import SettingIcon from '@/components/Icons/mobile/Setting'
-import FaceIdIcon from '@/components/Icons/FaceId'
+import PasskeyIcon from '@/components/Icons/mobile/Passkey'
 import TelegramIcon from '@/components/Icons/mobile/Telegram'
 import LicenseIcon from '@/components/Icons/mobile/License'
 import { headerHeight, tgLink } from '@/config';
@@ -54,7 +54,7 @@ export default function Settings({ isModal, closeModal }: any) {
       paddingLeft="30px"
       paddingRight="30px"
     >
-      {/* <Box
+      <Box
         width="100%"
         display="flex"
         alignItems="center"
@@ -68,13 +68,14 @@ export default function Settings({ isModal, closeModal }: any) {
         >
           <AddressIcon address={selectedAddress} width={48} />
         </Box>
-        <Box fontSize="22px" lineHeight={"24pcx"} fontWeight="500">{walletName}</Box>
-      </Box> */}
+        <Box fontSize="28px" lineHeight={"24pcx"} fontWeight="500">{walletName}</Box>
+      </Box>
       <Box
         display="flex"
         flexDirection="column"
         alignItems="center"
         width="100%"
+        gap="8px"
       >
         <Box
           width="100%"
@@ -96,7 +97,7 @@ export default function Settings({ isModal, closeModal }: any) {
           >
             <SettingIcon />
           </Box>
-          <Box>Account Recovery</Box>
+          <Box>Account recovery settings</Box>
         </Box>
         <Box
           width="100%"
@@ -115,7 +116,7 @@ export default function Settings({ isModal, closeModal }: any) {
             alignItems="center"
             justifyContent="center"
           >
-            <FaceIdIcon />
+            <PasskeyIcon />
           </Box>
           <Box>Device & passkey</Box>
           <Box
@@ -176,17 +177,38 @@ export default function Settings({ isModal, closeModal }: any) {
           </Box>
         </Box>
       </Box>
-      <Box width="100%" marginTop="auto" marginBottom="20px">
-        <Button
-          size="xl"
-          width="100%"
-          color="#E83D26"
-          onClick={doLogout}
-          type="red"
-        >
-          {/* <Box><LogoutIcon /></Box> */}
-          Logout
-        </Button>
+      <Box
+        height="1px"
+        width="100%"
+        background="#F2F3F5"
+        marginTop="8px"
+        marginBottom="8px"
+      />
+      <Box width="100%">
+        <Box width="100%" onClick={doLogout}>
+          <Box
+            width="100%"
+            height="56px"
+            fontSize="18px"
+            fontWeight="500"
+            py="10px"
+            display="flex"
+            alignItems="center"
+            justifyContent="flex-start"
+            color="#E8424C"
+          >
+            <Box
+              marginRight="12px"
+              height="32px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <LogoutIcon />
+            </Box>
+            <Box>Logout</Box>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

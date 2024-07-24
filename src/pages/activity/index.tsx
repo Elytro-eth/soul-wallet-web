@@ -12,18 +12,11 @@ import USDCIcon from '@/assets/mobile/usdc_lg.png';
 import ETHIcon from '@/assets/tokens/eth.svg';
 import { aaveLink } from '@/config';
 import useWallet from '@/hooks/useWallet';
-import SettingIcon from '@/components/Icons/mobile/Setting';
-import TelegramIcon from '@/components/Icons/mobile/Telegram';
 import { headerHeight, tgLink } from '@/config';
 import { useAddressStore } from '@/store/address';
-import AddressIcon from '@/components/AddressIcon';
-import LogoutIcon from '@/components/Icons/mobile/Logout';
 import { useHistoryStore } from '@/store/history';
-import HistoryIcon from '@/components/Icons/mobile/History';
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
-import SendIcon from '@/components/Icons/mobile/Send';
-import ReceiveIcon from '@/components/Icons/mobile/Receive';
 import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
 
 export default function Activity({ isModal, registerScrollable }: any) {

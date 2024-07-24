@@ -1,11 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { Flex, Box, Modal, ModalOverlay, ModalContent, ModalHeader, Image, ModalCloseButton, ModalBody, useDisclosure } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import ProfileIcon from '@/components/Icons/mobile/Profile'
-import SettingIcon from '@/components/Icons/mobile/Setting'
-import TelegramIcon from '@/components/Icons/mobile/Telegram'
-import UserIcon from '@/components/Icons/mobile/User'
-import MenuIcon from '@/components/Icons/mobile/Menu'
 import CloseIcon from '@/components/Icons/mobile/Close'
 import { useAddressStore } from '@/store/address';
 import IconSetting from '@/assets/icons/setting.svg';
