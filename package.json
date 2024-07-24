@@ -38,6 +38,7 @@
     "react-router-dom": "^6.16.0",
     "swiper": "^11.0.7",
     "viem": "2.x",
+    "vite-plugin-compression": "^0.5.1",
     "wagmi": "^2.5.7",
     "zustand": "^4.4.1"
   },

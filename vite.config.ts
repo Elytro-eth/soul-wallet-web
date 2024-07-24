@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import checker from 'vite-plugin-checker';
 import path from 'path';
 import removeConsole from "vite-plugin-remove-console";
+import compression from 'vite-plugin-compression';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,6 +22,12 @@ export default defineConfig({
       overlay: false,
     }),
     removeConsole(),
+    compression({
+      threshold: 10240,
+      deleteOriginFile: false,
+      algorithm: 'gzip',
+      ext: '.gz',
+    }),
   ],
   resolve: {
     alias: {
