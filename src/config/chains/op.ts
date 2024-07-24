@@ -11,7 +11,7 @@ export default {
   icon: IconOpSquare,
   iconFaded: IconOpFaded,
   iconSquare: IconOpSquare,
-  provider: `https://opt-mainnet.g.alchemy.com/v2/goJmtHHi_XBjXsLhpgRHwjkCd4rKy2ra`,
+  provider: `https://mainnet.optimism.io`,
   mainnetProvider: `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_KEY}`,
   scanUrl: 'https://optimistic.etherscan.io',
   scanName: 'Etherscan',

@@ -27,11 +27,15 @@ export const fetchHistoryApi = async (address: string, chainId: string, ethersPr
 
     const status = item.success ? ActivityStatusEn.Success : ActivityStatusEn.Error;
 
+    // if it's transfer, transfer ETH or swap, show the amount
+    console.log('History ddecdoe', callDataDecodes)
+
     res.data.ops[i] = {
       ...res.data.ops[i],
       functionName,
-      to: callDataDecodes[0].to,
-      totalCost: BN(res.data.ops[i].totalGasCost || 0).plus(callDataDecodes[0].value || 0).toNumber(),
+      ...callDataDecodes[0],
+      // to: callDataDecodes[0].to,
+      // totalCost: BN(res.data.ops[i].totalGasCost || 0).plus(callDataDecodes[0].value || 0).toNumber(),
       status,
     };
   }

@@ -1,4 +1,4 @@
-import { ethers, Contract } from 'ethers';
+import { ethers, Contract, formatEther } from 'ethers';
 import BN from 'bignumber.js';
 import { chainIdMapping, chainMapping } from '@/config';
 import IconDefault from '@/assets/tokens/default.svg';
@@ -375,6 +375,7 @@ export const decodeCalldata = async (
   for (let i of decoded) {
     if (!i.method && i.value) {
       i.functionName = 'Transfer ETH';
+      i.sendEthAmount = `${formatEther(i.value)} ETH`;
     }
 
     if (i.method && i.method.name === 'transfer') {

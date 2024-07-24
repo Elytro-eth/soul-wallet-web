@@ -64,8 +64,8 @@ export default function Activity({ isModal, registerScrollable }: any) {
       >
         {historyList.length ? (
           <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
-            {historyList.map((item) => (
-              <Box display="flex" alignItems="center" height="52px">
+            {historyList.map((item, index) => (
+              <Box display="flex" alignItems="center" height="52px" key={index}>
                 <Box marginRight="12px">
                   <Image src={getIconMapping(item.functionName)} />
                 </Box>
@@ -78,10 +78,14 @@ export default function Activity({ isModal, registerScrollable }: any) {
                   <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C">{new Date(item.timestamp * 1000).toLocaleString()}</Box>
                 </Box>
                 <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                  <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" display="flex">
-                    <Box marginRight="8px">{toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH</Box>
-                    <Image width="20px" height="20px" src={ETHIcon} />
-                  </Box>
+                  <Flex align={'center'} fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" display="flex">
+                    <Box>
+                      {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount: 0}
+                      {/* {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH */}
+                      </Box>
+                      {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
+                    {/*  */}
+                  </Flex>
                   <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="4px">{toShortAddress(item.to, 6)}</Box>
                 </Box>
               </Box>
