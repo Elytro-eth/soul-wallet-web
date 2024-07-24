@@ -29,11 +29,12 @@ export const fetchHistoryApi = async (address: string, chainId: string, ethersPr
 
     // if it's transfer, transfer ETH or swap, show the amount
     console.log('History ddecdoe', callDataDecodes)
+    callDataDecodes[0].value = BN(callDataDecodes[0].value || 0).toNumber();
 
     res.data.ops[i] = {
       ...res.data.ops[i],
       functionName,
-      ...callDataDecodes[0],
+      ...JSON.parse(JSON.stringify(callDataDecodes[0])),
       // to: callDataDecodes[0].to,
       // totalCost: BN(res.data.ops[i].totalGasCost || 0).plus(callDataDecodes[0].value || 0).toNumber(),
       status,

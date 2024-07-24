@@ -1,5 +1,6 @@
 import QRCode from 'qrcode';
 import { useToast } from '@chakra-ui/react';
+import { useState } from 'react';
 import { useSignerStore } from '@/store/signer';
 import { useAddressStore } from '@/store/address';
 import { useBalanceStore } from '@/store/balance';
@@ -15,6 +16,12 @@ export default function useTools() {
   const { clearHistory } = useHistoryStore();
   const { clearChainStore } = useChainStore();
   const { clearSlotStore } = useSlotStore();
+  const [timer, setTimer] = useState<any>();
+
+  const debounce = (fn: Function, delay: number) => {
+    clearTimeout(timer);
+    setTimer(setTimeout(fn, delay));
+  };
 
   const clearLogData = () => {
     clearAddresses();
@@ -31,11 +38,18 @@ export default function useTools() {
   };
 
   const doCopy = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    toast({
-      title: 'Copied',
-      status: 'info',
-    });
+    // if(toast.isActive()){
+    toast.closeAll();
+    // }
+    // if (!toast.isActive('copy-toast')) {
+    debounce(() => {
+      navigator.clipboard.writeText(text);
+      toast({
+        title: 'Copied',
+        status: 'info',
+        // id: 'copy-toast',
+      });
+    }, 300);
   };
 
   const downloadJsonFile = (jsonToSave: any) => {
@@ -63,7 +77,6 @@ export default function useTools() {
       };
     });
   };
-
 
   const verifyAddressFormat = (address: string) => {
     return /^0x[0-9a-fA-F]{40}$/.test(address);

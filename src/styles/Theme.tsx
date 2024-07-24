@@ -95,7 +95,6 @@ const theme = extendTheme({
     Alert: {
       variants: {
         solid: (props: any) => {
-          console.log('props', props)
           if (props.status === 'error') {
             return {
               container: {
