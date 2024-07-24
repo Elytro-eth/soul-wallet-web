@@ -22,12 +22,7 @@ export default defineConfig({
       overlay: false,
     }),
     removeConsole(),
-    compression({
-      threshold: 10240,
-      deleteOriginFile: false,
-      algorithm: 'gzip',
-      ext: '.gz',
-    }),
+    compression(),
   ],
   resolve: {
     alias: {
