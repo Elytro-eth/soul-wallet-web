@@ -82,7 +82,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           }}
           marginTop={{
             sm: `${marginHeight}px`,
-            md: 'calc(50vh - 125px)'
+            md: 'calc(50vh - 234px)'
           }}
           height="468px"
           overflow="auto"

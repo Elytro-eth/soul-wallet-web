@@ -64,7 +64,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
           }}
           marginTop={{
             sm: `${marginHeight}px`,
-            md: 'calc(50vh - 125px)',
+            md: 'calc(50vh - 229px)',
           }}
           height="458px"
           overflow="auto"

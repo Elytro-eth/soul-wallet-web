@@ -282,7 +282,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           }}
           marginTop={{
             sm: `${marginHeight}px`,
-            md: 'calc(50vh - 125px)',
+            md: 'calc(50vh - 234px)',
           }}
           height="468px"
           overflow="auto"
@@ -315,11 +315,9 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           justifyContent="flex-end"
           maxW={{
             sm: 'calc(100vw - 32px)',
-            md: '430px',
           }}
           marginTop={{
             sm: `auto`,
-            md: 'calc(50vh - 125px)',
           }}
           overflow="visible"
           mb="0"
