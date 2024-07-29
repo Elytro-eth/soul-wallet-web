@@ -26,8 +26,10 @@ export default function InjectorMessage() {
     //   address: selectedAddress,
     //   chainId: selectedChainId,
     // } });
-    // (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
     (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    // send message to parent window
+    window.parent.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    
     window.addEventListener('message', listener, false);
   }, []);
 
