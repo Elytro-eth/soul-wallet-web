@@ -61,6 +61,7 @@ export default function InjectorMessage() {
     console.log('ready to listen message');
 
     window.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
     window.addEventListener('message', listener, false);
   }, []);
 
