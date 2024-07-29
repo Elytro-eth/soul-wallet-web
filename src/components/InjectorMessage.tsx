@@ -49,10 +49,7 @@ export default function InjectorMessage() {
     //   address: selectedAddress,
     //   chainId: selectedChainId,
     // } });
-    // setInterval(()=>{
-    // }, 3000)
-    // send message to parent window
-    // window.parent.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    setInterval(()=>{
       (window as any).top.postMessage({
         type: 'wallet/getAccount',
         accountInfo: {
@@ -60,6 +57,10 @@ export default function InjectorMessage() {
           chainId: selectedChainId,
         },
       }, '*');
+    }, 3000)
+    // send message to parent window
+    // window.parent.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    
     // window.addEventListener('message', listener, false);
   }, [selectedAddress, selectedChainId]);
 
