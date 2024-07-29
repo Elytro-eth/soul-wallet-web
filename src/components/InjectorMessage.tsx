@@ -10,7 +10,7 @@ export default function InjectorMessage() {
   const { selectedChainId } = useChainStore();
 
   const listener = (msg: any) => {
-    (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    // (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
 
     // (window as any).postMessage({
     //   type: 'wallet/getAccount',
@@ -50,13 +50,18 @@ export default function InjectorMessage() {
     //   chainId: selectedChainId,
     // } });
     // setInterval(()=>{
-    //   (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
     // }, 3000)
     // send message to parent window
     // window.parent.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
-
-    window.addEventListener('message', listener, false);
-  }, []);
+      (window as any).top.postMessage({
+        type: 'wallet/getAccount',
+        accountInfo: {
+          address: selectedAddress,
+          chainId: selectedChainId,
+        },
+      }, '*');
+    // window.addEventListener('message', listener, false);
+  }, [selectedAddress, selectedChainId]);
 
   // useEffect(() => {
   //   fetchApy();
