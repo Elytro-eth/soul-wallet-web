@@ -54,12 +54,13 @@ export default function InjectorMessage() {
   }, []);
 
   const listener = (msg: any) => {
-    if(msg.data.type === 'wallet/getAccount') {
+    alert(JSON.stringify(msg));
+    // if(msg.data.type === 'wallet/getAccount') {
       window.postMessage({ type: 'wallet/getAccount', accountInfo: {
         address: selectedAddress,
         chainId: selectedChainId,
       } });
-    }
+    // }
   };
 
   useEffect(() => {
