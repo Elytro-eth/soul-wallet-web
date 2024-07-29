@@ -54,12 +54,14 @@ export default function InjectorMessage() {
   }, []);
 
   const listener = (msg: any) => {
-    alert(JSON.stringify(msg));
     // if(msg.data.type === 'wallet/getAccount') {
-      window.postMessage({ type: 'wallet/getAccount', accountInfo: {
+    (window as any).top.postMessage({
+      type: 'wallet/getAccount',
+      accountInfo: {
         address: selectedAddress,
         chainId: selectedChainId,
-      } });
+      },
+    });
     // }
   };
 
@@ -68,7 +70,7 @@ export default function InjectorMessage() {
     //   address: selectedAddress,
     //   chainId: selectedChainId,
     // } });
-    // (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
     window.addEventListener('message', listener, false);
   }, []);
 
