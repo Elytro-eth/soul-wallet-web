@@ -54,14 +54,20 @@ export default function InjectorMessage() {
   }, []);
 
   const listener = (msg: any) => {
-    console.log('meg is ', msg);
+    if(msg.data.type === 'wallet/getAccount') {
+      window.postMessage({ type: 'wallet/getAccount', accountInfo: {
+        address: selectedAddress,
+        chainId: selectedChainId,
+      } });
+    }
   };
 
   useEffect(() => {
-    console.log('ready to listen message');
-
-    window.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
-    (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    // window.postMessage({ type: 'wallet/getAccount', accountInfo: {
+    //   address: selectedAddress,
+    //   chainId: selectedChainId,
+    // } });
+    // (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
     window.addEventListener('message', listener, false);
   }, []);
 
