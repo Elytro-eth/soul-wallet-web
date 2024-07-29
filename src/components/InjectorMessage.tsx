@@ -17,13 +17,13 @@ export default function InjectorMessage() {
     //     chainId: selectedChainId,
     //   },
     // });
-    // (window as any).top.postMessage({
-    //   type: 'wallet/getAccount',
-    //   accountInfo: {
-    //     address: selectedAddress,
-    //     chainId: selectedChainId,
-    //   },
-    // });
+    (window as any).top.postMessage({
+      type: 'wallet/getAccount',
+      accountInfo: {
+        address: selectedAddress,
+        chainId: selectedChainId,
+      },
+    });
     // (window as any).parent.postMessage({
     //   type: 'wallet/getAccount',
     //   accountInfo: {
@@ -47,9 +47,9 @@ export default function InjectorMessage() {
     //   address: selectedAddress,
     //   chainId: selectedChainId,
     // } });
-    setInterval(()=>{
-      (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
-    }, 3000)
+    // setInterval(()=>{
+    //   (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    // }, 3000)
     // send message to parent window
     // window.parent.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
 
