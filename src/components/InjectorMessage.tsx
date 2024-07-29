@@ -58,7 +58,9 @@ export default function InjectorMessage() {
   };
 
   useEffect(() => {
-    console.log('ready to listen message')
+    console.log('ready to listen message');
+
+    window.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
     window.addEventListener('message', listener, false);
   }, []);
 
