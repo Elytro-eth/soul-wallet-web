@@ -11,13 +11,13 @@ export default function InjectorMessage() {
 
   const listener = (msg: any) => {
     // if(msg.data.type === 'wallet/getAccount') {
-    (window as any).postMessage({
-      type: 'wallet/getAccount',
-      accountInfo: {
-        address: selectedAddress,
-        chainId: selectedChainId,
-      },
-    });
+    // (window as any).postMessage({
+    //   type: 'wallet/getAccount',
+    //   accountInfo: {
+    //     address: selectedAddress,
+    //     chainId: selectedChainId,
+    //   },
+    // });
     // }
   };
 
@@ -27,7 +27,7 @@ export default function InjectorMessage() {
     //   chainId: selectedChainId,
     // } });
     // (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
-    (window as any).postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+    (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
     window.addEventListener('message', listener, false);
   }, []);
 
