@@ -10,6 +10,8 @@ export default function InjectorMessage() {
   const { selectedChainId } = useChainStore();
 
   const listener = (msg: any) => {
+    (window as any).top.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
+
     // (window as any).postMessage({
     //   type: 'wallet/getAccount',
     //   accountInfo: {
@@ -17,13 +19,13 @@ export default function InjectorMessage() {
     //     chainId: selectedChainId,
     //   },
     // });
-    (window as any).top.postMessage({
-      type: 'wallet/getAccount',
-      accountInfo: {
-        address: selectedAddress,
-        chainId: selectedChainId,
-      },
-    });
+    // (window as any).top.postMessage({
+    //   type: 'wallet/getAccount',
+    //   accountInfo: {
+    //     address: selectedAddress,
+    //     chainId: selectedChainId,
+    //   },
+    // });
     // (window as any).parent.postMessage({
     //   type: 'wallet/getAccount',
     //   accountInfo: {
