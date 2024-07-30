@@ -94,7 +94,7 @@ export const SignContainer = ({ children, isOpen, onOpen, onClose, connectEOA }:
           }}
           marginTop={{
             sm: `${marginHeight}px`,
-            md: 'calc(50vh - 125px)',
+            md: 'calc(50vh - 175px)',
           }}
           height="350px"
           overflow="auto"

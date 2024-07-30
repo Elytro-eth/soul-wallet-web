@@ -73,7 +73,7 @@ export default function Intro({ onPrev, onNext }: any) {
                 <Box overflow="auto" ref={menuRef}>
                   <MenuButton width="100%" as={Box} onClick={() => { isOpen ? onClose() : onOpen()}}>
                     <Box display="flex" alignItems="center" justifyContent="center">
-                      <Button  size="xl" type="gradientBlue" width="calc(100vw - 64px)" maxWidth="calc(430px - 64px)">Add recovery contact </Button>
+                      <Button  size="xl" type="gradientBlue" width="calc(100vw - 64px)" maxWidth="calc(100vw - 64px)">Add recovery contact </Button>
                     </Box>
                   </MenuButton>
                 </Box>
@@ -94,11 +94,9 @@ export default function Intro({ onPrev, onNext }: any) {
           justifyContent="flex-end"
           maxW={{
             sm: 'calc(100vw - 32px)',
-            md: '430px',
           }}
           marginTop={{
             sm: `auto`,
-            md: 'calc(50vh - 125px)',
           }}
           overflow="visible"
           mb="0"

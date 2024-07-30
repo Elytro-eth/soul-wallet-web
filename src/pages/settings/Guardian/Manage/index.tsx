@@ -366,7 +366,7 @@ export default function Manage() {
           }}
           marginTop={{
             sm: `${innerHeight - 468}px`,
-            md: 'calc(50vh - 125px)',
+            md: 'calc(50vh - 234px)',
           }}
           height="468px"
           overflow="auto"
@@ -414,7 +414,7 @@ export default function Manage() {
           }}
           marginTop={{
             sm: `${innerHeight - 528}px`,
-            md: 'calc(50vh - 125px)',
+            md: 'calc(50vh - 264px)',
           }}
           height="528px"
           overflow="auto"
@@ -483,11 +483,9 @@ export default function Manage() {
           justifyContent="flex-end"
           maxW={{
             sm: 'calc(100vw - 32px)',
-            md: '430px',
           }}
           marginTop={{
             sm: `auto`,
-            md: 'calc(50vh - 125px)',
           }}
           overflow="visible"
           mb="0"
@@ -568,11 +566,9 @@ export default function Manage() {
           justifyContent="flex-end"
           maxW={{
             sm: 'calc(100vw - 32px)',
-            md: '430px',
           }}
           marginTop={{
             sm: `auto`,
-            md: 'calc(50vh - 125px)',
           }}
           overflow="visible"
           mb="0"
