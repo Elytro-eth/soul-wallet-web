@@ -149,21 +149,23 @@ export default function Create() {
   };
 
   return (
-    <Box width="100%" height={innerHeight} bg="#fff">
-      {step < 3 && (
-        <Fragment>
-          <Header title="Create account" showBackButton onBack={onPrev} />
-          <ProgressBar size={3} activeIndex={step} />
-        </Fragment>
-      )}
-      <Box
-        height={(step < 3) ? (innerHeight - 64) : innerHeight}
-        overflowY="auto"
-        display="flex"
-        alignItems="flex-start"
-        justifyContent="center"
-      >
-        {renderStep()}
+    <Box width="100%" height={innerHeight}>
+      <Box width="100%" bg="#fff">
+        {step < 3 && (
+          <Fragment>
+            <Header title="Create account" showBackButton onBack={onPrev} />
+            <ProgressBar size={3} activeIndex={step} />
+          </Fragment>
+        )}
+        <Box
+          height={(step < 3) ? (innerHeight - 64) : innerHeight}
+          overflowY="auto"
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="center"
+        >
+          {renderStep()}
+        </Box>
       </Box>
     </Box>
   );
