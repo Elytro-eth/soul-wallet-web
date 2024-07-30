@@ -20,6 +20,7 @@ export default {
   maxCostMultiplier: 120,
   chainId,
   chainPrefix: 'opsep:',
+  chainColor: '#E94E57',
   chainIdHex: `0x${(chainId).toString(16)}`,
   defaultMaxFee: '0.135',
   defaultMaxPriorityFee: '0',

@@ -14,6 +14,7 @@ import IconEmailYahoo from '@/assets/emails/yahoo.png';
 import IconEmailIcloud from '@/assets/emails/icloud.png';
 import IconEmailProton from '@/assets/emails/proton.png';
 import IconEmailGMX from '@/assets/emails/gmx.png';
+import IconEmailAOL from '@/assets/emails/aol.png';
 
 export const sidebarLinks = [
   {
@@ -63,14 +64,14 @@ export const forbiddenEmailProviders = ['qq.com', '163.com', '126.com'];
 
 export const validEmailProviders = [
   {
-    icon: IconEmailIcloud,
-    title: 'Icloud',
-    domain: 'icloud.com',
-  },
-  {
     icon: IconEmailGmail,
     title: 'Gmail',
     domain: 'gmail.com',
+  },
+  {
+    icon: IconEmailIcloud,
+    title: 'Icloud',
+    domain: 'icloud.com',
   },
   {
     icon: IconEmailYahoo,
@@ -78,19 +79,14 @@ export const validEmailProviders = [
     domain: 'yahoo.com',
   },
   {
+    icon: IconEmailAOL,
+    title: 'AOL',
+    domain: 'aol.com',
+  },
+  {
     icon: IconEmailProton,
     title: 'Pronton',
     domain: 'proton.me',
-  },
-  {
-    icon: IconEmailOutlook,
-    title: 'Outlook',
-    domain: 'outlook.com',
-  },
-  {
-    icon: IconEmailGMX,
-    title: 'GMX',
-    domain: 'gmx.com',
   },
 ];
 

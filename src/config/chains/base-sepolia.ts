@@ -19,6 +19,7 @@ export default {
   maxCostMultiplier: 120,
   chainId,
   chainPrefix: 'basesep:',
+  chainColor: 'black',
   chainIdHex: `0x${chainId.toString(16)}`,
   defaultMaxFee: '0.135',
   defaultMaxPriorityFee: '0',
