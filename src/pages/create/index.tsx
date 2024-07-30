@@ -149,8 +149,29 @@ export default function Create() {
   };
 
   return (
-    <Box width="100%" height={innerHeight}>
-      <Box width="100%" bg="#fff">
+    <Box
+      width="100%"
+      height={innerHeight}
+      background={{
+        sm: 'white',
+        md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+      }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Box
+        width={{
+          sm: "100%",
+          md: "640px",
+        }}
+        bg="#fff"
+        borderRadius={{
+          sm: '0',
+          md: '32px',
+        }}
+        overflow="hidden"
+      >
         {step < 3 && (
           <Fragment>
             <Header title="Create account" showBackButton onBack={onPrev} />
@@ -158,7 +179,10 @@ export default function Create() {
           </Fragment>
         )}
         <Box
-          height={(step < 3) ? (innerHeight - 64) : innerHeight}
+          height={{
+            sm: (step < 3) ? (innerHeight - 64) : innerHeight,
+            md: 'auto',
+          }}
           overflowY="auto"
           display="flex"
           alignItems="flex-start"

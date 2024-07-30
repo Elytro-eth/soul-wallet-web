@@ -26,7 +26,7 @@ export default function Header({ title, onBack, step, showBackButton, showLogo, 
       {showBackButton && (
         <Box
           position="absolute"
-          left="20px"
+          left="28px"
           top="0px"
           cursor="pointer"
           marginTop="15px"

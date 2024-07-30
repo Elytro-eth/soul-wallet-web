@@ -114,7 +114,10 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
     <Box
       width="100%"
       padding="30px"
-      height={innerHeight}
+      height={{
+        sm: innerHeight,
+        md: 'auto',
+      }}
       display="flex"
       alignItems="center"
       justifyContent="center"
