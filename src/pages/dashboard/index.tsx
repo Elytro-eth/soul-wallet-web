@@ -633,7 +633,7 @@ export default function Dashboard() {
             }}
             marginTop={{
               sm: `${innerHeight - 474}px`,
-              md: 'calc(50vh - 125px)',
+              md: 'calc(50vh - 237px)',
             }}
             height={474}
             overflow="visible"

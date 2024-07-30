@@ -237,7 +237,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
           }}
           marginTop={{
             sm: `${marginHeight}px`,
-            md: 'calc(50vh - 125px)',
+            md: 'calc(50vh - 234px)',
           }}
           height="468px"
           overflow="auto"

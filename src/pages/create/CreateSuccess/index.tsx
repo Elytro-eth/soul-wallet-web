@@ -90,8 +90,8 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       <Box
         position="fixed"
         top="0"
-        left="calc(50% - 215px)"
-        width="430px"
+        left="0"
+        width="100vw"
         height="100vh"
         display="flex"
         alignItems="center"
