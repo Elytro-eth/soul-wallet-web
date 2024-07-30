@@ -308,6 +308,7 @@ export default function Sign() {
             fontSize="13px"
             fontWeight="500"
           >
+            <Box as="span" color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Box>
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
             <Box as="span" color="#95979C">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(-6)}</Box>
@@ -479,6 +480,7 @@ export default function Sign() {
             fontSize="18px"
             fontWeight="400"
           >
+            <Box as="span" color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Box>
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
             <Box as="span" color="#95979C">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
             <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(-6)}</Box>
@@ -568,6 +570,7 @@ export default function Sign() {
           fontSize="18px"
           fontWeight="400"
         >
+          <Box as="span" color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Box>
           <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(0, 6)}</Box>
           <Box as="span" color="#95979C">{recoveryAddress && recoveryAddress.slice(6, -6)}</Box>
           <Box as="span" color="black">{recoveryAddress && recoveryAddress.slice(-6)}</Box>

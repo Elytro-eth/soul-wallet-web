@@ -71,22 +71,22 @@ export default function Activity({ isModal, registerScrollable }: any) {
                 </Box>
                 <Box>
                   <Box display="flex" alignItems="center">
-                    <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" textTransform={"capitalize"}>
-                      {item.functionName}
-                    </Box>
+                    <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">{toShortAddress(item.to, 6)}</Box>
                   </Box>
-                  <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C">{new Date(item.timestamp * 1000).toLocaleString()}</Box>
+                  <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">{new Date(item.timestamp * 1000).toLocaleString()}</Box>
                 </Box>
                 <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                  <Flex align={'center'} fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" display="flex">
+                  <Box fontSize="14px" fontWeight="500" lineHeight="17.5px" color="#161F36" textTransform={"capitalize"}>
+                    {item.functionName}
+                  </Box>
+                  <Flex align={'center'} fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" display="flex" marginTop="2px">
                     <Box>
                       {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount: 0}
                       {/* {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH */}
-                      </Box>
-                      {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
+                    </Box>
+                    {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
                     {/*  */}
                   </Flex>
-                  <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="4px">{toShortAddress(item.to, 6)}</Box>
                 </Box>
               </Box>
             ))}
