@@ -9,6 +9,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import RecoverSuccessIcon from '@/assets/recover-success.png';
 import useScreenSize from '@/hooks/useScreenSize';
 import { useTempStore } from '@/store/temp';
+import FadeId from '@/components/Icons/mobile/FaceId'
+import SuccessIcon from '@/components/Icons/Success';
 
 export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering }: any) {
   const { innerHeight } = useScreenSize();
@@ -52,11 +54,11 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
       flexDirection="column"
       justifyContent="center"
     >
-      <Box width="144px" height="144px" marginBottom="40px" position="relative">
-        <Image height="144px" src={RecoverSuccessIcon} />
-      </Box>
       {validTime >= 1 ? (
         <>
+          <Box width="144px" height="144px" marginBottom="40px" position="relative">
+            <Image height="144px" src={RecoverSuccessIcon} />
+          </Box>
           {reachedValidTime ? (
             <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
               <Box fontWeight="500" fontSize="28px" lineHeight="1" marginBottom="40px" color="#161F36">
@@ -103,7 +105,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
                     </Box>
                   </Box>
                   <Box padding="8px" fontWeight="500" fontSize="20px">
-                    :
+            :
                   </Box>
                   <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
                     <Box
@@ -131,8 +133,21 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
         </>
       ) : (
         <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-          <Box fontWeight="500" fontSize="28px" lineHeight="1" marginBottom="40px" color="#161F36">
-            You can recover account now
+          <Box marginBottom="8px">
+            <SuccessIcon size="96" />
+          </Box>
+          <Box fontWeight="500" fontSize="28px" lineHeight="1" marginBottom="8px" color="#161F36">
+            Signature collected
+          </Box>
+          <Box
+            fontWeight="400"
+            fontSize="14px"
+            lineHeight="17.5px"
+            marginBottom="40px"
+            color="#676B75"
+            textAlign="center"
+          >
+            Please click on the button below to confirm account recovery
           </Box>
           <Button
             width="100%"
@@ -142,7 +157,10 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
             onClick={doRecover}
             loading={isRecovering}
           >
-            Recover
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <Box marginRight="8px"><FadeId /></Box>
+              <Box>Confirm</Box>
+            </Box>
           </Button>
         </Box>
       )}
