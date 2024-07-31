@@ -26,7 +26,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
     const remainingTime = validTime - now;
     if (validTime > 1 && remainingTime <= 0) {
       setReachedValidTime(true);
-    } else {
+    } else if(validTime >= 1) {
       setReachedValidTime(false);
       const hours = Math.floor(remainingTime / 3600);
       setRemainingHours(hours);
