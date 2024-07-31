@@ -45,6 +45,11 @@ import AddressIcon from '@/components/AddressIcon';
 import EmptyIcon from '@/assets/mobile/activity-empty.png'
 import SettingPage from '@/pages/settings'
 import useConfig from '@/hooks/useConfig';
+import AppHeader from '@/components/mobile/Header';
+import AppsIcon2 from '@/components/Icons/desktop/Apps';
+import AssetsIcon2 from '@/components/Icons/desktop/Assets';
+import ActivityIcon2 from '@/components/Icons/desktop/Activity';
+import SettingsIcon2 from '@/components/Icons/desktop/Settings';
 import op from '@/config/chains/op';
 
 const getFontSize = (value: any) => {
@@ -105,8 +110,8 @@ export function Header({ openMenu, username, ...props }: any) {
     >
       <Box display="flex" gap="2" alignItems="center" justifyContent="center">
         {/* <Box width="40px" height="40px">
-          <AddressIcon address={selectedAddress} width={40} />
-        </Box> */}
+            <AddressIcon address={selectedAddress} width={40} />
+            </Box> */}
         <Image src={chainConfig.icon} width="40px" height="40px" />
         <Box fontSize="20px" lineHeight="24px" fontWeight="400" color="#161F36">
           {walletName}
@@ -283,16 +288,16 @@ export default function Dashboard() {
           openMenu={onOpen}
         />
         {/* <Box
-          position="fixed"
-          width="100vw"
-          bottom="30px"
-          left="0"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          zIndex="2"
-        >
-          <Box
+            position="fixed"
+            width="100vw"
+            bottom="30px"
+            left="0"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            zIndex="2"
+            >
+            <Box
             display="flex"
             background="#161F36"
             height="56px"
@@ -300,319 +305,423 @@ export default function Dashboard() {
             fontSize="18px"
             fontWeight="400"
             lineHeight="22.5px"
-          >
-            <Box
-              color="white"
-              padding="16px 32px"
-              paddingRight="12px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              {...(activeMenu === 'apps' ? { opacity: 1, fontWeight: 500 } : { opacity: .6}) }
-              onClick={() => setActiveMenu('apps')}
             >
-              <Box marginRight="2px">
-                <AppsIcon />
-              </Box>
-              <Box>Apps</Box>
+            <Box
+            color="white"
+            padding="16px 32px"
+            paddingRight="12px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            {...(activeMenu === 'apps' ? { opacity: 1, fontWeight: 500 } : { opacity: .6}) }
+            onClick={() => setActiveMenu('apps')}
+            >
+            <Box marginRight="2px">
+            <AppsIcon />
+            </Box>
+            <Box>Apps</Box>
             </Box>
 
             <Box
-              color="white"
-              padding="16px 32px"
-              paddingLeft="12px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              {...(activeMenu === 'assets' ? { opacity: 1, fontWeight: 500 } : { opacity: .6}) }
-              onClick={() => setActiveMenu('assets')}
-            >
-              <Box marginRight="2px">
-                <AssetsIcon />
-              </Box>
-              <Box>Assets</Box>
-            </Box>
-          </Box>
-        </Box> */}
-        <Box padding="8px" height={innerHeight - 64} overflowY="scroll">
-          <Box
-            ref={(v: any) => {
-              contentRef.current = v;
-            }}
+            color="white"
+            padding="16px 32px"
+            paddingLeft="12px"
             display="flex"
-            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            {...(activeMenu === 'assets' ? { opacity: 1, fontWeight: 500 } : { opacity: .6}) }
+            onClick={() => setActiveMenu('assets')}
+            >
+            <Box marginRight="2px">
+            <AssetsIcon />
+            </Box>
+            <Box>Assets</Box>
+            </Box>
+            </Box>
+            </Box> */}
+        <Box
+          display="flex"
+          height={innerHeight - 64}
+        >
+          <Box
+            minWidth={{
+              sm: '0',
+              md: '240px'
+            }}
+            height="100%"
+            display={{
+              sm: 'none',
+              md: 'flex'
+            }}
+            padding="24px 0"
           >
-            {(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash) && (
+            <Box width="100%">
               <Box
-                paddingLeft="8px"
-                paddingRight="8px"
-                marginBottom="20px"
-              >
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  width="100%"
-                  minHeight="79px"
-                  borderRadius="32px"
-                  // background="white"
-                  padding="12px 16px"
-                  color="#0E1736"
-                  justifyContent="space-between"
-                  fontSize="14px"
-                  background="radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)"
-                  onClick={() => navigate('/verify-email')}
-                >
-                  <Box>
-                    <Box fontSize="32px" lineHeight={"1"} fontWeight="500">$10</Box>
-                    <Box fontSize="14px" lineHeight={"17px"} fontWeight="400" opacity="0.64" color="#161F36">Setup email recovery to get 10 USDC</Box>
-                  </Box>
-                  <Box>
-                    <Image width="40px" height="40px" src={USDCIcon} />
-                  </Box>
-                </Box>
-              </Box>
-            )}
-            {activeMenu === 'apps' && (
-              <Fragment>
-                <Box
-                  width="100%"
-                  px="2"
-                  marginTop="20px"
-                >
-                  <Box
-                    width="100%"
-                    background="linear-gradient(to bottom, #E4EaED 0%, #C5DDEF 100%)"
-                    borderRadius="24px"
-                    padding="24px"
-                    height="216px"
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="space-between"
-                  >
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
-                      <Box>
-                        <Box fontSize="32px" fontWeight="500" color="#161F36" lineHeight="1">AAVE</Box>
-                        <Box fontSize="20px" lineHeight="25px" color="#3C3F45" opacity="0.8">10.16% APY</Box>
-                      </Box>
-                      <Box>
-                        <Image src={AAVEIcon} width="56px" height="56px" />
-                      </Box>
-                    </Box>
-                    <Box>
-                      <Button onClick={()=> toast({
-                        title: 'Coming soon',
-                        status: 'info',
-                      })} border="none" size="xl" height="40px" width="110px" type="white">Earn now</Button>
-                    </Box>
-                  </Box>
-                  <Box textAlign="center" width="100%" marginTop="16px" fontSize="14px" lineHeight="17.5px" opacity="0.4">
-                    More apps arriving soon
-                  </Box>
-                </Box>
-              </Fragment>
-            )}
-            {activeMenu === 'assets' && (
-              <Fragment>
-                <Box
-                  width="100%"
-                  px="2"
-                >
-                  <Box display="flex" alignItems="center">
-                    <Box fontSize="56px" lineHeight={"1"} fontWeight="500" marginRight="2px">
-                      $
-                    </Box>
-                    <Box
-                      fontSize={fontSize}
-                      lineHeight={'1'}
-                      fontWeight="500"
-                      sx={{
-                        '@property --num': {
-                          syntax: `'<integer>'`,
-                          initialValue: '0',
-                          inherits: 'false',
-                        },
-                        '&': {
-                          transition: '--num 1s',
-                          counterReset: 'num var(--num)',
-                          '--num': valueLeft,
-                        },
-                        '&::after': {
-                          content: 'counter(num)',
-                        },
-                      }}
-                    />
-                    {valueRight &&
-                     BN(valueRight).isGreaterThan(0) &&
-                     Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
-                       <Box
-                         fontSize={fontSize}
-                         lineHeight={'1'}
-                         fontWeight="500"
-                         // marginTop={fontBottomMargin}
-                         // marginLeft="10px"
-                         color="#939393"
-                       >
-                         .
-                         <Box
-                           as="span"
-                         >
-                           {valueRight.slice(0, 4).replace(/0+$/, '')}
-                         </Box>
-                       </Box>
-                    )}
-                  </Box>
-                </Box>
-                <Box
-                  width="100%"
-                  display="flex"
-                  paddingLeft="8px"
-                  paddingRight="8px"
-                  marginTop="14px"
-                  marginBottom="40px"
-                >
-                  <Box width="calc((100% - 16px) / 3)" marginRight="8px">
-                    <Box
-                      background="#DCE4F2"
-                      borderRadius="32px"
-                      color="#161F36"
-                      fontSize="18px"
-                      fontWeight="400"
-                      lineHeight="22.5px"
-                      padding="12px 16px"
-                      height="47px"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      onClick={() => openFullScreenModal('send')}
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        marginRight="4px"
-                      >
-                        <SendIcon />
-                      </Box>
-                      <Box>Send</Box>
-                    </Box>
-                  </Box>
-                  <Box width="calc((100% - 16px) / 3)" marginRight="8px">
-                    <Box
-                      background="#DCE4F2"
-                      borderRadius="32px"
-                      color="#161F36"
-                      fontSize="18px"
-                      fontWeight="400"
-                      lineHeight="22.5px"
-                      padding="12px 16px"
-                      height="47px"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      onClick={() => openFullScreenModal('receive')}
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        marginRight="4px"
-                      >
-                        <ReceiveIcon />
-                      </Box>
-                      <Box>Receive</Box>
-                    </Box>
-                  </Box>
-                  <Box width="calc((100% - 16px) / 3)">
-                    <Box
-                      background="#DCE4F2"
-                      borderRadius="32px"
-                      color="#161F36"
-                      fontSize="18px"
-                      fontWeight="400"
-                      lineHeight="22.5px"
-                      padding="12px 16px"
-                      height="47px"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      onClick={() => openFullScreenModal('activity')}
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        marginRight="4px"
-                      >
-                        <ActivitiesIcon />
-                      </Box>
-                      <Box>Activity</Box>
-                    </Box>
-                  </Box>
-                </Box>
-                {tokenBalanceValid ? (
-                  <Box
-                    width="100%"
-                    background="white"
-                    borderRadius="32px"
-                    boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
-                    // border="1px solid #EAECF0"
-                    position="relative"
-                    zIndex="1"
-                  >
-                    <Box padding="12px 16px" paddingBottom="0">
-                      {tokenBalance.map((item: any, index: number) => (
-                        <Box key={index} display="flex" alignItems="center" marginBottom="12px">
-                          <Box marginRight="10px">
-                            <Image src={item.logoURI} w="32px" h="32px" />
-                          </Box>
-                          <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                            {item.name}
-                          </Box>
-                          <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                            <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                              {item.tokenBalanceFormatted}
-                            </Box>
-                            <Box fontSize="12px" lineHeight="15px" color="#95979C">$0</Box>
-                          </Box>
-                        </Box>
-                      ))}
-                    </Box>
-                  </Box>
-                ) : <Box
                 width="100%"
-                background="white"
-                borderRadius="32px"
-                height="377px"
-                boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
-                // border="1px solid #EAECF0"
-                position="relative"
-                zIndex="1"
+                padding="12px 20px"
+                cursor="pointer"
                 display="flex"
                 alignItems="center"
-                justifyContent="center"
-                marginBottom="40px"
               >
+                <Box marginRight="8px">
+                  <AppsIcon2 />
+                </Box>
                 <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  flexDirection="column"
+                  fontWeight="400"
+                  fontSize="18px"
+                  color="#676B75"
+                  lineHeight="22.5px"
                 >
-                  <Box marginBottom="20px">
-                    <Image height="108px" w="216px" src={EmptyIcon} />
-                  </Box>
-                  <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
-                  <Box marginTop="12px">
-                    <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openFullScreenModal('receive')}>Deposit</Button>
+                  Apps
+                </Box>
+              </Box>
+              <Box
+                width="100%"
+                padding="12px 20px"
+                cursor="pointer"
+                display="flex"
+                alignItems="center"
+              >
+                <Box marginRight="8px">
+                  <AssetsIcon2 />
+                </Box>
+                <Box
+                  fontWeight="400"
+                  fontSize="18px"
+                  color="#676B75"
+                  lineHeight="22.5px"
+                >
+                  Assets
+                </Box>
+              </Box>
+              <Box
+                width="100%"
+                padding="12px 20px"
+                cursor="pointer"
+                display="flex"
+                alignItems="center"
+              >
+                <Box marginRight="8px">
+                  <ActivityIcon2 />
+                </Box>
+                <Box
+                  fontWeight="400"
+                  fontSize="18px"
+                  color="#676B75"
+                  lineHeight="22.5px"
+                >
+                  Activity
+                </Box>
+              </Box>
+              <Box
+                width="100%"
+                padding="12px 20px"
+                cursor="pointer"
+                display="flex"
+                alignItems="center"
+              >
+                <Box marginRight="8px">
+                  <SettingsIcon2 />
+                </Box>
+                <Box
+                  fontWeight="400"
+                  fontSize="18px"
+                  color="#676B75"
+                  lineHeight="22.5px"
+                >
+                  Settings
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box
+            padding="8px"
+            height="100%"
+            overflowY="scroll"
+            width={{
+              sm: '100%',
+              md: 'calc(100% - 240px)'
+            }}
+          >
+            <Box
+              ref={(v: any) => {
+                contentRef.current = v;
+              }}
+              display="flex"
+              flexDirection="column"
+            >
+              {(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash) && (
+                <Box
+                  paddingLeft="8px"
+                  paddingRight="8px"
+                  marginBottom="20px"
+                >
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    width="100%"
+                    minHeight="79px"
+                    borderRadius="32px"
+                    // background="white"
+                    padding="12px 16px"
+                    color="#0E1736"
+                    justifyContent="space-between"
+                    fontSize="14px"
+                    background="radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)"
+                    onClick={() => navigate('/verify-email')}
+                  >
+                    <Box>
+                      <Box fontSize="32px" lineHeight={"1"} fontWeight="500">$10</Box>
+                      <Box fontSize="14px" lineHeight={"17px"} fontWeight="400" opacity="0.64" color="#161F36">Setup email recovery to get 10 USDC</Box>
+                    </Box>
+                    <Box>
+                      <Image width="40px" height="40px" src={USDCIcon} />
+                    </Box>
                   </Box>
                 </Box>
-              </Box>}
-              </Fragment>
-            )}
+              )}
+              {activeMenu === 'apps' && (
+                <Fragment>
+                  <Box
+                    width="100%"
+                    px="2"
+                    marginTop="20px"
+                  >
+                    <Box
+                      width="100%"
+                      background="linear-gradient(to bottom, #E4EaED 0%, #C5DDEF 100%)"
+                      borderRadius="24px"
+                      padding="24px"
+                      height="216px"
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="space-between"
+                    >
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <Box>
+                          <Box fontSize="32px" fontWeight="500" color="#161F36" lineHeight="1">AAVE</Box>
+                          <Box fontSize="20px" lineHeight="25px" color="#3C3F45" opacity="0.8">10.16% APY</Box>
+                        </Box>
+                        <Box>
+                          <Image src={AAVEIcon} width="56px" height="56px" />
+                        </Box>
+                      </Box>
+                      <Box>
+                        <Button onClick={()=> toast({
+                          title: 'Coming soon',
+                          status: 'info',
+                        })} border="none" size="xl" height="40px" width="110px" type="white">Earn now</Button>
+                      </Box>
+                    </Box>
+                    <Box textAlign="center" width="100%" marginTop="16px" fontSize="14px" lineHeight="17.5px" opacity="0.4">
+                      More apps arriving soon
+                    </Box>
+                  </Box>
+                </Fragment>
+              )}
+              {activeMenu === 'assets' && (
+                <Fragment>
+                  <Box
+                    width="100%"
+                    px="2"
+                  >
+                    <Box display="flex" alignItems="center">
+                      <Box fontSize="56px" lineHeight={"1"} fontWeight="500" marginRight="2px">
+                        $
+                      </Box>
+                      <Box
+                        fontSize={fontSize}
+                        lineHeight={'1'}
+                        fontWeight="500"
+                        sx={{
+                          '@property --num': {
+                            syntax: `'<integer>'`,
+                            initialValue: '0',
+                            inherits: 'false',
+                          },
+                          '&': {
+                            transition: '--num 1s',
+                            counterReset: 'num var(--num)',
+                            '--num': valueLeft,
+                          },
+                          '&::after': {
+                            content: 'counter(num)',
+                          },
+                        }}
+                      />
+                      {valueRight &&
+                       BN(valueRight).isGreaterThan(0) &&
+                       Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
+                         <Box
+                           fontSize={fontSize}
+                           lineHeight={'1'}
+                           fontWeight="500"
+                           // marginTop={fontBottomMargin}
+                           // marginLeft="10px"
+                           color="#939393"
+                         >
+                           .
+                           <Box
+                             as="span"
+                           >
+                             {valueRight.slice(0, 4).replace(/0+$/, '')}
+                           </Box>
+                         </Box>
+                      )}
+                    </Box>
+                  </Box>
+                  <Box
+                    width="100%"
+                    display="flex"
+                    paddingLeft="8px"
+                    paddingRight="8px"
+                    marginTop="14px"
+                    marginBottom="40px"
+                  >
+                    <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+                      <Box
+                        background="#DCE4F2"
+                        borderRadius="32px"
+                        color="#161F36"
+                        fontSize="18px"
+                        fontWeight="400"
+                        lineHeight="22.5px"
+                        padding="12px 16px"
+                        height="47px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        onClick={() => openFullScreenModal('send')}
+                      >
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          marginRight="4px"
+                        >
+                          <SendIcon />
+                        </Box>
+                        <Box>Send</Box>
+                      </Box>
+                    </Box>
+                    <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+                      <Box
+                        background="#DCE4F2"
+                        borderRadius="32px"
+                        color="#161F36"
+                        fontSize="18px"
+                        fontWeight="400"
+                        lineHeight="22.5px"
+                        padding="12px 16px"
+                        height="47px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        onClick={() => openFullScreenModal('receive')}
+                      >
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          marginRight="4px"
+                        >
+                          <ReceiveIcon />
+                        </Box>
+                        <Box>Receive</Box>
+                      </Box>
+                    </Box>
+                    <Box width="calc((100% - 16px) / 3)">
+                      <Box
+                        background="#DCE4F2"
+                        borderRadius="32px"
+                        color="#161F36"
+                        fontSize="18px"
+                        fontWeight="400"
+                        lineHeight="22.5px"
+                        padding="12px 16px"
+                        height="47px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        onClick={() => openFullScreenModal('activity')}
+                      >
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          marginRight="4px"
+                        >
+                          <ActivitiesIcon />
+                        </Box>
+                        <Box>Activity</Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  {tokenBalanceValid ? (
+                    <Box
+                      width="100%"
+                      background="white"
+                      borderRadius="32px"
+                      boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+                      // border="1px solid #EAECF0"
+                      position="relative"
+                      zIndex="1"
+                    >
+                      <Box padding="12px 16px" paddingBottom="0">
+                        {tokenBalance.map((item: any, index: number) => (
+                          <Box key={index} display="flex" alignItems="center" marginBottom="12px">
+                            <Box marginRight="10px">
+                              <Image src={item.logoURI} w="32px" h="32px" />
+                            </Box>
+                            <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
+                              {item.name}
+                            </Box>
+                            <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                              <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
+                                {item.tokenBalanceFormatted}
+                              </Box>
+                              <Box fontSize="12px" lineHeight="15px" color="#95979C">$0</Box>
+                            </Box>
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                  ) : <Box
+                        width="100%"
+                        background="white"
+                        borderRadius="32px"
+                        height="377px"
+                        boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+                    // border="1px solid #EAECF0"
+                        position="relative"
+                        zIndex="1"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        marginBottom="40px"
+                      >
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      flexDirection="column"
+                    >
+                      <Box marginBottom="20px">
+                        <Image height="108px" w="216px" src={EmptyIcon} />
+                      </Box>
+                      <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
+                      <Box marginTop="12px">
+                        <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openFullScreenModal('receive')}>Deposit</Button>
+                      </Box>
+                    </Box>
+                  </Box>}
+                </Fragment>
+              )}
+            </Box>
           </Box>
         </Box>
         <Modal
