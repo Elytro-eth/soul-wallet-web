@@ -18,11 +18,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
   const [remainingHours, setRemainingHours] = useState(0);
   const [remainingMinutes, setRemainingMinutes] = useState(0);
   const [reachedValidTime, setReachedValidTime] = useState(false);
-
-  const validTime = recoverInfo.validTime;
-
-  console.log('valid time!!!!', validTime)
-
+  const validTime  = recoverInfo.validTime
   /**
    *
    * @returns Calculate the remaining time return hour and minutes
@@ -30,7 +26,6 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
   const calculateReamingTime = () => {
     const now = new Date().getTime() / 1000;
     const remainingTime = validTime - now;
-    console.log('rema', remainingTime, validTime);
     if (validTime > 1 && remainingTime <= 0) {
       setReachedValidTime(true);
     } else {
@@ -47,7 +42,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
       calculateReamingTime();
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [validTime]);
 
   return (
     <Box

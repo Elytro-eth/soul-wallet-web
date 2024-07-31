@@ -34,7 +34,6 @@ export default function Recover() {
   const [isRecovering, setIsRecovering] = useState(false);
   const [signedGuardians, setSignedGuardians] = useState<any>([]);
   const { innerHeight } = useScreenSize();
-  const { clearTempInfo } = useTempStore();
 
   const { recoverInfo, updateRecoverInfo } = useTempStore();
   const { recoveryID, credential: newCredential } = recoverInfo;
@@ -144,10 +143,11 @@ export default function Recover() {
       while (true) {
         setIsRecovering(true);
         const res: any = await api.recovery.execute({ recoveryID });
-        if (res.msg === 'executeRecovery tirggered' || res.msg === 'recovery already executed') {
-          const recoverRecord = await getPreviousRecord();
-          await boostAfterRecovered(recoverRecord);
-          break;
+        if (res.msg === 'scheduleRecovery triggered' || res.msg === 'need to wait') {
+          getPreviousRecord();
+          // const recoverRecord = await getPreviousRecord();
+          // await boostAfterRecovered(recoverRecord);
+          // break;
           // trigger login again, and use current credential id
           // try {
           //   await loginWallet(newCredential.id);
@@ -155,8 +155,6 @@ export default function Recover() {
           //   navigate('/dashboard');
           //   break;
           // }
-        } else if (res.msg === 'need to wait') {
-          break;
         }
       }
     } catch (err: any) {
@@ -171,10 +169,19 @@ export default function Recover() {
 
   const doPastRecover = async () => {
     try {
+      while (true) {
+        setIsRecovering(true);
+        const res: any = await api.recovery.execute({ recoveryID });
+        if (res.msg === 'executeRecovery triggered' || res.msg === 'already executed') {
+          const recoverRecord = await getPreviousRecord();
+          await boostAfterRecovered(recoverRecord);
+          break;
+        }
+      }
+
       try {
         await loginWallet(newCredential.id);
       } finally {
-        clearTempInfo();
         navigate('/dashboard');
       }
     } catch (err: any) {

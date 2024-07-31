@@ -347,6 +347,7 @@ export default function useWallet() {
     setSlotInfo({
       ..._recoverInfo.initInfo,
     });
+    clearTempInfo();
   };
 
   const signAndSend = async (userOp: UserOperation) => {
