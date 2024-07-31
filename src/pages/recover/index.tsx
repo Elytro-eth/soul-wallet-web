@@ -143,20 +143,48 @@ export default function Recover() {
       while (true) {
         setIsRecovering(true);
         const res: any = await api.recovery.execute({ recoveryID });
-        if (res.msg === 'executeRecovery tirggered' || res.msg === 'recovery already executed') {
-          const recoverRecord = await getPreviousRecord();
-          await boostAfterRecovered(recoverRecord);
+        if (res.msg === 'scheduleRecovery triggered' || res.msg === 'need to wait') {
+          getPreviousRecord();
+          // const recoverRecord = await getPreviousRecord();
+          // await boostAfterRecovered(recoverRecord);
+          // break;
           // trigger login again, and use current credential id
-          try{
-            await loginWallet(newCredential.id);
-          }finally{
-            navigate('/dashboard');
-            break;
-          }
+          // try {
+          //   await loginWallet(newCredential.id);
+          // } finally {
+          //   navigate('/dashboard');
+          //   break;
+          // }
         }
       }
     } catch (err: any) {
       setIsRecovering(false);
+      toast({
+        title: 'Error',
+        description: err.response.data.msg,
+        status: 'error',
+      });
+    }
+  };
+
+  const doPastRecover = async () => {
+    try {
+      while (true) {
+        setIsRecovering(true);
+        const res: any = await api.recovery.execute({ recoveryID });
+        if (res.msg === 'executeRecovery triggered' || res.msg === 'already executed') {
+          const recoverRecord = await getPreviousRecord();
+          await boostAfterRecovered(recoverRecord);
+          break;
+        }
+      }
+
+      try {
+        await loginWallet(newCredential.id);
+      } finally {
+        navigate('/dashboard');
+      }
+    } catch (err: any) {
       toast({
         title: 'Error',
         description: err.response.data.msg,
@@ -226,7 +254,7 @@ export default function Recover() {
     } else if (step == 2) {
       return <RecoverProgress onNext={onNext} signedGuardians={signedGuardians} />;
     } else if (step == 3) {
-      return <RecoverSuccess isRecovering={isRecovering} doRecover={doRecover} />;
+      return <RecoverSuccess isRecovering={isRecovering} doRecover={doRecover} doPastRecover={doPastRecover} />;
     }
 
     return null;

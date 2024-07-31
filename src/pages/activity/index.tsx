@@ -5,8 +5,8 @@ import Button from '@/components/mobile/Button';
 import { Link as Rlink } from 'react-router-dom';
 import DetailsIMG from '@/components/Icons/mobile/Details';
 import TabIcon from '@/components/Icons/mobile/Tab';
-import { getIconMapping, toFixed, toShortAddress } from '@/lib/tools';
-import BN from 'bignumber.js'
+import { formatDate, getIconMapping, toFixed, toShortAddress } from '@/lib/tools';
+import BN from 'bignumber.js';
 import { useNavigate } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc_lg.png';
 import ETHIcon from '@/assets/tokens/eth.svg';
@@ -27,7 +27,7 @@ export default function Activity({ isModal, registerScrollable }: any) {
     registerScrollable(scrollableRef.current);
   }, []);
 
-  console.log('history', historyList)
+  console.log('history', historyList);
 
   return (
     <Box
@@ -66,22 +66,38 @@ export default function Activity({ isModal, registerScrollable }: any) {
           <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
             {historyList.map((item, index) => (
               <Box display="flex" alignItems="center" height="52px" key={index}>
-                <Box marginRight="12px">
-                  <Image src={getIconMapping(item.functionName)} />
-                </Box>
+                <Image w="8" h="8" mr="3" flex={"0 0 32px"} src={getIconMapping(item.functionName)} />
                 <Box>
                   <Box display="flex" alignItems="center">
-                    <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">{toShortAddress(item.to, 6)}</Box>
+                    <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">
+                      {toShortAddress(item.to, 6)}
+                    </Box>
                   </Box>
-                  <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">{new Date(item.timestamp * 1000).toLocaleString()}</Box>
+                  <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">
+                    {formatDate(new Date(item.timestamp * 1000))}
+                  </Box>
                 </Box>
                 <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                  <Box fontSize="14px" fontWeight="500" lineHeight="17.5px" color="#161F36" textTransform={"capitalize"}>
+                  <Box
+                    fontSize="14px"
+                    fontWeight="500"
+                    lineHeight="17.5px"
+                    color="#161F36"
+                    textTransform={'capitalize'}
+                  >
                     {item.functionName}
                   </Box>
-                  <Flex align={'center'} fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" display="flex" marginTop="2px">
+                  <Flex
+                    align={'center'}
+                    fontSize="18px"
+                    fontWeight="500"
+                    lineHeight="22.5px"
+                    color="#161F36"
+                    display="flex"
+                    marginTop="2px"
+                  >
                     <Box>
-                      {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount: 0}
+                      {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
                       {/* {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH */}
                     </Box>
                     {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
@@ -103,7 +119,7 @@ export default function Activity({ isModal, registerScrollable }: any) {
             height="100%"
           >
             <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-              <Image src={ActivityEmptyIcon} w={"216px"} h="108px" />
+              <Image src={ActivityEmptyIcon} w={'216px'} h="108px" />
               <Box color="#676B75" marginTop="8px">
                 You don’t have any activity yet
               </Box>

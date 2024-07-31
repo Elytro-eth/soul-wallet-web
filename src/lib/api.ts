@@ -66,6 +66,7 @@ const sponsor = {
       entryPoint,
       op,
     }),
+    leftTimes: (params: any) => axio.post('/walletapi/sponsor/sponsor-op-check', params),
 };
 
 const invitation = {

@@ -17,7 +17,7 @@ import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
 import { defaultGuardianSafePeriod } from '@/config';
 import { fetchTokenBalanceApi } from '@/store/balance';
-import { aaveUsdcPoolAbi, claimInterestAbi } from '@/contracts/abis';
+// import { aaveUsdcPoolAbi, claimInterestAbi } from '@/contracts/abis';
 // import useTransaction from './useTransaction';
 import useTools from './useTools';
 import BN from 'bignumber.js';
@@ -26,7 +26,7 @@ import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { useTempStore } from '@/store/temp';
-import { useGuardianStore } from '@/store/guardian';
+// import { useGuardianStore } from '@/store/guardian';
 
 export const noGuardian = {
   initialGuardianHash: ethers.ZeroHash,
@@ -175,6 +175,7 @@ export default function useWallet() {
       _initialKeys,
       noGuardian.initialGuardianHash,
       '0x',
+      noGuardian.initialGuardianSafePeriod,
     );
 
     if (userOpRet.isErr()) {

@@ -10,17 +10,28 @@ import storage from '@/lib/storage';
 import { useLocation } from 'react-router-dom';
 import { storeVersion } from '@/config';
 import useTools from '@/hooks/useTools';
+import { useTempStore } from '@/store/temp';
 
 export default function FindRoute({ children }: { children: ReactNode }) {
   const { navigate } = useBrowser();
   const location = useLocation();
   const { addressList, selectedAddress } = useAddressStore();
+  const {recoverInfo } = useTempStore();
   const { clearLogData } = useTools();
 
   const findRoute = async () => {
     const storageVersion = storage.getItem('storeVersion');
 
     const allowBypass = location.pathname.includes('create') || location.pathname.includes('landing') || location.pathname.includes('test') || location.pathname.includes('deposit') || location.pathname.includes('details') || location.pathname.includes('dashboard') || location.pathname.includes('create') || location.pathname.includes('withdraw') || location.pathname.includes('intro') || location.pathname.includes('verify-email') || location.pathname.includes('recover') || location.pathname.includes('public') || location.pathname.includes('guardian') || location.pathname.includes('guardian/intro') || location.pathname.includes('guardian/manage');
+
+
+    // if recovery record exists, redirect to /recover
+    if(recoverInfo && recoverInfo.recoveryID) {
+      navigate({
+        pathname: '/recover',
+        search: location.search,
+      });
+    }
 
     if (storeVersion !== storageVersion) {
       storage.setItem('storeVersion', storeVersion);
@@ -38,7 +49,13 @@ export default function FindRoute({ children }: { children: ReactNode }) {
       });
     } else {
     }
-    // if (addressList.length && selectedAddress)
+
+    
+
+
+
+
+
   };
 
   useEffect(() => {
