@@ -34,6 +34,7 @@ export default function Recover() {
   const [isRecovering, setIsRecovering] = useState(false);
   const [signedGuardians, setSignedGuardians] = useState<any>([]);
   const { innerHeight } = useScreenSize();
+  const { clearTempInfo } = useTempStore();
 
   const { recoverInfo, updateRecoverInfo } = useTempStore();
   const { recoveryID, credential: newCredential } = recoverInfo;
@@ -146,17 +147,37 @@ export default function Recover() {
         if (res.msg === 'executeRecovery tirggered' || res.msg === 'recovery already executed') {
           const recoverRecord = await getPreviousRecord();
           await boostAfterRecovered(recoverRecord);
+          break;
           // trigger login again, and use current credential id
-          try{
-            await loginWallet(newCredential.id);
-          }finally{
-            navigate('/dashboard');
-            break;
-          }
+          // try {
+          //   await loginWallet(newCredential.id);
+          // } finally {
+          //   navigate('/dashboard');
+          //   break;
+          // }
+        } else if (res.msg === 'need to wait') {
+          break;
         }
       }
     } catch (err: any) {
       setIsRecovering(false);
+      toast({
+        title: 'Error',
+        description: err.response.data.msg,
+        status: 'error',
+      });
+    }
+  };
+
+  const doPastRecover = async () => {
+    try {
+      try {
+        await loginWallet(newCredential.id);
+      } finally {
+        clearTempInfo();
+        navigate('/dashboard');
+      }
+    } catch (err: any) {
       toast({
         title: 'Error',
         description: err.response.data.msg,
@@ -226,7 +247,7 @@ export default function Recover() {
     } else if (step == 2) {
       return <RecoverProgress onNext={onNext} signedGuardians={signedGuardians} />;
     } else if (step == 3) {
-      return <RecoverSuccess isRecovering={isRecovering} doRecover={doRecover} />;
+      return <RecoverSuccess isRecovering={isRecovering} doRecover={doRecover} doPastRecover={doPastRecover} />;
     }
 
     return null;

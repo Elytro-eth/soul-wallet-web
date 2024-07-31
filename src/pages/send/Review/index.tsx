@@ -32,6 +32,9 @@ import useConfig from '@/hooks/useConfig';
 import useScreenSize from '@/hooks/useScreenSize';
 import FadeId from '@/components/Icons/mobile/FaceId';
 import Circle from '@/components/Icons/mobile/Circle';
+import api from '@/lib/api';
+import { useAddressStore } from '@/store/address';
+import { zeroAddress } from 'viem';
 
 export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, selectedToken }: any) {
   const { closeModal, closeFullScreenModal } = useWalletContext();
@@ -48,7 +51,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   const userOpRef = useRef();
   const isCompletedRef = useRef(false);
   const isTransferingRef = useRef(false);
+  const {getTokenBalance} = useBalanceStore();
   const { innerHeight } = useScreenSize();
+  const { selectedAddress } = useAddressStore();
+  const [sponsorLeftTimes, setSponsorLeftTimes] = useState(0);
   const marginHeight = innerHeight - 468;
   const { isOpen: isSelectOpen, onOpen: onSelectOpen, onClose: onSelectClose } = useDisclosure();
 
@@ -123,6 +129,24 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
     }
   };
 
+  const getSponsorLeftTimes = async () => {
+    console.log('chain config', chainConfig)
+    const res = await api.sponsor.leftTimes({
+      chainID: chainConfig.chainIdHex,
+      entryPoint: chainConfig.contracts.entryPoint,
+      address: selectedAddress,
+    });
+    setUseSponsor(res.data > 0);
+    setSponsorLeftTimes(res.data);
+  }
+  useEffect(()=>{
+    getSponsorLeftTimes();
+  }, [])
+
+  const ethBalance = getTokenBalance(zeroAddress);
+
+  console.log('eth balance', ethBalance)
+
   return (
     <Box width="100%" height={innerHeight} overflowY="scroll">
       <Header title="" showBackButton={!isModal} onBack={onPrev} />
@@ -169,19 +193,14 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
             marginTop="8px"
             alignItems="center"
             width="100%"
-            fontWeight={'500'}
             display="inline-block"
             lineHeight="24.2px"
           >
-            <Box as="span" fontSize="22px">
+            <Box as="span" fontSize="22px" fontWeight={"500"} color="brand.red">
               {chainConfig.chainPrefix}
-              {sendTo.startsWith(chainConfig.chainPrefix) ? sendTo.split(':')[1].slice(0, 6) : sendTo.slice(0, 6)}
             </Box>
-            <Box as="span" fontSize="22px" color="#95979C">
-              {sendTo.slice(6, 32)}
-            </Box>
-            <Box as="span" fontSize="22px">
-              {sendTo.slice(32)}
+            <Box as="span" fontSize="22px" color="#161f36" >
+              {sendTo}
             </Box>
           </Box>
         </Box>
@@ -341,7 +360,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
             paddingRight="0"
           >
             <Box background="white" width="100%" padding="0 16px">
-              <Box
+              {sponsorLeftTimes > 0 ?   <Box
                 width="calc(100%)"
                 position="relative"
                 display="flex"
@@ -372,10 +391,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                     Sponsored by Soul Wallet
                   </Box>
                   <Box fontWeight="400" fontSize="12px" color="#161F36">
-                    Upto 0.4 ETH per day
+                   {sponsorLeftTimes} times left today
                   </Box>
                 </Box>
-              </Box>
+              </Box> : ''}
               <Box
                 width="calc(100%)"
                 position="relative"
@@ -407,7 +426,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                     Pay with ETH
                   </Box>
                   <Box fontWeight="400" fontSize="12px" color="#161F36">
-                    Balance: 0.001 ETH
+                    Balance: {ethBalance?.tokenBalanceFormatted || 0} ETH
                   </Box>
                 </Box>
               </Box>

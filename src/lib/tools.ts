@@ -16,6 +16,15 @@ import WalletConnectIcon from '@/assets/wallets/wallet-connect.png';
 import InjectedIcon from '@/assets/wallets/injected.svg';
 import UnknownIcon from '@/assets/wallets/unknown.svg';
 
+/**
+ * Format date to user friendly string, example 2024/07/30 12:30:00
+ * @param date
+ * @returns string
+ */
+export const formatDate = (date: Date) => {
+  return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+};
+
 export const dataURItoBlob = (dataURI: string) => {
   // Split the dataURI into parts
   const parts = dataURI.split(';base64,');

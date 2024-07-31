@@ -142,16 +142,11 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 maxWidth="313px"
                 marginTop="14px"
                 color="#161F36"
-                fontWeight={"400"}
               >
-                <Text as="span">
-                  <Text as="span" color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Text>
-                  {selectedAddress.slice(0, 6)}
+                <Text as="span" fontWeight={"500"} color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Text>
+                <Text as="span" color="#161F36">
+                  {selectedAddress}
                 </Text>
-                <Text as="span" color="#95979C">
-                  {selectedAddress.slice(6, 36)}
-                </Text>
-                <Text as="span">{selectedAddress.slice(-6)}</Text>
               </Box>
               <Box marginTop="24px" width="174px">
                 <Button
