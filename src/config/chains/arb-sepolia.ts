@@ -18,6 +18,7 @@ export default {
   maxCostMultiplier: 120,
   chainId,
   chainPrefix: 'arb-sep:',
+  chainColor: 'black',
   chainIdHex: `0x${chainId.toString(16)}`,
   defaultMaxFee: '0.135',
   defaultMaxPriorityFee: '0',

@@ -145,7 +145,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 fontWeight={"400"}
               >
                 <Text as="span">
-                  {chainConfig.chainPrefix}
+                  <Text as="span" color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Text>
                   {selectedAddress.slice(0, 6)}
                 </Text>
                 <Text as="span" color="#95979C">

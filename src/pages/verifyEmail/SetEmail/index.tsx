@@ -112,7 +112,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
               </Box>
             </Box>
             <Box width="100%" marginTop="40px">
-              <Button size="xl" type="black" width="100%" onClick={onClose}>
+              <Button size="xl" type="gradientBlue" width="100%" onClick={onClose}>
                 Got it
               </Button>
             </Box>
