@@ -130,14 +130,14 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   };
 
   const getSponsorLeftTimes = async () => {
-    console.log('chain config', chainConfig)
+
     const res = await api.sponsor.leftTimes({
       chainID: chainConfig.chainIdHex,
       entryPoint: chainConfig.contracts.entryPoint,
       address: selectedAddress,
     });
-    setUseSponsor(res.data > 0);
-    setSponsorLeftTimes(res.data);
+    setUseSponsor(res.data.sponsorCountLeft > 0);
+    setSponsorLeftTimes(res.data.sponsorCountLeft);
   }
   useEffect(()=>{
     getSponsorLeftTimes();

@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import api from '@/lib/api';
 import { decodeCalldata } from '@/lib/tools';
 import { ActivityStatusEn } from '@/lib/type';
-import BN from 'bignumber.js'
+import BN from 'bignumber.js';
 import { Provider } from 'ethers';
 
 export interface IHistoryStore {
@@ -28,18 +28,23 @@ export const fetchHistoryApi = async (address: string, chainId: string, ethersPr
     const status = item.success ? ActivityStatusEn.Success : ActivityStatusEn.Error;
 
     // if it's transfer, transfer ETH or swap, show the amount
-    console.log('History ddecdoe', callDataDecodes)
-    callDataDecodes[0].value = BN(callDataDecodes[0].value || 0).toNumber();
+    console.log('History ddecdoe::', i, callDataDecodes);
+    let decodedData = callDataDecodes[0]
+    decodedData.value = BN(callDataDecodes[0].value || 0).toNumber();
 
     res.data.ops[i] = {
       ...res.data.ops[i],
       functionName,
-      ...JSON.parse(JSON.stringify(callDataDecodes[0])),
-      // to: callDataDecodes[0].to,
-      // totalCost: BN(res.data.ops[i].totalGasCost || 0).plus(callDataDecodes[0].value || 0).toNumber(),
+      // ...JSON.parse(JSON.stringify(decodedData)),
+      to: decodedData.to,
+      toInfo: decodedData.toInfo,
+      sendErc20Address: decodedData.sendErc20Address,
+      sendErc20Amount: decodedData.sendErc20Amount,
       status,
     };
   }
+
+  console.log('HIS', res.data.ops);
 
   return res.data.ops;
 };
