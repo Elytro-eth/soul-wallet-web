@@ -116,7 +116,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
     setIsENSOpen(false);
   };
 
-  const isInvalidNetwork = sendTo && sendTo.includes(':') && `${sendTo.split(':')[0]}:` !== chainConfig.chainPrefix && `${sendTo.split(':')[0]}:` !== chainConfig.chainPrefixOther;
+  const isInvalidNetwork = sendTo && sendTo.includes(':') && `${sendTo.split(':')[0]}:` !== chainConfig.chainPrefix;
 
   const isSelf = sendTo.toLowerCase() === selectedAddress.toLowerCase();
 
