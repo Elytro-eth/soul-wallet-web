@@ -150,7 +150,14 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   return (
     <Box width="100%" height={innerHeight} overflowY="scroll">
       <Header title="" showBackButton={!isModal} onBack={onPrev} />
-      <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
+      <Box
+        padding="30px"
+        minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
+        paddingTop={{
+          sm: '30px',
+          md: '0',
+        }}
+      >
         {isSent && (
           <Box fontSize="28px" fontWeight="500" display="flex" alignItems="center" color="#161F36">
             <Box marginRight="12px">
@@ -361,21 +368,21 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           >
             <Box background="white" width="100%" padding="0 16px">
               {sponsorLeftTimes > 0 ?   <Box
-                width="calc(100%)"
-                position="relative"
-                display="flex"
-                alignItems="center"
-                height="72px"
-                background="#F2F3F5"
-                borderRadius="16px"
-                marginBottom="8px"
-                padding="16px"
-                onClick={() => {
-                  setUseSponsor(true);
-                  onSelectClose();
-                }}
-                opacity={useSponsor ? 1 : 0.6}
-              >
+                                          width="calc(100%)"
+                                          position="relative"
+                                          display="flex"
+                                          alignItems="center"
+                                          height="72px"
+                                          background="#F2F3F5"
+                                          borderRadius="16px"
+                                          marginBottom="8px"
+                                          padding="16px"
+                                          onClick={() => {
+                                            setUseSponsor(true);
+                                            onSelectClose();
+                                          }}
+                                          opacity={useSponsor ? 1 : 0.6}
+                                        >
                 <Box
                   height="24px"
                   width="24px"
@@ -391,7 +398,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                     Sponsored by Soul Wallet
                   </Box>
                   <Box fontWeight="400" fontSize="12px" color="#161F36">
-                   {sponsorLeftTimes} times left today
+                    {sponsorLeftTimes} times left today
                   </Box>
                 </Box>
               </Box> : ''}

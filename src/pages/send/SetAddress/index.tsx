@@ -127,7 +127,14 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
   return (
     <Box width="100%" height={innerHeight} overflowY="scroll">
       <Header title="" showBackButton={!isModal} onBack={onPrev} />
-      <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
+      <Box
+        padding="30px"
+        minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
+        paddingTop={{
+          sm: '30px',
+          md: '0',
+        }}
+      >
         <Box fontSize="28px" fontWeight="500" color="#161F36">
           Send
         </Box>
@@ -148,7 +155,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
                 fontSize="20px"
                 lineHeight="24px"
                 fontWeight="400"
-                // autoFocus
+              // autoFocus
                 placeholder="Enter wallet address or ENS"
                 border="none"
                 outline="none"
@@ -194,12 +201,12 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
             >
               <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
                 {isSelf
-                  ? 'You cannot send to yourself'
-                  : isInvalidNetwork
-                    ? 'Invalid network'
-                    : disabled
-                      ? 'Invalid wallet address'
-                      : ''}
+                ? 'You cannot send to yourself'
+                : isInvalidNetwork
+                ? 'Invalid network'
+                : disabled
+                ? 'Invalid wallet address'
+                : ''}
               </Box>
             </Box>
           )}

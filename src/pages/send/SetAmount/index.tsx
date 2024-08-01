@@ -86,7 +86,14 @@ export default function SetAmount({
   return (
     <Box width="100%" height={innerHeight} overflowY="scroll">
       <Header title="" showBackButton={!isModal} onBack={onPrev} />
-      <Box padding="30px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
+      <Box
+        padding="30px"
+        minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
+        paddingTop={{
+          sm: '30px',
+          md: '0',
+        }}
+      >
         <Box fontSize="28px" fontWeight="500" color="#161F36">
           Amount
         </Box>

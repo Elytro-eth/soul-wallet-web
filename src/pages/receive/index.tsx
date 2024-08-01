@@ -95,8 +95,24 @@ export default function Receive({ isModal, registerScrollable }: any) {
   }, []);
 
   return (
-    <Box width="100%" height={innerHeight} overflowY="scroll" background="#F2F3F5">
-      <Box marginTop="60px" padding="30px 8px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
+    <Box
+      width="100%"
+      height={innerHeight}
+      overflowY="scroll"
+      background="#F2F3F5"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Box
+        marginTop="60px"
+        padding="30px 8px"
+        minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
+        width={{
+          sm: '100%',
+          md: '380px'
+        }}
+      >
         <Box fontSize="28px" fontWeight="500" padding="0 24px">
           Receive
         </Box>
