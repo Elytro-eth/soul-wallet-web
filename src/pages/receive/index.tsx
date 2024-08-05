@@ -97,17 +97,23 @@ export default function Receive({ isModal, registerScrollable }: any) {
   return (
     <Box
       width="100%"
-      height={innerHeight}
+      height={{
+        sm: innerHeight,
+        md: '100%',
+      }}
       overflowY="scroll"
       background="#F2F3F5"
       display="flex"
-      alignItems="center"
+      alignItems="flex-start"
       justifyContent="center"
     >
       <Box
-        marginTop="60px"
+        marginTop="0px"
         padding="30px 8px"
-        minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
+        minHeight={{
+          sm: isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)',
+          md: isModal ? 'calc(100%)' : 'calc(100vh - 62px)'
+        }}
         width={{
           sm: '100%',
           md: '380px'
@@ -152,21 +158,21 @@ export default function Receive({ isModal, registerScrollable }: any) {
               </Box>
               <Box
                 fontSize="18px"
-                lineHeight={"25px"}
+                lineHeight="25px"
                 display="inline-block"
                 textAlign="center"
                 maxWidth="313px"
                 marginTop="14px"
                 color="#161F36"
               >
-                <Text as="span" fontWeight={"500"} color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Text>
+                <Text as="span" fontWeight="500" color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Text>
                 <Text as="span" color="#161F36">
                   {selectedAddress}
                 </Text>
               </Box>
               <Box marginTop="24px" width="174px">
                 <Button
-                  fontWeight={'400'}
+                  fontWeight="400"
                   size="xl"
                   type="white"
                   width="174px"
@@ -191,7 +197,7 @@ export default function Receive({ isModal, registerScrollable }: any) {
               position: "absolute",
               bottom: "32px"
             } : {
-              marginTop: "64px",
+              marginTop: "40px",
             }}
             onClick={() => openModal('receiveSteps')}
           >

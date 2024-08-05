@@ -621,7 +621,9 @@ export default function Dashboard() {
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
-                        onClick={() => openFullScreenModal('receive')}
+                        onClick={() => {
+                          openModal('receive', { width: 480, height: 600 })
+                        }}
                       >
                         <Box
                           display="flex"
