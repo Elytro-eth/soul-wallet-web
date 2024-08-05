@@ -7,6 +7,7 @@ import { erc20Abi } from 'viem';
 import { DecodeUserOp, DecodeResult } from '@soulwallet/decoder';
 import { UserOperation } from '@soulwallet/sdk';
 import IconSend from '@/assets/activities/send.svg';
+import IconReceive from '@/assets/activities/receive.svg';
 import IconMint from '@/assets/activities/mint.svg';
 import IconApprove from '@/assets/activities/approve.svg';
 import IconTrade from '@/assets/activities/trade.svg';
@@ -384,7 +385,7 @@ export const decodeCalldata = async (
   for (let i of decoded) {
     if (!i.method && i.value) {
       i.functionName = 'Transfer ETH';
-      i.sendEthAmount = `${formatEther(i.value)} ETH`;
+      i.tokenChanged = `${formatEther(i.value)} ETH`;
     }
 
     if (i.method && i.method.name === 'transfer') {
@@ -396,8 +397,8 @@ export const decodeCalldata = async (
       const symbol = await tokenContract.symbol();
       const amount = BN(i.method.params['1']).shiftedBy(-BN(decimals)).toFixed();
 
-      i.sendErc20Amount = `${amount} ${symbol}`;
-      i.sendErc20Address = i.method.params['0'];
+      i.tokenChanged = `${amount} ${symbol}`;
+      i.erc20Address = i.method.params['0'];
     }
   }
 
@@ -421,6 +422,8 @@ export function isPwaMode() {
 
 export const getIconMapping = (name: string) => {
   switch (name.toLowerCase()) {
+    case 'receive':
+      return IconReceive;
     case 'transfer erc20':
     case 'transfer eth':
       return IconSend;
@@ -435,4 +438,8 @@ export const getIconMapping = (name: string) => {
     default:
       return IconContract;
   }
+};
+
+export const getTokenIcon = (address: string, chainId: string) => {
+  return `https://static.metafi.codefi.network/api/v1/tokenIcons/${parseInt(chainId)}/${address.toLowerCase()}.png`;
 };

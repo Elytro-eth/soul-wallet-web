@@ -10,18 +10,20 @@ import { useChainStore } from '@/store/chain';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import { fetchTokenBalanceApi } from '@/store/balance';
 import useQuery from '@/hooks/useQuery';
+import useConfig from '@/hooks/useConfig';
 export default function Pooling() {
   const { ethersProvider } = useWalletContext();
   const { selectedAddress } = useAddressStore();
   const { fetchHistory } = useHistoryStore();
   const { selectedChainId } = useChainStore();
+  const { chainConfig } = useConfig();
   const { setTokenBalance, fetchFeeData, } = useBalanceStore();
   const { fetchGuardianInfo } = useQuery();
 
   const getUserInfo = async() => {
     const balances = await fetchTokenBalanceApi(selectedAddress, selectedChainId);
     setTokenBalance(balances);
-    fetchHistory(selectedAddress, selectedChainId, ethersProvider);
+    fetchHistory(selectedAddress, selectedChainId, chainConfig.contracts.entryPoint, ethersProvider);
     fetchGuardianInfo(selectedAddress);
   };
 

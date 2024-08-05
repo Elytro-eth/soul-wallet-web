@@ -91,6 +91,10 @@ const op = {
     }),
 };
 
+const transaction = {
+  query: (params: any) => axio.post('/walletapi/transaction/query', params),
+}
+
 const emailVerify = {
   requestVerifyEmail: (params: any) => axio.post('walletapi/email-verify/request-verify-email', params),
   confirmVerification: (params: any) => axio.post('walletapi/email-verify/confirm-verification', params),
@@ -115,4 +119,5 @@ export default {
   emailVerify,
   emailGuardian,
   recovery,
+  transaction,
 };

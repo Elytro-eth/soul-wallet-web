@@ -70,7 +70,7 @@ export default function Activity({ isModal, registerScrollable }: any) {
                 <Box>
                   <Box display="flex" alignItems="center">
                     <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">
-                      {toShortAddress(item.to, 6)}
+                      {toShortAddress(item.interactAddress, 6)}
                     </Box>
                   </Box>
                   <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">
@@ -97,11 +97,9 @@ export default function Activity({ isModal, registerScrollable }: any) {
                     marginTop="2px"
                   >
                     <Box>
-                      {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
-                      {/* {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH */}
+                      {item.tokenChanged}
                     </Box>
-                    {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
-                    {/*  */}
+                    {/* {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />} */}
                   </Flex>
                 </Box>
               </Box>

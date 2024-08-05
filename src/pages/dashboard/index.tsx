@@ -37,7 +37,7 @@ import IconSetting from '@/assets/icons/setting.svg';
 import { useAddressStore } from '@/store/address';
 import { useGuardianStore } from '@/store/guardian';
 import { ZeroHash } from 'ethers';
-import { toFixed } from '@/lib/tools';
+import { getTokenIcon, toFixed } from '@/lib/tools';
 import USDCIcon from '@/assets/mobile/usdc.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import ThemePage from '@/components/ThemeChange';
@@ -266,9 +266,6 @@ export default function Dashboard() {
     },
     [modalPosition, isMoving, innerHeight],
   );
-
-  const finalHistoryList = showFullHistory ? historyList : historyList.slice(0, 2);
-  // const finalHistoryList = historyList
 
   const tokenBalanceValid = tokenBalance && tokenBalance.length && tokenBalance.some((item) => BN(item.tokenBalance).isGreaterThan(0));
 
@@ -567,7 +564,8 @@ export default function Dashboard() {
                       {tokenBalance.map((item: any, index: number) => (
                         <Box key={index} display="flex" alignItems="center" marginBottom="12px">
                           <Box marginRight="10px">
-                            <Image src={item.logoURI} w="32px" h="32px" />
+                            <Image src={item.logoURI} w="32px" h="32px" flex="1 1 32px" />
+                            {/* <Image src={getTokenIcon(item.contractAddress,item.chainID)} w="32px" h="32px" /> */}
                           </Box>
                           <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
                             {item.name}
