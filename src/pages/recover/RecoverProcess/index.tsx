@@ -8,18 +8,28 @@ export default function RecoverProcess({ step }: any) {
 
   return (
     <Box
-      position="fixed"
+      position={{
+        sm: "fixed",
+        md: "static",
+      }}
       bottom="20px"
       left="16px"
-      width="calc(100vw - 32px)"
+      width={{
+        sm: "calc(100vw - 32px)",
+        md: "345px",
+      }}
       padding="24px"
       borderRadius="20px"
       background="white"
       boxShadow="0px 0px 20px 0px rgba(0, 0, 0, 0.1)"
       border="1px solid #F2F3F5"
       zIndex="1"
+      marginLeft={{
+        sm: '0',
+        md: '33px'
+      }}
     >
-      <Box onClick={() => setIsOpen(!isOpen)} display="flex" alignItems="center" justifyContent="space-between">
+      <Box onClick={() => setIsOpen(!isOpen)} display="flex" alignItems="center" justifyContent="space-between" cursor="pointer">
         <Box fontSize="18px" fontWeight="500" color="#161F36">Recovery process ({step+1}/3)</Box>
         <Box transform={isOpen ? '' : 'rotate(180deg)'}><ChevronDown /></Box>
       </Box>

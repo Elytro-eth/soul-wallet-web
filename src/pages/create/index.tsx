@@ -156,39 +156,61 @@ export default function Create() {
         sm: 'white',
         md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
       }}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
     >
+      <Header
+        showLogo={true}
+        height="60px"
+        width="100%"
+        background="transparent"
+        display={{
+          sm: 'none',
+          md: 'flex',
+        }}
+      />
       <Box
-        width={{
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height={{
           sm: "100%",
-          md: "640px",
+          md: "calc(100% - 60px)"
         }}
-        bg="#fff"
-        borderRadius={{
-          sm: '0',
-          md: '32px',
+        paddingTop={{
+          sm: "0",
+          md: "20px"
         }}
-        overflow="hidden"
+        overflow="scroll"
       >
-        {step < 3 && (
-          <Fragment>
-            <Header title="Create account" showBackButton onBack={onPrev} />
-            <ProgressBar size={3} activeIndex={step} />
-          </Fragment>
-        )}
         <Box
-          height={{
-            sm: (step < 3) ? (innerHeight - 64) : innerHeight,
-            md: 'auto',
+          width={{
+            sm: "100%",
+            md: "640px",
           }}
-          overflowY="auto"
-          display="flex"
-          alignItems="flex-start"
-          justifyContent="center"
+          bg="#fff"
+          borderRadius={{
+            sm: '0',
+            md: '32px',
+          }}
+          overflow="hidden"
         >
-          {renderStep()}
+          {step < 3 && (
+            <Fragment>
+              <Header title="Create account" showBackButton onBack={onPrev} />
+              <ProgressBar size={3} activeIndex={step} />
+            </Fragment>
+          )}
+          <Box
+            height={{
+              sm: (step < 3) ? (innerHeight - 64) : innerHeight,
+              md: 'auto',
+            }}
+            overflowY="auto"
+            display="flex"
+            alignItems="flex-start"
+            justifyContent="center"
+          >
+            {renderStep()}
+          </Box>
         </Box>
       </Box>
     </Box>

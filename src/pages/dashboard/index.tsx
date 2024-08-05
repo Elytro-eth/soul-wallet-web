@@ -364,25 +364,6 @@ export default function Dashboard() {
                 alignItems="center"
               >
                 <Box marginRight="8px">
-                  <AppsIcon2 />
-                </Box>
-                <Box
-                  fontWeight="400"
-                  fontSize="18px"
-                  color="#676B75"
-                  lineHeight="22.5px"
-                >
-                  Apps
-                </Box>
-              </Box>
-              <Box
-                width="100%"
-                padding="12px 20px"
-                cursor="pointer"
-                display="flex"
-                alignItems="center"
-              >
-                <Box marginRight="8px">
                   <AssetsIcon2 />
                 </Box>
                 <Box
