@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import RecoverSuccessIcon from '@/assets/recover-success.png';
 import useScreenSize from '@/hooks/useScreenSize';
 import { useTempStore } from '@/store/temp';
-import FadeId from '@/components/Icons/mobile/FaceId'
+import FadeId from '@/components/Icons/mobile/FaceId';
 import SuccessIcon from '@/components/Icons/Success';
 
 export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering }: any) {
@@ -18,7 +18,8 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
   const [remainingHours, setRemainingHours] = useState(0);
   const [remainingMinutes, setRemainingMinutes] = useState(0);
   const [reachedValidTime, setReachedValidTime] = useState(false);
-  const validTime  = recoverInfo.validTime
+  const [isPastRecovering, setIsPastRecovering] = useState(false);
+  const validTime = recoverInfo.validTime;
   /**
    *
    * @returns Calculate the remaining time return hour and minutes
@@ -28,7 +29,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
     const remainingTime = validTime - now;
     if (validTime > 1 && remainingTime <= 0) {
       setReachedValidTime(true);
-    } else if(validTime >= 1) {
+    } else if (validTime >= 1) {
       setReachedValidTime(false);
       const hours = Math.floor(remainingTime / 3600);
       setRemainingHours(hours);
@@ -54,17 +55,26 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
       flexDirection="column"
       justifyContent="center"
     >
-      {validTime >= 1 ? (
+      {validTime >= 1 || isPastRecovering ? (
         <>
           <Box width="144px" height="144px" marginBottom="40px" position="relative">
             <Image height="144px" src={RecoverSuccessIcon} />
           </Box>
-          {reachedValidTime ? (
+          {reachedValidTime || isPastRecovering ? (
             <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
               <Box fontWeight="500" fontSize="28px" lineHeight="1" marginBottom="40px" color="#161F36">
                 Account recovered
               </Box>
-              <Button width="100%" size="xl" type="gradientBlue" minWidth="195px" onClick={doPastRecover}>
+              <Button
+                width="100%"
+                size="xl"
+                type="gradientBlue"
+                minWidth="195px"
+                onClick={() => {
+                  setIsPastRecovering(true);
+                  doPastRecover();
+                }}
+              >
                 Go to account
               </Button>
             </Box>
@@ -105,7 +115,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
                     </Box>
                   </Box>
                   <Box padding="8px" fontWeight="500" fontSize="20px">
-            :
+                    :
                   </Box>
                   <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
                     <Box
@@ -158,7 +168,9 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
             loading={isRecovering}
           >
             <Box display="flex" alignItems="center" justifyContent="center">
-              <Box marginRight="8px"><FadeId /></Box>
+              <Box marginRight="8px">
+                <FadeId />
+              </Box>
               <Box>Confirm</Box>
             </Box>
           </Button>

@@ -37,7 +37,7 @@ import IconSetting from '@/assets/icons/setting.svg';
 import { useAddressStore } from '@/store/address';
 import { useGuardianStore } from '@/store/guardian';
 import { ZeroHash } from 'ethers';
-import { toFixed } from '@/lib/tools';
+import { getTokenIcon, toFixed } from '@/lib/tools';
 import USDCIcon from '@/assets/mobile/usdc.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import ThemePage from '@/components/ThemeChange';
@@ -184,7 +184,7 @@ export default function Dashboard() {
 
   useEffect(()=>{
     if(!selectedAddress){
-      navigate('/landing')
+      // navigate('/landing')
     }
 
   }, [selectedAddress])
@@ -271,9 +271,6 @@ export default function Dashboard() {
     },
     [modalPosition, isMoving, innerHeight],
   );
-
-  const finalHistoryList = showFullHistory ? historyList : historyList.slice(0, 2);
-  // const finalHistoryList = historyList
 
   const tokenBalanceValid = tokenBalance && tokenBalance.length && tokenBalance.some((item) => BN(item.tokenBalance).isGreaterThan(0));
 
