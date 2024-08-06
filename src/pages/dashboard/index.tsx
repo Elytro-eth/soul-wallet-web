@@ -568,7 +568,7 @@ export default function Dashboard() {
                             {/* <Image src={getTokenIcon(item.contractAddress,item.chainID)} w="32px" h="32px" /> */}
                           </Box>
                           <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                            {item.name}
+                            {item.symbol}
                           </Box>
                           <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
                             <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
