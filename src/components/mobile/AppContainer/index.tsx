@@ -177,7 +177,7 @@ export default function AppContainer() {
     return {}
   }
 
-  const desktopModalStyle = {
+  const desktopModalStyle: any = {
     width: activeModal?.props?.width || 480,
     height: activeModal?.props?.height || 600,
   }
@@ -282,7 +282,6 @@ export default function AppContainer() {
               onClick={closeModal}
             />
             <Box
-              height="100%"
               position="absolute"
               transition="all 0.3s ease"
               top={{
