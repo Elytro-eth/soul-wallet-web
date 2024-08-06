@@ -16,6 +16,10 @@ import Button from '@/components/mobile/Button';
 import IntroItem1Icon from '@/components/Icons/mobile/Intro/Item1';
 import IntroItem2Icon from '@/components/Icons/mobile/Intro/Item2';
 import IntroItem3Icon from '@/components/Icons/mobile/Intro/Item3';
+import TwitterIcon from '@/components/Icons/desktop/Twitter';
+import TelegramIcon from '@/components/Icons/desktop/Telegram';
+import GithubIcon from '@/components/Icons/desktop/Github';
+import LinkedInIcon from '@/components/Icons/desktop/LinkedIn';
 import USDCIcon from '@/assets/tokens/usdc.png';
 import IconLoading from '@/assets/mobile/loading.gif';
 import Toolbar1 from '@/assets/toolbar1.png';
@@ -85,7 +89,7 @@ export default function Landing() {
 
   useEffect(()=>{
     if(selectedAddress){
-      navigate('/dashboard')
+      // navigate('/dashboard')
     }
   }, [selectedAddress])
 
@@ -176,6 +180,37 @@ export default function Landing() {
                 }}
               >
                 If you have any questions, reach out to us at <Box as="span" fontWeight="500">support@soulwallet.io</Box>
+              </Box>
+              <Box
+                marginTop="14px"
+                alignItems="center"
+                justifyContent="flex-start"
+                gap="17px"
+                display={{
+                  sm: 'none',
+                  md: 'flex'
+                }}
+              >
+                <Box
+                  cursor="pointer"
+                >
+                  <TwitterIcon />
+                </Box>
+                <Box
+                  cursor="pointer"
+                >
+                  <TelegramIcon />
+                </Box>
+                <Box
+                  cursor="pointer"
+                >
+                  <GithubIcon />
+                </Box>
+                <Box
+                  cursor="pointer"
+                >
+                  <LinkedInIcon />
+                </Box>
               </Box>
             </Box>
           </Box>
@@ -276,7 +311,7 @@ export default function Landing() {
               </Box>
               <Box fontSize="14px" fontWeight="400" color="#2D3CBD" lineHeight="17.5px" marginBottom="20px">
                 Lost account?{' '}
-                <Box as="span" fontWeight="500" onClick={goRecover}>
+                <Box as="span" fontWeight="500" onClick={goRecover} cursor="pointer">
                   Recover here
                 </Box>
               </Box>

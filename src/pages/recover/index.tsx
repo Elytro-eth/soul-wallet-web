@@ -291,6 +291,14 @@ export default function Recover() {
           sm: "0",
           md: "40px"
         }}
+        paddingLeft={{
+          sm: "0",
+          md: "20px"
+        }}
+        paddingRight={{
+          sm: "0",
+          md: "20px"
+        }}
         overflow="scroll"
         paddingBottom={{
           sm: '0px',
