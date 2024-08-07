@@ -169,7 +169,6 @@ export function Header({ openMenu, username, ...props }: any) {
           height="36px"
           width="36px"
           borderRadius="36px"
-          display="flex"
           alignItems="center"
           justifyContent="center"
           onClick={openMenu}
