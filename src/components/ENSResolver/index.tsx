@@ -187,7 +187,7 @@ const ENSResolver = ({
       sx={{
         div: {
           width: '100%',
-          maxWidth: '100%',
+          maxWidth: 'calc(100vw - 60px)',
           minWidth: 'auto'
         }
       }}
