@@ -52,6 +52,9 @@ import ActivityIcon2 from '@/components/Icons/desktop/Activity';
 import SettingsIcon2 from '@/components/Icons/desktop/Settings';
 import op from '@/config/chains/op';
 import ImgLogo from '@/assets/soul-logo.svg';
+import OpIcon from '@/assets/mobile/op.png'
+import { toShortAddress } from '@/lib/tools';
+import OpenIcon from '@/components/Icons/mobile/Open';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -131,7 +134,36 @@ export function Header({ openMenu, username, ...props }: any) {
           {walletName}
         </Box>
       </Box>
-      <Box fontSize="18px" fontWeight="500" color="black" lineHeight="24px">
+      <Box
+        fontSize="18px"
+        fontWeight="500"
+        color="black"
+        lineHeight="24px"
+        display="flex"
+        alignItems="center"
+      >
+        <Box
+          height="42px"
+          borderRadius="22px"
+          padding="10px 12px"
+          background="rgba(255, 255, 255, 0.5)"
+          // marginRight="20px"
+          display={{
+            sm: "none",
+            md: "flex"
+          }}
+        >
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <Box marginRight="8px">
+              <Image width="20px" height="20px" src={OpIcon} />
+            </Box>
+            <Box fontWeight="500" fontSize="14px" marginRight="4px" color="#161F36">{walletName}</Box>
+            <Box fontWeight="400" fontSize="14px">({toShortAddress(selectedAddress)})</Box>
+            <Box width="1px" height="20px" background="#E2E2E2" marginLeft="10px" marginRight="10px"></Box>
+            <Box onClick={() => {}} cursor="pointer"><OpenIcon /></Box>
+          </Box>
+        </Box>
+
         <Box
           height="36px"
           width="36px"
@@ -140,6 +172,10 @@ export function Header({ openMenu, username, ...props }: any) {
           alignItems="center"
           justifyContent="center"
           onClick={openMenu}
+          display={{
+            sm: "flex",
+            md: "none"
+          }}
         >
           <Box
             width="36px"
