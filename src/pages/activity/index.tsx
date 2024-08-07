@@ -19,6 +19,16 @@ import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
 import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
 
+const getSubject = (functionName: any) => {
+  if (functionName === 'Send') {
+    return "To:"
+  } else if (functionName === 'Receive') {
+    return "From:"
+  } else {
+    return "On:"
+  }
+}
+
 export default function Activity({ isModal, registerScrollable }: any) {
   const { historyList } = useHistoryStore();
   const scrollableRef = useRef<any>();
@@ -69,38 +79,40 @@ export default function Activity({ isModal, registerScrollable }: any) {
                 <Image w="8" h="8" mr="3" flex={"0 0 32px"} src={getIconMapping(item.functionName)} />
                 <Box>
                   <Box display="flex" alignItems="center">
-                    <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">
-                      {toShortAddress(item.interactAddress, 6)}
+                    <Box
+                      fontSize="18px"
+                      fontWeight="500"
+                      lineHeight="22.5px"
+                      color="#161F36"
+                      textTransform={'capitalize'}
+                      marginRight="4px"
+                    >
+                      {item.functionName}
                     </Box>
+                    <Flex
+                      align={'center'}
+                      fontSize="18px"
+                      fontWeight="500"
+                      lineHeight="22.5px"
+                      color="#161F36"
+                      display="flex"
+                    >
+                      <Box marginRight="4px">
+                        {item.tokenChanged}
+                      </Box>
+                      <Box marginRight="4px">
+                        {"USDC"}
+                      </Box>
+                      {/* {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />} */}
+                    </Flex>
                   </Box>
-                  <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">
-                    {formatDate(new Date(item.timestamp * 1000))}
+                  <Box fontSize="14px" fontWeight="400" lineHeight="17.5px" color="#95979C" display="flex">
+                    <Box marginRight="4px">{getSubject(item.functionName)}</Box>
+                    <Box>{toShortAddress(item.interactAddress, 6)}</Box>
                   </Box>
-                </Box>
-                <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                  <Box
-                    fontSize="14px"
-                    fontWeight="500"
-                    lineHeight="17.5px"
-                    color="#161F36"
-                    textTransform={'capitalize'}
-                  >
-                    {item.functionName}
-                  </Box>
-                  <Flex
-                    align={'center'}
-                    fontSize="18px"
-                    fontWeight="500"
-                    lineHeight="22.5px"
-                    color="#161F36"
-                    display="flex"
-                    marginTop="2px"
-                  >
-                    <Box>
-                      {item.tokenChanged}
-                    </Box>
-                    {/* {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />} */}
-                  </Flex>
+                  {/* <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">
+                      {formatDate(new Date(item.timestamp * 1000))}
+                      </Box> */}
                 </Box>
               </Box>
             ))}
