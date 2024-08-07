@@ -1,6 +1,6 @@
 import { Box, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import USDCIcon from '@/assets/mobile/usdc.png'
+import USDCIcon from '@/assets/tokens/usdc.png';
 import useScreenSize from '@/hooks/useScreenSize'
 import Button from '@/components/mobile/Button'
 
@@ -35,8 +35,8 @@ export default function SelectToken({
       >
         <Box>
           <Box
-            width="96px"
-            height="96px"
+            width="72px"
+            height="72px"
             borderRadius="12px"
             marginLeft="6px"
             marginRight="6px"
@@ -45,7 +45,7 @@ export default function SelectToken({
             justifyContent="center"
             margin="0 auto"
           >
-            <Image width="96px" height="96px" src={USDCIcon} className="icon" />
+            <Image width="72px" height="72px" src={USDCIcon} className="icon" />
           </Box>
         </Box>
         <Box width="100%" fontSize="28px" fontWeight="500" lineHeight="36px" marginTop="20px" textAlign="center">

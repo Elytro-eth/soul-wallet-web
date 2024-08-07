@@ -18,6 +18,7 @@ import { useHistoryStore } from '@/store/history';
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
 import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
+import TokenIcon from '@/components/TokenIcon';
 
 const getSubject = (functionName: any) => {
   if (functionName === 'Send') {
@@ -100,9 +101,10 @@ export default function Activity({ isModal, registerScrollable }: any) {
                       <Box marginRight="4px">
                         {item.tokenChanged}
                       </Box>
-                      <Box marginRight="4px">
+                      {/* <Box marginRight="4px">
                         {"USDC"}
-                      </Box>
+                      </Box> */}
+                      {item.erc20Address && <TokenIcon address={item.erc20Address} size={20} /> }
                       {/* {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />} */}
                     </Flex>
                   </Box>
