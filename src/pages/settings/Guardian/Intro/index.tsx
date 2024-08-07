@@ -10,12 +10,13 @@ import useWalletContext from '@/context/hooks/useWalletContext';
 import IntroGuardianIcon from '@/assets/guardian.png'
 import useScreenSize from '@/hooks/useScreenSize'
 
-export default function Intro({ onPrev, onNext }: any) {
+export default function Intro({ onPrev, onNext, isDashboard }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const menuRef = useRef<any>()
   const { openModal } = useWalletContext()
   const { innerHeight } = useScreenSize()
 
+  console.log('isDashboard', isDashboard)
   useOutsideClick({
     ref: menuRef,
     handler: () => onClose(),
@@ -23,10 +24,11 @@ export default function Intro({ onPrev, onNext }: any) {
 
   return (
     <Box
-      width="100%"
-      height={innerHeight - 60}
-      padding="30px"
+      width={isDashboard ? '330px' : '100%'}
+      height={isDashboard ? (innerHeight - 64) : (innerHeight - 60)}
+      padding={isDashboard ? '0' : '30px'}
       paddingTop="40px"
+      margin={isDashboard ? '0 auto' : '0'}
     >
       <Box
         marginBottom="40px"
@@ -71,9 +73,26 @@ export default function Intro({ onPrev, onNext }: any) {
             >
               {() => (
                 <Box overflow="auto" ref={menuRef}>
-                  <MenuButton width="100%" as={Box} onClick={() => { isOpen ? onClose() : onOpen()}}>
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                      <Button  size="xl" type="gradientBlue" width="calc(100vw - 64px)" maxWidth="calc(100vw - 64px)">Add recovery contact </Button>
+                  <MenuButton
+                    width={isDashboard ? '330px' : '100%'}
+                    margin={isDashboard ? '0 auto' : '0'}
+                    as={Box}
+                    onClick={() => { isOpen ? onClose() : onOpen()}}
+                    cursor="pointer"
+                  >
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Button
+                        size="xl"
+                        type="gradientBlue"
+                        width={isDashboard ? '330px' : 'calc(100vw - 64px)'}
+                        maxWidth={isDashboard ? '330px' : 'calc(100vw - 64px)'}
+                      >
+                        Add recovery contact
+                      </Button>
                     </Box>
                   </MenuButton>
                 </Box>
@@ -133,6 +152,7 @@ export default function Intro({ onPrev, onNext }: any) {
                 borderRadius="16px"
                 marginBottom="8px"
                 onClick={() => { openModal('addWalletGuardian'); onClose(); }}
+                cursor="pointer"
               >
                 <Box marginRight="8px"><WalletGuardianIcon /></Box>
                 <Box fontWeight="500" fontSize="18px" color="#161F36">
@@ -150,6 +170,7 @@ export default function Intro({ onPrev, onNext }: any) {
                 borderRadius="16px"
                 marginBottom="8px"
                 onClick={() => { openModal('verifyEmail'); onClose(); }}
+                cursor="pointer"
               >
                 <Box marginRight="8px"><EmailGuardianIcon /></Box>
                 <Box fontWeight="500" fontSize="18px" color="#161F36">

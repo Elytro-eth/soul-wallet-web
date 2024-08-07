@@ -44,6 +44,8 @@ import ThemePage from '@/components/ThemeChange';
 import AddressIcon from '@/components/AddressIcon';
 import EmptyIcon from '@/assets/mobile/activity-empty.png'
 import SettingPage from '@/pages/settings'
+import GuardianPage from '@/pages/settings/Guardian/Intro'
+import ActivityPage from '@/pages/activity'
 import useConfig from '@/hooks/useConfig';
 import AppHeader from '@/components/mobile/Header';
 import AppsIcon2 from '@/components/Icons/desktop/Apps';
@@ -193,25 +195,21 @@ export function Header({ openMenu, username, ...props }: any) {
   );
 }
 
-export default function Dashboard() {
+export function AssetPage({ isDashboard }: any) {
   const { openFullScreenModal } = useWalletContext();
-  const { totalUsdValue, tokenBalance } = useBalanceStore();
-  const { selectedAddress } = useAddressStore();
   const { innerHeight } = useScreenSize();
   const [modalMargin, setModalMargin] = useState(494);
   const [modalHeight, setModalHeight] = useState(innerHeight - 494);
   const [showFullHistory, setShowFullHistory] = useState(false);
   const [modalPosition, setModalPosition] = useState('bottom');
-  const { guardiansInfo } = useGuardianStore();
-  const [isMoving, setIsMoving] = useState(false);
   const toast = useToast();
   const { navigate } = useBrowser();
   const { walletName } = useAddressStore();
-  // const { openModal } = useNavigation()
   const [openModal] = useOutletContext<any>();
-  const contentRef = useRef();
-  const [activeMenu, setActiveMenu] = useState('assets')
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { guardiansInfo } = useGuardianStore();
+  const { totalUsdValue, tokenBalance } = useBalanceStore();
 
   const valueLeft = totalUsdValue.split('.')[0];
   const valueRight = totalUsdValue.split('.')[1];
@@ -220,108 +218,299 @@ export default function Dashboard() {
   const smFontSize = getSmallFontSize(valueRight);
   const fontBottomMargin = getFontBottomMargin(valueLeft);
 
-  const [startPosition, setStartPosition] = useState(null);
-  /*
-   *   useMotionValueEvent(scrollY, 'change', (latest) => {
-   *     console.log('Page scroll: ', latest);
-   *   });
-   *  */
-  useEffect(() => {
-    getContentHeight();
-    console.log('contentRef', contentRef);
-  }, []);
+  const tokenBalanceValid = tokenBalance && tokenBalance.length && tokenBalance.some((item) => BN(item.tokenBalance).isGreaterThan(0));
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+    >
+      {(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash) && (
+        <Box
+          paddingLeft="8px"
+          paddingRight="8px"
+          marginBottom="20px"
+        >
+          <Box
+            display="flex"
+            alignItems="center"
+            width="100%"
+            minHeight="79px"
+            borderRadius="32px"
+            // background="white"
+            padding="12px 16px"
+            color="#0E1736"
+            justifyContent="space-between"
+            fontSize="14px"
+            background="radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)"
+            onClick={() => navigate('/verify-email')}
+          >
+            <Box>
+              <Box fontSize="32px" lineHeight={"1"} fontWeight="500">$10</Box>
+              <Box fontSize="14px" lineHeight={"17px"} fontWeight="400" opacity="0.64" color="#161F36">Setup email recovery to get 10 USDC</Box>
+            </Box>
+            <Box>
+              <Image width="40px" height="40px" src={USDCIcon} />
+            </Box>
+          </Box>
+        </Box>
+      )}
+      {/* {activeMenu === 'apps' && (
+          <Fragment>
+          <Box
+          width="100%"
+          px="2"
+          marginTop="20px"
+          >
+          <Box
+          width="100%"
+          background="linear-gradient(to bottom, #E4EaED 0%, #C5DDEF 100%)"
+          borderRadius="24px"
+          padding="24px"
+          height="216px"
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
+          >
+          <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          >
+          <Box>
+          <Box fontSize="32px" fontWeight="500" color="#161F36" lineHeight="1">AAVE</Box>
+          <Box fontSize="20px" lineHeight="25px" color="#3C3F45" opacity="0.8">10.16% APY</Box>
+          </Box>
+          <Box>
+          <Image src={AAVEIcon} width="56px" height="56px" />
+          </Box>
+          </Box>
+          <Box>
+          <Button onClick={()=> toast({
+          title: 'Coming soon',
+          status: 'info',
+          })} border="none" size="xl" height="40px" width="110px" type="white">Earn now</Button>
+          </Box>
+          </Box>
+          <Box textAlign="center" width="100%" marginTop="16px" fontSize="14px" lineHeight="17.5px" opacity="0.4">
+          More apps arriving soon
+          </Box>
+          </Box>
+          </Fragment>
+          )} */}
+      <Fragment>
+        <Box
+          width="100%"
+          px="2"
+        >
+          <Box display="flex" alignItems="center">
+            <Box fontSize="56px" lineHeight={"1"} fontWeight="500" marginRight="2px">
+              $
+            </Box>
+            <Box
+              fontSize={fontSize}
+              lineHeight={'1'}
+              fontWeight="500"
+              sx={{
+                '@property --num': {
+                  syntax: `'<integer>'`,
+                  initialValue: '0',
+                  inherits: 'false',
+                },
+                '&': {
+                  transition: '--num 1s',
+                  counterReset: 'num var(--num)',
+                  '--num': valueLeft,
+                },
+                '&::after': {
+                  content: 'counter(num)',
+                },
+              }}
+            />
+            {valueRight &&
+             BN(valueRight).isGreaterThan(0) &&
+             Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
+               <Box
+                 fontSize={fontSize}
+                 lineHeight={'1'}
+                 fontWeight="500"
+                 // marginTop={fontBottomMargin}
+                 // marginLeft="10px"
+                 color="#939393"
+               >
+                 .
+                 <Box
+                   as="span"
+                 >
+                   {valueRight.slice(0, 4).replace(/0+$/, '')}
+                 </Box>
+               </Box>
+            )}
+          </Box>
+        </Box>
+        <Box
+          width="100%"
+          display="flex"
+          paddingLeft="8px"
+          paddingRight="8px"
+          marginTop="14px"
+          marginBottom="40px"
+        >
+          <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+            <Box
+              background="#DCE4F2"
+              borderRadius="32px"
+              color="#161F36"
+              fontSize="18px"
+              fontWeight="400"
+              lineHeight="22.5px"
+              padding="12px 16px"
+              height="47px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              onClick={() => openFullScreenModal('send')}
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                marginRight="4px"
+              >
+                <SendIcon />
+              </Box>
+              <Box>Send</Box>
+            </Box>
+          </Box>
+          <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+            <Box
+              background="#DCE4F2"
+              borderRadius="32px"
+              color="#161F36"
+              fontSize="18px"
+              fontWeight="400"
+              lineHeight="22.5px"
+              padding="12px 16px"
+              height="47px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              onClick={() => {
+                openModal('receive', { width: 480, height: 600 })
+              }}
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                marginRight="4px"
+              >
+                <ReceiveIcon />
+              </Box>
+              <Box>Receive</Box>
+            </Box>
+          </Box>
+          <Box width="calc((100% - 16px) / 3)">
+            <Box
+              background="#DCE4F2"
+              borderRadius="32px"
+              color="#161F36"
+              fontSize="18px"
+              fontWeight="400"
+              lineHeight="22.5px"
+              padding="12px 16px"
+              height="47px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              onClick={() => openFullScreenModal('activity')}
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                marginRight="4px"
+              >
+                <ActivitiesIcon />
+              </Box>
+              <Box>Activity</Box>
+            </Box>
+          </Box>
+        </Box>
+        {tokenBalanceValid ? (
+          <Box
+            width="100%"
+            background="white"
+            borderRadius="32px"
+            boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+            // border="1px solid #EAECF0"
+            position="relative"
+            zIndex="1"
+          >
+            <Box padding="12px 16px" paddingBottom="0">
+              {tokenBalance.map((item: any, index: number) => (
+                <Box key={index} display="flex" alignItems="center" marginBottom="12px">
+                  <Box marginRight="10px">
+                    <Image src={item.logoURI} w="32px" h="32px" />
+                  </Box>
+                  <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
+                    {item.name}
+                  </Box>
+                  <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                    <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
+                      {item.tokenBalanceFormatted}
+                    </Box>
+                    <Box fontSize="12px" lineHeight="15px" color="#95979C">${item.usdValue || '0'}</Box>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        ) : <Box
+              width="100%"
+              background="white"
+              borderRadius="32px"
+              height="377px"
+              boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+          // border="1px solid #EAECF0"
+              position="relative"
+              zIndex="1"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              marginBottom="40px"
+            >
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="column"
+          >
+            <Box marginBottom="20px">
+              <Image height="108px" w="216px" src={EmptyIcon} />
+            </Box>
+            <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
+            <Box marginTop="12px">
+              <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openModal('receive', { width: 480, height: 600 })}>Deposit</Button>
+            </Box>
+          </Box>
+        </Box>}
+      </Fragment>
+    </Box>
+  )
+}
+
+export default function Dashboard(props: any) {
+  const { selectedAddress } = useAddressStore();
+  const { innerHeight } = useScreenSize();
+  const { navigate } = useBrowser();
+  const [activeMenu, setActiveMenu] = useState(props.activeMenu || 'assets')
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(()=>{
     if(!selectedAddress){
       // navigate('/landing')
     }
-
   }, [selectedAddress])
-
-  // const handleStart = (position: any) => {
-  //   setStartPosition(position);
-  // };
-
-  // const openActivity = () => {
-  //   console.log('openActivity');
-  //   openModal('activity');
-  // };
-
-  const handleMove = (currentPosition: any) => {
-    if (startPosition == null) return;
-
-    if (startPosition > currentPosition + 20) {
-      console.log('Moving up');
-      changeModalPosition('top');
-      setTimeout(() => {
-        setShowFullHistory(true);
-      }, 600);
-    } else if (startPosition < currentPosition - 20) {
-      console.log('Moving down');
-      changeModalPosition('bottom');
-      setTimeout(() => {
-        setShowFullHistory(false);
-      }, 600);
-    }
-  };
-
-  // const handleTouchStart = (e: any) => {
-  //   handleStart(e.touches[0].clientY);
-  // };
-
-  // const handleTouchMove = (e: any) => {
-  //   handleMove(e.touches[0].clientY);
-  // };
-
-  // const handleMouseDown = (e: any) => {
-  //   handleStart(e.clientY);
-  // };
-
-  // const handleMouseMove = (e: any) => {
-  //   // Only track movement when the mouse button is pressed
-  //   if (e.buttons === 1) {
-  //     handleMove(e.clientY);
-  //   }
-  // };
-
-  const getContentHeight = () => {
-    const elem: any = contentRef.current;
-
-    if (elem) {
-      return elem.clientHeight + 62 + 60 - 6;
-    }
-
-    return 494;
-  };
-
-  const changeModalPosition = useCallback(
-    (intentPosition: any) => {
-      if (!isMoving && intentPosition !== modalPosition) {
-        setIsMoving(true);
-
-        if (modalPosition === 'bottom') {
-          setModalMargin(64);
-          setModalHeight(innerHeight - 64);
-          setModalPosition('top');
-        } else {
-          const height = getContentHeight();
-          setModalMargin(height);
-          setModalPosition('bottom');
-
-          setTimeout(() => {
-            setModalHeight(innerHeight - height);
-          }, 620);
-        }
-
-        setTimeout(() => {
-          setIsMoving(false);
-        }, 600);
-      }
-    },
-    [modalPosition, isMoving, innerHeight],
-  );
-
-  const tokenBalanceValid = tokenBalance && tokenBalance.length && tokenBalance.some((item) => BN(item.tokenBalance).isGreaterThan(0));
 
   return (
     <ThemePage themeColor="#F2F3F5">
@@ -408,14 +597,15 @@ export default function Dashboard() {
                 cursor="pointer"
                 display="flex"
                 alignItems="center"
+                onClick={() => setActiveMenu('assets')}
               >
                 <Box marginRight="8px">
-                  <AssetsIcon2 />
+                  <AssetsIcon2 color={activeMenu === 'assets' ? '#2D3CBD' : '#676B75'} />
                 </Box>
                 <Box
-                  fontWeight="400"
                   fontSize="18px"
-                  color="#676B75"
+                  fontWeight={activeMenu === 'assets' ? '500' : '400'}
+                  color={activeMenu === 'assets' ? '#2D3CBD' : '#676B75'}
                   lineHeight="22.5px"
                 >
                   Assets
@@ -427,14 +617,15 @@ export default function Dashboard() {
                 cursor="pointer"
                 display="flex"
                 alignItems="center"
+                onClick={() => setActiveMenu('activities')}
               >
                 <Box marginRight="8px">
-                  <ActivityIcon2 />
+                  <ActivityIcon2 color={activeMenu === 'activities' ? '#2D3CBD' : '#676B75'} />
                 </Box>
                 <Box
-                  fontWeight="400"
                   fontSize="18px"
-                  color="#676B75"
+                  fontWeight={activeMenu === 'activities' ? '500' : '400'}
+                  color={activeMenu === 'activities' ? '#2D3CBD' : '#676B75'}
                   lineHeight="22.5px"
                 >
                   Activity
@@ -446,14 +637,15 @@ export default function Dashboard() {
                 cursor="pointer"
                 display="flex"
                 alignItems="center"
+                onClick={() => setActiveMenu('settings')}
               >
                 <Box marginRight="8px">
-                  <SettingsIcon2 />
+                  <SettingsIcon2  color={activeMenu === 'settings' ? '#2D3CBD' : '#676B75'} />
                 </Box>
                 <Box
-                  fontWeight="400"
                   fontSize="18px"
-                  color="#676B75"
+                  fontWeight={activeMenu === 'settings' ? '500' : '400'}
+                  color={activeMenu === 'settings' ? '#2D3CBD' : '#676B75'}
                   lineHeight="22.5px"
                 >
                   Settings
@@ -462,295 +654,23 @@ export default function Dashboard() {
             </Box>
           </Box>
           <Box
-            padding="8px"
+            padding={{
+              sm: '8px',
+              md: '0'
+            }}
             height="100%"
             overflowY="scroll"
             width={{
               sm: '100%',
               md: 'calc(100% - 240px)'
             }}
+            borderTopLeftRadius="32px"
+            borderTopRightRadius="32px"
+            background="white"
           >
-            <Box
-              ref={(v: any) => {
-                contentRef.current = v;
-              }}
-              display="flex"
-              flexDirection="column"
-            >
-              {(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash) && (
-                <Box
-                  paddingLeft="8px"
-                  paddingRight="8px"
-                  marginBottom="20px"
-                >
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    width="100%"
-                    minHeight="79px"
-                    borderRadius="32px"
-                    // background="white"
-                    padding="12px 16px"
-                    color="#0E1736"
-                    justifyContent="space-between"
-                    fontSize="14px"
-                    background="radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)"
-                    onClick={() => navigate('/verify-email')}
-                  >
-                    <Box>
-                      <Box fontSize="32px" lineHeight={"1"} fontWeight="500">$10</Box>
-                      <Box fontSize="14px" lineHeight={"17px"} fontWeight="400" opacity="0.64" color="#161F36">Setup email recovery to get 10 USDC</Box>
-                    </Box>
-                    <Box>
-                      <Image width="40px" height="40px" src={USDCIcon} />
-                    </Box>
-                  </Box>
-                </Box>
-              )}
-              {activeMenu === 'apps' && (
-                <Fragment>
-                  <Box
-                    width="100%"
-                    px="2"
-                    marginTop="20px"
-                  >
-                    <Box
-                      width="100%"
-                      background="linear-gradient(to bottom, #E4EaED 0%, #C5DDEF 100%)"
-                      borderRadius="24px"
-                      padding="24px"
-                      height="216px"
-                      display="flex"
-                      flexDirection="column"
-                      justifyContent="space-between"
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="space-between"
-                      >
-                        <Box>
-                          <Box fontSize="32px" fontWeight="500" color="#161F36" lineHeight="1">AAVE</Box>
-                          <Box fontSize="20px" lineHeight="25px" color="#3C3F45" opacity="0.8">10.16% APY</Box>
-                        </Box>
-                        <Box>
-                          <Image src={AAVEIcon} width="56px" height="56px" />
-                        </Box>
-                      </Box>
-                      <Box>
-                        <Button onClick={()=> toast({
-                          title: 'Coming soon',
-                          status: 'info',
-                        })} border="none" size="xl" height="40px" width="110px" type="white">Earn now</Button>
-                      </Box>
-                    </Box>
-                    <Box textAlign="center" width="100%" marginTop="16px" fontSize="14px" lineHeight="17.5px" opacity="0.4">
-                      More apps arriving soon
-                    </Box>
-                  </Box>
-                </Fragment>
-              )}
-              {activeMenu === 'assets' && (
-                <Fragment>
-                  <Box
-                    width="100%"
-                    px="2"
-                  >
-                    <Box display="flex" alignItems="center">
-                      <Box fontSize="56px" lineHeight={"1"} fontWeight="500" marginRight="2px">
-                        $
-                      </Box>
-                      <Box
-                        fontSize={fontSize}
-                        lineHeight={'1'}
-                        fontWeight="500"
-                        sx={{
-                          '@property --num': {
-                            syntax: `'<integer>'`,
-                            initialValue: '0',
-                            inherits: 'false',
-                          },
-                          '&': {
-                            transition: '--num 1s',
-                            counterReset: 'num var(--num)',
-                            '--num': valueLeft,
-                          },
-                          '&::after': {
-                            content: 'counter(num)',
-                          },
-                        }}
-                      />
-                      {valueRight &&
-                       BN(valueRight).isGreaterThan(0) &&
-                       Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
-                         <Box
-                           fontSize={fontSize}
-                           lineHeight={'1'}
-                           fontWeight="500"
-                           // marginTop={fontBottomMargin}
-                           // marginLeft="10px"
-                           color="#939393"
-                         >
-                           .
-                           <Box
-                             as="span"
-                           >
-                             {valueRight.slice(0, 4).replace(/0+$/, '')}
-                           </Box>
-                         </Box>
-                      )}
-                    </Box>
-                  </Box>
-                  <Box
-                    width="100%"
-                    display="flex"
-                    paddingLeft="8px"
-                    paddingRight="8px"
-                    marginTop="14px"
-                    marginBottom="40px"
-                  >
-                    <Box width="calc((100% - 16px) / 3)" marginRight="8px">
-                      <Box
-                        background="#DCE4F2"
-                        borderRadius="32px"
-                        color="#161F36"
-                        fontSize="18px"
-                        fontWeight="400"
-                        lineHeight="22.5px"
-                        padding="12px 16px"
-                        height="47px"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        onClick={() => openFullScreenModal('send')}
-                      >
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          marginRight="4px"
-                        >
-                          <SendIcon />
-                        </Box>
-                        <Box>Send</Box>
-                      </Box>
-                    </Box>
-                    <Box width="calc((100% - 16px) / 3)" marginRight="8px">
-                      <Box
-                        background="#DCE4F2"
-                        borderRadius="32px"
-                        color="#161F36"
-                        fontSize="18px"
-                        fontWeight="400"
-                        lineHeight="22.5px"
-                        padding="12px 16px"
-                        height="47px"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        onClick={() => {
-                          openModal('receive', { width: 480, height: 600 })
-                        }}
-                      >
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          marginRight="4px"
-                        >
-                          <ReceiveIcon />
-                        </Box>
-                        <Box>Receive</Box>
-                      </Box>
-                    </Box>
-                    <Box width="calc((100% - 16px) / 3)">
-                      <Box
-                        background="#DCE4F2"
-                        borderRadius="32px"
-                        color="#161F36"
-                        fontSize="18px"
-                        fontWeight="400"
-                        lineHeight="22.5px"
-                        padding="12px 16px"
-                        height="47px"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        onClick={() => openFullScreenModal('activity')}
-                      >
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          marginRight="4px"
-                        >
-                          <ActivitiesIcon />
-                        </Box>
-                        <Box>Activity</Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                  {tokenBalanceValid ? (
-                    <Box
-                      width="100%"
-                      background="white"
-                      borderRadius="32px"
-                      boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
-                      // border="1px solid #EAECF0"
-                      position="relative"
-                      zIndex="1"
-                    >
-                      <Box padding="12px 16px" paddingBottom="0">
-                        {tokenBalance.map((item: any, index: number) => (
-                          <Box key={index} display="flex" alignItems="center" marginBottom="12px">
-                            <Box marginRight="10px">
-                              <Image src={item.logoURI} w="32px" h="32px" />
-                            </Box>
-                            <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                              {item.name}
-                            </Box>
-                            <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                              <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                                {item.tokenBalanceFormatted}
-                              </Box>
-                              <Box fontSize="12px" lineHeight="15px" color="#95979C">${item.usdValue || '0'}</Box>
-                            </Box>
-                          </Box>
-                        ))}
-                      </Box>
-                    </Box>
-                  ) : <Box
-                        width="100%"
-                        background="white"
-                        borderRadius="32px"
-                        height="377px"
-                        boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
-                    // border="1px solid #EAECF0"
-                        position="relative"
-                        zIndex="1"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        marginBottom="40px"
-                      >
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      flexDirection="column"
-                    >
-                      <Box marginBottom="20px">
-                        <Image height="108px" w="216px" src={EmptyIcon} />
-                      </Box>
-                      <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
-                      <Box marginTop="12px">
-                        <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openModal('receive', { width: 480, height: 600 })}>Deposit</Button>
-                      </Box>
-                    </Box>
-                  </Box>}
-                </Fragment>
-              )}
-            </Box>
+            {activeMenu === 'assets' && <AssetPage isDashboard={true} />}
+            {activeMenu === 'activities' && <ActivityPage isDashboard={true} />}
+            {activeMenu === 'settings' && <GuardianPage isDashboard={true} />}
           </Box>
         </Box>
         <Modal

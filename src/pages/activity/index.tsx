@@ -30,13 +30,8 @@ const getSubject = (functionName: any) => {
   }
 }
 
-export default function Activity({ isModal, registerScrollable }: any) {
+export default function Activity({ isModal, isDashboard }: any) {
   const { historyList } = useHistoryStore();
-  const scrollableRef = useRef<any>();
-
-  useEffect(() => {
-    registerScrollable(scrollableRef.current);
-  }, []);
 
   console.log('history', historyList);
 
@@ -47,25 +42,24 @@ export default function Activity({ isModal, registerScrollable }: any) {
       alignItems="center"
       justifyContent="flex-start"
       width="100%"
-      marginTop="24px"
       position="relative"
-      height={window.innerHeight - 20}
+      marginTop={isDashboard ? '0' : '24px'}
+      height={isDashboard ? 'calc(100vh - 104px)' : (window.innerHeight - 20)}
     >
       <Box
         width={{
           sm: '100%',
-          md: '798px',
+          md: isDashboard ? '100%' : '798px',
         }}
       >
         <Box
-          // fontSize="18px"
           fontSize="32px"
           fontWeight="500"
           lineHeight="24px"
           width="100%"
           paddingLeft="30px"
           paddingRight="30px"
-          marginTop="60px"
+          marginTop={isDashboard ? '32px' : '60px'}
         >
           Activity
         </Box>
@@ -74,10 +68,9 @@ export default function Activity({ isModal, registerScrollable }: any) {
           background="white"
           marginTop="27px"
           overflow="auto"
-          ref={scrollableRef}
           paddingLeft="30px"
           paddingRight="30px"
-          height={window.innerHeight - 64}
+          height={isDashboard ? 'calc(100vh - 150px)' : (window.innerHeight - 60)}
         >
           {historyList.length ? (
             <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
