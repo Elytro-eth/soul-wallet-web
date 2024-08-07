@@ -42,11 +42,11 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
   const { innerHeight } = useScreenSize();
   const marginHeight = innerHeight - 468;
 
-  const onAddressChange = (val: string) => {
-    setSendTo(val);
-    setSearchText(val);
+  const onAddressChange = (value: string) => {
+    setSendTo(value);
+    setSearchText(String((value || '')).toLowerCase());
 
-    if (extractENSAddress(val)) {
+    if (extractENSAddress(value)) {
       setIsENSOpen(true);
     } else {
       setIsENSOpen(false);
@@ -58,7 +58,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
   const inputRef = useRef<any>();
 
   const inputOnFocus = (value: any) => {
-    setSearchText(value);
+    setSearchText(String((value || '')).toLowerCase());
 
     if (extractENSAddress(value)) {
       setIsENSOpen(true);
