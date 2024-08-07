@@ -1,11 +1,10 @@
 import { create } from 'zustand';
 import api from '@/lib/api';
 import { persist } from 'zustand/middleware';
-import { ethers } from 'ethers';
+import { ethers, formatUnits } from 'ethers';
 import IconDefaultToken from '@/assets/tokens/default.svg';
 import IconEth from '@/assets/tokens/eth.svg';
 import BN from 'bignumber.js';
-import { trialFundAddress } from '@/config';
 
 export interface ITokenBalanceItem {
   chainID: string;
@@ -41,9 +40,7 @@ export interface IBalanceStore {
   sevenDayApy: string;
   oneDayInterest: string;
   totalInterest: string;
-  fetchInterest: (address: string, chainID: string) => void;
   totalUsdValue: string;
-  totalTrialValue: string;
   tokenBalance: ITokenBalanceItem[];
   clearBalance: () => void;
   getTokenBalance: (tokenAddress: string) => any;
@@ -65,6 +62,20 @@ export const fetchTokenBalanceApi = async (address: string, chainId: string) => 
     reservedTokenAddresses: []
   });
 
+  const resPrice = await api.token.price({
+    chainID: chainId,
+    contractAddresses: res.data.map((item: any) => item.contractAddress),
+  });
+
+  res.data.forEach((item: any) => {
+    console.log('Found', resPrice.data.find((i:any) => i.address === item.contractAddress));
+    item.tokenPrice = resPrice.data.find((i:any) => i.address === item.contractAddress).price || '0';
+    item.tokenBalanceFormatted = formatUnits(item.tokenBalance, item.decimals);
+    item.usdValue = BN(item.tokenBalanceFormatted).times(item.tokenPrice).toString();
+  });
+
+  console.log('res price',res, resPrice)
+
   return res.data;
 };
 
@@ -78,9 +89,9 @@ export const formatTokenBalance = (item: ITokenBalanceItem) => {
   if (!item.name) {
     item.name = 'Unknown';
   }
-  if (item.tokenBalance) {
-    item.tokenBalanceFormatted = ethers.formatUnits(item.tokenBalance, item.decimals);
-  }
+  // if (item.tokenBalance) {
+  //   item.tokenBalanceFormatted = ethers.formatUnits(item.tokenBalance, item.decimals);
+  // }
   return item;
 };
 
@@ -90,7 +101,6 @@ export const useBalanceStore = create<IBalanceStore>()(
       maxFeePerGas: '0x',
       maxPriorityFeePerGas: '0x',
       totalUsdValue: '0',
-      totalTrialValue: '0',
       apy: '0',
       sevenDayApy: '0',
       oneDayInterest: '0',
@@ -106,17 +116,6 @@ export const useBalanceStore = create<IBalanceStore>()(
         //   maxPriorityFeePerGas: `0x${feeData.maxPriorityFeePerGas?.toString(16)}`,
         // });
       },
-      fetchInterest: async (address, chainID) => {
-        const date = new Date();
-        date.setHours(0, 0, 0, 0);
-        const res = await api.token.interest({
-          chainID,
-          address,
-          startTime: Math.floor(date.getTime() / 1000),
-        });
-
-        set({ oneDayInterest: res.data.interest });
-      },
       tokenBalance: [defaultEthBalance],
       nftBalance: [],
       getTokenBalance: (tokenAddress: string) => {
@@ -129,18 +128,13 @@ export const useBalanceStore = create<IBalanceStore>()(
       },
       setTokenBalance: (balanceList: any) => {
         let totalUsdValue = BN('0');
-        let totalTrialValue = BN('0');
         const tokenList = balanceList.map((item: ITokenBalanceItem) => {
           let formattedItem = formatTokenBalance(item);
-          if(item.contractAddress === trialFundAddress){
-            totalTrialValue = totalTrialValue.plus(item.tokenBalanceFormatted);
-          }else{
-            totalUsdValue = totalUsdValue.plus(item.tokenBalanceFormatted);
-          }
+          totalUsdValue = totalUsdValue.plus(item.usdValue || '0');
           return formattedItem;
         });
         // format balance list here
-        set({ tokenBalance: tokenList, totalUsdValue: totalUsdValue.toString(), totalTrialValue: totalTrialValue.toString() });
+        set({ tokenBalance: tokenList, totalUsdValue: totalUsdValue.toString() });
       },
     }),
     {

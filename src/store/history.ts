@@ -22,14 +22,13 @@ export const fetchHistoryApi = async (
 ) => {
   // const res = await api.op.list(address, [chainId]);
   const res:any = await api.transaction.query({address, chainId});
-console.log('RES', res)
+  const txs = res.data.txs;
   let finalHistoryList = [];
 
   // IMPORTANT TODO, cache decode result
-  for (let i = 0; i < res.txs.length; i++) {
-    const item = res.txs[i];
+  for (let i = 0; i < txs.length; i++) {
+    const item = txs[i];
     // decode calldata
-
     if (item.type === 'op' && item.opList) {
       const callDataDecodes = await decodeCalldata(chainId, entryPointAddress, item.opList[0], ethersProvider);
 

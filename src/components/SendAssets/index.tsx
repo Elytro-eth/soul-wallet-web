@@ -49,7 +49,7 @@ export default function SendAssets({ tokenAddress = '', onSent }: ISendAssets) {
 
   const inputOnChange = (value: any) => {
     setReceiverAddress(value);
-    setSearchText(value);
+    setSearchText(String((value || '')).toLowerCase());
 
     if (extractENSAddress(value)) {
       setIsENSOpen(true);
@@ -59,7 +59,7 @@ export default function SendAssets({ tokenAddress = '', onSent }: ISendAssets) {
   };
 
   const inputOnFocus = (value: any) => {
-    setSearchText(value);
+    setSearchText(String((value || '')).toLowerCase());
 
     if (extractENSAddress(value)) {
       setIsENSOpen(true);

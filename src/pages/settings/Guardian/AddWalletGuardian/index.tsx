@@ -41,11 +41,11 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   const [guardianName, setGuardianName] = useState(defaultGuardianName || '');
   const [addressStatus, setAddressStatus] = useState(0);
 
-  const onAddressChange = (val: string) => {
-    setGuardianAddress(val)
-    setSearchText(val);
+  const onAddressChange = (value: string) => {
+    setGuardianAddress(value)
+    setSearchText(String((value || '')).toLowerCase());
 
-    if (extractENSAddress(val)) {
+    if (extractENSAddress(value)) {
       setIsENSOpen(true);
     } else {
       setIsENSOpen(false);
@@ -56,15 +56,15 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   const menuRef = useRef();
   const inputRef = useRef<any>();
 
-  // const inputOnFocus = (value: any) => {
-  //   setSearchText(value);
+  const inputOnFocus = (value: any) => {
+    setSearchText(String((value || '')).toLowerCase());
 
-  //   if (extractENSAddress(value)) {
-  //     setIsENSOpen(true);
-  //   } else {
-  //     setIsENSOpen(false);
-  //   }
-  // };
+    if (extractENSAddress(value)) {
+      setIsENSOpen(true);
+    } else {
+      setIsENSOpen(false);
+    }
+  };
 
   const setMenuRef = (value: any) => {
     menuRef.current = value;
@@ -154,7 +154,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
         <Box width="100%">
           <Box padding="30px" paddingTop="40px">
             <Box fontSize="28px" fontWeight="500" color="#161F36">
-            Add wallet address
+              Add wallet address
             </Box>
             <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px"  marginTop="24px" color="#95979C">
               ENS or wallet address
@@ -166,6 +166,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 value={guardianAddress}
                 onChange={e => onAddressChange(e.target.value)}
                 onBlur={() => {setAddressStatus(1); handleBlur();}}
+                onFocus={(e: any) => inputOnFocus(e.target.value)}
                 fontSize="20px"
                 lineHeight="24px"
                 fontWeight="400"

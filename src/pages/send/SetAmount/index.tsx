@@ -22,7 +22,6 @@ import OpIcon from '@/assets/mobile/op.png';
 import USDCIcon from '@/assets/mobile/usdc.png';
 import { toFixed } from '@/lib/tools';
 import { isAddress } from 'ethers';
-import ENSResolver, { extractENSAddress, isENSAddress } from '@/components/ENSResolver';
 import SelectToken from '@/components/SelectToken';
 import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import useScreenSize from '@/hooks/useScreenSize';

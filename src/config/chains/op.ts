@@ -2,13 +2,14 @@
  * Arbitrum Sepolia
  */
 
+import IconOp from '@/assets/chains/op.svg';
 import IconOpFaded from '@/assets/chains/op-faded.svg';
 import IconOpSquare from '@/assets/chains/op-square.svg';
 
 const chainId = 10;
 
 export default {
-  icon: IconOpSquare,
+  icon: IconOp,
   iconFaded: IconOpFaded,
   iconSquare: IconOpSquare,
   provider: `https://mainnet.optimism.io`,

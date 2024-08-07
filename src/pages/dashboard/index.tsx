@@ -4,6 +4,7 @@ import {
   Box,
   Image,
   Flex,
+  Text,
   useToast,
   Modal,
   ModalOverlay,
@@ -37,7 +38,6 @@ import IconSetting from '@/assets/icons/setting.svg';
 import { useAddressStore } from '@/store/address';
 import { useGuardianStore } from '@/store/guardian';
 import { ZeroHash } from 'ethers';
-import { getTokenIcon, toFixed } from '@/lib/tools';
 import USDCIcon from '@/assets/mobile/usdc.png'
 import AAVEIcon from '@/assets/mobile/aave.png'
 import ThemePage from '@/components/ThemeChange';
@@ -55,6 +55,7 @@ import ImgLogo from '@/assets/soul-logo.svg';
 import OpIcon from '@/assets/mobile/op.png'
 import { toShortAddress } from '@/lib/tools';
 import OpenIcon from '@/components/Icons/mobile/Open';
+import TokenIcon from '@/components/TokenIcon';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -195,8 +196,7 @@ export function Header({ openMenu, username, ...props }: any) {
 
 export default function Dashboard() {
   const { openFullScreenModal } = useWalletContext();
-  const { totalUsdValue, totalTrialValue, tokenBalance } = useBalanceStore();
-  const { historyList } = useHistoryStore();
+  const { totalUsdValue, tokenBalance } = useBalanceStore();
   const { selectedAddress } = useAddressStore();
   const { innerHeight } = useScreenSize();
   const [modalMargin, setModalMargin] = useState(494);
@@ -714,7 +714,7 @@ export default function Dashboard() {
                               <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
                                 {item.tokenBalanceFormatted}
                               </Box>
-                              <Box fontSize="12px" lineHeight="15px" color="#95979C">$0</Box>
+                              <Box fontSize="12px" lineHeight="15px" color="#95979C">${item.usdValue || '0'}</Box>
                             </Box>
                           </Box>
                         ))}
