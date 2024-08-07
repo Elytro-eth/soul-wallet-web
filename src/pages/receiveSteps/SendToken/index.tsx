@@ -1,6 +1,6 @@
 import { Box, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import USDCIcon from '@/assets/mobile/usdc.png'
+import USDCIcon from '@/assets/tokens/usdc.png';
 import useScreenSize from '@/hooks/useScreenSize'
 import Button from '@/components/mobile/Button'
 
