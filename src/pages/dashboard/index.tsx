@@ -46,6 +46,7 @@ import EmptyIcon from '@/assets/mobile/activity-empty.png'
 import SettingPage from '@/pages/settings'
 import useConfig from '@/hooks/useConfig';
 import op from '@/config/chains/op';
+import TokenIcon from '@/components/TokenIcon';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -563,7 +564,8 @@ export default function Dashboard() {
                       {tokenBalance.map((item: any, index: number) => (
                         <Box key={index} display="flex" alignItems="center" marginBottom="12px">
                           <Box marginRight="10px">
-                            <Image src={item.logoURI} w="32px" h="32px" flex="1 1 32px" />
+                            <TokenIcon address={item.contractAddress} size={32} />
+                            {/* <Image src={item.logoURI} w="32px" h="32px" flex="1 1 32px" /> */}
                             {/* <Image src={getTokenIcon(item.contractAddress,item.chainID)} w="32px" h="32px" /> */}
                           </Box>
                           <Box>
