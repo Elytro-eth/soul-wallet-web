@@ -76,6 +76,7 @@ const invitation = {
 const token = {
   interest: (params: any) => axio.post('/walletapi/token/interest',params),
   balance: (params: any) => axio.post('/walletapi/token/ft',params),
+  price: (params: any) => axio.post('/walletapi/token/ft-price', params),
   spendTrialInterest: (params: any) => axio.post('/walletapi/token/spend-trial-interest',params),
 }
 
