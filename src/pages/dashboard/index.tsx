@@ -51,6 +51,7 @@ import AssetsIcon2 from '@/components/Icons/desktop/Assets';
 import ActivityIcon2 from '@/components/Icons/desktop/Activity';
 import SettingsIcon2 from '@/components/Icons/desktop/Settings';
 import op from '@/config/chains/op';
+import ImgLogo from '@/assets/soul-logo.svg';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -108,10 +109,23 @@ export function Header({ openMenu, username, ...props }: any) {
       position="relative"
       {...props}
     >
-      <Box display="flex" gap="2" alignItems="center" justifyContent="center">
-        {/* <Box width="40px" height="40px">
-            <AddressIcon address={selectedAddress} width={40} />
-            </Box> */}
+      <Box
+        display={{
+          sm: 'none',
+          md: 'flex',
+        }}
+      >
+        <Image src={ImgLogo} />
+      </Box>
+      <Box
+        display={{
+          sm: 'flex',
+          md: 'none',
+        }}
+        gap="2"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Image src={chainConfig.icon} width="40px" height="40px" />
         <Box fontSize="20px" lineHeight="24px" fontWeight="400" color="#161F36">
           {walletName}
@@ -695,7 +709,7 @@ export default function Dashboard() {
                       </Box>
                       <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
                       <Box marginTop="12px">
-                        <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openFullScreenModal('receive')}>Deposit</Button>
+                        <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openModal('receive', { width: 480, height: 600 })}>Deposit</Button>
                       </Box>
                     </Box>
                   </Box>}
