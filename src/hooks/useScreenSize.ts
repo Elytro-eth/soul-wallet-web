@@ -13,9 +13,17 @@ export default function useScreenSize() {
     // Add event listener
     window.addEventListener('resize', handleResize)
 
+    if (screen.orientation) {
+      screen.orientation.addEventListener('change', handleResize)
+    }
+
     // Remove event listener on cleanup
     return () => {
       window.removeEventListener('resize', handleResize)
+
+      if (screen.orientation) {
+        screen.orientation.addEventListener('change', handleResize)
+      }
     }
   }, [])
 
