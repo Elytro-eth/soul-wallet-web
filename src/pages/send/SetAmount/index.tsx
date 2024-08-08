@@ -134,7 +134,7 @@ export default function SetAmount({
                     <Box fontSize="18px" color="#161F36" fontWeight="500">
                       {selectedToken.name}
                     </Box>
-                    <Box color="#95979C" fontSize="14px" fontWeight="400">Balance: {toFixed(selectedToken.tokenBalanceFormatted, 6)}</Box>
+                    <Box color="#95979C" fontSize="14px" fontWeight="400">Balance: {toFixed(selectedToken.tokenBalanceFormatted, 3)}</Box>
                   </Box>
                 </Box>
               )}
