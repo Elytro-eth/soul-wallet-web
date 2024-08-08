@@ -47,6 +47,7 @@ import SettingPage from '@/pages/settings'
 import useConfig from '@/hooks/useConfig';
 import op from '@/config/chains/op';
 import TokenIcon from '@/components/TokenIcon';
+import { toFixed } from '@/lib/tools';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -163,15 +164,10 @@ export default function Dashboard() {
   const valueRight = totalUsdValue.split('.')[1];
 
   const fontSize = getFontSize(valueLeft);
-  const smFontSize = getSmallFontSize(valueRight);
-  const fontBottomMargin = getFontBottomMargin(valueLeft);
+  // const smFontSize = getSmallFontSize(valueRight);
+  // const fontBottomMargin = getFontBottomMargin(valueLeft);
 
   const [startPosition, setStartPosition] = useState(null);
-  /*
-   *   useMotionValueEvent(scrollY, 'change', (latest) => {
-   *     console.log('Page scroll: ', latest);
-   *   });
-   *  */
   useEffect(() => {
     getContentHeight();
     console.log('contentRef', contentRef);
@@ -444,7 +440,7 @@ export default function Dashboard() {
                     />
                     {valueRight &&
                      BN(valueRight).isGreaterThan(0) &&
-                     Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
+                     Number(valueRight.slice(0, 2).replace(/0+$/, '')) > 0 && (
                        <Box
                          fontSize={fontSize}
                          lineHeight={'1'}
@@ -457,7 +453,7 @@ export default function Dashboard() {
                          <Box
                            as="span"
                          >
-                           {valueRight.slice(0, 4).replace(/0+$/, '')}
+                           {valueRight.slice(0, 2).replace(/0+$/, '')}
                          </Box>
                        </Box>
                     )}
@@ -576,12 +572,11 @@ export default function Dashboard() {
                               {item.name}
                             </Text>
                           </Box>
-                         
                           <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
                             <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                              {item.tokenBalanceFormatted}
+                              {toFixed(item.tokenBalanceFormatted, 3)}
                             </Box>
-                            <Box fontSize="12px" lineHeight="15px" color="#95979C">${item.usdValue || '0'}</Box>
+                            <Box fontSize="12px" lineHeight="15px" color="#95979C">${item.usdValue ? toFixed(item.usdValue, 2) : '0'}</Box>
                           </Box>
                         </Box>
                       ))}
