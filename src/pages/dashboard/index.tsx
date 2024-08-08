@@ -15,6 +15,7 @@ import {
   ModalCloseButton,
   ModalBody,
   useDisclosure,
+  useBreakpointValue
 } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import MoreIcon from '@/components/Icons/mobile/More';
@@ -449,6 +450,7 @@ export function AssetPage({ isDashboard }: any) {
     <Box
       display="flex"
       flexDirection="column"
+      height="100%"
     >
       {(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash) && (
         <Box
@@ -486,7 +488,11 @@ export function AssetPage({ isDashboard }: any) {
               sm: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
               md: 'white',
             }}
-            onClick={() => navigate('/verify-email')}
+            // onClick={() => navigate('/verify-email')}
+            onClick={useBreakpointValue({
+              sm: () => navigate('/verify-email'),
+              md: () => openModal('verifyEmail'),
+            })}
             cursor="pointer"
           >
             <Box>
@@ -604,6 +610,10 @@ export function AssetPage({ isDashboard }: any) {
           sm: 'column',
           md: 'row'
         }}
+        height={{
+          sm: 'auto',
+          md: 'calc(100% - 76px)'
+        }}
       >
         <Box
           width={{
@@ -627,7 +637,7 @@ export function AssetPage({ isDashboard }: any) {
             }}
             marginBottom={{
               sm: '0',
-              md: '24px'
+              md: '20px'
             }}
           >
             <Box display="flex" alignItems="center">
@@ -687,6 +697,11 @@ export function AssetPage({ isDashboard }: any) {
               sm: '0',
               md: '4px'
             }}
+            display={{
+              sm: 'none',
+              md: 'flex'
+            }}
+            height="calc(100% - 140px)"
           >
             <Box
               fontSize="22px"
@@ -821,6 +836,7 @@ export function AssetPage({ isDashboard }: any) {
                 sm: '0',
                 md: '4px'
               }}
+              height="100%"
             >
               <Box
                 fontSize="22px"
@@ -1058,7 +1074,7 @@ export default function Dashboard(props: any) {
               sm: '0',
               md: '20px'
             }}
-            paddingBottom={{
+            marginBottom={{
               sm: '0',
               md: '20px'
             }}
