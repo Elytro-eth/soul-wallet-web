@@ -22,7 +22,7 @@ export default function useScreenSize() {
       window.removeEventListener('resize', handleResize)
 
       if (screen.orientation) {
-        screen.orientation.addEventListener('change', handleResize)
+        screen.orientation.removeEventListener('change', handleResize)
       }
     }
   }, [])
