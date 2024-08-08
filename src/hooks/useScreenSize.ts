@@ -5,15 +5,25 @@ export default function useScreenSize() {
 
   useEffect(() => {
     const handleResize = () => {
-      setInnerHeight(window.innerHeight)
+      setTimeout(() => {
+        setInnerHeight(window.innerHeight)
+      }, 0)
     }
 
     // Add event listener
     window.addEventListener('resize', handleResize)
 
+    if (screen.orientation) {
+      screen.orientation.addEventListener('change', handleResize)
+    }
+
     // Remove event listener on cleanup
     return () => {
       window.removeEventListener('resize', handleResize)
+
+      if (screen.orientation) {
+        screen.orientation.removeEventListener('change', handleResize)
+      }
     }
   }, [])
 
