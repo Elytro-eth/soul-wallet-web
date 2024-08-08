@@ -240,6 +240,7 @@ export function Header({ openMenu, username, ...props }: any) {
             position="absolute"
             top="48px"
             right="224px"
+            zIndex="2"
           >
             <Menu
               isOpen={isTransferOpen}

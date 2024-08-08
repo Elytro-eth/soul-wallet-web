@@ -66,10 +66,14 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
         <Box width="100%" display="flex" alignItems="center" justifyContent="center">
           <Box position="relative">
             <Box
-              position="absolute"
+              marginTop="30px"
+              // position="absolute"
               top="60px"
               left="calc(-50vw + 32px)"
-              width="calc(100vw - 64px)"
+              width={{
+                sm: 'calc(100vw - 64px)',
+                md: '100%',
+              }}
             >
               <Menu
                 isOpen={isOpen}
