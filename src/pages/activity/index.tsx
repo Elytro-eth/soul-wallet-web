@@ -45,6 +45,7 @@ export default function Activity({ isModal, isDashboard }: any) {
       position="relative"
       marginTop={isDashboard ? '0' : '24px'}
       height={isDashboard ? 'calc(100vh - 104px)' : (window.innerHeight - 20)}
+      background="white"
     >
       <Box
         width={{
@@ -70,7 +71,7 @@ export default function Activity({ isModal, isDashboard }: any) {
           overflow="auto"
           paddingLeft="30px"
           paddingRight="30px"
-          height={isDashboard ? 'calc(100vh - 150px)' : (window.innerHeight - 60)}
+          height={isDashboard ? 'calc(100vh - 170px)' : (window.innerHeight - 60)}
         >
           {historyList.length ? (
             <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">

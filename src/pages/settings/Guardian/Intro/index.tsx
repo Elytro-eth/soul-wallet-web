@@ -24,163 +24,169 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
 
   return (
     <Box
-      width={isDashboard ? '330px' : '100%'}
-      height={isDashboard ? (innerHeight - 64) : (innerHeight - 60)}
-      padding={isDashboard ? '0' : '30px'}
+      width="100%"
+      height={isDashboard ? (innerHeight - 84) : (innerHeight - 60)}
       paddingTop="40px"
-      margin={isDashboard ? '0 auto' : '0'}
+      background="white"
+      display="flex"
+      justifyContent="center"
     >
       <Box
-        marginBottom="40px"
-        height="116px"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
+        width={isDashboard ? '330px' : '100%'}
+        padding={isDashboard ? '0' : '30px'}
       >
-        <Image height="116px" src={IntroGuardianIcon} />
-      </Box>
-      <Box
-        width="100%"
-        textAlign="center"
-        fontSize="28px"
-        fontWeight="500"
-        color="#161F36"
-      >
-        Recovery contact
-      </Box>
-      <Box
-        width="100%"
-        textAlign="center"
-        fontSize="14px"
-        fontWeight="400"
-        marginTop="18px"
-        color="#676B75"
-      >
-        If you lose access to your account, recovery contacts can help you get your account back.
-      </Box>
-      <Box width="100%" display="flex" alignItems="center" justifyContent="center">
-        <Box position="relative">
-          <Box
-            position="absolute"
-            top="60px"
-            left="calc(-50vw + 32px)"
-            width="calc(100vw - 64px)"
-          >
-            <Menu
-              isOpen={isOpen}
-              isLazy
-              autoSelect={false}
+        <Box
+          marginBottom="40px"
+          height="116px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Image height="116px" src={IntroGuardianIcon} />
+        </Box>
+        <Box
+          width="100%"
+          textAlign="center"
+          fontSize="28px"
+          fontWeight="500"
+          color="#161F36"
+        >
+          Recovery contact
+        </Box>
+        <Box
+          width="100%"
+          textAlign="center"
+          fontSize="14px"
+          fontWeight="400"
+          marginTop="18px"
+          color="#676B75"
+        >
+          If you lose access to your account, recovery contacts can help you get your account back.
+        </Box>
+        <Box width="100%" display="flex" alignItems="center" justifyContent="center">
+          <Box position="relative">
+            <Box
+              position="absolute"
+              top="60px"
+              left="calc(-50vw + 32px)"
+              width="calc(100vw - 64px)"
             >
-              {() => (
-                <Box overflow="auto" ref={menuRef}>
-                  <MenuButton
-                    width={isDashboard ? '330px' : '100%'}
-                    margin={isDashboard ? '0 auto' : '0'}
-                    as={Box}
-                    onClick={() => { isOpen ? onClose() : onOpen()}}
-                    cursor="pointer"
-                  >
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
+              <Menu
+                isOpen={isOpen}
+                isLazy
+                autoSelect={false}
+              >
+                {() => (
+                  <Box overflow="auto" ref={menuRef}>
+                    <MenuButton
+                      width={isDashboard ? '330px' : '100%'}
+                      margin={isDashboard ? '0 auto' : '0'}
+                      as={Box}
+                      onClick={() => { isOpen ? onClose() : onOpen()}}
+                      cursor="pointer"
                     >
-                      <Button
-                        size="xl"
-                        type="gradientBlue"
-                        width={isDashboard ? '330px' : 'calc(100vw - 64px)'}
-                        maxWidth={isDashboard ? '330px' : 'calc(100vw - 64px)'}
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
                       >
-                        Add recovery contact
-                      </Button>
-                    </Box>
-                  </MenuButton>
-                </Box>
-              )}
-            </Menu>
+                        <Button
+                          size="xl"
+                          type="gradientBlue"
+                          width={isDashboard ? '330px' : 'calc(100vw - 64px)'}
+                          maxWidth={isDashboard ? '330px' : 'calc(100vw - 64px)'}
+                        >
+                          Add recovery contact
+                        </Button>
+                      </Box>
+                    </MenuButton>
+                  </Box>
+                )}
+              </Menu>
+            </Box>
           </Box>
         </Box>
-      </Box>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        motionPreset="slideInBottom"
-        blockScrollOnMount={true}
-      >
-        <ModalOverlay height="100vh" background="transparent" />
-        <ModalContent
-          borderRadius="24px"
-          justifyContent="flex-end"
-          maxW={{
-            sm: 'calc(100vw - 32px)',
-          }}
-          marginTop={{
-            sm: `auto`,
-          }}
-          overflow="visible"
-          mb="0"
-          bottom="30px"
-          position="relative"
-          overflowY="scroll"
-          boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
-          border="1px solid #F2F3F5"
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+          motionPreset="slideInBottom"
+          blockScrollOnMount={true}
         >
-          <ModalCloseButton />
-          <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add via...</ModalHeader>
-          <ModalBody
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            justifyContent="center"
-            width="100%"
-            paddingLeft="0"
-            paddingRight="0"
+          <ModalOverlay height="100vh" background="transparent" />
+          <ModalContent
+            borderRadius="24px"
+            justifyContent="flex-end"
+            maxW={{
+              sm: 'calc(100vw - 32px)',
+            }}
+            marginTop={{
+              sm: `auto`,
+            }}
+            overflow="visible"
+            mb="0"
+            bottom="30px"
+            position="relative"
+            overflowY="scroll"
+            boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+            border="1px solid #F2F3F5"
           >
-            <Box
-              background="white"
+            <ModalCloseButton />
+            <ModalHeader fontSize="20px" fontWeight="500" color="#161F36" paddingBottom="2">Add via...</ModalHeader>
+            <ModalBody
+              display="flex"
+              flexDirection="column"
+              alignItems="flex-start"
+              justifyContent="center"
               width="100%"
-              padding="0 16px"
+              paddingLeft="0"
+              paddingRight="0"
             >
               <Box
-                width="calc(100%)"
-                position="relative"
+                background="white"
+                width="100%"
                 padding="0 16px"
-                display="flex"
-                alignItems="center"
-                height="56px"
-                background="#F2F3F5"
-                borderRadius="16px"
-                marginBottom="8px"
-                onClick={() => { openModal('addWalletGuardian'); onClose(); }}
-                cursor="pointer"
               >
-                <Box marginRight="8px"><WalletGuardianIcon /></Box>
-                <Box fontWeight="500" fontSize="18px" color="#161F36">
-                  Wallet address
+                <Box
+                  width="calc(100%)"
+                  position="relative"
+                  padding="0 16px"
+                  display="flex"
+                  alignItems="center"
+                  height="56px"
+                  background="#F2F3F5"
+                  borderRadius="16px"
+                  marginBottom="8px"
+                  onClick={() => { openModal('addWalletGuardian'); onClose(); }}
+                  cursor="pointer"
+                >
+                  <Box marginRight="8px"><WalletGuardianIcon /></Box>
+                  <Box fontWeight="500" fontSize="18px" color="#161F36">
+                    Wallet address
+                  </Box>
+                </Box>
+                <Box
+                  width="calc(100%)"
+                  position="relative"
+                  padding="0 16px"
+                  display="flex"
+                  alignItems="center"
+                  height="56px"
+                  background="#F2F3F5"
+                  borderRadius="16px"
+                  marginBottom="8px"
+                  onClick={() => { openModal('verifyEmail'); onClose(); }}
+                  cursor="pointer"
+                >
+                  <Box marginRight="8px"><EmailGuardianIcon /></Box>
+                  <Box fontWeight="500" fontSize="18px" color="#161F36">
+                    Email
+                  </Box>
                 </Box>
               </Box>
-              <Box
-                width="calc(100%)"
-                position="relative"
-                padding="0 16px"
-                display="flex"
-                alignItems="center"
-                height="56px"
-                background="#F2F3F5"
-                borderRadius="16px"
-                marginBottom="8px"
-                onClick={() => { openModal('verifyEmail'); onClose(); }}
-                cursor="pointer"
-              >
-                <Box marginRight="8px"><EmailGuardianIcon /></Box>
-                <Box fontWeight="500" fontSize="18px" color="#161F36">
-                  Email
-                </Box>
-              </Box>
-            </Box>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </Box>
     </Box>
   );
 }

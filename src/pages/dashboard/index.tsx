@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import {
   Box,
   Image,
+  Menu,
+  MenuList,
+  MenuItem,
   Flex,
   Text,
   useToast,
@@ -52,12 +55,18 @@ import AppsIcon2 from '@/components/Icons/desktop/Apps';
 import AssetsIcon2 from '@/components/Icons/desktop/Assets';
 import ActivityIcon2 from '@/components/Icons/desktop/Activity';
 import SettingsIcon2 from '@/components/Icons/desktop/Settings';
+import ArrowRightIcon from '@/components/Icons/desktop/ArrowRight';
 import op from '@/config/chains/op';
 import ImgLogo from '@/assets/soul-logo.svg';
 import OpIcon from '@/assets/mobile/op.png'
-import { toShortAddress } from '@/lib/tools';
+import { toShortAddress, getIconMapping } from '@/lib/tools';
 import OpenIcon from '@/components/Icons/mobile/Open';
 import TokenIcon from '@/components/TokenIcon';
+import CopyIcon from '@/components/Icons/mobile/Copy';
+import useTools from '@/hooks/useTools';
+import ChevronDown from '@/components/Icons/mobile/ChevronDown';
+import LogoutIcon from '@/components/Icons/mobile/Logout'
+import useWallet from '@/hooks/useWallet';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -104,6 +113,68 @@ const getFontBottomMargin = (value: any) => {
 export function Header({ openMenu, username, ...props }: any) {
   const { walletName, selectedAddress } = useAddressStore();
   const { chainConfig } = useConfig();
+  const { logoutWallet } = useWallet();
+  const { openFullScreenModal } = useWalletContext();
+  const [openModal] = useOutletContext<any>();
+
+  const { doCopy } = useTools();
+  const { isOpen: isTransferOpen, onOpen: onTransferOpen, onClose: onTransferClose } = useDisclosure();
+  const { isOpen: isLogoutOpen, onOpen: onLogoutOpen, onClose: onLogoutClose } = useDisclosure();
+
+  const copyAddress = () => {
+    doCopy(selectedAddress)
+  }
+
+  const transferMenuRef = useRef();
+  const transferInputRef = useRef();
+
+  const setTransferMenuRef = (value: any) => {
+    transferMenuRef.current = value;
+  };
+
+  const setTransferInputRef = (value: any) => {
+    transferInputRef.current = value;
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (transferInputRef.current && !(transferInputRef.current as any).contains(event.target) && transferMenuRef.current && !(transferMenuRef.current as any).contains(event.target)) {
+        onTransferClose()
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const logoutMenuRef = useRef();
+  const logoutInputRef = useRef();
+
+  const setLogoutMenuRef = (value: any) => {
+    logoutMenuRef.current = value;
+  };
+
+  const setLogoutInputRef = (value: any) => {
+    logoutInputRef.current = value;
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (logoutInputRef.current && !(logoutInputRef.current as any).contains(event.target) && logoutMenuRef.current && !(logoutMenuRef.current as any).contains(event.target)) {
+        onLogoutClose()
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <Box
       height="56px"
@@ -149,21 +220,176 @@ export function Header({ openMenu, username, ...props }: any) {
           height="42px"
           borderRadius="22px"
           padding="10px 12px"
+          paddingLeft="18px"
+          background="rgba(255, 255, 255, 1)"
+          display={{
+            sm: "none",
+            md: "flex"
+          }}
+          cursor="pointer"
+          marginRight="12px"
+          onClick={() => { isTransferOpen ? onTransferClose() : onTransferOpen() }}
+          position="relative"
+        >
+          <Box display="flex" alignItems="center" justifyContent="center" ref={setTransferInputRef}>
+            <Box fontWeight="500" fontSize="14px" marginRight="4px" color="#161F36">Transfer</Box>
+            <Box><ChevronDown /></Box>
+          </Box>
+          <Box
+            position="absolute"
+            top="48px"
+            right="224px"
+          >
+            <Menu
+              isOpen={isTransferOpen}
+              isLazy
+            >
+              {() => (
+                <Box
+                  width="100%"
+                  overflow="auto"
+                  ref={setTransferMenuRef}
+                >
+                  <MenuList
+                    background="white"
+                    boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+                    border="1px solid #F2F3F5"
+                    width="224px"
+                    borderRadius="24px"
+                    padding="8px"
+                  >
+                    <Box
+                      width="100%"
+                      position="relative"
+                      padding="0 8px"
+                      onClick={() => {
+                        onTransferClose()
+                        openFullScreenModal('send')
+                      }}
+                      display="flex"
+                      alignItems="center"
+                      height="48px"
+                      borderRadius="48px"
+                      transition="all 0.2s ease"
+                      _hover={{
+                        background: '#F2F3F5'
+                      }}
+                    >
+                      <Box>
+                        <Image w="8" h="8" mr="8px" flex="0 0 32px" src={getIconMapping('transfer eth')} />
+                      </Box>
+                      <Box fontSize="18px" fontWeight="500">Send</Box>
+                    </Box>
+                    <Box
+                      width="100%"
+                      position="relative"
+                      padding="0 8px"
+                      onClick={() => {
+                        onTransferClose()
+                        openModal('receive', { width: 480, height: 600 })
+                      }}
+                      display="flex"
+                      alignItems="center"
+                      height="48px"
+                      borderRadius="48px"
+                      transition="all 0.2s ease"
+                      _hover={{
+                        background: '#F2F3F5'
+                      }}
+                    >
+                      <Box>
+                        <Image w="8" h="8" mr="8px" flex="0 0 32px" src={getIconMapping('receive')} />
+                      </Box>
+                      <Box fontSize="18px" fontWeight="500">Receive</Box>
+                    </Box>
+                  </MenuList>
+                </Box>
+              )}
+            </Menu>
+          </Box>
+        </Box>
+
+        <Box
+          height="42px"
+          borderRadius="22px"
+          padding="10px 12px"
           background="rgba(255, 255, 255, 0.5)"
-          // marginRight="20px"
           display={{
             sm: "none",
             md: "flex"
           }}
         >
-          <Box display="flex" alignItems="center" justifyContent="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
             </Box>
             <Box fontWeight="500" fontSize="14px" marginRight="4px" color="#161F36">{walletName}</Box>
             <Box fontWeight="400" fontSize="14px">({toShortAddress(selectedAddress)})</Box>
-            <Box width="1px" height="20px" background="#E2E2E2" marginLeft="10px" marginRight="10px"></Box>
-            <Box onClick={() => {}} cursor="pointer"><OpenIcon /></Box>
+            <Box marginLeft="4px" cursor="pointer" onClick={copyAddress}>
+              <CopyIcon color="#161F36" />
+            </Box>
+            <Box width="1px" height="20px" background="#BDC0C7" marginLeft="10px" marginRight="10px"></Box>
+            <Box
+              cursor="pointer"
+              onClick={() => { isLogoutOpen ? onLogoutClose() : onLogoutOpen() }}
+              ref={setLogoutInputRef}
+            >
+              <ChevronDown />
+            </Box>
+          </Box>
+          <Box
+            position="absolute"
+            top="60px"
+            right="240px"
+          >
+            <Menu
+              isOpen={isLogoutOpen}
+              isLazy
+            >
+              {() => (
+                <Box
+                  width="100%"
+                  overflow="auto"
+                  ref={setLogoutMenuRef}
+                >
+                  <MenuList
+                    background="white"
+                    boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+                    border="1px solid #F2F3F5"
+                    width="224px"
+                    borderRadius="24px"
+                    padding="8px"
+                  >
+                    <Box
+                      width="100%"
+                      position="relative"
+                      padding="0 8px"
+                      onClick={() => {
+                        onLogoutClose()
+                      }}
+                      display="flex"
+                      alignItems="center"
+                      height="48px"
+                      borderRadius="48px"
+                      transition="all 0.2s ease"
+                      cursor="pointer"
+                      _hover={{
+                        background: '#F2F3F5'
+                      }}
+                    >
+                      <Box marginRight="4px">
+                        <LogoutIcon />
+                      </Box>
+                      <Box fontSize="18px" fontWeight="500">Logout</Box>
+                    </Box>
+                  </MenuList>
+                </Box>
+              )}
+            </Menu>
           </Box>
         </Box>
 
@@ -226,30 +452,104 @@ export function AssetPage({ isDashboard }: any) {
     >
       {(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash) && (
         <Box
-          paddingLeft="8px"
-          paddingRight="8px"
+          paddingLeft={{
+            sm: '8px',
+            md: '0',
+          }}
+          paddingRight={{
+            sm: '8px',
+            md: '0',
+          }}
           marginBottom="20px"
         >
           <Box
             display="flex"
             alignItems="center"
-            width="100%"
-            minHeight="79px"
+            width={{
+              sm: '100%',
+              md: 'fit-content',
+            }}
+            minHeight={{
+              sm: '79px',
+              md: '48px',
+            }}
             borderRadius="32px"
             // background="white"
             padding="12px 16px"
             color="#0E1736"
             justifyContent="space-between"
-            fontSize="14px"
-            background="radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)"
+            flexDirection={{
+              sm: 'row',
+              md: 'row-reverse',
+            }}
+            background={{
+              sm: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+              md: 'white',
+            }}
             onClick={() => navigate('/verify-email')}
+            cursor="pointer"
           >
             <Box>
-              <Box fontSize="32px" lineHeight={"1"} fontWeight="500">$10</Box>
-              <Box fontSize="14px" lineHeight={"17px"} fontWeight="400" opacity="0.64" color="#161F36">Setup email recovery to get 10 USDC</Box>
+              <Box
+                fontSize="32px"
+                lineHeight={"1"}
+                fontWeight="500"
+                display={{
+                  sm: 'flex',
+                  md: 'none'
+                }}
+              >
+                $10
+              </Box>
+              <Box
+                fontSize={{
+                  sm: '14px',
+                  md: '18px',
+                }}
+                lineHeight={{
+                  sm: '17px',
+                  md: '22.5px',
+                }}
+                fontWeight={{
+                  sm: '400',
+                  md: '500',
+                }}
+                opacity={{
+                  sm: '0.64',
+                  md: '1',
+                }}
+                color="#161F36"
+                display="flex"
+                alignItems="center"
+              >
+                Setup email recovery to get 10 USDC
+                <Box
+                  marginLeft="10px"
+                  display={{
+                    sm: 'none',
+                    md: 'flex',
+                  }}
+                >
+                  <ArrowRightIcon />
+                </Box>
+              </Box>
             </Box>
             <Box>
-              <Image width="40px" height="40px" src={USDCIcon} />
+              <Image
+                width={{
+                  sm: '40px',
+                  md: '32px'
+                }}
+                height={{
+                  sm: '40px',
+                  md: '32px'
+                }}
+                marginRight={{
+                  sm: '0px',
+                  md: '10px'
+                }}
+                src={USDCIcon}
+              />
             </Box>
           </Box>
         </Box>
@@ -297,204 +597,294 @@ export function AssetPage({ isDashboard }: any) {
           </Box>
           </Fragment>
           )} */}
-      <Fragment>
+      <Box
+        display="flex"
+        width="100%"
+        flexDirection={{
+          sm: 'column',
+          md: 'row'
+        }}
+      >
         <Box
-          width="100%"
-          px="2"
+          width={{
+            sm: '100%',
+            md: '56%'
+          }}
         >
-          <Box display="flex" alignItems="center">
-            <Box fontSize="56px" lineHeight={"1"} fontWeight="500" marginRight="2px">
-              $
-            </Box>
-            <Box
-              fontSize={fontSize}
-              lineHeight={'1'}
-              fontWeight="500"
-              sx={{
-                '@property --num': {
-                  syntax: `'<integer>'`,
-                  initialValue: '0',
-                  inherits: 'false',
-                },
-                '&': {
-                  transition: '--num 1s',
-                  counterReset: 'num var(--num)',
-                  '--num': valueLeft,
-                },
-                '&::after': {
-                  content: 'counter(num)',
-                },
-              }}
-            />
-            {valueRight &&
-             BN(valueRight).isGreaterThan(0) &&
-             Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
-               <Box
-                 fontSize={fontSize}
-                 lineHeight={'1'}
-                 fontWeight="500"
-                 // marginTop={fontBottomMargin}
-                 // marginLeft="10px"
-                 color="#939393"
-               >
-                 .
+          <Box
+            width="100%"
+            padding={{
+              sm: '0 8px',
+              md: '32px',
+            }}
+            background={{
+              sm: 'transparent',
+              md: 'white'
+            }}
+            borderRadius={{
+              sm: '0',
+              md: '32px'
+            }}
+            marginBottom={{
+              sm: '0',
+              md: '24px'
+            }}
+          >
+            <Box display="flex" alignItems="center">
+              <Box fontSize="56px" lineHeight={"1"} fontWeight="500" marginRight="2px">
+                $
+              </Box>
+              <Box
+                fontSize={fontSize}
+                lineHeight={'1'}
+                fontWeight="500"
+                sx={{
+                  '@property --num': {
+                    syntax: `'<integer>'`,
+                    initialValue: '0',
+                    inherits: 'false',
+                  },
+                  '&': {
+                    transition: '--num 1s',
+                    counterReset: 'num var(--num)',
+                    '--num': valueLeft,
+                  },
+                  '&::after': {
+                    content: 'counter(num)',
+                  },
+                }}
+              />
+              {valueRight &&
+               BN(valueRight).isGreaterThan(0) &&
+               Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
                  <Box
-                   as="span"
+                   fontSize={fontSize}
+                   lineHeight={'1'}
+                   fontWeight="500"
+                   // marginTop={fontBottomMargin}
+                   // marginLeft="10px"
+                   color="#939393"
                  >
-                   {valueRight.slice(0, 4).replace(/0+$/, '')}
+                   .
+                   <Box
+                     as="span"
+                   >
+                     {valueRight.slice(0, 4).replace(/0+$/, '')}
+                   </Box>
                  </Box>
-               </Box>
-            )}
-          </Box>
-        </Box>
-        <Box
-          width="100%"
-          display="flex"
-          paddingLeft="8px"
-          paddingRight="8px"
-          marginTop="14px"
-          marginBottom="40px"
-        >
-          <Box width="calc((100% - 16px) / 3)" marginRight="8px">
-            <Box
-              background="#DCE4F2"
-              borderRadius="32px"
-              color="#161F36"
-              fontSize="18px"
-              fontWeight="400"
-              lineHeight="22.5px"
-              padding="12px 16px"
-              height="47px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              onClick={() => openFullScreenModal('send')}
-            >
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                marginRight="4px"
-              >
-                <SendIcon />
-              </Box>
-              <Box>Send</Box>
+              )}
             </Box>
           </Box>
-          <Box width="calc((100% - 16px) / 3)" marginRight="8px">
-            <Box
-              background="#DCE4F2"
-              borderRadius="32px"
-              color="#161F36"
-              fontSize="18px"
-              fontWeight="400"
-              lineHeight="22.5px"
-              padding="12px 16px"
-              height="47px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              onClick={() => {
-                openModal('receive', { width: 480, height: 600 })
-              }}
-            >
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                marginRight="4px"
-              >
-                <ReceiveIcon />
-              </Box>
-              <Box>Receive</Box>
-            </Box>
-          </Box>
-          <Box width="calc((100% - 16px) / 3)">
-            <Box
-              background="#DCE4F2"
-              borderRadius="32px"
-              color="#161F36"
-              fontSize="18px"
-              fontWeight="400"
-              lineHeight="22.5px"
-              padding="12px 16px"
-              height="47px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              onClick={() => openFullScreenModal('activity')}
-            >
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                marginRight="4px"
-              >
-                <ActivitiesIcon />
-              </Box>
-              <Box>Activity</Box>
-            </Box>
-          </Box>
-        </Box>
-        {tokenBalanceValid ? (
           <Box
             width="100%"
             background="white"
             borderRadius="32px"
-            boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+            // boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
             // border="1px solid #EAECF0"
             position="relative"
             zIndex="1"
+            paddingBottom={{
+              sm: '0',
+              md: '4px'
+            }}
           >
-            <Box padding="12px 16px" paddingBottom="0">
-              {tokenBalance.map((item: any, index: number) => (
-                <Box key={index} display="flex" alignItems="center" marginBottom="12px">
-                  <Box marginRight="10px">
-                    <Image src={item.logoURI} w="32px" h="32px" />
-                  </Box>
-                  <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                    {item.name}
-                  </Box>
-                  <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                    <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                      {item.tokenBalanceFormatted}
-                    </Box>
-                    <Box fontSize="12px" lineHeight="15px" color="#95979C">${item.usdValue || '0'}</Box>
-                  </Box>
-                </Box>
-              ))}
+            <Box
+              fontSize="22px"
+              fontWeight="500"
+              color="#161F36"
+              padding="22px 32px"
+              display={{
+                sm: 'none',
+                md: 'flex'
+              }}
+            >
+              Activity
+            </Box>
+            <Box padding="12px 16px" paddingBottom="0" display="flex" width="100%">
+
             </Box>
           </Box>
-        ) : <Box
+
+          <Box
+            width="100%"
+            paddingLeft="8px"
+            paddingRight="8px"
+            marginTop="14px"
+            marginBottom="40px"
+            display={{
+              sm: 'flex',
+              md: 'none'
+            }}
+          >
+            <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+              <Box
+                background="#DCE4F2"
+                borderRadius="32px"
+                color="#161F36"
+                fontSize="18px"
+                fontWeight="400"
+                lineHeight="22.5px"
+                padding="12px 16px"
+                height="47px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                onClick={() => openFullScreenModal('send')}
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginRight="4px"
+                >
+                  <SendIcon />
+                </Box>
+                <Box>Send</Box>
+              </Box>
+            </Box>
+            <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+              <Box
+                background="#DCE4F2"
+                borderRadius="32px"
+                color="#161F36"
+                fontSize="18px"
+                fontWeight="400"
+                lineHeight="22.5px"
+                padding="12px 16px"
+                height="47px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                onClick={() => {
+                  openModal('receive', { width: 480, height: 600 })
+                }}
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginRight="4px"
+                >
+                  <ReceiveIcon />
+                </Box>
+                <Box>Receive</Box>
+              </Box>
+            </Box>
+            <Box width="calc((100% - 16px) / 3)">
+              <Box
+                background="#DCE4F2"
+                borderRadius="32px"
+                color="#161F36"
+                fontSize="18px"
+                fontWeight="400"
+                lineHeight="22.5px"
+                padding="12px 16px"
+                height="47px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                onClick={() => openFullScreenModal('activity')}
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  marginRight="4px"
+                >
+                  <ActivitiesIcon />
+                </Box>
+                <Box>Activity</Box>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          width={{
+            sm: '100%',
+            md: '44%'
+          }}
+          paddingLeft={{
+            sm: '0',
+            md: '20px',
+          }}
+        >
+          {tokenBalanceValid ? (
+            <Box
               width="100%"
               background="white"
               borderRadius="32px"
-              height="377px"
-              boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
-          // border="1px solid #EAECF0"
+              // boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+              // border="1px solid #EAECF0"
               position="relative"
               zIndex="1"
+              paddingBottom={{
+                sm: '0',
+                md: '4px'
+              }}
+            >
+              <Box
+                fontSize="22px"
+                fontWeight="500"
+                color="#161F36"
+                padding="22px 32px"
+                paddingBottom="0"
+                display={{
+                  sm: 'none',
+                  md: 'flex'
+                }}
+              >
+                Tokens
+              </Box>
+              <Box padding="12px 16px" paddingBottom="0" display="flex" width="100%">
+                {tokenBalance.map((item: any, index: number) => (
+                  <Box key={index} display="flex" alignItems="center" marginBottom="12px" width="100%">
+                    <Box marginRight="10px">
+                      <Image src={item.logoURI} w="32px" h="32px" />
+                    </Box>
+                    <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
+                      {item.name}
+                    </Box>
+                    <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
+                      <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
+                        {item.tokenBalanceFormatted}
+                      </Box>
+                      <Box fontSize="12px" lineHeight="15px" color="#95979C">${item.usdValue || '0'}</Box>
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          ) : <Box
+                width="100%"
+                background="white"
+                borderRadius="32px"
+                height="377px"
+                boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+            // border="1px solid #EAECF0"
+                position="relative"
+                zIndex="1"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                marginBottom="40px"
+              >
+            <Box
               display="flex"
               alignItems="center"
               justifyContent="center"
-              marginBottom="40px"
+              flexDirection="column"
             >
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="column"
-          >
-            <Box marginBottom="20px">
-              <Image height="108px" w="216px" src={EmptyIcon} />
+              <Box marginBottom="20px">
+                <Image height="108px" w="216px" src={EmptyIcon} />
+              </Box>
+              <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
+              <Box marginTop="12px">
+                <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openModal('receive', { width: 480, height: 600 })}>Deposit</Button>
+              </Box>
             </Box>
-            <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
-            <Box marginTop="12px">
-              <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openModal('receive', { width: 480, height: 600 })}>Deposit</Button>
-            </Box>
-          </Box>
-        </Box>}
-      </Fragment>
+          </Box>}
+        </Box>
+      </Box>
     </Box>
   )
 }
@@ -514,7 +904,13 @@ export default function Dashboard(props: any) {
 
   return (
     <ThemePage themeColor="#F2F3F5">
-      <Box height={innerHeight} background="#F2F3F5">
+      <Box
+        height={innerHeight}
+        background={{
+          sm: `#F2F3F5`,
+          md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+        }}
+      >
         <Header
           paddingTop="10px"
           paddingBottom="10px"
@@ -654,23 +1050,39 @@ export default function Dashboard(props: any) {
             </Box>
           </Box>
           <Box
-            padding={{
-              sm: '8px',
-              md: '0'
-            }}
-            height="100%"
-            overflowY="scroll"
             width={{
               sm: '100%',
               md: 'calc(100% - 240px)'
             }}
-            borderTopLeftRadius="32px"
-            borderTopRightRadius="32px"
-            background="white"
+            paddingRight={{
+              sm: '0',
+              md: '20px'
+            }}
+            paddingBottom={{
+              sm: '0',
+              md: '20px'
+            }}
           >
-            {activeMenu === 'assets' && <AssetPage isDashboard={true} />}
-            {activeMenu === 'activities' && <ActivityPage isDashboard={true} />}
-            {activeMenu === 'settings' && <GuardianPage isDashboard={true} />}
+            <Box
+              padding={{
+                sm: (activeMenu === 'assets') ? '8px' : '0',
+                md: '0'
+              }}
+              height="100%"
+              overflowY="scroll"
+              borderRadius={{
+                sm: '0',
+                md: '32px',
+              }}
+              background={{
+                sm: (activeMenu === 'assets') ? 'transparent' : 'white',
+                md: (activeMenu === 'assets') ? 'transparent' : 'white'
+              }}
+            >
+              {activeMenu === 'assets' && <AssetPage isDashboard={true} />}
+              {activeMenu === 'activities' && <ActivityPage isDashboard={true} />}
+              {activeMenu === 'settings' && <GuardianPage isDashboard={true} />}
+            </Box>
           </Box>
         </Box>
         <Modal
