@@ -19,6 +19,7 @@ export default function TokenIcon({ address, size }: { address: string; size: nu
       fallbackSrc={IconDefault}
       width={`${size}px`}
       height={`${size}px`}
+      flex={`1 1 ${size}px`}
     />
   );
 }

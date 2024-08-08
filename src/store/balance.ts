@@ -132,7 +132,10 @@ export const useBalanceStore = create<IBalanceStore>()(
           let formattedItem = formatTokenBalance(item);
           totalUsdValue = totalUsdValue.plus(item.usdValue || '0');
           return formattedItem;
+        }).sort((a: ITokenBalanceItem, b: ITokenBalanceItem) => {
+          return BN(b.usdValue || '0').comparedTo(a.usdValue || '0');
         });
+
         // format balance list here
         set({ tokenBalance: tokenList, totalUsdValue: totalUsdValue.toString() });
       },
