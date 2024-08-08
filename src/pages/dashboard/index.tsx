@@ -168,11 +168,6 @@ export default function Dashboard() {
   // const fontBottomMargin = getFontBottomMargin(valueLeft);
 
   const [startPosition, setStartPosition] = useState(null);
-  /*
-   *   useMotionValueEvent(scrollY, 'change', (latest) => {
-   *     console.log('Page scroll: ', latest);
-   *   });
-   *  */
   useEffect(() => {
     getContentHeight();
     console.log('contentRef', contentRef);

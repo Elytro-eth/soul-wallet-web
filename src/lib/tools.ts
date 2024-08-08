@@ -310,9 +310,12 @@ export function toFixed(num: number | string | undefined, maxDecimalPlaces: numb
   if (!num) {
     return '0';
   }
-  let fixedStr = Number(num).toFixed(maxDecimalPlaces);
-  let trimmedStr = fixedStr.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.$/, '');
-  return needFormat ? new BN(trimmedStr).toFormat() : new BN(trimmedStr).toString();
+  
+  const bigNum = new BN(num);
+  const roundedNum = bigNum.decimalPlaces(maxDecimalPlaces, 1);
+  let trimmedStr = roundedNum.toString();
+  trimmedStr = trimmedStr.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.$/, '');
+  return needFormat ? new BN(trimmedStr).toFormat() : trimmedStr;
 }
 
 export const getNetwork = (chainId: number) => {
