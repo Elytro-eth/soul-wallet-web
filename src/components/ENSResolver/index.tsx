@@ -123,7 +123,7 @@ const ENSResolver = ({
       setIsENSLoading(true)
       setResolvedAddress('')
       const ethersProvider = new ethers.JsonRpcProvider(chainConfig.mainnetProvider);
-      const address = await ethersProvider.resolveName(ensName.toLowerCase());
+      const address = await ethersProvider.resolveName(ensName);
       let isSuccess = false
       const isExpired = await isENSExpiration(ensName, ethersProvider);
       console.log('address', address, isExpired)
