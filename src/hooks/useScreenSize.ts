@@ -5,7 +5,9 @@ export default function useScreenSize() {
 
   useEffect(() => {
     const handleResize = () => {
-      setInnerHeight(window.innerHeight)
+      setTimeout(() => {
+        setInnerHeight(window.innerHeight)
+      }, 0)
     }
 
     // Add event listener
