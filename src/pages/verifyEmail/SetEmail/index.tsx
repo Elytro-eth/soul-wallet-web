@@ -24,7 +24,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
       </Box>
       <Box width="100%" marginBottom="30px">
         <Input
-          // autoFocus
+        // autoFocus
           onChange={(e: any) => onChange((e.target.value).toLowerCase())}
           onBlur={(e: any) => onBlur(e.target.value)}
           value={email}
@@ -44,7 +44,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
           _focusVisible={{ border: 'none', boxShadow: 'none' }}
         />
         <Box mt="1" h="44px" overflow={"hidden"}>
-          {!errorMsg && <Box color="#2D3CBD" fontSize="14px" lineHeight="17.5px" width="100%" onClick={onOpen}>
+          {!errorMsg && <Box color="#2D3CBD" fontSize="14px" lineHeight="17.5px" width="100%" onClick={onOpen} cursor="pointer">
             Why do I need to provide Email?
           </Box>}
           {errorMsg && <Box color="#E83D26" fontSize="14px" lineHeight="17.5px" width="100%">{errorMsg}</Box>}
@@ -72,7 +72,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
         >
           <ModalCloseButton />
           <ModalBody display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
-            <Box fontSize="28px" fontWeight="500" marginTop="40px" marginBottom="8px" color="#161F36">
+            <Box fontSize="28px" fontWeight="500" marginTop="40px" marginBottom="8px" color="#161F36" >
               Why do I need to provide Email
             </Box>
             <Box fontSize="14px" fontWeight="400" marginBottom="4px" color="#676B75">

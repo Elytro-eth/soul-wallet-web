@@ -123,6 +123,8 @@ export default function Manage({ isDashboard }: any) {
     const guardianEmail = guardianAddressEmail[guardianAddress];
     if (guardianEmail) {
       openModal('verifyEmailGuardian', {
+        width: 640,
+        height: 450,
         defaultGuardianEmail: guardianEmail,
         callback: (guardianAddress: string, guardianEmail: string) => {
           setTempGuardians((prev: any) => {
@@ -136,6 +138,8 @@ export default function Manage({ isDashboard }: any) {
       });
     } else {
       openModal('addWalletGuardian', {
+        width: 640,
+        height: 450,
         defaultGuardianAddress: guardianAddress,
         defaultGuardianName: guardianName,
         callback: (guardianAddress: string, guardianName: string) => {
@@ -155,6 +159,8 @@ export default function Manage({ isDashboard }: any) {
     onGuardianMenuClose();
     if (guardianType === 0) {
       openModal('verifyEmailGuardian', {
+        width: 640,
+        height: 450,
         defaultEmail: "",
         callback: (guardianAddress: string, guardianEmail: string) => {
           setTempGuardians((prev: any) => {
@@ -169,6 +175,8 @@ export default function Manage({ isDashboard }: any) {
       });
     } else if(guardianType === 1) {
       openModal('addWalletGuardian', {
+        width: 640,
+        height: 450,
         callback: (guardianAddress: string, guardianName: string) => {
           saveGuardianAddressName(guardianAddress, guardianName);
           setTempGuardians((prev: any) => {

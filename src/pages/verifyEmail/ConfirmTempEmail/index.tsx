@@ -24,12 +24,16 @@ export default function ConfirmTempGuardians({ onPrev, email, onChangeGuardian, 
   return (
     <Box
       width="100%"
-      height={isModal ? innerHeight - 94 : innerHeight - 60}
+      height={{
+        sm: isModal ? (innerHeight - 94) : (innerHeight - 60),
+        md: '100%'
+      }}
       padding="30px"
       display="flex"
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
+      overflowY="auto"
     >
       <Box marginBottom="40px" height="120px">
         <Image height="120px" src={GuardianIcon} />

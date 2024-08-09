@@ -279,15 +279,30 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
     <Box width="100%" bg="#fff" height={innerHeight}>
       {step < 3 && (
         <Fragment>
-          <Header title={!(isModal && step === 0) ? 'Email recovery' : ''} showBackButton={!(isModal && step === 0)} onBack={onPrev} />
+          <Header
+            title={!(isModal && step === 0) ? 'Email recovery' : ''}
+            showBackButton={!(isModal && step === 0)}
+            onBack={onPrev}
+            display={{
+              sm: 'flex',
+              md: 'none'
+            }}
+          />
         </Fragment>
       )}
       <Box
-        height={isModal ? innerHeight - 94 : innerHeight - 60}
+        height={{
+          sm: isModal ? 'calc(${innerHeight} - 94)' : innerHeight - 60,
+          md: '100%'
+        }}
         overflowY="auto"
         display="flex"
         alignItems="flex-start"
         justifyContent="center"
+        marginTop={{
+          sm: '0',
+          md: '0',
+        }}
       >
         {renderStep(isModal)}
       </Box>

@@ -93,6 +93,8 @@ export default function Landing() {
     }
   }, [selectedAddress])
 
+  const modalHeight = (innerHeight - 40) < 620 ? (innerHeight - 40) : 620
+
   return (
     <ThemePage themeColor="#f9f5f2">
       <Box
@@ -339,9 +341,9 @@ export default function Landing() {
             }}
             marginTop={{
               sm: `${marginHeight}px`,
-              md: 'calc(50vh - 125px)',
+              md: `calc(50vh - ${modalHeight / 2}px)`,
             }}
-            height={(innerHeight - 40) < 620 ? (innerHeight - 40) : 620}
+            height={modalHeight}
             overflow="visible"
             mb="0"
             position="relative"

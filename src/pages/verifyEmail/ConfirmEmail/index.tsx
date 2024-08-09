@@ -10,12 +10,16 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
   return (
     <Box
       width="100%"
-      height={isModal ? (innerHeight - 94) : (innerHeight - 60)}
+      height={{
+        sm: isModal ? (innerHeight - 94) : (innerHeight - 60),
+        md: '100%'
+      }}
       padding="30px"
       display="flex"
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
+      overflowY="auto"
     >
       <Box marginBottom="40px" height="116px">
         <Image height="116px" src={EmailGuardianIcon} />
@@ -42,15 +46,15 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
         {email}
       </Box>
       {/* <Box
-        width="100%"
-        textAlign="center"
-        fontSize="14px"
-        fontWeight="400"
-        marginTop="8px"
-        color="#676B75"
-      >
-        Please follow the instructions and complete the verification process.
-      </Box> */}
+          width="100%"
+          textAlign="center"
+          fontSize="14px"
+          fontWeight="400"
+          marginTop="8px"
+          color="#676B75"
+          >
+          Please follow the instructions and complete the verification process.
+          </Box> */}
       <Button disabled={countDown > 0} loading={sendingEmail} size="xl" type="gradientBlue" width="100%" marginTop="40px" onClick={onResend}>
         Resend {countDown > 0 ? `(${countDown}s)` : ''}
       </Button>

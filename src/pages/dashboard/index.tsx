@@ -348,6 +348,7 @@ export function Header({ openMenu, username, ...props }: any) {
             position="absolute"
             top="60px"
             right="240px"
+            zIndex="2"
           >
             <Menu
               isOpen={isLogoutOpen}
