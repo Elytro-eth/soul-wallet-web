@@ -246,7 +246,14 @@ export default function Manage({ isDashboard }: any) {
             )}
           </Box>
         </Box>
-        <Box marginTop="14px">
+        <Box
+          marginTop="14px"
+          display="flex"
+          flexDirection={{
+            sm: 'column',
+            md: 'row',
+          }}
+        >
           {tempGuardians.map((guardianAddress: any, index: number) => (
             <Box
               // border="1px solid #DFDFDF"
@@ -257,6 +264,14 @@ export default function Manage({ isDashboard }: any) {
               alignItems="center"
               marginBottom="16px"
               key={index}
+              width={{
+                sm: '100%',
+                md: 'calc(50% - 8px)'
+              }}
+              marginRight={{
+                sm: '0',
+                md: ((index % 2) === 0) ? '16px' : '0',
+              }}
             >
               <Box width="48px" height="48px" marginRight="8px">
                 <AddressIcon address={guardianAddress} width={48} />
@@ -276,7 +291,7 @@ export default function Manage({ isDashboard }: any) {
                 </Box>
               </Box>
               {isEditing && (
-                <Box marginLeft="auto" onClick={() => doHandleGuardian(index)}>
+                <Box marginLeft="auto" onClick={() => doHandleGuardian(index)} cursor="pointer">
                   <EditIcon />
                 </Box>
               )}
@@ -322,7 +337,16 @@ export default function Manage({ isDashboard }: any) {
             >
               RECOVERY SETTINGS
             </Box>
-            <Box background="#F2F3F5" padding="16px" marginTop="16px" borderRadius="16px">
+            <Box
+              background="#F2F3F5"
+              padding="16px"
+              marginTop="16px"
+              borderRadius="16px"
+              width={{
+                sm: '100%',
+                md: 'calc(50% - 8px)'
+              }}
+            >
               <Box marginBottom="14px" marginTop="12px" position="relative">
                 <Box display="flex" alignItems="center" justifyContent="space-between">
                   {isEditing && (
@@ -334,6 +358,7 @@ export default function Manage({ isDashboard }: any) {
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
+                      cursor="pointer"
                       onClick={() => { if (tempThreshold - 1 > 0) { onSetThreshold(tempThreshold - 1) } }}
                     >
                       <MinusIcon />
@@ -355,6 +380,7 @@ export default function Manage({ isDashboard }: any) {
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
+                      cursor="pointer"
                       onClick={() => { if (tempThreshold + 1 <= tempGuardians.length) { onSetThreshold(tempThreshold + 1) } }}
                     >
                       <AddIcon />
@@ -378,12 +404,34 @@ export default function Manage({ isDashboard }: any) {
       {isEditing && (
         <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
           <Box width="50%" paddingRight="7px">
-            <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={() => setIsEditing(false)} color="black">
+            <Button
+              width={{
+                sm: 'calc(100% - 7px)',
+                md: '200px',
+              }}
+              disabled={false} size="xl"
+              type="white"
+              onClick={() => setIsEditing(false)} color="black"
+            >
               Cancel
             </Button>
           </Box>
           <Box width="50%" paddingLeft="7px">
-            <Button width="calc(100% - 7px)" loading={changingGuardian} disabled={changingGuardian} size="xl" type="gradientBlue"  onClick={() => doChangeGuardian()}>
+            <Button
+              width={{
+                sm: 'calc(100% - 7px)',
+                md: '200px',
+              }}
+              loading={changingGuardian}
+              disabled={changingGuardian}
+              size="xl"
+              type="gradientBlue"
+              onClick={() => doChangeGuardian()}
+              marginLeft={{
+                sm: "0",
+                md: 'calc(100% - 200px)',
+              }}
+            >
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Box marginRight="8px"><FadeId /></Box>
                 <Box>Confirm</Box>
@@ -394,7 +442,21 @@ export default function Manage({ isDashboard }: any) {
       )}
       {!isEditing && (
         <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
-          <Button width="100%" disabled={false} size="xl" type="white" onClick={() => setIsEditing(true)} color="black">
+          <Button
+            width={{
+              sm: "100%",
+              md: '200px',
+            }}
+            disabled={false}
+            size="xl"
+            type="white"
+            onClick={() => setIsEditing(true)}
+            color="black"
+            marginLeft={{
+              sm: "0",
+              md: 'auto',
+            }}
+          >
             Edit
           </Button>
         </Box>

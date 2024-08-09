@@ -913,16 +913,16 @@ export function AssetPage({ isDashboard }: any) {
   )
 }
 
-export function GuardianPage() {
+export function GuardianPage({ isDashboard }: any) {
   const { guardiansInfo } = useGuardianStore();
 
   if(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash){
     return (
-      <GuardianIntroPage isDashboard={true} />
+      <GuardianIntroPage isDashboard={isDashboard} />
     )
   } else {
     return (
-      <GuardianManagePage isDashboard={true} />
+      <GuardianManagePage isDashboard={isDashboard} />
     )
   }
 }
