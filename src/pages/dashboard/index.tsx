@@ -70,6 +70,10 @@ import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import LogoutIcon from '@/components/Icons/mobile/Logout'
 import useWallet from '@/hooks/useWallet';
 import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
+import TwitterIcon from '@/components/Icons/desktop/Twitter';
+import TelegramIcon from '@/components/Icons/desktop/Telegram';
+import GithubIcon from '@/components/Icons/desktop/Github';
+import LinkedInIcon from '@/components/Icons/desktop/LinkedIn';
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -1097,6 +1101,7 @@ export default function Dashboard(props: any) {
               md: 'flex'
             }}
             padding="24px 0"
+            flexDirection="column"
           >
             <Box width="100%">
               <Box
@@ -1157,6 +1162,44 @@ export default function Dashboard(props: any) {
                   lineHeight="22.5px"
                 >
                   Settings
+                </Box>
+              </Box>
+            </Box>
+            <Box
+              marginTop="auto"
+            >
+              <Box color="#676B75" fontSize="12px" lineHeight="15px" fontWeight="400" paddingLeft="20px" paddingRight="20px" paddingBottom="12px">Version: Alpha 0.0.1</Box>
+              <Box color="#676B75" fontSize="12px" lineHeight="15px" fontWeight="400" paddingLeft="20px" paddingRight="20px" paddingBottom="16px">Third-party software license</Box>
+              <Box
+                alignItems="center"
+                justifyContent="flex-start"
+                gap="17px"
+                width="100%"
+                display={{
+                  sm: 'none',
+                  md: 'flex'
+                }}
+                padding="0 20px"
+              >
+                <Box
+                  cursor="pointer"
+                >
+                  <TwitterIcon />
+                </Box>
+                <Box
+                  cursor="pointer"
+                >
+                  <TelegramIcon />
+                </Box>
+                <Box
+                  cursor="pointer"
+                >
+                  <GithubIcon />
+                </Box>
+                <Box
+                  cursor="pointer"
+                >
+                  <LinkedInIcon />
                 </Box>
               </Box>
             </Box>
