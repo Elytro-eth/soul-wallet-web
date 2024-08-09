@@ -8,7 +8,18 @@ export default function SetPasskey({ onNext, addingPasskey }: any) {
   const { innerHeight } = useScreenSize()
 
   return (
-    <Box width="100%" padding="30px" height={innerHeight - 64} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+    <Box
+      width="100%"
+      padding="30px"
+      height={{
+        sm: innerHeight - 64,
+        md: 'auto',
+      }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      flexDirection="column"
+    >
       <Box
         marginBottom="24px"
         width="144px"

@@ -31,24 +31,38 @@ export default function RecoverProcess({ step }: any) {
     >
       <Box onClick={() => setIsOpen(!isOpen)} display="flex" alignItems="center" justifyContent="space-between" cursor="pointer">
         <Box fontSize="18px" fontWeight="500" color="#161F36">Recovery process ({step+1}/3)</Box>
-        <Box transform={isOpen ? '' : 'rotate(180deg)'}><ChevronDown /></Box>
-      </Box>
-      {isOpen && (
-        <Box display="flex" gap="8px" flexDirection="column" marginTop="14px">
-          <Box display="flex" alignItems="center">
-            <Box marginRight="8px"><Circle active={step >= 0 ? true : false} /></Box>
-            <Box fontSize="14px" fontWeight={500} color="#161F36">Step 1: <Box as="span" fontWeight="400">Enter username/wallet address</Box></Box>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Box marginRight="8px"><Circle active={step >= 1 ? true : false} /></Box>
-            <Box fontSize="14px" fontWeight={500} color="#161F36">Step 2: <Box as="span" fontWeight="400">Add passkey</Box></Box>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Box marginRight="8px"><Circle active={step >= 2 ? true : false} /></Box>
-            <Box fontSize="14px" fontWeight={500} color="#161F36">Step 3: <Box as="span" fontWeight="400">Recovery contact confirmation</Box></Box>
-          </Box>
+        <Box
+          transform={isOpen ? '' : 'rotate(180deg)'}
+          display={{
+            sm: 'flex',
+            md: 'none'
+          }}
+        >
+          <ChevronDown />
         </Box>
-      )}
+      </Box>
+      <Box
+        display={{
+          sm: isOpen ? 'flex' : 'none',
+          md: 'flex',
+        }}
+        gap="8px"
+        flexDirection="column"
+        marginTop="14px"
+      >
+        <Box display="flex" alignItems="center">
+          <Box marginRight="8px"><Circle active={step >= 0 ? true : false} /></Box>
+          <Box fontSize="14px" fontWeight={500} color="#161F36">Step 1: <Box as="span" fontWeight="400">Enter username/wallet address</Box></Box>
+        </Box>
+        <Box display="flex" alignItems="center">
+          <Box marginRight="8px"><Circle active={step >= 1 ? true : false} /></Box>
+          <Box fontSize="14px" fontWeight={500} color="#161F36">Step 2: <Box as="span" fontWeight="400">Add passkey</Box></Box>
+        </Box>
+        <Box display="flex" alignItems="center">
+          <Box marginRight="8px"><Circle active={step >= 2 ? true : false} /></Box>
+          <Box fontSize="14px" fontWeight={500} color="#161F36">Step 3: <Box as="span" fontWeight="400">Recovery contact confirmation</Box></Box>
+        </Box>
+      </Box>
     </Box>
   )
 }

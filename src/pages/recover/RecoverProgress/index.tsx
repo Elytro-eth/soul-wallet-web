@@ -231,7 +231,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           </Button>
         )}
       </Box> : ''}
-      <Box height="110px" />
+      <Box height="110px" display={{ sm: 'block', md: 'none' }} />
     </Box>
   );
 }
