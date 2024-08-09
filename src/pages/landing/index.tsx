@@ -193,12 +193,14 @@ export default function Landing() {
                   md: 'flex'
                 }}
               >
-                <Box
-                  cursor="pointer"
-                >
-                  <TwitterIcon />
-                </Box>
-                <Box
+                {config.socials.map((item, idx) => (
+                  <Box cursor="pointer"
+                  >
+                    <Image src={item.icon} />
+                    {/* <TwitterIcon /> */}
+                  </Box>
+                ))}
+                {/* <Box
                   cursor="pointer"
                 >
                   <TelegramIcon />
@@ -212,7 +214,7 @@ export default function Landing() {
                   cursor="pointer"
                 >
                   <LinkedInIcon />
-                </Box>
+                </Box> */}
               </Box>
             </Box>
           </Box>

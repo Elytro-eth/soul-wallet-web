@@ -54,7 +54,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
         disabled={disabled}
         size="xl"
         type="gradientBlue"
-        width="100%"
+        // width="100%"
         loading={sendingEmail}
         onClick={onSendEmail}
         width={{ sm: '100%', md: '200px' }}

@@ -378,7 +378,8 @@ export function Header({ openMenu, username, ...props }: any) {
                       position="relative"
                       padding="0 8px"
                       onClick={() => {
-                        onLogoutClose()
+                        onLogoutClose();
+                        logoutWallet();
                       }}
                       display="flex"
                       alignItems="center"
@@ -941,10 +942,11 @@ export function AssetPage({ isDashboard }: any) {
                 {tokenBalance.map((item: any, index: number) => (
                   <Box key={index} display="flex" alignItems="center" marginBottom="12px" width="100%">
                     <Box marginRight="10px">
-                      <Image src={item.logoURI} w="32px" h="32px" />
+                      <TokenIcon address={item.contractAddress} size={32} />
+                      {/* <Image src={item.logoURI} w="32px" h="32px" /> */}
                     </Box>
                     <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
-                      {item.name}
+                      {item.symbol}
                     </Box>
                     <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
                       <Box fontWeight="500" fontSize="22px" lineHeight="24px" color="#161F36">
