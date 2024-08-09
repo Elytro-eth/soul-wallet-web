@@ -134,7 +134,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
           Let’s go
         </Button>
       </Box>
-      <Box height="100px" />
+      <Box height="100px" display={{ sm: 'block', md: 'none' }} />
     </Box>
   );
 }

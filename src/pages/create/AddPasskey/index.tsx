@@ -61,7 +61,7 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
           <Box>Setup</Box>
         </Box>
       </Button>
-      <Box height="100px" />
+      <Box height="100px" display={{ sm: 'block', md: 'none' }} />
     </Box>
   );
 }

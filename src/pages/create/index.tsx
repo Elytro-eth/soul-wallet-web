@@ -169,7 +169,10 @@ export default function Create() {
       />
       <Box
         display="flex"
-        alignItems="center"
+        alignItems={{
+          sm: 'center',
+          md: 'flex-start',
+        }}
         justifyContent="center"
         height={{
           sm: "100%",
