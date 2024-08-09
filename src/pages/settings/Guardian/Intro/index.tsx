@@ -30,6 +30,7 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
       background="white"
       display="flex"
       justifyContent="center"
+      alignItems={isDashboard ? 'center' : 'flex-start'}
     >
       <Box
         width={isDashboard ? '330px' : '100%'}
@@ -67,6 +68,7 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
           <Box position="relative">
             <Box
               marginTop="30px"
+              marginBottom="20px"
               // position="absolute"
               top="60px"
               left="calc(-50vw + 32px)"

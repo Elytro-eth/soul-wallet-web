@@ -48,7 +48,8 @@ import ThemePage from '@/components/ThemeChange';
 import AddressIcon from '@/components/AddressIcon';
 import EmptyIcon from '@/assets/mobile/activity-empty.png'
 import SettingPage from '@/pages/settings'
-import GuardianPage from '@/pages/settings/Guardian/Intro'
+import GuardianIntroPage from '@/pages/settings/Guardian/Intro'
+import GuardianManagePage from '@/pages/settings/Guardian/Manage'
 import ActivityPage from '@/pages/activity'
 import useConfig from '@/hooks/useConfig';
 import AppHeader from '@/components/mobile/Header';
@@ -852,7 +853,13 @@ export function AssetPage({ isDashboard }: any) {
               >
                 Tokens
               </Box>
-              <Box padding="12px 16px" paddingBottom="0" display="flex" width="100%">
+              <Box
+                padding="12px 16px"
+                paddingBottom="0"
+                display="flex"
+                width="100%"
+                flexDirection="column"
+              >
                 {tokenBalance.map((item: any, index: number) => (
                   <Box key={index} display="flex" alignItems="center" marginBottom="12px" width="100%">
                     <Box marginRight="10px">
@@ -904,6 +911,20 @@ export function AssetPage({ isDashboard }: any) {
       </Box>
     </Box>
   )
+}
+
+export function GuardianPage() {
+  const { guardiansInfo } = useGuardianStore();
+
+  if(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash){
+    return (
+      <GuardianIntroPage isDashboard={true} />
+    )
+  } else {
+    return (
+      <GuardianManagePage isDashboard={true} />
+    )
+  }
 }
 
 export default function Dashboard(props: any) {
