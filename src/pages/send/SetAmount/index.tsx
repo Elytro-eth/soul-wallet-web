@@ -126,6 +126,7 @@ export default function SetAmount({
               onClick={() => {
                 isOpen ? onClose() : onOpen();
               }}
+              cursor="pointer"
             >
               {!selectedToken && (
                 <Box lineHeight="40px" fontSize="20px" fontWeight="400" color="#95979C">

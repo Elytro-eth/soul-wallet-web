@@ -214,7 +214,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" color="#95979C" marginTop="24px">
           Network
         </Box>
-        <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
+        <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center" cursor="pointer">
           <Box marginRight="8px">
             <Image w="32px" h="32px" src={OpIcon} />
           </Box>
@@ -229,7 +229,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
           Fee
         </Box>
         <Box marginTop="8px" display="flex" justifyContent="center" flexDirection="column">
-          <Flex gap="1" align="center" onClick={() => !isSent && onSelectOpen()}>
+          <Flex gap="1" align="center" onClick={() => !isSent && onSelectOpen()} cursor="pointer">
             <Box fontSize="22px" fontWeight="500" lineHeight="24.2px" textDecoration={useSponsor ? 'line-through' : ''}>
               $0
             </Box>

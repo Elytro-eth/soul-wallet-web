@@ -261,6 +261,7 @@ export default function Manage({ isDashboard }: any) {
             sm: 'column',
             md: 'row',
           }}
+          flexWrap="wrap"
         >
           {tempGuardians.map((guardianAddress: any, index: number) => (
             <Box

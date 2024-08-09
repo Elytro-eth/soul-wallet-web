@@ -22,119 +22,127 @@ export default function RecoverVerifyEmail() {
       width="100%"
       marginTop="60px"
       position="relative"
-      height={innerHeight - 60}
-      overflowY="auto"
+      height={{
+        sm: innerHeight - 60,
+        md: "calc(100% - 60px)",
+      }}
+      // overflowY="auto"
     >
-      <Box marginBottom="8px" height="96px" width="96px">
-        <Image height="96px" width="96px" src={EmailGuardianIcon} />
-      </Box>
       <Box
-        fontSize="28px"
-        fontWeight="500"
-        lineHeight="24px"
+        height="calc(100% - 100px)"
+        overflowY="auto"
         width="100%"
-        padding="0 30px"
-        color="#161F36"
-        textAlign="center"
       >
-        Verify Email
-      </Box>
-      <Box
-        padding="24px"
-        fontSize="14px"
-        fontWeight="400"
-        color="#676B75"
-        textAlign="center"
-      >
-        Please send the following content from your email recovery contact.
-      </Box>
-      <Box width="100%" padding="0 30px">
+        <Box marginBottom="8px" height="96px" width="96px" marginLeft="auto" marginRight="auto">
+          <Image height="96px" width="96px" src={EmailGuardianIcon} />
+        </Box>
         <Box
-          boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
-          border="1px solid rgba(0, 0, 0, 0.05)"
-          borderRadius="16px"
-          overflow="hidden"
+          fontSize="28px"
+          fontWeight="500"
+          lineHeight="24px"
+          width="100%"
+          padding="0 30px"
+          color="#161F36"
+          textAlign="center"
         >
+          Verify Email
+        </Box>
+        <Box
+          padding="24px"
+          fontSize="14px"
+          fontWeight="400"
+          color="#676B75"
+          textAlign="center"
+        >
+          Please send the following content from your email recovery contact.
+        </Box>
+        <Box width="100%" padding="0 30px" marginBottom="30px">
           <Box
-            padding="14px 24px"
-            fontWeight="500"
-            fontSize="18px"
-            color="#161F36"
-          >
-            New Message
-          </Box>
-          <Box
-            padding="8px"
-            // marginBottom="24px"
+            boxShadow="0px 12px 16px -4px rgba(0, 0, 0, 0.08)"
+            border="1px solid rgba(0, 0, 0, 0.05)"
+            borderRadius="16px"
+            overflow="hidden"
           >
             <Box
-              display="flex"
-              alignItems="center"
-              background="#F2F3F5"
-              padding="14.5px 12px"
-              borderRadius="12px"
+              padding="14px 24px"
+              fontWeight="500"
+              fontSize="18px"
+              color="#161F36"
             >
-              <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">From</Box>
-              <Box fontSize="18px" color="#161F36">{emailTemplate.from || '...'}</Box>
+              New Message
             </Box>
             <Box
-              display="flex"
-              alignItems="center"
-              background="#F2F3F5"
-              padding="14.5px 12px"
-              borderRadius="12px"
-              marginTop="8px"
+              padding="8px"
+              // marginBottom="24px"
             >
-              <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">To</Box>
-              <Box display="flex" alignItems="center" fontSize="18px" color="#161F36">
-                <Box wordBreak={"break-word"}>{emailTemplate.to || '...'}</Box>
-                <Box marginLeft="4px" onClick={()=> doCopy(emailTemplate.to)}><CopyIcon /></Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                background="#F2F3F5"
+                padding="14.5px 12px"
+                borderRadius="12px"
+              >
+                <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">From</Box>
+                <Box fontSize="18px" color="#161F36">{emailTemplate.from || '...'}</Box>
               </Box>
-            </Box>
-            <Box
-              marginTop="8px"
-              display="flex"
-              alignItems="flex-start"
-              background="#F2F3F5"
-              padding="14.5px 12px"
-              borderRadius="12px"
-              flexDirection="column"
-            >
-              <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
-                <Box>Subject</Box>
-                <Box onClick={()=> doCopy(emailTemplate.subject)}><CopyIcon /></Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                background="#F2F3F5"
+                padding="14.5px 12px"
+                borderRadius="12px"
+                marginTop="8px"
+              >
+                <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">To</Box>
+                <Box display="flex" alignItems="center" fontSize="18px" color="#161F36">
+                  <Box wordBreak={"break-word"}>{emailTemplate.to || '...'}</Box>
+                  <Box marginLeft="4px" onClick={()=> doCopy(emailTemplate.to)}><CopyIcon /></Box>
+                </Box>
               </Box>
-              <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
-                <Box width="100%">{emailTemplate.subject}</Box>
+              <Box
+                marginTop="8px"
+                display="flex"
+                alignItems="flex-start"
+                background="#F2F3F5"
+                padding="14.5px 12px"
+                borderRadius="12px"
+                flexDirection="column"
+              >
+                <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
+                  <Box>Subject</Box>
+                  <Box onClick={()=> doCopy(emailTemplate.subject)}><CopyIcon /></Box>
+                </Box>
+                <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
+                  <Box width="100%">{emailTemplate.subject}</Box>
+                </Box>
               </Box>
-            </Box>
-            <Box
-              marginTop="8px"
-              display="flex"
-              alignItems="flex-start"
-              background="#F2F3F5"
-              padding="14.5px 12px"
-              borderRadius="12px"
-              flexDirection="column"
-            >
-              <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
-                <Box>Content</Box>
-              </Box>
-              <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
-                <Box width="100%" color="#95979C">(Empty)</Box>
+              <Box
+                marginTop="8px"
+                display="flex"
+                alignItems="flex-start"
+                background="#F2F3F5"
+                padding="14.5px 12px"
+                borderRadius="12px"
+                flexDirection="column"
+              >
+                <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
+                  <Box>Content</Box>
+                </Box>
+                <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
+                  <Box width="100%" color="#95979C">(Empty)</Box>
+                </Box>
               </Box>
             </Box>
           </Box>
         </Box>
-        <Box height="120px" width="1px" />
       </Box>
       <Box
-        position="fixed"
+        position={{ sm: 'fixed', md: 'absolute' }}
         padding="0 30px"
         width="100%"
         paddingTop="20px"
         paddingBottom="20px"
-        // background="white"
+        background="white"
         left="0"
         bottom="0"
       >

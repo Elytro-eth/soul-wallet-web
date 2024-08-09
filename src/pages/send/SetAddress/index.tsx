@@ -211,10 +211,10 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
             </Box>
           )}
         </Box>
-        <Box fontSize="14px" fontWeight="400" color="#95979C" marginTop="32px" lineHeight="17.5px">
+        <Box fontSize="14px" fontWeight="400" color="#95979C" marginTop="32px" lineHeight="17.5px" >
           Network
         </Box>
-        <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center">
+        <Box onClick={onOpen} marginTop="8px" display="flex" alignItems="center" cursor="pointer">
           <Box marginRight="8px">
             <Image w="32px" h="32px" src={OpIcon} />
           </Box>
