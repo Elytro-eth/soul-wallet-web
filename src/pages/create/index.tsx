@@ -62,7 +62,7 @@ export default function Create() {
       setAddingPasskey(false);
     } catch (error: any) {
       toast({
-        title: 'Failed to create passkey',
+        title: 'Failed to create wallet',
         description: error.message,
         status: 'error',
       });

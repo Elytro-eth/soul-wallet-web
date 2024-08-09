@@ -16,6 +16,7 @@ import {
 import USDCIcon from '@/assets/mobile/usdc.png'
 import { useBalanceStore } from '@/store/balance'
 import { toFixed } from '@/lib/tools'
+import TokenIcon from '../TokenIcon'
 
 const SelectToken = ({ select, isOpen, onClose, setMenuRef }: any) => {
   const { tokenBalance } = useBalanceStore();
@@ -55,10 +56,11 @@ const SelectToken = ({ select, isOpen, onClose, setMenuRef }: any) => {
                   height="48px"
                 >
                   <Box marginRight="8px">
-                    <Image width="36px" height="36px" src={token.logoURI} />
+                    <TokenIcon address={token.contractAddress} size={36} />
+                    {/* <Image width="36px" height="36px" flex='1 1 36px' src={token.logoURI} /> */}
                   </Box>
-                  <Box fontSize="16px" fontWeight="500">{token.name}</Box>
-                  <Box fontSize="12px" marginLeft="auto" color="#95979C">Balance: {toFixed(token.tokenBalanceFormatted, 6)}</Box>
+                  <Box fontSize="16px" fontWeight="500">{token.symbol}</Box>
+                  <Box fontSize="12px" marginLeft="auto" color="#95979C">Balance: {toFixed(token.tokenBalanceFormatted, 3)}</Box>
                 </Box>
               )}
             </MenuList>

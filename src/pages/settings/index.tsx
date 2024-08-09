@@ -7,7 +7,7 @@ import DetailsIMG from '@/components/Icons/mobile/Details'
 import TabIcon from '@/components/Icons/mobile/Tab'
 import { useNavigate } from 'react-router-dom';
 import USDCIcon from '@/assets/mobile/usdc_lg.png'
-import { aaveLink } from '@/config';
+import { aaveLink, tgTestLink } from '@/config';
 import useWallet from '@/hooks/useWallet';
 import SettingIcon from '@/components/Icons/mobile/Setting'
 import PasskeyIcon from '@/components/Icons/mobile/Passkey'
@@ -130,7 +130,7 @@ export default function Settings({ isModal, closeModal }: any) {
             Coming soon
           </Box>
         </Box>
-        <a target='_blank' href={tgLink} style={{width: "100%"}}>
+        <a target='_blank' href={tgTestLink} style={{width: "100%"}}>
           <Box
             width="100%"
             height="56px"

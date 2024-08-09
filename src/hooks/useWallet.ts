@@ -133,7 +133,7 @@ export default function useWallet() {
     return await getUserOp(txs, skipSponsor);
   };
 
-  const getTransferErc20Op = async (amount: string, to: string, skipSponsor: boolean, tokenAddress: string) => {
+  const getTransferErc20Op = async (amount: string, decimals: number, to: string, skipSponsor: boolean, tokenAddress: string) => {
     const erc20 = new ethers.Interface(erc20Abi);
 
     const erc20Balance = getTokenBalance(tokenAddress)?.tokenBalanceFormatted;
@@ -151,7 +151,7 @@ export default function useWallet() {
     txs.push({
       from: selectedAddress,
       to: tokenAddress,
-      data: erc20.encodeFunctionData('transfer', [to, ethers.parseUnits(String(amount), 6)]),
+      data: erc20.encodeFunctionData('transfer', [to, ethers.parseUnits(String(amount), decimals)]),
     });
 
     return await getUserOp(txs, skipSponsor);

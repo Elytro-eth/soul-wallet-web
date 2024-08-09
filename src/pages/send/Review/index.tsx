@@ -67,7 +67,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
         const _userOp = await getTransferEthOp(String(amount), sendTo, !useSponsor);
         userOpRef.current = _userOp;
       } else {
-        const _userOp = await getTransferErc20Op(String(amount), sendTo, !useSponsor, tokenAddress);
+        const _userOp = await getTransferErc20Op(String(amount), selectedToken.decimals, sendTo, !useSponsor, tokenAddress);
         userOpRef.current = _userOp;
       }
     } catch (e) {

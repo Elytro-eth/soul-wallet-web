@@ -447,8 +447,8 @@ export function AssetPage({ isDashboard }: any) {
   const valueRight = totalUsdValue.split('.')[1];
 
   const fontSize = getFontSize(valueLeft);
-  const smFontSize = getSmallFontSize(valueRight);
-  const fontBottomMargin = getFontBottomMargin(valueLeft);
+  // const smFontSize = getSmallFontSize(valueRight);
+  // const fontBottomMargin = getFontBottomMargin(valueLeft);
 
   const tokenBalanceValid = tokenBalance && tokenBalance.length && tokenBalance.some((item) => BN(item.tokenBalance).isGreaterThan(0));
   return (

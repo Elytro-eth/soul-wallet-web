@@ -100,6 +100,8 @@ export const ensContractAddress = '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85';
 
 export const tgLink = 'https://t.me/+XFUHusXFdTYyODQ9';
 
+export const tgTestLink = 'https://t.me/+d34jY9XP5LZmZjY5'
+
 export const aaveLink = 'https://aave.com';
 
 export default {

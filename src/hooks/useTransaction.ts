@@ -50,49 +50,52 @@ export default function useTransaction() {
 
     setSelectedAddress(address);
     setWalletName(walletName);
-    const res: any = await api.account.create({
-      address,
-      chainID: selectedChainId,
-      name: walletName,
-      initInfo: {
-        index: createIndex,
-        ...createSlotInfo,
-      },
-      invitationCode,
-    });
-    if (res.code !== 200) {
-      toast({
-        title: 'Create wallet failed',
-        description: res.msg,
-        status: 'error',
+    try{
+      const res: any = await api.account.create({
+        address,
+        chainID: selectedChainId,
+        name: walletName,
+        initInfo: {
+          index: createIndex,
+          ...createSlotInfo,
+        },
+        invitationCode,
       });
-      throw new Error('Create wallet failed');
+      // console.log('Create wallet failed msg:!!!!!', res);
+      // if (res.code !== 200) {
+      //   toast({
+      //     title: 'Create wallet failed',
+      //     description: res.msg,
+      //     status: 'error',
+      //   });
+      //   throw new Error('Create wallet failed');
+      // }
+      // private backup key
+      setSlotInfo(createSlotInfo);
+  
+      setCredentials([credential as any]);
+  
+      return {
+        initialKeys,
+        address,
+        selectedChainId,
+      };
+    }catch(err:any){
+      throw new Error(err.response.data.msg);
     }
-
-    // private backup key
-
-    setSlotInfo(createSlotInfo);
-
-    setCredentials([credential as any]);
-
-    return {
-      initialKeys,
-      address,
-      selectedChainId,
-    };
   };
 
-  const payTask = async (contractAddress: string, amount: string, paymentId: string) => {
-    const soulAbi = new ethers.Interface(ABI_ReceivePayment);
-    const callData = soulAbi.encodeFunctionData('pay(bytes32)', [paymentId]);
-    const tx: Transaction = {
-      to: contractAddress,
-      data: callData,
-      value: BN(amount).toString(),
-    };
+  // const payTask = async (contractAddress: string, amount: string, paymentId: string) => {
+  //   const soulAbi = new ethers.Interface(ABI_ReceivePayment);
+  //   const callData = soulAbi.encodeFunctionData('pay(bytes32)', [paymentId]);
+  //   const tx: Transaction = {
+  //     to: contractAddress,
+  //     data: callData,
+  //     value: BN(amount).toString(),
+  //   };
 
-    // return showSignTransaction([tx], '', '');
-  };
+  //   // return showSignTransaction([tx], '', '');
+  // };
 
   const sendEth = async (to: string, amount: string) => {
     const amountInWei = new BN(amount).shiftedBy(18).toString();
@@ -120,7 +123,7 @@ export default function useTransaction() {
   return {
     sendErc20,
     sendEth,
-    payTask,
+    // payTask,
     initWallet,
   };
 }
