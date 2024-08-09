@@ -142,7 +142,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
 
   console.log('isModal', isModal)
   return (
-    <Box width="100%" height={innerHeight} overflow="hidden">
+    <Box width="100%" height={{ sm: innerHeight, md: '640px' }} overflow="hidden">
       <Header
         title=""
         showBackButton={!isModal}

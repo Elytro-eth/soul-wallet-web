@@ -7,7 +7,7 @@ interface IReceiveCode extends BoxProps {
   onSet: (qrcode: string) => void;
 }
 
-export default function ReceiveCode({ address, onSet }: IReceiveCode) {
+export default function ReceiveCode({ address, onSet, width, height }: IReceiveCode) {
   const [imgSrc, setImgSrc] = useState<string>('');
   const { generateQrCode } = useTools();
   const generateQR = async (text: string) => {
@@ -27,5 +27,5 @@ export default function ReceiveCode({ address, onSet }: IReceiveCode) {
     generateQR(address);
   }, [address]);
 
-  return <Image src={imgSrc} mx="auto" display={'block'} w={'200px'} h="200px" />;
+  return <Image src={imgSrc} mx="auto" display={'block'} w={width || '200px'} h={height || '200px'} />;
 }

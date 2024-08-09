@@ -36,7 +36,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           autoFocus
           lineHeight="34px"
           fontWeight="500"
-          // placeholder="Enter or paste here"
+        // placeholder="Enter or paste here"
           border="none"
           outline="none"
           background="#F2F3F5"
@@ -63,7 +63,22 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           }
         </Box>
       </Box>
-      <Button disabled={disabled} size="xl" type="gradientBlue" width="100%" onClick={onNext}>Continue</Button>
+      <Button
+        disabled={disabled}
+        size="xl"
+        type="gradientBlue"
+        width={{
+          sm: '100%',
+          md: '200px',
+        }}
+        marginLeft={{
+          sm: '0',
+          md: 'calc(100% - 200px)',
+        }}
+        onClick={onNext}
+      >
+        Continue
+      </Button>
       <Modal
         isOpen={isOpen}
         onClose={onClose}

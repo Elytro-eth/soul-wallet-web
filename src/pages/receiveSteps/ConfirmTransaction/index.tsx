@@ -15,7 +15,7 @@ export default function ConfirmTransaction({
   return (
     <Box
       width="100%"
-      height={contentHeight}
+      height={{ sm: contentHeight, md: '440px' }}
       position="relative"
       overflow="auto"
       sx={{

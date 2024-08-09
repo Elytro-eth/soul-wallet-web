@@ -116,7 +116,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       padding="30px"
       height={{
         sm: innerHeight,
-        md: 'auto',
+        md: '440px',
       }}
       display="flex"
       alignItems="center"

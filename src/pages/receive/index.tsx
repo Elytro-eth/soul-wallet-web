@@ -102,9 +102,12 @@ export default function Receive({ isModal, registerScrollable }: any) {
         md: '100%',
       }}
       overflowY="scroll"
-      background="#F2F3F5"
+      background={{
+        sm: '#F2F3F5',
+        md: 'white',
+      }}
       display="flex"
-      alignItems="flex-start"
+      alignItems={{ sm: 'center', md: 'flex-start' }}
       justifyContent="center"
     >
       <Box
@@ -152,9 +155,31 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 </Box>
               </Box>
             </Box>
-            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" marginTop="40px">
-              <Box display="flex" alignItems="center" width="205px" height="205px">
-                <ReceiveCode address={selectedAddress} onSet={() => {}} />
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" marginTop={{ sm: '40px', md: '10px' }}>
+              <Box
+                display="flex"
+                alignItems="center"
+                width={{
+                  sm: '205px',
+                  md: '144px'
+                }}
+                height={{
+                  sm: '205px',
+                  md: '144px'
+                }}
+              >
+                <ReceiveCode
+                  address={selectedAddress}
+                  width={{
+                    sm: '205px',
+                    md: '144px'
+                  }}
+                  height={{
+                    sm: '205px',
+                    md: '144px'
+                  }}
+                  onSet={() => {}}
+                />
               </Box>
               <Box
                 fontSize="18px"
@@ -189,7 +214,6 @@ export default function Receive({ isModal, registerScrollable }: any) {
             color="rgba(0, 0, 0, 0.5)"
             width="100%"
             textAlign="center"
-            marginTop="20px"
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -197,9 +221,10 @@ export default function Receive({ isModal, registerScrollable }: any) {
               position: "absolute",
               bottom: "32px"
             } : {
-              marginTop: "40px",
+              marginTop: '20px',
             }}
             onClick={() => openModal('receiveSteps')}
+            cursor="pointer"
           >
             <Box as="span" marginRight="4px">
               How to send crypto to this address?
