@@ -1,7 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
-import { Flex, Box, Modal, ModalOverlay, ModalContent, ModalHeader, Image, ModalCloseButton, ModalBody, useDisclosure } from '@chakra-ui/react';
+import { Flex, Box, Modal, ModalOverlay, ModalContent, ModalHeader, Image, ModalCloseButton, ModalBody, useDisclosure, CloseButton } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import CloseIcon from '@/components/Icons/mobile/Close'
 import { useAddressStore } from '@/store/address';
 import IconSetting from '@/assets/icons/setting.svg';
 import Button from '@/components/mobile/Button'
@@ -248,7 +247,7 @@ export default function AppContainer() {
                 onClick={closeFullScreenModal}
                 zIndex="2"
               >
-                <CloseIcon />
+                <CloseButton />
               </Box>
               <ModalPage
                 height={window.innerHeight}
@@ -314,7 +313,7 @@ export default function AppContainer() {
                 onClick={closeModal}
                 zIndex="2"
               >
-                <CloseIcon />
+                <CloseButton />
               </Box>
               <ModalPage
                 height={{
