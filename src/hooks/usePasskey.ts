@@ -177,8 +177,8 @@ export default function usePasskey() {
 
       console.log('res save key', resSaveKey);
       return credential;
-    } catch (err) {
-      throw new Error('Error when registering passkey');
+    } catch (err:any) {
+      throw new Error(err.message);
     }
   };
 
