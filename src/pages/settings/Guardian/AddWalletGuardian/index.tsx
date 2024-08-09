@@ -246,7 +246,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 height="56px"
               />
             </Box>
-            <Button size="xl" type="gradientBlue" width="100%" marginTop="60px" disabled={!isValidAddress} loading={changingGuardian} onClick={onConfirm}>
+            <Button size="xl" type="gradientBlue" width={{ sm: '100%', md: '200px' }} marginTop="60px" marginLeft={{ sm: '0', md: 'calc(100% - 200px)' }} disabled={!isValidAddress} loading={changingGuardian} onClick={onConfirm}>
               Add
             </Button>
           </Box>

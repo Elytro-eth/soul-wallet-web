@@ -90,6 +90,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
       </Box>
       <Box
         display="flex"
+        flexDirection={{ sm: 'column', md: 'row' }}
       >
         <Box
           width={{
