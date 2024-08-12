@@ -451,7 +451,7 @@ export function Header({ openMenu, username, ...props }: any) {
   );
 }
 
-export function AssetPage({ isDashboard }: any) {
+export function AssetPage({ isDashboard, setActiveMenu }: any) {
   const { openFullScreenModal } = useWalletContext();
   const { innerHeight } = useScreenSize();
   const [modalMargin, setModalMargin] = useState(494);
@@ -743,11 +743,14 @@ export function AssetPage({ isDashboard }: any) {
                 sm: 'none',
                 md: 'flex'
               }}
+              alignItems="center"
+              justifyContent="span-between"
+              width="100%"
             >
               <Box>
                 Activity
               </Box>
-              <Box>
+              <Box color="#676B75" cursor="pointer" fontWeight="500" fontSize="14px" marginLeft="auto" onClick={() => setActiveMenu('activities') }>
                 View more
               </Box>
             </Box>
@@ -1276,7 +1279,7 @@ export default function Dashboard(props: any) {
                 md: (activeMenu === 'assets') ? 'transparent' : 'white'
               }}
             >
-              {activeMenu === 'assets' && <AssetPage isDashboard={true} />}
+              {activeMenu === 'assets' && <AssetPage isDashboard={true} setActiveMenu={setActiveMenu} />}
               {activeMenu === 'activities' && <ActivityPage isDashboard={true} />}
               {activeMenu === 'settings' && <GuardianPage isDashboard={true} />}
             </Box>
