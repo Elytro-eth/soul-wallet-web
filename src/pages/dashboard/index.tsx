@@ -933,7 +933,10 @@ export function AssetPage({ isDashboard }: any) {
                 Tokens
               </Box>
               <Box
-                padding="12px 16px"
+                padding={{
+                  sm: '12px 16px',
+                  md: '12px 32px'
+                }}
                 paddingBottom="0"
                 display="flex"
                 width="100%"
@@ -996,7 +999,7 @@ export function AssetPage({ isDashboard }: any) {
 export function GuardianPage({ isDashboard }: any) {
   const { guardiansInfo } = useGuardianStore();
 
-  if(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash){
+  if(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash || true){
     return (
       <GuardianIntroPage isDashboard={isDashboard} />
     )

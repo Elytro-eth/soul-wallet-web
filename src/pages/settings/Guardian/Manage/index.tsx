@@ -601,9 +601,11 @@ export default function Manage({ isDashboard }: any) {
           justifyContent="flex-end"
           maxW={{
             sm: 'calc(100vw - 32px)',
+            md: '330px',
           }}
           marginTop={{
             sm: `auto`,
+            md: 'calc(50vh - 100px)',
           }}
           overflow="visible"
           mb="0"
@@ -678,15 +680,23 @@ export default function Manage({ isDashboard }: any) {
         motionPreset="slideInBottom"
         blockScrollOnMount={true}
       >
-        <ModalOverlay height="100vh" background="transparent" />
+        <ModalOverlay
+          height="100vh"
+          background={{
+            sm: 'transparent',
+            md: 'rgba(0, 0, 0, 0.5)',
+          }}
+        />
         <ModalContent
           borderRadius="24px"
           justifyContent="flex-end"
           maxW={{
             sm: 'calc(100vw - 32px)',
+            md: '330px',
           }}
           marginTop={{
             sm: `auto`,
+            md: 'calc(50vh - 100px)',
           }}
           overflow="visible"
           mb="0"

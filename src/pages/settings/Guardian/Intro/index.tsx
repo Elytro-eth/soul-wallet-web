@@ -118,15 +118,23 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
           motionPreset="slideInBottom"
           blockScrollOnMount={true}
         >
-          <ModalOverlay height="100vh" background="transparent" />
+          <ModalOverlay
+            height="100vh"
+            background={{
+              sm: 'transparent',
+              md: 'rgba(0, 0, 0, 0.5)',
+            }}
+          />
           <ModalContent
             borderRadius="24px"
             justifyContent="flex-end"
             maxW={{
               sm: 'calc(100vw - 32px)',
+              md: '330px',
             }}
             marginTop={{
               sm: `auto`,
+              md: 'calc(50vh - 100px)',
             }}
             overflow="visible"
             mb="0"
@@ -162,7 +170,7 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
                   background="#F2F3F5"
                   borderRadius="16px"
                   marginBottom="8px"
-                  onClick={() => { openModal('addWalletGuardian'); onClose(); }}
+                  onClick={() => { openModal('addWalletGuardian', { width: 640, height: 450 }); onClose(); }}
                   cursor="pointer"
                 >
                   <Box marginRight="8px"><WalletGuardianIcon /></Box>
@@ -180,7 +188,7 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
                   background="#F2F3F5"
                   borderRadius="16px"
                   marginBottom="8px"
-                  onClick={() => { openModal('verifyEmail'); onClose(); }}
+                  onClick={() => { openModal('verifyEmail', { width: 640, height: 420 }); onClose(); }}
                   cursor="pointer"
                 >
                   <Box marginRight="8px"><EmailGuardianIcon /></Box>
