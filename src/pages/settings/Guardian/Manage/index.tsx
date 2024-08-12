@@ -124,7 +124,7 @@ export default function Manage({ isDashboard }: any) {
     if (guardianEmail) {
       openModal('verifyEmailGuardian', {
         width: 640,
-        height: 380,
+        height: 420,
         defaultGuardianEmail: guardianEmail,
         callback: (guardianAddress: string, guardianEmail: string) => {
           setTempGuardians((prev: any) => {
@@ -160,7 +160,7 @@ export default function Manage({ isDashboard }: any) {
     if (guardianType === 0) {
       openModal('verifyEmailGuardian', {
         width: 640,
-        height: 380,
+        height: 420,
         defaultEmail: "",
         callback: (guardianAddress: string, guardianEmail: string) => {
           setTempGuardians((prev: any) => {

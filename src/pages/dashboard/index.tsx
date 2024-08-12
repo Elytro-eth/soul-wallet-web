@@ -501,7 +501,7 @@ export function AssetPage({ isDashboard }: any) {
             // onClick={() => navigate('/verify-email')}
             onClick={useBreakpointValue({
               sm: () => navigate('/verify-email'),
-              md: () => openModal('verifyEmail'),
+              md: () => openModal('verifyEmail', { width: 640, height: 420 }),
             })}
             cursor="pointer"
           >
