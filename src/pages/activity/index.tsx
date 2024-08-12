@@ -17,6 +17,7 @@ import { useAddressStore } from '@/store/address';
 import { useHistoryStore } from '@/store/history';
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
+import OpenIcon from '@/components/Icons/desktop/Open';
 import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
 import TokenIcon from '@/components/TokenIcon';
 
@@ -27,6 +28,16 @@ const getSubject = (functionName: any) => {
     return "From:"
   } else {
     return "On:"
+  }
+}
+
+const shouldShowAmount = (functionName: any) => {
+  if (functionName === 'Send') {
+    return true
+  } else if (functionName === 'Receive') {
+    return true
+  } else {
+    return false
   }
 }
 
@@ -76,44 +87,56 @@ export default function Activity({ isModal, isDashboard }: any) {
           {historyList.length ? (
             <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
               {historyList.map((item, index) => (
-                <Box display="flex" alignItems="center" height="52px" key={index}>
-                  <Image w="8" h="8" mr="3" flex={"0 0 32px"} src={getIconMapping(item.functionName)} />
-                  <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  height={{
+                    sm: '52px',
+                    // md: '42px',
+                  }}
+                  key={index}
+                  width="100%"
+                >
+                  <Image w="8" h="8" mr="10px" flex={"0 0 32px"} src={getIconMapping(item.functionName)} />
+                  <Box
+                    display="flex"
+                    alignItems="flex-start"
+                    width="calc(100% - 42px)"
+                    flexDirection={{
+                      sm: 'column',
+                      md: 'row',
+                    }}
+                    justifyContent={{
+                      sm: 'center',
+                      md: 'space-between',
+                    }}
+                  >
                     <Box display="flex" alignItems="center">
                       <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">
-                        {toShortAddress(item.interactAddress, 6)}
+                        {item.functionName}
+                      </Box>
+                      {(shouldShowAmount(item.functionName)) && (
+                        <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" marginLeft="4px">
+                          <Box>
+                            {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
+                          </Box>
+                          {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
+                        </Box>
+                      )}
+                    </Box>
+                    <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px" display="flex" alignItems="center">
+                      {getSubject(item.functionName)}{toShortAddress(item.interactAddress, 6)}
+                      <Box
+                        marginLeft="8px"
+                        cursor="pointer"
+                        display={{
+                          sm: 'none',
+                          md: 'block'
+                        }}
+                      >
+                        <OpenIcon />
                       </Box>
                     </Box>
-                    <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">
-                      {formatDate(new Date(item.timestamp * 1000))}
-                    </Box>
-                  </Box>
-                  <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                    <Box
-                      fontSize="14px"
-                      fontWeight="500"
-                      lineHeight="17.5px"
-                      color="#161F36"
-                      textTransform={'capitalize'}
-                    >
-                      {item.functionName}
-                    </Box>
-                    <Flex
-                      align={'center'}
-                      fontSize="18px"
-                      fontWeight="500"
-                      lineHeight="22.5px"
-                      color="#161F36"
-                      display="flex"
-                      marginTop="2px"
-                    >
-                      <Box>
-                        {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
-                        {/* {toFixed(BN(item.actualGasCost).shiftedBy(-18).toString(), 6)} ETH */}
-                      </Box>
-                      {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
-                      {/*  */}
-                    </Flex>
                   </Box>
                 </Box>
               ))}

@@ -62,7 +62,6 @@ import op from '@/config/chains/op';
 import ImgLogo from '@/assets/soul-logo.svg';
 import OpIcon from '@/assets/mobile/op.png'
 import { formatDate, toShortAddress, getIconMapping } from '@/lib/tools';
-import OpenIcon from '@/components/Icons/mobile/Open';
 import TokenIcon from '@/components/TokenIcon';
 import CopyIcon from '@/components/Icons/mobile/Copy';
 import useTools from '@/hooks/useTools';
@@ -74,6 +73,27 @@ import TwitterIcon from '@/components/Icons/desktop/Twitter';
 import TelegramIcon from '@/components/Icons/desktop/Telegram';
 import GithubIcon from '@/components/Icons/desktop/Github';
 import LinkedInIcon from '@/components/Icons/desktop/LinkedIn';
+import OpenIcon from '@/components/Icons/desktop/Open';
+
+const getSubject = (functionName: any) => {
+  if (functionName === 'Send') {
+    return "To:"
+  } else if (functionName === 'Receive') {
+    return "From:"
+  } else {
+    return "On:"
+  }
+}
+
+const shouldShowAmount = (functionName: any) => {
+  if (functionName === 'Send') {
+    return true
+  } else if (functionName === 'Receive') {
+    return true
+  } else {
+    return false
+  }
+}
 
 const getFontSize = (value: any) => {
   const length = value ? String(value).length : 0;
@@ -724,7 +744,12 @@ export function AssetPage({ isDashboard }: any) {
                 md: 'flex'
               }}
             >
-              Activity
+              <Box>
+                Activity
+              </Box>
+              <Box>
+                View more
+              </Box>
             </Box>
             <Box
               width="100%"
@@ -736,44 +761,56 @@ export function AssetPage({ isDashboard }: any) {
             >
               {historyList.length ? (
                 <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
-                  {historyList.map((item, index) => (
-                    <Box display="flex" alignItems="center" height="52px" key={index}>
-                      <Image w="8" h="8" mr="3" flex={"0 0 32px"} src={getIconMapping(item.functionName)} />
-                      <Box width="140px">
+                  {historyList.slice(0, 4).map((item, index) => (
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      height={{
+                        sm: '52px',
+                        // md: '42px',
+                      }}
+                      key={index}
+                      width="100%"
+                    >
+                      <Image w="8" h="8" mr="10px" flex={"0 0 32px"} src={getIconMapping(item.functionName)} />
+                      <Box
+                        display="flex"
+                        alignItems="flex-start"
+                        width="calc(100% - 42px)"
+                        flexDirection={{
+                          sm: 'column',
+                          md: 'row',
+                        }}
+                        justifyContent={{
+                          sm: 'center',
+                          md: 'space-between',
+                        }}
+                      >
                         <Box display="flex" alignItems="center">
                           <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">
                             {item.functionName}
                           </Box>
+                          {(shouldShowAmount(item.functionName)) && (
+                            <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" marginLeft="4px">
+                              <Box>
+                                {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
+                              </Box>
+                              {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
+                            </Box>
+                          )}
                         </Box>
-                        <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">
-                          {formatDate(new Date(item.timestamp * 1000))}
-                        </Box>
-                      </Box>
-                      <Box marginLeft="20px" minWidth="120px">
-                        <Flex
-                          align={'center'}
-                          fontSize="18px"
-                          fontWeight="500"
-                          lineHeight="22.5px"
-                          color="#161F36"
-                          display="flex"
-                          marginTop="2px"
-                        >
-                          {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
-                          <Box>
-                            {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
+                        <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px" display="flex" alignItems="center">
+                          {getSubject(item.functionName)}{toShortAddress(item.interactAddress, 6)}
+                          <Box
+                            marginLeft="8px"
+                            cursor="pointer"
+                            display={{
+                              sm: 'none',
+                              md: 'block'
+                            }}
+                          >
+                            <OpenIcon />
                           </Box>
-                        </Flex>
-                      </Box>
-                      <Box marginLeft="auto" display="flex" flexDirection="column" alignItems="flex-end">
-                        <Box
-                          fontSize="18px"
-                          fontWeight="400"
-                          lineHeight="22.5px"
-                          color="#95979C"
-                          textTransform={'capitalize'}
-                        >
-                          {toShortAddress(item.interactAddress, 6)}
                         </Box>
                       </Box>
                     </Box>
