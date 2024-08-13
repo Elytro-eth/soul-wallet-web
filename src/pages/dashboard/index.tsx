@@ -74,6 +74,8 @@ import TelegramIcon from '@/components/Icons/desktop/Telegram';
 import GithubIcon from '@/components/Icons/desktop/Github';
 import LinkedInIcon from '@/components/Icons/desktop/LinkedIn';
 import OpenIcon from '@/components/Icons/desktop/Open';
+import { thirdPartyLicenseUrl } from '@/config/constants';
+import config from '@/config';
 
 const getSubject = (functionName: any) => {
   if (functionName === 'Send') {
@@ -1214,7 +1216,10 @@ export default function Dashboard(props: any) {
               marginTop="auto"
             >
               <Box color="#676B75" fontSize="12px" lineHeight="15px" fontWeight="400" paddingLeft="20px" paddingRight="20px" paddingBottom="12px">Version: Alpha 0.0.1</Box>
-              <Box color="#676B75" fontSize="12px" lineHeight="15px" fontWeight="400" paddingLeft="20px" paddingRight="20px" paddingBottom="16px">Third-party software license</Box>
+              <a href={thirdPartyLicenseUrl} target='_blank'>
+                <Text color="#676B75" fontSize="12px" lineHeight="15px" fontWeight="400" paddingLeft="20px" paddingRight="20px" paddingBottom="16px">Third-party software license</Text>
+              </a>
+
               <Box
                 alignItems="center"
                 justifyContent="flex-start"
@@ -1226,7 +1231,12 @@ export default function Dashboard(props: any) {
                 }}
                 padding="0 20px"
               >
-                <Box
+                {config.socials.map((item, index) => (
+                  <a href={item.link} target='_blank'>
+                    <Image src={item.icon} key={index} />
+                  </a>
+                ))}
+                {/* <Box
                   cursor="pointer"
                 >
                   <TwitterIcon />
@@ -1245,7 +1255,7 @@ export default function Dashboard(props: any) {
                   cursor="pointer"
                 >
                   <LinkedInIcon />
-                </Box>
+                </Box> */}
               </Box>
             </Box>
           </Box>
