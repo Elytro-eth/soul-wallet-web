@@ -118,7 +118,7 @@ export default function Activity({ isModal, isDashboard }: any) {
                       {(shouldShowAmount(item.functionName)) && (
                         <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" marginLeft="4px">
                           <Box>
-                            {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
+                            {item.tokenChanged}
                           </Box>
                           {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
                         </Box>
