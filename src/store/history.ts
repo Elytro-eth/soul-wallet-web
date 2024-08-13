@@ -28,6 +28,7 @@ export const fetchHistoryApi = async (
   // IMPORTANT TODO, cache decode result
   for (let i = 0; i < txs.length; i++) {
     const item = txs[i];
+    console.log('I', item)
     // decode calldata
     if (item.type === 'op' && item.opList) {
       const callDataDecodes = await decodeCalldata(chainId, entryPointAddress, item.opList[0], ethersProvider);
@@ -47,6 +48,7 @@ export const fetchHistoryApi = async (
         timestamp: item.timestamp,
         erc20Address: decodedData.erc20Address,
         tokenChanged: decodedData.tokenChanged,
+        txHash: item.txhash,
       });
     } else {
       if (item.list) {
@@ -71,7 +73,8 @@ export const fetchHistoryApi = async (
           timestamp: item.timestamp,
           erc20Address: tokenAddress,
           tokenChanged,
-        });
+          txHash: item.txhash,
+      });
       }
     }
   }
