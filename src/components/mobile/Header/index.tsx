@@ -1,8 +1,11 @@
 import { Box, Text, Image,} from '@chakra-ui/react';
 import BackIcon from '@/components/Icons/mobile/Back'
 import ImgLogo from '@/assets/soul-logo.svg';
+import useBrowser from '@/hooks/useBrowser';
 
 export default function Header({ title, onBack, step, showBackButton, showLogo, ...props }: any) {
+  const { navigate } = useBrowser();
+
   return (
     <Box
       height="60px"
@@ -19,6 +22,7 @@ export default function Header({ title, onBack, step, showBackButton, showLogo, 
           left="20px"
           top="calc(50% - 17px)"
           cursor="pointer"
+          onClick={() => navigate('/landing')}
         >
           <Image src={ImgLogo} />
         </Box>

@@ -122,6 +122,10 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
+      maxWidth={{
+        sm: '100%',
+        md: '400px'
+      }}
     >
       <Box marginBottom="40px">
         <Image height="198px" src={WelcomeIcon} />

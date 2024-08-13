@@ -19,6 +19,10 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
+      maxWidth={{
+        sm: '100%',
+        md: '400px'
+      }}
     >
       <Box
         marginBottom="24px"

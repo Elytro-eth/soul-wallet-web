@@ -143,6 +143,7 @@ export function Header({ openMenu, username, ...props }: any) {
   const { logoutWallet } = useWallet();
   const { openFullScreenModal } = useWalletContext();
   const [openModal] = useOutletContext<any>();
+  const { navigate } = useBrowser();
 
   const { doCopy } = useTools();
   const { isOpen: isTransferOpen, onOpen: onTransferOpen, onClose: onTransferClose } = useDisclosure();
@@ -218,6 +219,8 @@ export function Header({ openMenu, username, ...props }: any) {
           sm: 'none',
           md: 'flex',
         }}
+        cursor="pointer"
+        onClick={() => navigate('/landing')}
       >
         <Image src={ImgLogo} />
       </Box>
@@ -1059,7 +1062,7 @@ export default function Dashboard(props: any) {
 
   useEffect(()=>{
     if(!selectedAddress){
-      // navigate('/landing')
+      navigate('/landing')
     }
   }, [selectedAddress])
 

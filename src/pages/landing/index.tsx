@@ -89,7 +89,7 @@ export default function Landing() {
 
   useEffect(()=>{
     if(selectedAddress){
-      // navigate('/dashboard')
+      navigate('/dashboard')
     }
   }, [selectedAddress])
 

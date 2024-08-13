@@ -22,6 +22,7 @@ import { getWalletIcon } from '@/lib/tools'
 import RecoverSuccessIcon from '@/assets/recover-success.png'
 import OPIcon from '@/assets/op.svg'
 import { chainIdConfigs } from '@/config';
+import useBrowser from '@/hooks/useBrowser';
 
 const validateSigner = (recoveryRecord: any, address: any) => {
   if (!recoveryRecord) return;
@@ -37,6 +38,8 @@ const checkSigned = (recoveryRecord: any, address: any) => {
 };
 
 export const SignHeader = ({ url }: { url?: string }) => {
+  const { navigate } = useBrowser();
+
   return (
     <Box height="58px" pos="absolute" top="0" left={'0'} right={'0'} padding="10px 20px">
       <Link
@@ -48,6 +51,8 @@ export const SignHeader = ({ url }: { url?: string }) => {
            : {
              cursor: 'default',
         })}
+        cursor="pointer"
+        onClick={() => navigate('/landing')}
       >
         <Image src={IconLogo} h="44px" />
       </Link>
