@@ -87,10 +87,16 @@ const getSubject = (functionName: any) => {
   }
 }
 
+const getActivityName = (functionName: any) => {
+  if (functionName === 'Transfer ETH') {
+    return 'Transfer'
+  }
+
+  return functionName
+}
+
 const shouldShowAmount = (functionName: any) => {
-  if (functionName === 'Send') {
-    return true
-  } else if (functionName === 'Receive') {
+  if (functionName === 'Send' || functionName === 'Receive' || functionName.indexOf('Transfer') !== -1) {
     return true
   } else {
     return false
@@ -796,7 +802,7 @@ export function AssetPage({ isDashboard, setActiveMenu }: any) {
                       >
                         <Box display="flex" alignItems="center">
                           <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">
-                            {item.functionName}
+                            {getActivityName(item.functionName)}
                           </Box>
                           {(shouldShowAmount(item.functionName)) && (
                             <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" marginLeft="4px">
