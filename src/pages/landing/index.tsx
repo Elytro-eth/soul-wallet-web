@@ -194,11 +194,11 @@ export default function Landing() {
                 }}
               >
                 {config.socials.map((item, idx) => (
-                  <Box cursor="pointer"
+                  <a href={item.link} target='_blank' key={idx}
                   >
                     <Image src={item.icon} />
                     {/* <TwitterIcon /> */}
-                  </Box>
+                  </a>
                 ))}
                 {/* <Box
                   cursor="pointer"
