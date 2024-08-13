@@ -20,6 +20,7 @@ import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
 import OpenIcon from '@/components/Icons/desktop/Open';
 import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
 import TokenIcon from '@/components/TokenIcon';
+import useConfig from '@/hooks/useConfig';
 
 const getSubject = (functionName: any) => {
   if (functionName === 'Send') {
@@ -49,6 +50,7 @@ const shouldShowAmount = (functionName: any) => {
 
 export default function Activity({ isModal, isDashboard }: any) {
   const { historyList } = useHistoryStore();
+  const { chainConfig } = useConfig();
 
   console.log('history', historyList);
 
@@ -139,6 +141,7 @@ export default function Activity({ isModal, isDashboard }: any) {
                           sm: 'none',
                           md: 'block'
                         }}
+                        onClick={() => window.open(`${chainConfig.scanUrl}/tx/${item.txHash}`, '_blank')}
                       >
                         <OpenIcon />
                       </Box>

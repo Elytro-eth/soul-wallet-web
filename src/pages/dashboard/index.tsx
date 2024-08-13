@@ -474,6 +474,7 @@ export function AssetPage({ isDashboard, setActiveMenu }: any) {
   const { walletName } = useAddressStore();
   const [openModal] = useOutletContext<any>();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { chainConfig } = useConfig();
 
   const { guardiansInfo } = useGuardianStore();
   const { totalUsdValue, tokenBalance } = useBalanceStore();
@@ -822,6 +823,7 @@ export function AssetPage({ isDashboard, setActiveMenu }: any) {
                               sm: 'none',
                               md: 'block'
                             }}
+                            onClick={() => window.open(`${chainConfig.scanUrl}/tx/${item.txHash}`, '_blank')}
                           >
                             <OpenIcon />
                           </Box>
