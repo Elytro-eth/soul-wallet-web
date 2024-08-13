@@ -22,6 +22,7 @@ import { getWalletIcon } from '@/lib/tools'
 import RecoverSuccessIcon from '@/assets/recover-success.png'
 import OPIcon from '@/assets/op.svg'
 import { chainIdConfigs } from '@/config';
+import useBrowser from '@/hooks/useBrowser';
 
 const validateSigner = (recoveryRecord: any, address: any) => {
   if (!recoveryRecord) return;
@@ -37,6 +38,8 @@ const checkSigned = (recoveryRecord: any, address: any) => {
 };
 
 export const SignHeader = ({ url }: { url?: string }) => {
+  const { navigate } = useBrowser();
+
   return (
     <Box height="58px" pos="absolute" top="0" left={'0'} right={'0'} padding="10px 20px">
       <Link
@@ -48,6 +51,8 @@ export const SignHeader = ({ url }: { url?: string }) => {
            : {
              cursor: 'default',
         })}
+        cursor="pointer"
+        onClick={() => navigate('/landing')}
       >
         <Image src={IconLogo} h="44px" />
       </Link>
@@ -67,7 +72,10 @@ export const SignContainer = ({ children, isOpen, onOpen, onClose, connectEOA }:
       align="center"
       width="100%"
       minHeight="100vh"
-      background="white"
+      background={{
+        sm: `white`,
+        md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+      }}
     >
       <SignHeader />
       <Box
@@ -79,7 +87,28 @@ export const SignContainer = ({ children, isOpen, onOpen, onClose, connectEOA }:
         flexDirection="column"
         width="100%"
       >
-        {children}
+        <Box
+          background={{
+            sm: `transparent`,
+            md: 'white',
+          }}
+          width={{
+            sm: `100%`,
+            md: '640px',
+          }}
+          padding={{
+            sm: `0`,
+            md: '40px 64px',
+          }}
+          borderRadius={{
+            sm: `0`,
+            md: '32px',
+          }}
+          maxHeight="100%"
+          overflowY="auto"
+        >
+          {children}
+        </Box>
       </Box>
       <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom" blockScrollOnMount={true}>
         <ModalOverlay height="100vh" />
@@ -260,10 +289,10 @@ export default function Sign() {
           width="120px"
           height="120px"
           borderRadius="120px"
-          margin="0 auto"
           display="flex"
           alignItems="center"
           justifyContent="center"
+          margin="0 auto"
         >
           <SuccessIcon size="96" />
         </Box>
@@ -338,10 +367,10 @@ export default function Sign() {
           width="120px"
           height="120px"
           borderRadius="120px"
-          margin="0 auto"
           display="flex"
           alignItems="center"
           justifyContent="center"
+          margin="0 auto"
         >
           <WarningIcon size="96" />
         </Box>
@@ -366,7 +395,7 @@ export default function Sign() {
           The wallet you connected is not the recovery contact for the recovery wallet. Please double check.
         </Box>
         <Button size="xl" type="gradientBlue" width="100%" marginTop="30px" onClick={() => {disconnectEOA(); onOpen()}}>Connect another wallet</Button>
-        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5">
+        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5" width="fit-content" marginLeft="auto" marginRight="auto">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
@@ -388,10 +417,10 @@ export default function Sign() {
           width="120px"
           height="120px"
           borderRadius="120px"
-          margin="0 auto"
           display="flex"
           alignItems="center"
           justifyContent="center"
+          margin="0 auto"
         >
           <Image height="96" src={OPIcon} />
         </Box>
@@ -418,7 +447,7 @@ export default function Sign() {
         <Button size="xl" type="gradientBlue" width="100%" marginTop="30px" onClick={() => switchChain({ chainId: targetChainId })}>
           Switch to {targetChainName} network
         </Button>
-        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5">
+        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5" width="fit-content" marginLeft="auto" marginRight="auto">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
@@ -436,7 +465,13 @@ export default function Sign() {
   if (isConnected) {
     return (
       <SignContainer isOpen={isOpen} onOpen={onOpen} onClose={onClose} connectEOA={connectEOA} isConnecting={isConnecting}>
-        <Box width="144px" height="144px" marginBottom="16px" position="relative">
+        <Box
+          width="144px"
+          height="144px"
+          marginBottom="16px"
+          position="relative"
+          margin="0 auto"
+        >
           <Image height="144px" src={RecoverSuccessIcon} />
         </Box>
         <Box
@@ -509,7 +544,7 @@ export default function Sign() {
         >
           Confirm and Sign
         </Button>
-        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5">
+        <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5" width="fit-content" marginLeft="auto" marginRight="auto">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">
               <Image width="20px" height="20px" src={OpIcon} />
@@ -526,7 +561,13 @@ export default function Sign() {
 
   return (
     <SignContainer isOpen={isOpen} onOpen={onOpen} onClose={onClose} connectEOA={connectEOA} isConnecting={isConnecting}>
-      <Box width="144px" height="144px" marginBottom="16px" position="relative">
+      <Box
+        width="144px"
+        height="144px"
+        marginBottom="16px"
+        position="relative"
+        margin="0 auto"
+      >
         <Image height="144px" src={RecoverSuccessIcon} />
       </Box>
       <Box

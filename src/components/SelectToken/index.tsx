@@ -41,6 +41,7 @@ const SelectToken = ({ select, isOpen, onClose, setMenuRef }: any) => {
               border="1px solid #F2F3F5"
               width={{
                 sm: 'calc(100vw - 60px)',
+                md: '420px'
               }}
             >
               {tokenBalance.map((token: any) =>

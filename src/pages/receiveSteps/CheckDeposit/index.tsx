@@ -68,7 +68,13 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
   }, [])
 
   return (
-    <Box width="100%" height={contentHeight} position="relative" overflowY={isAllChecked ? 'auto' : 'hidden'} ref={scrollableRef}>
+    <Box
+      width="100%"
+      height={{ sm: contentHeight, md: '440px' }}
+      position="relative"
+      overflowY={isAllChecked ? 'auto' : 'hidden'}
+      ref={scrollableRef}
+    >
       <Box
         padding="30px"
         marginBottom={isAllChecked ? '80px' : '0px'}

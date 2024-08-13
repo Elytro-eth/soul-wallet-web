@@ -1,7 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
-import { Flex, Box, Modal, ModalOverlay, ModalContent, ModalHeader, Image, ModalCloseButton, ModalBody, useDisclosure } from '@chakra-ui/react';
+import { Flex, Box, Modal, ModalOverlay, ModalContent, ModalHeader, Image, ModalCloseButton, ModalBody, useDisclosure, CloseButton } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import CloseIcon from '@/components/Icons/mobile/Close'
 import { useAddressStore } from '@/store/address';
 import IconSetting from '@/assets/icons/setting.svg';
 import Button from '@/components/mobile/Button'
@@ -122,6 +121,14 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
       background="white"
       borderTopRightRadius="32px"
       borderTopLeftRadius="32px"
+      borderBottomRightRadius={{
+        sm: '0',
+        md: '32px',
+      }}
+      borderBottomLeftRadius={{
+        sm: '0',
+        md: '32px',
+      }}
       overflow="hidden"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -168,6 +175,15 @@ export default function AppContainer() {
 
     return {}
   }
+
+  const desktopModalStyle: any = {
+    width: activeModal?.props?.width || 480,
+    height: activeModal?.props?.height || 600,
+  }
+
+  if (desktopModalStyle.height > innerHeight) desktopModalStyle.height = innerHeight
+  desktopModalStyle.top = `calc(50vh - (${desktopModalStyle.height}px / 2))`
+  desktopModalStyle.left = `calc(50vw - (${desktopModalStyle.width}px / 2))`
 
   return (
     <Box background="black">
@@ -231,7 +247,7 @@ export default function AppContainer() {
                 onClick={closeFullScreenModal}
                 zIndex="2"
               >
-                <CloseIcon />
+                <CloseButton />
               </Box>
               <ModalPage
                 height={window.innerHeight}
@@ -260,16 +276,29 @@ export default function AppContainer() {
               height="100%"
               width="100%"
               position="absolute"
-            // background={isModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
+              background={isModalOpen ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0)'}
               transition="all 0.3s ease"
+              onClick={closeModal}
             />
             <Box
-              height="100%"
-              width="100%"
               position="absolute"
-              // background="white"
-              top={isModalOpen ? '0' : '100%'}
               transition="all 0.3s ease"
+              top={{
+                sm: isModalOpen ? '0' : '100%',
+                md: isModalOpen ? desktopModalStyle.top : '100%'
+              }}
+              left={{
+                sm: '0',
+                md: desktopModalStyle.left
+              }}
+              height={{
+                sm: "100%",
+                md: desktopModalStyle.height
+              }}
+              width={{
+                sm: "100%",
+                md: desktopModalStyle.width
+              }}
             >
               <Box
                 height="32px"
@@ -284,10 +313,13 @@ export default function AppContainer() {
                 onClick={closeModal}
                 zIndex="2"
               >
-                <CloseIcon />
+                <CloseButton />
               </Box>
               <ModalPage
-                height={window.innerHeight}
+                height={{
+                  sm: window.innerHeight,
+                  md: desktopModalStyle.height,
+                }}
                 activeModal={activeModal}
                 openModal={openModal}
                 closeModal={closeModal}

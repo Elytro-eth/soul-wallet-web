@@ -7,7 +7,7 @@ import useScreenSize from '@/hooks/useScreenSize'
 // import Intro from './Intro'
 // import Manage from './Manage'
 
-export default function GuardianSetting() {
+export default function GuardianSetting({ isDashboard }: any) {
   const { registerForRecover } = usePasskey();
   const toast = useToast();
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function GuardianSetting() {
         alignItems="center"
         justifyContent="center"
       >
-        <Outlet context={[onPrev]} />
+        <Outlet context={[onPrev, isDashboard]} />
       </Box>
     </Box>
   );

@@ -47,7 +47,7 @@ import WarningIcon from '@/components/Icons/Warning';
 import { useOutletContext } from "react-router-dom"
 import FadeId from '@/components/Icons/mobile/FaceId'
 
-export default function Manage() {
+export default function Manage({ isDashboard }: any) {
   const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
 
   const { isOpen: isSelectOpen, onOpen: onSelectOpen, onClose: onSelectClose } = useDisclosure();
@@ -123,6 +123,8 @@ export default function Manage() {
     const guardianEmail = guardianAddressEmail[guardianAddress];
     if (guardianEmail) {
       openModal('verifyEmailGuardian', {
+        width: 640,
+        height: 420,
         defaultGuardianEmail: guardianEmail,
         callback: (guardianAddress: string, guardianEmail: string) => {
           setTempGuardians((prev: any) => {
@@ -136,6 +138,8 @@ export default function Manage() {
       });
     } else {
       openModal('addWalletGuardian', {
+        width: 640,
+        height: 450,
         defaultGuardianAddress: guardianAddress,
         defaultGuardianName: guardianName,
         callback: (guardianAddress: string, guardianName: string) => {
@@ -155,6 +159,8 @@ export default function Manage() {
     onGuardianMenuClose();
     if (guardianType === 0) {
       openModal('verifyEmailGuardian', {
+        width: 640,
+        height: 420,
         defaultEmail: "",
         callback: (guardianAddress: string, guardianEmail: string) => {
           setTempGuardians((prev: any) => {
@@ -169,6 +175,8 @@ export default function Manage() {
       });
     } else if(guardianType === 1) {
       openModal('addWalletGuardian', {
+        width: 640,
+        height: 450,
         callback: (guardianAddress: string, guardianName: string) => {
           saveGuardianAddressName(guardianAddress, guardianName);
           setTempGuardians((prev: any) => {
@@ -210,10 +218,51 @@ export default function Manage() {
   return (
     <Box width="100%" height="100%" display="flex" flexDirection="column">
       <Box padding="30px">
-        <Box fontSize="14px" fontWeight="500" color="#161F36" lineHeight="17.5px">
-          MY RECOVERY CONTACTS
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          position="relative"
+          minHeight="40px"
+        >
+          <Box fontSize="14px" fontWeight="500" color="#161F36" lineHeight="17.5px">
+            MY RECOVERY CONTACTS
+          </Box>
+          <Box>
+            {isEditing && tempGuardians.length < 10 && (
+              <Box
+                position="relative"
+                display={{
+                  sm: 'none',
+                  md: 'flex'
+                }}
+              >
+                <Box>
+                  <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
+                    {() => (
+                      <Box overflow="auto" ref={guardianMenuRef} cursor="pointer">
+                        <MenuButton as={Box} onClick={onAddRecoveryContact}>
+                          <Button fontSize="14px" size="lg" type="white" color="#161F36" fontWeight="400">
+                            +Add {tempGuardians.length ? 'another' : ''} recovery contact
+                          </Button>
+                        </MenuButton>
+                      </Box>
+                    )}
+                  </Menu>
+                </Box>
+              </Box>
+            )}
+          </Box>
         </Box>
-        <Box marginTop="14px">
+        <Box
+          marginTop="14px"
+          display="flex"
+          flexDirection={{
+            sm: 'column',
+            md: 'row',
+          }}
+          flexWrap="wrap"
+        >
           {tempGuardians.map((guardianAddress: any, index: number) => (
             <Box
               // border="1px solid #DFDFDF"
@@ -224,6 +273,14 @@ export default function Manage() {
               alignItems="center"
               marginBottom="16px"
               key={index}
+              width={{
+                sm: '100%',
+                md: 'calc(50% - 8px)'
+              }}
+              marginRight={{
+                sm: '0',
+                md: ((index % 2) === 0) ? '16px' : '0',
+              }}
             >
               <Box width="48px" height="48px" marginRight="8px">
                 <AddressIcon address={guardianAddress} width={48} />
@@ -243,39 +300,62 @@ export default function Manage() {
                 </Box>
               </Box>
               {isEditing && (
-                <Box marginLeft="auto" onClick={() => doHandleGuardian(index)}>
+                <Box marginLeft="auto" onClick={() => doHandleGuardian(index)} cursor="pointer">
                   <EditIcon />
                 </Box>
               )}
             </Box>
           ))}
         </Box>
-        {isEditing && tempGuardians.length < 10 && (
-          <Box marginBottom="40px" position="relative">
-            <Box>
+        <Box
+          marginBottom="40px"
+          position="relative"
+        >
+          {isEditing && tempGuardians.length < 10 && (
+            <Box
+              display={{
+                sm: 'flex',
+                md: 'none'
+              }}
+            >
               <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
                 {() => (
                   <Box overflow="auto" ref={guardianMenuRef}>
-                    <MenuButton as={Box} onClick={onAddRecoveryContact}>
-                      <Button fontSize="14px" size="lg" type="white" color="#161F36" fontWeight="400">
+                    <Box as={Box}>
+                      <Button fontSize="14px" size="lg" type="white" color="#161F36" fontWeight="400" cursor="pointer" onClick={onAddRecoveryContact}>
                         +Add {tempGuardians.length ? 'another' : ''} recovery contact
                       </Button>
-                    </MenuButton>
+                    </Box>
                   </Box>
                 )}
               </Menu>
             </Box>
-          </Box>
-        )}
-        {!isEditing && (
-          <Box height="40px" width="1px" />
-        )}
+          )}
+        </Box>
         {tempGuardians.length > 0 && (
           <Box>
-            <Box fontSize="14px" fontWeight="500" color="#161F36" lineHeight="17.5px">
+            <Box
+              fontSize="14px"
+              fontWeight="500"
+              color="#161F36"
+              lineHeight="17.5px"
+              minHeight="40px"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
               RECOVERY SETTINGS
             </Box>
-            <Box background="#F2F3F5" padding="16px" marginTop="16px" borderRadius="16px">
+            <Box
+              background="#F2F3F5"
+              padding="16px"
+              marginTop="16px"
+              borderRadius="16px"
+              width={{
+                sm: '100%',
+                md: 'calc(50% - 8px)'
+              }}
+            >
               <Box marginBottom="14px" marginTop="12px" position="relative">
                 <Box display="flex" alignItems="center" justifyContent="space-between">
                   {isEditing && (
@@ -287,6 +367,7 @@ export default function Manage() {
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
+                      cursor="pointer"
                       onClick={() => { if (tempThreshold - 1 > 0) { onSetThreshold(tempThreshold - 1) } }}
                     >
                       <MinusIcon />
@@ -308,6 +389,7 @@ export default function Manage() {
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
+                      cursor="pointer"
                       onClick={() => { if (tempThreshold + 1 <= tempGuardians.length) { onSetThreshold(tempThreshold + 1) } }}
                     >
                       <AddIcon />
@@ -331,12 +413,34 @@ export default function Manage() {
       {isEditing && (
         <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
           <Box width="50%" paddingRight="7px">
-            <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={() => setIsEditing(false)} color="black">
+            <Button
+              width={{
+                sm: 'calc(100% - 7px)',
+                md: '200px',
+              }}
+              disabled={false} size="xl"
+              type="white"
+              onClick={() => setIsEditing(false)} color="black"
+            >
               Cancel
             </Button>
           </Box>
           <Box width="50%" paddingLeft="7px">
-            <Button width="calc(100% - 7px)" loading={changingGuardian} disabled={changingGuardian} size="xl" type="gradientBlue"  onClick={() => doChangeGuardian()}>
+            <Button
+              width={{
+                sm: 'calc(100% - 7px)',
+                md: '200px',
+              }}
+              loading={changingGuardian}
+              disabled={changingGuardian}
+              size="xl"
+              type="gradientBlue"
+              onClick={() => doChangeGuardian()}
+              marginLeft={{
+                sm: "0",
+                md: 'calc(100% - 200px)',
+              }}
+            >
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Box marginRight="8px"><FadeId /></Box>
                 <Box>Confirm</Box>
@@ -347,7 +451,21 @@ export default function Manage() {
       )}
       {!isEditing && (
         <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
-          <Button width="100%" disabled={false} size="xl" type="white" onClick={() => setIsEditing(true)} color="black">
+          <Button
+            width={{
+              sm: "100%",
+              md: '200px',
+            }}
+            disabled={false}
+            size="xl"
+            type="white"
+            onClick={() => setIsEditing(true)}
+            color="black"
+            marginLeft={{
+              sm: "0",
+              md: 'auto',
+            }}
+          >
             Edit
           </Button>
         </Box>
@@ -483,9 +601,11 @@ export default function Manage() {
           justifyContent="flex-end"
           maxW={{
             sm: 'calc(100vw - 32px)',
+            md: '330px',
           }}
           marginTop={{
             sm: `auto`,
+            md: 'calc(50vh - 100px)',
           }}
           overflow="visible"
           mb="0"
@@ -560,15 +680,23 @@ export default function Manage() {
         motionPreset="slideInBottom"
         blockScrollOnMount={true}
       >
-        <ModalOverlay height="100vh" background="transparent" />
+        <ModalOverlay
+          height="100vh"
+          background={{
+            sm: 'transparent',
+            md: 'rgba(0, 0, 0, 0.5)',
+          }}
+        />
         <ModalContent
           borderRadius="24px"
           justifyContent="flex-end"
           maxW={{
             sm: 'calc(100vw - 32px)',
+            md: '330px',
           }}
           marginTop={{
             sm: `auto`,
+            md: 'calc(50vh - 100px)',
           }}
           overflow="visible"
           mb="0"

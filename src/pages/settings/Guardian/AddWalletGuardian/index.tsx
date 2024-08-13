@@ -27,7 +27,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   // const [step, setStep] = useState(0);
   // const screenSize = useScreenSize()
   const navigate = useNavigate();
-  const innerHeight = window.innerHeight - 134
+  const { innerHeight } = useScreenSize()
   const { doSetGuardians } = useRecover();
   const { guardianAddressName, saveGuardianAddressName } = useSettingStore();
   const [changingGuardian, setChangingGuardian] = useState(false);
@@ -140,8 +140,23 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   const isValidAddress = guardianAddress && isAddress(guardianAddress);
 
   return (
-    <Box width="100%" height={innerHeight - 40}>
-      <Box fontSize="16px" fontWeight="500" padding="10px 30px" paddingTop="60px">
+    <Box
+      width="100%"
+      height={{
+        sm: innerHeight,
+        md: '100%',
+      }}
+      overflowY="auto"
+    >
+      <Box
+        fontSize="16px"
+        fontWeight="500"
+        padding="10px 30px"
+        display={{
+          sm: 'flex',
+          md: 'none'
+        }}
+      >
 
       </Box>
       <Box
@@ -231,7 +246,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 height="56px"
               />
             </Box>
-            <Button size="xl" type="gradientBlue" width="100%" marginTop="60px" disabled={!isValidAddress} loading={changingGuardian} onClick={onConfirm}>
+            <Button size="xl" type="gradientBlue" width={{ sm: '100%', md: '200px' }} marginTop="60px" marginLeft={{ sm: '0', md: 'calc(100% - 200px)' }} disabled={!isValidAddress} loading={changingGuardian} onClick={onConfirm}>
               Add
             </Button>
           </Box>

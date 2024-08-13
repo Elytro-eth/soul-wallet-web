@@ -48,7 +48,10 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
   return (
     <Box
       width="100%"
-      height={innerHeight - 60 - 20}
+      height={{
+        sm: innerHeight - 80,
+        md: '440px',
+      }}
       padding="30px"
       display="flex"
       alignItems="center"
@@ -115,7 +118,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
                     </Box>
                   </Box>
                   <Box padding="8px" fontWeight="500" fontSize="20px">
-                    :
+            :
                   </Box>
                   <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
                     <Box
@@ -168,9 +171,6 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
             loading={isRecovering}
           >
             <Box display="flex" alignItems="center" justifyContent="center">
-              <Box marginRight="8px">
-                <FadeId />
-              </Box>
               <Box>Confirm</Box>
             </Box>
           </Button>

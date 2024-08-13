@@ -17,6 +17,7 @@ import { useAddressStore } from '@/store/address';
 import { useHistoryStore } from '@/store/history';
 import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
 import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
+import OpenIcon from '@/components/Icons/desktop/Open';
 import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
 import TokenIcon from '@/components/TokenIcon';
 
@@ -30,13 +31,18 @@ const getSubject = (functionName: any) => {
   }
 }
 
-export default function Activity({ isModal, registerScrollable }: any) {
-  const { historyList } = useHistoryStore();
-  const scrollableRef = useRef<any>();
+const shouldShowAmount = (functionName: any) => {
+  if (functionName === 'Send') {
+    return true
+  } else if (functionName === 'Receive') {
+    return true
+  } else {
+    return false
+  }
+}
 
-  useEffect(() => {
-    registerScrollable(scrollableRef.current);
-  }, []);
+export default function Activity({ isModal, isDashboard }: any) {
+  const { historyList } = useHistoryStore();
 
   console.log('history', historyList);
 
@@ -47,143 +53,160 @@ export default function Activity({ isModal, registerScrollable }: any) {
       alignItems="center"
       justifyContent="flex-start"
       width="100%"
-      marginTop="24px"
       position="relative"
-      height={window.innerHeight - 20}
+      marginTop={isDashboard ? '0' : '24px'}
+      height={isDashboard ? 'calc(100vh - 104px)' : (window.innerHeight - 20)}
+      background="white"
     >
       <Box
-        // fontSize="18px"
-        fontSize="32px"
-        fontWeight="500"
-        lineHeight="24px"
-        width="100%"
-        paddingLeft="30px"
-        paddingRight="30px"
-        marginTop="60px"
+        width={{
+          sm: '100%',
+          md: isDashboard ? '100%' : '798px',
+        }}
       >
-        Activity
-      </Box>
-      <Box
-        width="100%"
-        background="white"
-        marginTop="27px"
-        overflow="auto"
-        ref={scrollableRef}
-        paddingLeft="30px"
-        paddingRight="30px"
-        height={window.innerHeight - 64}
-      >
-        {historyList.length ? (
-          <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
-            {historyList.map((item, index) => (
-              <Box display="flex" alignItems="center" height="52px" key={index}>
-                <Image w="8" h="8" mr="3" flex={"0 0 32px"} src={getIconMapping(item.functionName)} />
-                <Box>
-                  <Box display="flex" alignItems="center">
-                    <Box
-                      fontSize="18px"
-                      fontWeight="500"
-                      lineHeight="22.5px"
-                      color="#161F36"
-                      textTransform={'capitalize'}
-                      marginRight="4px"
-                    >
-                      {item.functionName}
-                    </Box>
-                    <Flex
-                      align={'center'}
-                      fontSize="18px"
-                      fontWeight="500"
-                      lineHeight="22.5px"
-                      color="#161F36"
-                      display="flex"
-                    >
-                      <Box marginRight="4px">
-                        {item.tokenChanged}
-                      </Box>
-                      {/* <Box marginRight="4px">
-                        {"USDC"}
-                      </Box> */}
-                      {item.erc20Address && <TokenIcon address={item.erc20Address} size={20} /> }
-                      {/* {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />} */}
-                    </Flex>
-                  </Box>
-                  <Box fontSize="14px" fontWeight="400" lineHeight="17.5px" color="#95979C" display="flex">
-                    <Box marginRight="4px">{getSubject(item.functionName)}</Box>
-                    <Box>{toShortAddress(item.interactAddress, 6)}</Box>
-                  </Box>
-                  {/* <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px">
-                      {formatDate(new Date(item.timestamp * 1000))}
-                      </Box> */}
-                </Box>
-              </Box>
-            ))}
-          </Flex>
-        ) : (
-          <Flex
-            gap="16px"
-            padding="0"
-            width="100%"
-            paddingBottom="16px"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            height="100%"
-          >
-            <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-              <Image src={ActivityEmptyIcon} w={'216px'} h="108px" />
-              <Box color="#676B75" marginTop="8px">
-                You don’t have any activity yet
-              </Box>
-            </Box>
-          </Flex>
-        )}
-      </Box>
-      {/* {finalHistoryList && finalHistoryList.length > 0 && (
-          <Box
+        <Box
+          fontSize="32px"
+          fontWeight="500"
+          lineHeight="24px"
+          width="100%"
+          paddingLeft="30px"
+          paddingRight="30px"
+          marginTop={isDashboard ? '32px' : '60px'}
+        >
+          Activity
+        </Box>
+        <Box
           width="100%"
           background="white"
           marginTop="27px"
           overflow="auto"
-          ref={scrollableRef}
           paddingLeft="30px"
           paddingRight="30px"
-          >
-          <Flex
-          gap="36px"
-          padding="0"
-          flexDir="column"
-          width="100%"
-          overflow="auto"
-          // maxHeight="calc(100% - 120px)"
-          >
-          {finalHistoryList.map((item: any, i: any) => (
-          <Box
-          key={i}
-          display="flex"
-          alignItems="center"
-          height="40px"
-          >
-          <Box marginRight="12px">
-          {item.action === 'Deposit' ? <ActivityDepositIcon /> :  <ActivityTransferIcon />}
-          </Box>
-          <Box>
-          <Box
-          display="flex"
-          alignItems="center"
-          >
-          <Box fontSize="14px" fontWeight="500">{item.action}</Box>
-          </Box>
-          <Box fontSize="12px">{item.dateFormatted}</Box>
-          </Box>
-          <Box marginLeft="auto">
-          <Box fontSize="14px" fontWeight="500">{item.amountFormatted} USDC</Box>
-          </Box>
-          </Box>
-          ))}
-          </Flex>
-          </Box>
-          )} */}
+          height={isDashboard ? 'calc(100vh - 170px)' : (window.innerHeight - 60)}
+        >
+          {historyList.length ? (
+            <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
+              {historyList.map((item, index) => (
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  height={{
+                    sm: '52px',
+                    // md: '42px',
+                  }}
+                  key={index}
+                  width="100%"
+                >
+                  <Image w="8" h="8" mr="10px" flex={"0 0 32px"} src={getIconMapping(item.functionName)} />
+                  <Box
+                    display="flex"
+                    alignItems="flex-start"
+                    width="calc(100% - 42px)"
+                    flexDirection={{
+                      sm: 'column',
+                      md: 'row',
+                    }}
+                    justifyContent={{
+                      sm: 'center',
+                      md: 'space-between',
+                    }}
+                  >
+                    <Box display="flex" alignItems="center">
+                      <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36">
+                        {item.functionName}
+                      </Box>
+                      {(shouldShowAmount(item.functionName)) && (
+                        <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" marginLeft="4px">
+                          <Box>
+                            {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
+                          </Box>
+                          {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
+                        </Box>
+                      )}
+                    </Box>
+                    <Box fontSize="12px" fontWeight="400" lineHeight="15px" color="#95979C" marginTop="2px" display="flex" alignItems="center">
+                      {getSubject(item.functionName)}{toShortAddress(item.interactAddress, 6)}
+                      <Box
+                        marginLeft="8px"
+                        cursor="pointer"
+                        display={{
+                          sm: 'none',
+                          md: 'block'
+                        }}
+                      >
+                        <OpenIcon />
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              ))}
+            </Flex>
+          ) : (
+            <Flex
+              gap="16px"
+              padding="0"
+              width="100%"
+              paddingBottom="16px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              height="100%"
+            >
+              <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+                <Image src={ActivityEmptyIcon} w={'216px'} h="108px" />
+                <Box color="#676B75" marginTop="8px">
+                  You don’t have any activity yet
+                </Box>
+              </Box>
+            </Flex>
+          )}
+        </Box>
+        {/* {finalHistoryList && finalHistoryList.length > 0 && (
+            <Box
+            width="100%"
+            background="white"
+            marginTop="27px"
+            overflow="auto"
+            ref={scrollableRef}
+            paddingLeft="30px"
+            paddingRight="30px"
+            >
+            <Flex
+            gap="36px"
+            padding="0"
+            flexDir="column"
+            width="100%"
+            overflow="auto"
+            // maxHeight="calc(100% - 120px)"
+            >
+            {finalHistoryList.map((item: any, i: any) => (
+            <Box
+            key={i}
+            display="flex"
+            alignItems="center"
+            height="40px"
+            >
+            <Box marginRight="12px">
+            {item.action === 'Deposit' ? <ActivityDepositIcon /> :  <ActivityTransferIcon />}
+            </Box>
+            <Box>
+            <Box
+            display="flex"
+            alignItems="center"
+            >
+            <Box fontSize="14px" fontWeight="500">{item.action}</Box>
+            </Box>
+            <Box fontSize="12px">{item.dateFormatted}</Box>
+            </Box>
+            <Box marginLeft="auto">
+            <Box fontSize="14px" fontWeight="500">{item.amountFormatted} USDC</Box>
+            </Box>
+            </Box>
+            ))}
+            </Flex>
+            </Box>
+            )} */}
+      </Box>
     </Box>
   );
 }

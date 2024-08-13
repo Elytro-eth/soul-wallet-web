@@ -95,8 +95,33 @@ export default function Receive({ isModal, registerScrollable }: any) {
   }, []);
 
   return (
-    <Box width="100%" height={innerHeight} overflowY="scroll" background="#F2F3F5">
-      <Box marginTop="60px" padding="30px 8px" minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}>
+    <Box
+      width="100%"
+      height={{
+        sm: innerHeight,
+        md: '100%',
+      }}
+      overflowY="scroll"
+      background={{
+        sm: '#F2F3F5',
+        md: 'white',
+      }}
+      display="flex"
+      alignItems={{ sm: 'center', md: 'flex-start' }}
+      justifyContent="center"
+    >
+      <Box
+        marginTop="0px"
+        padding="30px 8px"
+        minHeight={{
+          sm: isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)',
+          md: isModal ? 'calc(100%)' : 'calc(100vh - 62px)'
+        }}
+        width={{
+          sm: '100%',
+          md: '380px'
+        }}
+      >
         <Box fontSize="28px" fontWeight="500" padding="0 24px">
           Receive
         </Box>
@@ -130,27 +155,49 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 </Box>
               </Box>
             </Box>
-            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" marginTop="40px">
-              <Box display="flex" alignItems="center" width="205px" height="205px">
-                <ReceiveCode address={selectedAddress} onSet={() => {}} />
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" marginTop={{ sm: '40px', md: '10px' }}>
+              <Box
+                display="flex"
+                alignItems="center"
+                width={{
+                  sm: '205px',
+                  md: '144px'
+                }}
+                height={{
+                  sm: '205px',
+                  md: '144px'
+                }}
+              >
+                <ReceiveCode
+                  address={selectedAddress}
+                  width={{
+                    sm: '205px',
+                    md: '144px'
+                  }}
+                  height={{
+                    sm: '205px',
+                    md: '144px'
+                  }}
+                  onSet={() => {}}
+                />
               </Box>
               <Box
                 fontSize="18px"
-                lineHeight={"25px"}
+                lineHeight="25px"
                 display="inline-block"
                 textAlign="center"
                 maxWidth="313px"
                 marginTop="14px"
                 color="#161F36"
               >
-                <Text as="span" fontWeight={"500"} color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Text>
+                <Text as="span" fontWeight="500" color={chainConfig.chainColor}>{chainConfig.chainPrefix}</Text>
                 <Text as="span" color="#161F36">
                   {selectedAddress}
                 </Text>
               </Box>
               <Box marginTop="24px" width="174px">
                 <Button
-                  fontWeight={'400'}
+                  fontWeight="400"
                   size="xl"
                   type="white"
                   width="174px"
@@ -167,7 +214,6 @@ export default function Receive({ isModal, registerScrollable }: any) {
             color="rgba(0, 0, 0, 0.5)"
             width="100%"
             textAlign="center"
-            marginTop="20px"
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -175,9 +221,10 @@ export default function Receive({ isModal, registerScrollable }: any) {
               position: "absolute",
               bottom: "32px"
             } : {
-              marginTop: "64px",
+              marginTop: '20px',
             }}
             onClick={() => openModal('receiveSteps')}
+            cursor="pointer"
           >
             <Box as="span" marginRight="4px">
               How to send crypto to this address?

@@ -261,25 +261,104 @@ export default function Recover() {
   };
 
   return (
-    <Box width="100%" height={innerHeight} bg="#fff">
-      {step < 4 && (
-        <Fragment>
-          {step === -1 && <Header title="" showLogo={true} />}
-          {step > -1 && (
-            <Header title={step < 3 ? 'Recover account' : ''} showBackButton={step < 3} step={step} onBack={onPrev} />
-          )}
-        </Fragment>
-      )}
-      {step > -1 && step < 3 && <ProgressBar size={3} activeIndex={step} />}
-      {step > -1 && step < 3 && <RecoverProcess step={step} />}
+    <Box
+      width="100%"
+      height={innerHeight}
+      background={{
+        sm: 'white',
+        md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+      }}
+    >
+      <Header
+        showLogo={true}
+        height="60px"
+        width="100%"
+        background="transparent"
+        display={{
+          sm: 'none',
+          md: 'flex',
+        }}
+      />
       <Box
-        height={step < 4 ? innerHeight - 64 : innerHeight}
-        overflowY="auto"
         display="flex"
         alignItems="flex-start"
         justifyContent="center"
+        height={{
+          sm: "100%",
+          md: "calc(100% - 60px)"
+        }}
+        paddingTop={{
+          sm: "0",
+          md: "40px"
+        }}
+        paddingLeft={{
+          sm: "0",
+          md: "20px"
+        }}
+        paddingRight={{
+          sm: "0",
+          md: "20px"
+        }}
+        overflow="scroll"
+        paddingBottom={{
+          sm: '0px',
+          md: '80px'
+        }}
       >
-        {renderStep()}
+        <Box
+          width={{
+            sm: "100%",
+            md: "640px",
+          }}
+          bg="#fff"
+          borderRadius={{
+            sm: '0',
+            md: '32px',
+          }}
+          overflow="hidden"
+        >
+          {step < 4 && (
+            <Fragment>
+              {step === -1 && <Header title="" showLogo={true} />}
+              {step > -1 && (
+                <Header
+                  title={step < 3 ? 'Recover account' : ''}
+                  showBackButton={step < 3}
+                  step={step}
+                  onBack={onPrev}
+                  display={{
+                    sm: 'flex',
+                    md: 'none'
+                  }}
+                />
+              )}
+            </Fragment>
+          )}
+          <Box
+            display={{
+              sm: 'flex',
+              md: 'none'
+            }}
+          >
+            {step > -1 && step < 3 && <ProgressBar size={3} activeIndex={step} />}
+          </Box>
+          <Box
+            height={{
+              sm: step < 4 ? innerHeight - 64 : innerHeight,
+              md: 'auto',
+            }}
+            width="100%"
+            overflowY="auto"
+            display="flex"
+            alignItems="flex-start"
+            justifyContent="center"
+          >
+            {renderStep()}
+          </Box>
+        </Box>
+        <Box>
+          {step > -1 && step < 3 && <RecoverProcess step={step} />}
+        </Box>
       </Box>
     </Box>
   );

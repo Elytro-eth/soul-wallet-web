@@ -88,150 +88,172 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           <Image height="116px" src={Guardian2Icon} />
         </Box>
       </Box>
-      {walletGurdians && walletGurdians.length ?  <Box marginTop="40px">
-        <Box fontSize="20px" fontWeight="500" mb="3" color="#161F36">
-          Wallet recovery contact
-        </Box>
-        {walletGurdians.map((guardianAddress: any, index: number) => {
-          const isEmail = guardianAddressEmail[guardianAddress] ? true : false;
-          const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
-          const isLast = index === guardiansList.length - 1
-          return <Box
-                   fontWeight="500"
-                   fontSize="14px"
-                   key={index}
-                   width="100%"
-                   padding="16px 0"
-                   height="64px"
-                   borderBottom={isLast ? '1px solid #F0F0F0' : ''}
-                   display="flex"
-                   alignItems="center"
-                  //  marginTop="12px"
-                 >
-            {/* <AddressIcon width={32} address={guardianAddress} /> */}
-            <Flex align={'center'} gap="2">
-              <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
-              {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
-            </Flex>
-            <Box marginLeft="auto">
-              {(signedGuardians.includes(guardianAddress)) ? (
-                <Box
-                  color="#92EF5A"
-                  background="#1E4124"
-                  padding="2px 12px"
-                  borderRadius="24px"
-                  fontWeight="400"
-                  display="flex"
-                  alignItems="center"
-                  fontSize="12px"
-                  height="31px"
-                >
-                  <Box marginRight="4px">
-                    <ApprovedIcon />
-                  </Box>
-                  <Box>Confirmed</Box>
-                </Box>
-              ) : guardianAddressEmail[guardianAddress] ? (
-                <Button size="sm" type="lightBlue" height="31px" onClick={() => doOpenModal(guardianAddress)} color="#161F36">
-                  Verify Email
-                </Button>
-              ) : (
-                <Box
-                  color="#848488"
-                  background="#F3F3F3"
-                  padding="2px 12px"
-                  borderRadius="24px"
-                  display="flex"
-                  alignItems="center"
-                  height="31px"
-                >
-                  <Box marginRight="4px">
-                    <WaitingIcon />
-                  </Box>
-                  <Box>Waiting</Box>
-                </Box>
-              )}
+      <Box
+        display="flex"
+        flexDirection={{ sm: 'column', md: 'row' }}
+      >
+        <Box
+          width={{
+            sm: '100%',
+            md: '50%',
+          }}
+          paddingRight={{ sm: '0', md: '32px' }}
+        >
+          {walletGurdians && walletGurdians.length ?  <Box marginTop="40px">
+            <Box fontSize="20px" fontWeight="500" mb="3" color="#161F36">
+              Wallet recovery contact
             </Box>
-          </Box>
-        })}
-        {walletGurdians && walletGurdians.length && (
-          <Box>
-            <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="8px" height="50px" minHeight="50px">
-              Share link
-            </Button>
-            <Box width="100%" fontSize="14px" fontWeight="400" marginTop="8px" color="#676B75">
-              Ask them to connect wallet and sign the signature to recover for you.
-            </Box>
-          </Box>
-        )}
-      </Box> : ''}
-
-      {emailGurdians && emailGurdians.length > 0 ? <Box marginTop="24px" borderTop="1px solid #BDC0C7" paddingTop="24px">
-        <Box fontSize="20px" fontWeight="500" color="#161F36" mb="3">
-          Email recovery contact
-        </Box>
-        {emailGurdians.map((guardianAddress: any, index: number) => {
-          const isEmail = guardianAddressEmail[guardianAddress] ? true : false;
-          const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
-          const isLast = index === guardiansList.length - 1
-          return <Box
-                   fontWeight="500"
-                   fontSize="14px"
-                   key={index}
-                   width="100%"
-                   padding="16px 0"
-                   height="64px"
-                   borderBottom={isLast ? '1px solid #F0F0F0' : ''}
-                   display="flex"
-                   alignItems="center"
-                 >
-            {/* <AddressIcon width={32} address={guardianAddress} /> */}
-            <Flex align={'center'} gap="2">
-              <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
-              {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
-            </Flex>
-            <Box marginLeft="auto">
-              {(signedGuardians.includes(guardianAddress)) ? (
-                <Box
-                  color="#92EF5A"
-                  background="#1E4124"
-                  padding="2px 12px"
-                  borderRadius="24px"
-                  fontWeight="400"
-                  display="flex"
-                  alignItems="center"
-                  fontSize="12px"
-                  height="31px"
-                >
-                  <Box marginRight="4px">
-                    <ApprovedIcon />
-                  </Box>
-                  <Box>Confirmed</Box>
+            {walletGurdians.map((guardianAddress: any, index: number) => {
+              const isEmail = guardianAddressEmail[guardianAddress] ? true : false;
+              const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
+              const isLast = index === guardiansList.length - 1
+              return <Box
+                       fontWeight="500"
+                       fontSize="14px"
+                       key={index}
+                       width="100%"
+                       padding="16px 0"
+                       height="64px"
+                       borderBottom={isLast ? '1px solid #F0F0F0' : ''}
+                       display="flex"
+                       alignItems="center"
+                //  marginTop="12px"
+                     >
+                {/* <AddressIcon width={32} address={guardianAddress} /> */}
+                <Flex align={'center'} gap="2">
+                  <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
+                  {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
+                </Flex>
+                <Box marginLeft="auto">
+                  {(signedGuardians.includes(guardianAddress)) ? (
+                    <Box
+                      color="#92EF5A"
+                      background="#1E4124"
+                      padding="2px 12px"
+                      borderRadius="24px"
+                      fontWeight="400"
+                      display="flex"
+                      alignItems="center"
+                      fontSize="12px"
+                      height="31px"
+                    >
+                      <Box marginRight="4px">
+                        <ApprovedIcon />
+                      </Box>
+                      <Box>Confirmed</Box>
+                    </Box>
+                  ) : guardianAddressEmail[guardianAddress] ? (
+                    <Button size="sm" type="lightBlue" height="31px" onClick={() => doOpenModal(guardianAddress)} color="#161F36">
+                      Verify Email
+                    </Button>
+                  ) : (
+                    <Box
+                      color="#848488"
+                      background="#F3F3F3"
+                      padding="2px 12px"
+                      borderRadius="24px"
+                      display="flex"
+                      alignItems="center"
+                      height="31px"
+                    >
+                      <Box marginRight="4px">
+                        <WaitingIcon />
+                      </Box>
+                      <Box>Waiting</Box>
+                    </Box>
+                  )}
                 </Box>
-              ) : <Box
-              color="#848488"
-              background="#F3F3F3"
-              padding="2px 12px"
-              borderRadius="24px"
-              display="flex"
-              alignItems="center"
-              height="31px"
-            >
-              <Box marginRight="4px">
-                <WaitingIcon />
               </Box>
-              <Box>Waiting</Box>
-            </Box>}
+            })}
+            {walletGurdians && walletGurdians.length && (
+              <Box>
+                <Button onClick={onShare} size="xl" type="gradientBlue" width="100%" marginTop="8px" height="50px" minHeight="50px">
+                  Share link
+                </Button>
+                <Box width="100%" fontSize="14px" fontWeight="400" marginTop="8px" color="#676B75">
+                  Ask them to connect wallet and sign the signature to recover for you.
+                </Box>
+              </Box>
+            )}
+          </Box> : ''}
+        </Box>
+
+        <Box
+          width={{
+            sm: '100%',
+            md: '50%',
+          }}
+          paddingLeft={{ sm: '0', md: '32px' }}
+          borderLeft={{ sm: 'none', md: '1px solid #F2F3F5' }}
+        >
+          {emailGurdians && emailGurdians.length > 0 ? <Box marginTop="24px" borderTop={{ sm: '1px solid #BDC0C7', md: 'none' }} paddingTop="24px">
+            <Box fontSize="20px" fontWeight="500" color="#161F36" mb="3">
+              Email recovery contact
             </Box>
-          </Box>
-        })}
-        {emailGurdians && emailGurdians.length && (
-          <Button onClick={() => doOpenModal(emailGurdians[0])} size="xl" type="gradientBlue" width="100%" marginTop="8px" height="50px" minHeight="50px">
-            Verify Email
-          </Button>
-        )}
-      </Box> : ''}
-      <Box height="110px" />
+            {emailGurdians.map((guardianAddress: any, index: number) => {
+              const isEmail = guardianAddressEmail[guardianAddress] ? true : false;
+              const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
+              const isLast = index === guardiansList.length - 1
+              return <Box
+                       fontWeight="500"
+                       fontSize="14px"
+                       key={index}
+                       width="100%"
+                       padding="16px 0"
+                       height="64px"
+                       borderBottom={isLast ? '1px solid #F0F0F0' : ''}
+                       display="flex"
+                       alignItems="center"
+                     >
+                {/* <AddressIcon width={32} address={guardianAddress} /> */}
+                <Flex align={'center'} gap="2">
+                  <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
+                  {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
+                </Flex>
+                <Box marginLeft="auto">
+                  {(signedGuardians.includes(guardianAddress)) ? (
+                    <Box
+                      color="#92EF5A"
+                      background="#1E4124"
+                      padding="2px 12px"
+                      borderRadius="24px"
+                      fontWeight="400"
+                      display="flex"
+                      alignItems="center"
+                      fontSize="12px"
+                      height="31px"
+                    >
+                      <Box marginRight="4px">
+                        <ApprovedIcon />
+                      </Box>
+                      <Box>Confirmed</Box>
+                    </Box>
+                  ) : <Box
+                        color="#848488"
+                        background="#F3F3F3"
+                        padding="2px 12px"
+                        borderRadius="24px"
+                        display="flex"
+                        alignItems="center"
+                        height="31px"
+                      >
+                    <Box marginRight="4px">
+                      <WaitingIcon />
+                    </Box>
+                    <Box>Waiting</Box>
+                  </Box>}
+                </Box>
+              </Box>
+            })}
+            {emailGurdians && emailGurdians.length && (
+              <Button onClick={() => doOpenModal(emailGurdians[0])} size="xl" type="gradientBlue" width="100%" marginTop="8px" height="50px" minHeight="50px">
+                Verify Email
+              </Button>
+            )}
+          </Box> : ''}
+        </Box>
+      </Box>
+      <Box height="110px" display={{ sm: 'block', md: 'none' }} />
     </Box>
   );
 }

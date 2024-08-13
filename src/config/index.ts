@@ -1,6 +1,7 @@
 import IconTwitter from '@/assets/socials/twitter.svg';
 import IconTelegram from '@/assets/socials/telegram.svg';
 import IconGithub from '@/assets/socials/github.svg';
+import IconLinkedin from '@/assets/socials/linkedin.svg';
 // import IconLinkedin from '@/assets/socials/linkedin.svg';
 import IconTwitterActivated from '@/assets/socials/twitter-activated.svg';
 import IconTelegramActivated from '@/assets/socials/telegram-activated.svg';
@@ -104,14 +105,33 @@ export const tgTestLink = 'https://t.me/+d34jY9XP5LZmZjY5'
 
 export const aaveLink = 'https://aave.com';
 
+export const githubLink = 'https://github.com/SoulWallet/soul-wallet-web'
+
+export const linkedinLink = 'https://www.linkedin.com/company/soul-wallet'
+
 export default {
   homepage: 'https://www.soulwallet.io',
   faviconUrl: 'https://www.google.com/s2/favicons?domain=',
   socials: [
     {
       icon: IconTwitter,
-      iconActivated: IconTwitterActivated,
+      // iconActivated: IconTwitterActivated,
       link: xLink,
+    },
+    {
+      icon: IconTelegram,
+      // iconActivated: IconTwitterActivated,
+      link: tgTestLink,
+    },
+    {
+      icon: IconGithub,
+      // iconActivated: IconTwitterActivated,
+      link: githubLink,
+    },
+    {
+      icon: IconLinkedin,
+      // iconActivated: IconTwitterActivated,
+      link: linkedinLink,
     },
   ],
   magicValue: '0x1626ba7e',

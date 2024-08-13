@@ -114,11 +114,18 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
     <Box
       width="100%"
       padding="30px"
-      height={innerHeight}
+      height={{
+        sm: innerHeight,
+        md: '440px',
+      }}
       display="flex"
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
+      maxWidth={{
+        sm: '100%',
+        md: '400px'
+      }}
     >
       <Box marginBottom="40px">
         <Image height="198px" src={WelcomeIcon} />
@@ -131,7 +138,7 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
           Let’s go
         </Button>
       </Box>
-      <Box height="100px" />
+      <Box height="100px" display={{ sm: 'block', md: 'none' }} />
     </Box>
   );
 }

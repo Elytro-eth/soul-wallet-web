@@ -8,7 +8,22 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
   const { innerHeight } = useScreenSize()
 
   return (
-    <Box width="100%" padding="30px" height={innerHeight - 64} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+    <Box
+      width="100%"
+      padding="30px"
+      height={{
+        sm: innerHeight - 64,
+        md: 'auto',
+      }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      flexDirection="column"
+      maxWidth={{
+        sm: '100%',
+        md: '400px'
+      }}
+    >
       <Box
         marginBottom="24px"
         width="144px"
@@ -40,8 +55,8 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
         width="100%"
       >
         <Box width="100%" fontSize="14px" lineHeight="17.5px" fontWeight="400" textAlign="center" color="#676B75">
-        Setup with your fingerprint, Face, or Lock ID.<br/><br/>
-        Use passkey to sent transaction in a safer and more secure way. You can change it later.
+          Setup with your fingerprint, Face, or Lock ID.<br/><br/>
+          Use passkey to sent transaction in a safer and more secure way. You can change it later.
         </Box>
       </Box>
       <Button width="100%" loading={addingPasskey} disabled={addingPasskey} size="xl" type="gradientBlue" onClick={onNext} minWidth="195px">
@@ -50,7 +65,7 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
           <Box>Setup</Box>
         </Box>
       </Button>
-      <Box height="100px" />
+      <Box height="100px" display={{ sm: 'block', md: 'none' }} />
     </Box>
   );
 }
