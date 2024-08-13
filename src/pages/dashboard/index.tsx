@@ -769,7 +769,7 @@ export function AssetPage({ isDashboard, setActiveMenu }: any) {
             >
               {historyList.length ? (
                 <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
-                  {historyList.slice(0, 4).map((item, index) => (
+                  {historyList.slice(0, 5).map((item, index) => (
                     <Box
                       display="flex"
                       alignItems="center"
@@ -801,7 +801,7 @@ export function AssetPage({ isDashboard, setActiveMenu }: any) {
                           {(shouldShowAmount(item.functionName)) && (
                             <Box fontSize="18px" fontWeight="500" lineHeight="22.5px" color="#161F36" marginLeft="4px">
                               <Box>
-                                {item.sendEthAmount ? item.sendEthAmount : item.sendErc20Amount ? item.sendErc20Amount : 0}
+                                {item.tokenChanged}
                               </Box>
                               {item.toInfo && <Image ml="1" width="20px" height="20px" src={item.toInfo.logoURI} />}
                             </Box>
@@ -1240,25 +1240,25 @@ export default function Dashboard(props: any) {
                   </a>
                 ))}
                 {/* <Box
-                  cursor="pointer"
-                >
-                  <TwitterIcon />
-                </Box>
-                <Box
-                  cursor="pointer"
-                >
-                  <TelegramIcon />
-                </Box>
-                <Box
-                  cursor="pointer"
-                >
-                  <GithubIcon />
-                </Box>
-                <Box
-                  cursor="pointer"
-                >
-                  <LinkedInIcon />
-                </Box> */}
+                    cursor="pointer"
+                    >
+                    <TwitterIcon />
+                    </Box>
+                    <Box
+                    cursor="pointer"
+                    >
+                    <TelegramIcon />
+                    </Box>
+                    <Box
+                    cursor="pointer"
+                    >
+                    <GithubIcon />
+                    </Box>
+                    <Box
+                    cursor="pointer"
+                    >
+                    <LinkedInIcon />
+                    </Box> */}
               </Box>
             </Box>
           </Box>
