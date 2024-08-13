@@ -9,7 +9,7 @@ export default function Footer({ ...restProps }: FlexProps) {
         Version: Alpha {packageJson.version}
       </Text>
       <Flex gap="3" align={'center'}>
-        {config.socials.map((item, idx) => (
+        {config.socials.map((item: any, idx) => (
           <Link
             href={item.link}
             target="_blank"
