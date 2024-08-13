@@ -56,7 +56,7 @@ export const sidebarLinks = [
 
 export const supportedEoas = ['injected', 'walletConnect', 'io.metamask'];
 
-export const vaultsFyiEndpoint = 'https://api.vaults.fyi/v1'
+export const thirdPartyLicenseUrl = 'https://github.com/SoulWallet/soul-wallet-web/blob/prod-op/third-party-software.md';
 
 export const forbiddenEmailProviders = ['qq.com', '163.com', '126.com'];
 

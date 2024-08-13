@@ -1,7 +1,6 @@
 import axios from 'axios';
 import config from '@/config';
 import { UserOperation } from '@soulwallet/sdk';
-import { vaultsFyiEndpoint } from '@/config/constants';
 
 const axio = axios.create({
   baseURL: config.backendURL,
