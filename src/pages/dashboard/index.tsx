@@ -15,7 +15,8 @@ import {
   ModalCloseButton,
   ModalBody,
   useDisclosure,
-  useBreakpointValue
+  useBreakpointValue,
+  useMediaQuery
 } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import MoreIcon from '@/components/Icons/mobile/More';
@@ -462,32 +463,28 @@ export function Header({ openMenu, username, ...props }: any) {
   );
 }
 
-export function AssetPage({ isDashboard, setActiveMenu }: any) {
+export function AssetPage({ setActiveMenu }: any) {
   const { openFullScreenModal } = useWalletContext();
-  const { innerHeight } = useScreenSize();
-  const [modalMargin, setModalMargin] = useState(494);
-  const [modalHeight, setModalHeight] = useState(innerHeight - 494);
-  const [showFullHistory, setShowFullHistory] = useState(false);
-  const [modalPosition, setModalPosition] = useState('bottom');
-  const toast = useToast();
   const { navigate } = useBrowser();
-  const { walletName } = useAddressStore();
   const [openModal] = useOutletContext<any>();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { chainConfig } = useConfig();
-
   const { guardiansInfo } = useGuardianStore();
-  const { totalUsdValue, tokenBalance } = useBalanceStore();
+  const { totalUsdValue, tokenBalance, tokenBalanceValid } = useBalanceStore();
+  const [isLargerThan768] = useMediaQuery('min-width: 768px');
   const { historyList } = useHistoryStore();
-
   const valueLeft = totalUsdValue.split('.')[0];
   const valueRight = totalUsdValue.split('.')[1];
 
   const fontSize = getFontSize(valueLeft);
-  // const smFontSize = getSmallFontSize(valueRight);
-  // const fontBottomMargin = getFontBottomMargin(valueLeft);
 
-  const tokenBalanceValid = tokenBalance && tokenBalance.length && tokenBalance.some((item) => BN(item.tokenBalance).isGreaterThan(0));
+  const handleVerifyEmailClick =  () => {
+    if(isLargerThan768){
+      openModal('verifyEmail', { width: 640, height: 420 })
+    }else{
+      navigate('/verify-email')
+    }
+  }
+
   return (
     <Box
       display="flex"
@@ -530,11 +527,12 @@ export function AssetPage({ isDashboard, setActiveMenu }: any) {
               sm: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
               md: 'white',
             }}
+            onClick={handleVerifyEmailClick}
             // onClick={() => navigate('/verify-email')}
-            onClick={useBreakpointValue({
-              sm: () => navigate('/verify-email'),
-              md: () => openModal('verifyEmail', { width: 640, height: 420 }),
-            })}
+            // onClick={useBreakpointValue({
+            //   sm: () => navigate('/verify-email'),
+            //   md: () => openModal('verifyEmail', { width: 640, height: 420 }),
+            // })}
             cursor="pointer"
           >
             <Box>
@@ -602,49 +600,6 @@ export function AssetPage({ isDashboard, setActiveMenu }: any) {
           </Box>
         </Box>
       )}
-      {/* {activeMenu === 'apps' && (
-          <Fragment>
-          <Box
-          width="100%"
-          px="2"
-          marginTop="20px"
-          >
-          <Box
-          width="100%"
-          background="linear-gradient(to bottom, #E4EaED 0%, #C5DDEF 100%)"
-          borderRadius="24px"
-          padding="24px"
-          height="216px"
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          >
-          <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          >
-          <Box>
-          <Box fontSize="32px" fontWeight="500" color="#161F36" lineHeight="1">AAVE</Box>
-          <Box fontSize="20px" lineHeight="25px" color="#3C3F45" opacity="0.8">10.16% APY</Box>
-          </Box>
-          <Box>
-          <Image src={AAVEIcon} width="56px" height="56px" />
-          </Box>
-          </Box>
-          <Box>
-          <Button onClick={()=> toast({
-          title: 'Coming soon',
-          status: 'info',
-          })} border="none" size="xl" height="40px" width="110px" type="white">Earn now</Button>
-          </Box>
-          </Box>
-          <Box textAlign="center" width="100%" marginTop="16px" fontSize="14px" lineHeight="17.5px" opacity="0.4">
-          More apps arriving soon
-          </Box>
-          </Box>
-          </Fragment>
-          )} */}
       <Box
         display="flex"
         width="100%"
@@ -1243,7 +1198,7 @@ export default function Dashboard(props: any) {
                 padding="0 20px"
               >
                 {config.socials.map((item, index) => (
-                  <a href={item.link} target='_blank'>
+                  <a href={item.link} target='_blank' key={index}>
                     <Image src={item.icon} key={index} />
                   </a>
                 ))}

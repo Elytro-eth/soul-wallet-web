@@ -68,11 +68,11 @@ export const validEmailProviders = [
     title: 'Gmail',
     domain: 'gmail.com',
   },
-  {
-    icon: IconEmailIcloud,
-    title: 'Icloud',
-    domain: 'icloud.com',
-  },
+  // {
+  //   icon: IconEmailIcloud,
+  //   title: 'Icloud',
+  //   domain: 'icloud.com',
+  // },
   {
     icon: IconEmailYahoo,
     title: 'Yahoo mail',

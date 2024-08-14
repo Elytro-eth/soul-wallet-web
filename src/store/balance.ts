@@ -37,6 +37,7 @@ export interface IBalanceStore {
   maxFeePerGas: string;
   maxPriorityFeePerGas: string;
   fetchFeeData: (provider: any) => void;
+  tokenBalanceValid: boolean;
   sevenDayApy: string;
   oneDayInterest: string;
   totalInterest: string;
@@ -59,7 +60,7 @@ export const fetchTokenBalanceApi = async (address: string, chainId: string) => 
   const res = await api.token.balance({
     address,
     chainID: chainId,
-    reservedTokenAddresses: []
+    reservedTokenAddresses: [],
   });
 
   const resPrice = await api.token.price({
@@ -68,13 +69,16 @@ export const fetchTokenBalanceApi = async (address: string, chainId: string) => 
   });
 
   res.data.forEach((item: any) => {
-    console.log('Found', resPrice.data.find((i:any) => i.address === item.contractAddress));
-    item.tokenPrice = resPrice.data.find((i:any) => i.address === item.contractAddress).price || '0';
+    console.log(
+      'Found',
+      resPrice.data.find((i: any) => i.address === item.contractAddress),
+    );
+    item.tokenPrice = resPrice.data.find((i: any) => i.address === item.contractAddress).price || '0';
     item.tokenBalanceFormatted = formatUnits(item.tokenBalance, item.decimals);
     item.usdValue = BN(item.tokenBalanceFormatted).times(item.tokenPrice).toString();
   });
 
-  console.log('res price',res, resPrice)
+  console.log('res price', res, resPrice);
 
   return res.data;
 };
@@ -105,12 +109,11 @@ export const useBalanceStore = create<IBalanceStore>()(
       sevenDayApy: '0',
       oneDayInterest: '0',
       totalInterest: '0',
+      tokenBalanceValid: false,
       fetchFeeData: async () => {
         // const feeData = await provider.getFeeData();
         // const feeData2 = await provider.send('pimlico_getUserOperationGasPrice', []);
-
         // console.log('fee data', feeData2)
-
         // set({
         //   maxFeePerGas: `0x${feeData.maxFeePerGas?.toString(16)}`,
         //   maxPriorityFeePerGas: `0x${feeData.maxPriorityFeePerGas?.toString(16)}`,
@@ -128,16 +131,24 @@ export const useBalanceStore = create<IBalanceStore>()(
       },
       setTokenBalance: (balanceList: any) => {
         let totalUsdValue = BN('0');
-        const tokenList = balanceList.map((item: ITokenBalanceItem) => {
-          let formattedItem = formatTokenBalance(item);
-          totalUsdValue = totalUsdValue.plus(item.usdValue || '0');
-          return formattedItem;
-        }).sort((a: ITokenBalanceItem, b: ITokenBalanceItem) => {
-          return BN(b.usdValue || '0').comparedTo(a.usdValue || '0');
-        });
+        const tokenList = balanceList
+          .map((item: ITokenBalanceItem) => {
+            let formattedItem = formatTokenBalance(item);
+            totalUsdValue = totalUsdValue.plus(item.usdValue || '0');
+            return formattedItem;
+          })
+          .sort((a: ITokenBalanceItem, b: ITokenBalanceItem) => {
+            return BN(b.usdValue || '0').comparedTo(a.usdValue || '0');
+          });
 
-        // format balance list here
-        set({ tokenBalance: tokenList, totalUsdValue: totalUsdValue.toString() });
+        const isTokenBalanceValid =
+          tokenList && tokenList.length && tokenList.some((item: any) => Number(item.tokenBalance) > 0);
+
+        set({
+          tokenBalance: tokenList,
+          totalUsdValue: totalUsdValue.toString(),
+          tokenBalanceValid: isTokenBalanceValid,
+        });
       },
     }),
     {
