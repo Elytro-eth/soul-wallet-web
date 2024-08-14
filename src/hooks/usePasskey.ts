@@ -234,44 +234,48 @@ export default function usePasskey() {
   };
 
   const signByPasskey = async (credential: any, userOpHash: string) => {
-    const userOpHashForBytes = userOpHash.startsWith('0x') ? userOpHash.substr(2) : userOpHash;
-    var byteArray = new Uint8Array(32);
-    for (var i = 0; i < 64; i += 2) {
-      byteArray[i / 2] = parseInt(userOpHashForBytes.substr(i, 2), 16);
-    }
-    let challenge = base64Tobase64url(btoa(String.fromCharCode(...byteArray)));
-
-    console.log('Authenticating with credential id', credential.id);
-    let authentication = await client.authenticate([credential.id], challenge);
-
-    const authenticatorData = `0x${base64ToBigInt(base64urlTobase64(authentication.authenticatorData)).toString(16)}`;
-    const clientData = atob(base64urlTobase64(authentication.clientData));
-
-    const sliceIndex = clientData.indexOf(`","origin"`);
-    const clientDataSuffix = clientData.slice(sliceIndex);
-    console.log('decoded clientData', clientData, clientDataSuffix);
-    const signature = base64urlTobase64(authentication.signature);
-    console.log(`signature: ${signature}`);
-
-    if (credential.algorithm === 'ES256') {
-      const { r, s } = decodeDER(signature);
-
-      return {
-        messageHash: userOpHash,
-        publicKey: credential.onchainPublicKey,
-        r,
-        s,
-        authenticatorData,
-        clientDataSuffix,
-      };
-    } else if (credential.algorithm === 'RS256') {
-      return {
-        messageHash: userOpHash,
-        publicKey: credential.onchainPublicKey,
-        signature,
-        authenticatorData,
-        clientDataSuffix,
-      };
+    try{
+      const userOpHashForBytes = userOpHash.startsWith('0x') ? userOpHash.substr(2) : userOpHash;
+      var byteArray = new Uint8Array(32);
+      for (var i = 0; i < 64; i += 2) {
+        byteArray[i / 2] = parseInt(userOpHashForBytes.substr(i, 2), 16);
+      }
+      let challenge = base64Tobase64url(btoa(String.fromCharCode(...byteArray)));
+  
+      console.log('Authenticating with credential id', credential.id);
+      let authentication = await client.authenticate([credential.id], challenge);
+  
+      const authenticatorData = `0x${base64ToBigInt(base64urlTobase64(authentication.authenticatorData)).toString(16)}`;
+      const clientData = atob(base64urlTobase64(authentication.clientData));
+  
+      const sliceIndex = clientData.indexOf(`","origin"`);
+      const clientDataSuffix = clientData.slice(sliceIndex);
+      console.log('decoded clientData', clientData, clientDataSuffix);
+      const signature = base64urlTobase64(authentication.signature);
+      console.log(`signature: ${signature}`);
+  
+      if (credential.algorithm === 'ES256') {
+        const { r, s } = decodeDER(signature);
+  
+        return {
+          messageHash: userOpHash,
+          publicKey: credential.onchainPublicKey,
+          r,
+          s,
+          authenticatorData,
+          clientDataSuffix,
+        };
+      } else if (credential.algorithm === 'RS256') {
+        return {
+          messageHash: userOpHash,
+          publicKey: credential.onchainPublicKey,
+          signature,
+          authenticatorData,
+          clientDataSuffix,
+        };
+      }
+    }catch(err){
+      throw new Error('Failed to sign by passkey');
     }
   };
 

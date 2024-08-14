@@ -87,10 +87,12 @@ export default function useWallet() {
       setCredentials([credential as any]);
       setWalletName(accountInfo.name);
       setSelectedAddress(accountInfo.address);
-      setAddressList([{
-        address: accountInfo.address,
-        chainIdHex: accountInfo.chainID,
-      }])
+      setAddressList([
+        {
+          address: accountInfo.address,
+          chainIdHex: accountInfo.chainID,
+        },
+      ]);
       setSelectedChainId(accountInfo.chainID);
       setSlotInfo(accountInfo.initInfo);
       // rob, IMPORTANT TODO, fetch GUARDIANS
@@ -133,7 +135,13 @@ export default function useWallet() {
     return await getUserOp(txs, skipSponsor);
   };
 
-  const getTransferErc20Op = async (amount: string, decimals: number, to: string, skipSponsor: boolean, tokenAddress: string) => {
+  const getTransferErc20Op = async (
+    amount: string,
+    decimals: number,
+    to: string,
+    skipSponsor: boolean,
+    tokenAddress: string,
+  ) => {
     const erc20 = new ethers.Interface(erc20Abi);
 
     const erc20Balance = getTokenBalance(tokenAddress)?.tokenBalanceFormatted;
@@ -166,7 +174,7 @@ export default function useWallet() {
     };
 
     return await getUserOp([tx]);
-  }
+  };
 
   const getActivateOp = async (_initialKeys: any) => {
     const createIndex = 0;
@@ -190,7 +198,7 @@ export default function useWallet() {
     // approve defi contract to spend token
     const approveTos = [
       // erc20 address
-      ''
+      '',
     ];
     const approveCalldata = erc20Interface.encodeFunctionData('approve', [
       // approve to who
@@ -232,7 +240,7 @@ export default function useWallet() {
 
       let userOp = userOpRet.OK;
 
-      if(!skipSponsor){
+      if (!skipSponsor) {
         userOp = await getSponsor(userOp);
       }
 
@@ -351,19 +359,19 @@ export default function useWallet() {
   };
 
   const signAndSend = async (userOp: UserOperation) => {
-    const validAfter = Math.floor(Date.now() / 1000 - 300);
-    const validUntil = validAfter + 3600;
-
-    const packedUserOpHashRet = await soulWallet.packUserOpHash(userOp, validAfter, validUntil);
-
-    if (packedUserOpHashRet.isErr()) {
-      throw new Error(packedUserOpHashRet.ERR.message);
-    }
-    const packedUserOpHash = packedUserOpHashRet.OK;
-
-    userOp.signature = await getPasskeySignature(packedUserOpHash.packedUserOpHash, packedUserOpHash.validationData);
-
     try {
+      const validAfter = Math.floor(Date.now() / 1000 - 300);
+      const validUntil = validAfter + 3600;
+
+      const packedUserOpHashRet = await soulWallet.packUserOpHash(userOp, validAfter, validUntil);
+
+      if (packedUserOpHashRet.isErr()) {
+        throw new Error(packedUserOpHashRet.ERR.message);
+      }
+      const packedUserOpHash = packedUserOpHashRet.OK;
+
+      userOp.signature = await getPasskeySignature(packedUserOpHash.packedUserOpHash, packedUserOpHash.validationData);
+
       console.log('before execute');
       return await executeTransaction(userOp, chainConfig);
     } catch (err) {
