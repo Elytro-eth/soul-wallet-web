@@ -158,7 +158,7 @@ export default function AppContainer() {
   console.log('isModalOpen', isModalOpen, activeModal)
   console.log('isFullScreenModalOpen', isFullScreenModalOpen)
 
-  const isTransparentBg = activeModal.name === 'receive';
+  const isTransparentBg = activeModal && activeModal.name === 'receive';
 
   const doLogout = async () => {
     logoutWallet();
