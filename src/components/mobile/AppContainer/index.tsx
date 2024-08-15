@@ -155,8 +155,10 @@ export default function AppContainer() {
   const { innerHeight } = useScreenSize()
   // const innerHeight = window.innerHeight
   const contentHeight = innerHeight //  - 56
-  console.log('isModalOpen', isModalOpen)
+  console.log('isModalOpen', isModalOpen, activeModal)
   console.log('isFullScreenModalOpen', isFullScreenModalOpen)
+
+  const isTransparentBg = activeModal.name === 'receive';
 
   const doLogout = async () => {
     logoutWallet();
@@ -276,7 +278,7 @@ export default function AppContainer() {
               height="100%"
               width="100%"
               position="absolute"
-              background={isModalOpen ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0)'}
+              background={isTransparentBg ? 'transparent' : isModalOpen ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0)'}
               transition="all 0.3s ease"
               onClick={closeModal}
             />
