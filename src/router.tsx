@@ -18,6 +18,7 @@ import GuardianSetting from '@/pages/settings/Guardian';
 import ManageGuardian from '@/pages/settings/Guardian/Manage';
 import IntroGuardian from '@/pages/settings/Guardian/Intro';
 import AppContainer from './components/mobile/AppContainer';
+import PassKeyMobile from './pages/passkeys/passkeyMobile';
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
               },
             ],
           },
+          {
+            path: '/passkeys',
+            element: <PassKeyMobile />
+          }
         ],
       },
     ],

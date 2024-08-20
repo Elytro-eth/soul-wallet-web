@@ -36,9 +36,9 @@ export default function Settings({ isModal, closeModal }: any) {
 
   const goGuardianSettings = async () => {
     closeModal();
-    if(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash){
+    if (!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash) {
       navigate('/guardian/intro')
-    }else{
+    } else {
       navigate('/guardian/manage');
     }
   }
@@ -118,19 +118,9 @@ export default function Settings({ isModal, closeModal }: any) {
           >
             <PasskeyIcon />
           </Box>
-          <Box>Device & passkey</Box>
-          <Box
-            marginLeft="auto"
-            background="#F2F2F2"
-            padding="3px 8px"
-            fontSize="12px"
-            fontWeight="400"
-            rounded="4px"
-          >
-            Coming soon
-          </Box>
+          <Link href='/passkeys' style={{ flex: 1 }}><Box>Passkeys</Box></Link>
         </Box>
-        <a target='_blank' href={tgTestLink} style={{width: "100%"}}>
+        <a target='_blank' href={tgTestLink} style={{ width: "100%" }}>
           <Box
             width="100%"
             height="56px"
@@ -153,7 +143,7 @@ export default function Settings({ isModal, closeModal }: any) {
             <Box>Join Telegram group</Box>
           </Box>
         </a>
-        <Box width="100%" onClick={() => { closeModal(); openFullScreenModal('lisence')}}>
+        <Box width="100%" onClick={() => { closeModal(); openFullScreenModal('lisence') }}>
           <Box
             width="100%"
             height="56px"
