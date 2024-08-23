@@ -67,8 +67,8 @@ export default function PassKeyPage() {
                         args: [credential.onchainPublicKey],
                     })
                 }
-                const res = sendTxs([tx])
-                console.log({ res })
+                const res = await sendTxs([tx])
+                console.log({ txs: res })
                 await api.authenticated.addNewKey({ key: credential.onchainPublicKey })
                 await backupCredential(credential)
             }
