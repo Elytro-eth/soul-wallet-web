@@ -1,6 +1,6 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import TrashIcon from '@/assets/trash.svg';
-import ChromeIcon from '@/assets/devices/Chrome.png'
+import ChromeIcon from '@/assets/devices/chrome.png'
 import iCloudIcon from '@/assets/devices/iCloud.png'
 import AndroidIcon from '@/assets/devices/Android.png'
 import UnknownIcon from '@/assets/devices/Unknow.png'
