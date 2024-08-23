@@ -14,6 +14,7 @@ import { encodeFunctionData } from "viem";
 import { ABI_SoulWalletOwnerManager } from "@soulwallet/abi";
 import useWallet from "@/hooks/useWallet";
 import IconLoading from '@/assets/mobile/loading.gif';
+import { useChainStore } from "@/store/chain";
 
 const cuid2 = init({ length: 4 })
 
@@ -29,10 +30,16 @@ const DevicesContainer = ({ children }: { children: ReactNode }) => <Grid
 </Grid>
 
 export default function PassKeyPage() {
+    const { selectedChainId } = useChainStore();
     const [isAdding, setIsAdding] = useState(false)
     const { walletName, selectedAddress } = useAddressStore()
     const { sendTxs } = useWallet()
-    const { createPasskey, backupCredential } = usePasskey();
+    const {
+        createPasskey,
+        backupCredential,
+        setJwt,
+        saveKeyInfo
+    } = usePasskey();
     const { isPending, error, data: passkeys } = useQuery<{ data: { keys: PasskeyDTO[] } }>({
         queryKey: ['passkey-list'],
         queryFn: () => api.authenticated.getKeyList().then((res) => res),
@@ -56,7 +63,12 @@ export default function PassKeyPage() {
         try {
             setIsAdding(true);
             const passkeyName = `${walletName}-${cuid2()}`;
-            const credential = await createPasskey(passkeyName);
+            const {
+                credential,
+                verifiedRegistration,
+                challenge,
+                registration
+            } = await createPasskey(passkeyName);
             if (credential.onchainPublicKey) {
                 const tx = {
                     from: selectedAddress,
@@ -67,10 +79,21 @@ export default function PassKeyPage() {
                         args: [credential.onchainPublicKey],
                     })
                 }
-                const res = await sendTxs([tx])
-                console.log({ txs: res })
+                await sendTxs([tx]) // make passkey on chain
                 await api.authenticated.addNewKey({ key: credential.onchainPublicKey })
                 await backupCredential(credential)
+                await setJwt(
+                    selectedAddress,
+                    selectedChainId,
+                    challenge,
+                    credential.credentialID,
+                    registration
+                )
+                await saveKeyInfo(
+                    credential.credentialID,
+                    passkeyName,
+                    verifiedRegistration
+                );
             }
         } catch (err) {
             throw err;
@@ -91,7 +114,11 @@ export default function PassKeyPage() {
                 CURRENT SIGNED IN
             </Heading>
             <DevicesContainer>
-                <DeviceItem isCurrent name={local?.name} />
+                <DeviceItem
+                    isCurrent
+                    name={local?.name}
+                    deviceType={local?.platform}
+                />
             </DevicesContainer>
         </Box>
         {
@@ -101,7 +128,12 @@ export default function PassKeyPage() {
                 </Heading>
                 <DevicesContainer>
                     {
-                        other.map(o => <DeviceItem isCurrent={false} name={o.name} />)
+                        other.map(o => <DeviceItem
+                            key={o.credentialID}
+                            isCurrent={false}
+                            name={o.name}
+                            deviceType={o.platform}
+                        />)
                     }
                 </DevicesContainer>
             </Box> : null

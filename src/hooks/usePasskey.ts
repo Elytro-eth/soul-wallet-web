@@ -14,7 +14,8 @@ import { AsnParser } from '@peculiar/asn1-schema';
 import { WebAuthN } from '@soulwallet/sdk';
 import { ethers } from 'ethers';
 import useTransaction from './useTransaction';
-import { AuthType, RegistrationEncoded } from '@passwordless-id/webauthn/dist/esm/types';
+import { AuthType, RegistrationEncoded, RegistrationParsed } from '@passwordless-id/webauthn/dist/esm/types';
+import { Address } from 'viem';
 
 interface Credential {
   challenge: string,
@@ -172,6 +173,50 @@ export default function usePasskey() {
     }
   }
 
+  const saveKeyInfo = async (
+    credentialID: string,
+    name: string,
+    verifiedRegistration: RegistrationParsed
+  ) => {
+    return await api.authenticated.saveKey({
+      credentialID,
+      name,
+      platform: verifiedRegistration.authenticator.name,
+      backedUp: verifiedRegistration.authenticator.flags.backupState,
+    });
+  }
+
+  const getVerifiedRegistration = async (
+    registration: RegistrationEncoded,
+    challenge: string
+  ) => await server.verifyRegistration(
+    registration,
+    {
+      challenge,
+      origin: location.origin,
+    }
+  );
+
+  const setJwt = async (
+    walletAddress: Address | string,
+    selectedChainId: string,
+    challenge: string,
+    credentialID: string,
+    passkeyInfo: RegistrationEncoded,
+  ) => {
+    const resJwt = await api.auth.getJwt({
+      address: walletAddress,
+      chainID: selectedChainId,
+      challenge,
+      responseData: {
+        isRegistration: true,
+        credentialID,
+        data: passkeyInfo,
+      },
+    });
+    return resJwt;
+  }
+
   const register = async (
     walletName: string = 'Wallet',
     invitationCode: string
@@ -180,11 +225,7 @@ export default function usePasskey() {
       const finalCredentialName = `${walletName}_${getCurrentDateFormatted()}`;
       const challenge = await getChalleng();
       const registration = await registerPasskey(finalCredentialName, challenge)
-      const verifiedRegistration = await server.verifyRegistration(registration, {
-        challenge,
-        origin: location.origin,
-      });
-
+      const verifiedRegistration = await getVerifiedRegistration(registration, challenge);
       const credential = await genCredential(registration, challenge, finalCredentialName);
 
       // backup credential info
@@ -194,26 +235,22 @@ export default function usePasskey() {
       const { address, selectedChainId } = await initWallet(credential, walletName, invitationCode);
 
       // get jwt
-      const resJwt = await api.auth.getJwt({
+      const resJwt = await setJwt(
         address,
-        chainID: selectedChainId,
+        selectedChainId,
         challenge,
-        responseData: {
-          isRegistration: true,
-          credentialID: credential.credentialID,
-          data: registration,
-        },
-      });
+        credential.credentialID,
+        registration
+      );
 
       localStorage.setItem('token', resJwt.data.token);
 
       // private backup key
-      const resSaveKey = await api.authenticated.saveKey({
-        credentialID: credential.credentialID,
-        name: finalCredentialName,
-        platform: verifiedRegistration.authenticator.name,
-        backedUp: verifiedRegistration.authenticator.flags.backupState,
-      });
+      await saveKeyInfo(
+        credential.credentialID,
+        finalCredentialName,
+        verifiedRegistration
+      );
 
       return credential;
     } catch (err: any) {
@@ -366,9 +403,13 @@ export default function usePasskey() {
     const challengeRes = await api.auth.challenge({});
     const challenge = challengeRes.data.challenge;
 
-    let authentication = await client.authenticate(desiredCredentialId ? [desiredCredentialId] : [], challenge, {
-      userVerification: 'required',
-    });
+    let authentication = await client.authenticate(
+      desiredCredentialId ? [desiredCredentialId] : [],
+      challenge,
+      {
+        userVerification: 'required',
+      }
+    );
     // authentication method will return credentialId, but not id.
     const credentialId = authentication.credentialId;
     console.log('Authenticated', authentication);
@@ -399,7 +440,16 @@ export default function usePasskey() {
         challenge,
         registerName
       )
-      return credential;
+      const verifiedRegistration = await getVerifiedRegistration(
+        registration,
+        challenge
+      )
+      return {
+        credential,
+        verifiedRegistration,
+        challenge,
+        registration
+      };
     } catch (err) {
       throw err;
     }
@@ -413,6 +463,9 @@ export default function usePasskey() {
     authenticate,
     authenticateLogin,
     createPasskey,
-    backupCredential
+    backupCredential,
+    setJwt,
+    getVerifiedRegistration,
+    saveKeyInfo
   };
 }

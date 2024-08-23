@@ -1,8 +1,9 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import TrashIcon from '@/assets/trash.svg';
-import ChromeIcon from '@/assets/devices/chrome.png'
-import IphoneIcon from '@/assets/devices/iphone.svg'
-import AndroidIcon from '@/assets/devices/android.svg'
+import ChromeIcon from '@/assets/devices/Chrome.png'
+import iCloudIcon from '@/assets/devices/iCloud.png'
+import AndroidIcon from '@/assets/devices/Android.png'
+import UnknownIcon from '@/assets/devices/Unknow.png'
 
 export default function DeviceItem({
     isCurrent = true,
@@ -21,20 +22,20 @@ export default function DeviceItem({
             deviceName: string
         }
     } = {
-        iphone: {
-            icon: IphoneIcon,
-            deviceName: 'iPhone'
+        'iCloud Keychain': {
+            icon: iCloudIcon,
+            deviceName: 'iCloud Keychain'
         },
-        chrome: {
+        'Chrome on Mac': {
             icon: ChromeIcon,
             deviceName: 'Chrome'
         },
-        android: {
+        'Google Password Manager': {
             icon: AndroidIcon,
             deviceName: 'Android'
         }
     }
-    const icon = devices[deviceType] ? devices[deviceType].icon : IphoneIcon;
+    const icon = devices[deviceType] ? devices[deviceType].icon : UnknownIcon;
     const deviceName = devices[deviceType] ? devices[deviceType].deviceName : 'Unknown Device';
     return <Box
         p="20px"
@@ -60,7 +61,7 @@ export default function DeviceItem({
                 alignItems='center'
                 justifyContent='center'
             >
-                <Image w='24px' h='24px' src={icon} />
+                <Image src={icon} />
             </Box>
             <Box marginLeft='10px'>
                 <Text fontSize='18px'>{deviceName}</Text>
