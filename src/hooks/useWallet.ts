@@ -229,7 +229,7 @@ export default function useWallet() {
     return userOp;
   };
 
-  const getUserOp = async (txns: any, skipSponsor?: boolean) => {
+  const getUserOp: any = async (txns: any, skipSponsor?: boolean) => {
     try {
       const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
 
@@ -245,7 +245,7 @@ export default function useWallet() {
         userOp = await getSponsor(userOp);
       }
 
-      return userOp as UserOperation;
+      return userOp;
     } catch (err: any) {
       throw new Error(err.message);
     }
