@@ -84,7 +84,7 @@ export const chainMapping = {
 // This is an important store switch which will clear all users' data
 export const storeVersion = '13';
 
-export const defaultGuardianSafePeriod = 172800; // 2 days
+export const defaultGuardianSafePeriod = import.meta.env.VITE_SocialRecoveryLimitation;
 
 // height of header
 export const headerHeight = 60;
