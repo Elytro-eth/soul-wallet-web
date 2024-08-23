@@ -49,6 +49,7 @@ export default function useWallet() {
 
   const loginWallet = async (credentialId?: string) => {
     const { credential, challenge, authentication } = await authenticateLogin(credentialId);
+    console.log({ credential })
     try {
       const res: any = await api.account.get({
         ownerKey: credential.onchainPublicKey,
@@ -228,7 +229,7 @@ export default function useWallet() {
     return userOp;
   };
 
-  const getUserOp: any = async (txns: any, skipSponsor: boolean) => {
+  const getUserOp = async (txns: any, skipSponsor?: boolean) => {
     try {
       const { maxFeePerGas, maxPriorityFeePerGas } = await getGasPrice();
 
@@ -244,7 +245,7 @@ export default function useWallet() {
         userOp = await getSponsor(userOp);
       }
 
-      return userOp;
+      return userOp as UserOperation;
     } catch (err: any) {
       throw new Error(err.message);
     }
@@ -257,16 +258,16 @@ export default function useWallet() {
     const packedSignatureRet =
       selectedCredential.algorithm === 'ES256'
         ? await soulWallet.packUserOpP256Signature(
+          chainConfig.contracts.defaultValidator,
+          signatureData,
+          validationData,
+        )
+        : selectedCredential.algorithm === 'RS256'
+          ? await soulWallet.packUserOpRS256Signature(
             chainConfig.contracts.defaultValidator,
             signatureData,
             validationData,
           )
-        : selectedCredential.algorithm === 'RS256'
-          ? await soulWallet.packUserOpRS256Signature(
-              chainConfig.contracts.defaultValidator,
-              signatureData,
-              validationData,
-            )
           : null;
 
     if (!packedSignatureRet) {
@@ -399,6 +400,15 @@ export default function useWallet() {
     return await signByPasskey(selectedCredential, hash);
   };
 
+  const sendTxs = async (txs: any[]) => {
+    try {
+      const uos = await getUserOp(txs);
+      return await signAndSend(uos)
+    } catch (err) {
+      throw err;
+    }
+  }
+
   return {
     loginWallet,
     getTransferEthOp,
@@ -412,5 +422,6 @@ export default function useWallet() {
     getSponsor,
     getChangeGuardianOp,
     boostAfterRecovered,
+    sendTxs
   };
 }

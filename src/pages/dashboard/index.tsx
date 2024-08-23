@@ -16,7 +16,13 @@ import {
   ModalBody,
   useDisclosure,
   useBreakpointValue,
-  useMediaQuery
+  useMediaQuery,
+  Tabs,
+  Tab,
+  TabIndicator,
+  TabList,
+  TabPanel,
+  TabPanels
 } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
 import MoreIcon from '@/components/Icons/mobile/More';
@@ -77,6 +83,7 @@ import LinkedInIcon from '@/components/Icons/desktop/LinkedIn';
 import OpenIcon from '@/components/Icons/desktop/Open';
 import { thirdPartyLicenseUrl } from '@/config/constants';
 import config from '@/config';
+import PassKeyPage from '../passkeys';
 
 const getSubject = (functionName: any) => {
   if (functionName === 'Send') {
@@ -477,10 +484,10 @@ export function AssetPage({ setActiveMenu }: any) {
 
   const fontSize = getFontSize(valueLeft);
 
-  const handleVerifyEmailClick =  () => {
-    if(isLargerThan768){
+  const handleVerifyEmailClick = () => {
+    if (isLargerThan768) {
       openModal('verifyEmail', { width: 640, height: 420 })
-    }else{
+    } else {
       navigate('/verify-email')
     }
   }
@@ -662,24 +669,22 @@ export function AssetPage({ setActiveMenu }: any) {
                 }}
               />
               {valueRight &&
-               BN(valueRight).isGreaterThan(0) &&
-               Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
-                 <Box
-                   fontSize={fontSize}
-                   lineHeight={'1'}
-                   fontWeight="500"
-                   // marginTop={fontBottomMargin}
-                   // marginLeft="10px"
-                   color="#939393"
-                 >
-                   .
-                   <Box
-                     as="span"
-                   >
-                     {valueRight.slice(0, 4).replace(/0+$/, '')}
-                   </Box>
-                 </Box>
-              )}
+                BN(valueRight).isGreaterThan(0) &&
+                Number(valueRight.slice(0, 4).replace(/0+$/, '')) > 0 && (
+                  <Box
+                    fontSize={fontSize}
+                    lineHeight={'1'}
+                    fontWeight="500"
+                    color="#939393"
+                  >
+                    .
+                    <Box
+                      as="span"
+                    >
+                      {valueRight.slice(0, 4).replace(/0+$/, '')}
+                    </Box>
+                  </Box>
+                )}
             </Box>
           </Box>
           <Box
@@ -717,7 +722,7 @@ export function AssetPage({ setActiveMenu }: any) {
               <Box>
                 Activity
               </Box>
-              <Box color="#676B75" cursor="pointer" fontWeight="500" fontSize="14px" marginLeft="auto" onClick={() => setActiveMenu('activities') }>
+              <Box color="#676B75" cursor="pointer" fontWeight="500" fontSize="14px" marginLeft="auto" onClick={() => setActiveMenu('activities')}>
                 View more
               </Box>
             </Box>
@@ -970,19 +975,19 @@ export function AssetPage({ setActiveMenu }: any) {
               </Box>
             </Box>
           ) : <Box
-                width="100%"
-                background="white"
-                borderRadius="32px"
-                height="377px"
-                boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
+            width="100%"
+            background="white"
+            borderRadius="32px"
+            height="377px"
+            boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
             // border="1px solid #EAECF0"
-                position="relative"
-                zIndex="1"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                marginBottom="40px"
-              >
+            position="relative"
+            zIndex="1"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            marginBottom="40px"
+          >
             <Box
               display="flex"
               alignItems="center"
@@ -1004,10 +1009,36 @@ export function AssetPage({ setActiveMenu }: any) {
   )
 }
 
+export function Setting({ isDashboard }: { isDashboard: boolean }) {
+  return <Box
+    h="100%"
+    overflowY="hidden"
+  >
+    <Tabs>
+      <TabList>
+        <Tab p="20px">Account Recovery</Tab>
+        <Tab p="20px">Passkeys</Tab>
+      </TabList>
+      <TabIndicator mt='-1.5px' height='2px' bg='#2D3CBD' borderRadius='1px' />
+      <TabPanels>
+        <TabPanel
+          overflowY="scroll"
+        >
+          <GuardianPage isDashboard={isDashboard} />
+        </TabPanel>
+        <TabPanel>
+          <PassKeyPage />
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  </Box>
+}
+
+
 export function GuardianPage({ isDashboard }: any) {
   const { guardiansInfo } = useGuardianStore();
 
-  if(!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash || true){
+  if (!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash || true) {
     return (
       <GuardianIntroPage isDashboard={isDashboard} />
     )
@@ -1025,8 +1056,8 @@ export default function Dashboard(props: any) {
   const [activeMenu, setActiveMenu] = useState(props.activeMenu || 'assets')
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  useEffect(()=>{
-    if(!selectedAddress){
+  useEffect(() => {
+    if (!selectedAddress) {
       navigate('/landing')
     }
   }, [selectedAddress])
@@ -1166,7 +1197,7 @@ export default function Dashboard(props: any) {
                 onClick={() => setActiveMenu('settings')}
               >
                 <Box marginRight="8px">
-                  <SettingsIcon2  color={activeMenu === 'settings' ? '#2D3CBD' : '#676B75'} />
+                  <SettingsIcon2 color={activeMenu === 'settings' ? '#2D3CBD' : '#676B75'} />
                 </Box>
                 <Box
                   fontSize="18px"
@@ -1257,7 +1288,7 @@ export default function Dashboard(props: any) {
             >
               {activeMenu === 'assets' && <AssetPage isDashboard={true} setActiveMenu={setActiveMenu} />}
               {activeMenu === 'activities' && <ActivityPage isDashboard={true} />}
-              {activeMenu === 'settings' && <GuardianPage isDashboard={true} />}
+              {activeMenu === 'settings' && <Setting isDashboard={true} />}
             </Box>
           </Box>
         </Box>

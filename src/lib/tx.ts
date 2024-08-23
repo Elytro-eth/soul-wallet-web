@@ -30,7 +30,7 @@ export const executeTransaction = async (userOp: any, chainConfig: any) => {
     initBundler(chainConfig.bundlerUrl);
   }
 
-  printUserOp(userOp);
+  // printUserOp(userOp);
   return new Promise(async (resolve, reject) => {
     const ret = await soulWallet.sendUserOperation(userOp);
     if (ret.isErr()) {

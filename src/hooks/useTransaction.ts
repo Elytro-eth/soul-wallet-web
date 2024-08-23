@@ -50,7 +50,7 @@ export default function useTransaction() {
 
     setSelectedAddress(address);
     setWalletName(walletName);
-    try{
+    try {
       const res: any = await api.account.create({
         address,
         chainID: selectedChainId,
@@ -72,15 +72,15 @@ export default function useTransaction() {
       // }
       // private backup key
       setSlotInfo(createSlotInfo);
-  
+
       setCredentials([credential as any]);
-  
+
       return {
         initialKeys,
         address,
         selectedChainId,
       };
-    }catch(err:any){
+    } catch (err: any) {
       throw new Error(err.response.data.msg);
     }
   };

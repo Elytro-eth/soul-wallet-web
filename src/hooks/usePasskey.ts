@@ -13,8 +13,19 @@ import { ECDSASigValue } from '@peculiar/asn1-ecc';
 import { AsnParser } from '@peculiar/asn1-schema';
 import { WebAuthN } from '@soulwallet/sdk';
 import { ethers } from 'ethers';
-import useWallet from './useWallet';
 import useTransaction from './useTransaction';
+import { AuthType, RegistrationEncoded } from '@passwordless-id/webauthn/dist/esm/types';
+
+interface Credential {
+  challenge: string,
+  registrationData: string,
+  id: string,
+  credentialID: string,
+  publicKey: string,
+  onchainPublicKey?: string,
+  algorithm: "RS256" | "ES256",
+  name: string,
+}
 
 const base64urlTobase64 = (base64url: string) => {
   const paddedUrl = base64url.padEnd(base64url.length + ((4 - (base64url.length % 4)) % 4), '=');
@@ -107,48 +118,77 @@ export default function usePasskey() {
     }
   };
 
-  const register = async (walletName: string = 'Wallet', invitationCode: string) => {
-    try {
-      // get challenge
-      const challengeRes = await api.auth.challenge({});
-      const challenge = challengeRes.data.challenge;
+  const getChalleng = async () => {
+    const challengeRes = await api.auth.challenge({});
+    const challenge = challengeRes.data.challenge;
+    return challenge;
+  }
 
-      const finalCredentialName = `${walletName}_${getCurrentDateFormatted()}`;
-      const registration = await client.register(finalCredentialName, challenge, {
-        authenticatorType: 'both',
+  const registerPasskey = async (
+    registerName: string,
+    challenge: string,
+    authenticatorType: AuthType = 'both'
+  ) => {
+    const registration = await client.register(
+      registerName,
+      challenge,
+      {
+        authenticatorType,
+      }
+    );
+    return registration;
+  }
+
+  const genCredential = async (
+    registration: RegistrationEncoded,
+    challenge: string,
+    name: string
+  ) => {
+    const onchainPublicKey = await getPublicKey(registration.credential);
+
+    const credential = {
+      challenge,
+      registrationData: registration,
+      id: registration.credential.id,
+      credentialID: registration.credential.id,
+      publicKey: registration.credential.publicKey,
+      onchainPublicKey,
+      algorithm: registration.credential.algorithm,
+      name,
+    } as unknown as Credential;
+    return credential;
+  }
+
+  const backupCredential = async (credential: Credential) => {
+    const res: any = await api.backup.publicBackupCredentialId(credential);
+
+    if (res.code !== 200) {
+      toast({
+        title: 'Failed to backup credential',
+        description: res.msg,
+        status: 'error',
       });
+      throw new Error('Failed to backup credential');
+    }
+  }
 
-      console.log('Registered: ', JSON.stringify(registration, null, 2));
-
+  const register = async (
+    walletName: string = 'Wallet',
+    invitationCode: string
+  ) => {
+    try {
+      const finalCredentialName = `${walletName}_${getCurrentDateFormatted()}`;
+      const challenge = await getChalleng();
+      const registration = await registerPasskey(finalCredentialName, challenge)
       const verifiedRegistration = await server.verifyRegistration(registration, {
         challenge,
         origin: location.origin,
       });
 
-      const onchainPublicKey = await getPublicKey(registration.credential);
-
-      const credential = {
-        challenge,
-        registrationData: registration,
-        id: registration.credential.id,
-        credentialID: registration.credential.id,
-        publicKey: registration.credential.publicKey,
-        onchainPublicKey,
-        algorithm: registration.credential.algorithm,
-        name: finalCredentialName,
-      };
+      const credential = await genCredential(registration, challenge, finalCredentialName);
 
       // backup credential info
-      const res: any = await api.backup.publicBackupCredentialId(credential);
-
-      if (res.code !== 200) {
-        toast({
-          title: 'Failed to backup credential',
-          description: res.msg,
-          status: 'error',
-        });
-        throw new Error('Failed to backup credential');
-      }
+      backupCredential(credential)
 
       // trigger init wallet
       const { address, selectedChainId } = await initWallet(credential, walletName, invitationCode);
@@ -175,9 +215,8 @@ export default function usePasskey() {
         backedUp: verifiedRegistration.authenticator.flags.backupState,
       });
 
-      console.log('res save key', resSaveKey);
       return credential;
-    } catch (err:any) {
+    } catch (err: any) {
       throw new Error(err.message);
     }
   };
@@ -188,19 +227,12 @@ export default function usePasskey() {
       const challengeRes = await api.auth.challenge({});
       const challenge = challengeRes.data.challenge;
 
-      // const randomChallenge = btoa('1234567890');
-      // const finalCredentialName = `${credentialName}_${getCurrentDateFormatted()}`;
       const finalCredentialName = `${walletName}_${getCurrentDateFormatted()}`;
       const registration = await client.register(finalCredentialName, challenge, {
         authenticatorType: 'both',
       });
 
       console.log('Registered: ', JSON.stringify(registration, null, 2));
-
-      // const verifiedRegistration = await server.verifyRegistration(registration, {
-      //   challenge,
-      //   origin: location.origin,
-      // });
 
       const onchainPublicKey = await getPublicKey(registration.credential);
 
@@ -234,29 +266,29 @@ export default function usePasskey() {
   };
 
   const signByPasskey = async (credential: any, userOpHash: string) => {
-    try{
+    try {
       const userOpHashForBytes = userOpHash.startsWith('0x') ? userOpHash.substr(2) : userOpHash;
       var byteArray = new Uint8Array(32);
       for (var i = 0; i < 64; i += 2) {
         byteArray[i / 2] = parseInt(userOpHashForBytes.substr(i, 2), 16);
       }
       let challenge = base64Tobase64url(btoa(String.fromCharCode(...byteArray)));
-  
+
       console.log('Authenticating with credential id', credential.id);
       let authentication = await client.authenticate([credential.id], challenge);
-  
+
       const authenticatorData = `0x${base64ToBigInt(base64urlTobase64(authentication.authenticatorData)).toString(16)}`;
       const clientData = atob(base64urlTobase64(authentication.clientData));
-  
+
       const sliceIndex = clientData.indexOf(`","origin"`);
       const clientDataSuffix = clientData.slice(sliceIndex);
       console.log('decoded clientData', clientData, clientDataSuffix);
       const signature = base64urlTobase64(authentication.signature);
       console.log(`signature: ${signature}`);
-  
+
       if (credential.algorithm === 'ES256') {
         const { r, s } = decodeDER(signature);
-  
+
         return {
           messageHash: userOpHash,
           publicKey: credential.onchainPublicKey,
@@ -274,7 +306,7 @@ export default function usePasskey() {
           clientDataSuffix,
         };
       }
-    }catch(err){
+    } catch (err) {
       throw new Error('Failed to sign by passkey');
     }
   };
@@ -344,13 +376,34 @@ export default function usePasskey() {
     const res: any = await api.backup.credential({
       credentialID: credentialId,
     });
-
     return {
-      credential: { ...res.data, id: res.data.credentialID },
+      credential: {
+        ...res.data,
+        id: res.data.credentialID,
+      },
       challenge,
       authentication,
     };
   };
+
+  const createPasskey = async (registerName: string) => {
+    try {
+      const challenge = await getChalleng();
+      const registration = await registerPasskey(
+        registerName,
+        challenge,
+        'roaming'
+      );
+      const credential = await genCredential(
+        registration,
+        challenge,
+        registerName
+      )
+      return credential;
+    } catch (err) {
+      throw err;
+    }
+  }
 
   return {
     decodeDER,
@@ -359,5 +412,7 @@ export default function usePasskey() {
     signByPasskey,
     authenticate,
     authenticateLogin,
+    createPasskey,
+    backupCredential
   };
 }

@@ -1,11 +1,8 @@
-import { useState, useRef } from 'react'
-import { Box, Input, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalHeader, ModalBody, useDisclosure, Link, Image, Menu, MenuList, MenuItem, useOutsideClick, MenuButton } from '@chakra-ui/react';
+import { useRef } from 'react'
+import { Box, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalHeader, ModalBody, useDisclosure, Link, Image, Menu, MenuList, MenuItem, useOutsideClick, MenuButton } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button'
-import EmailIcon from '@/assets/mobile/email-guardian.svg'
-import GuardianIcon from '@/assets/mobile/guardian.svg'
 import EmailGuardianIcon from '@/components/Icons/mobile/EmailGuardian';
 import WalletGuardianIcon from '@/components/Icons/mobile/WalletGuardian';
-import ChevronDown from '@/components/Icons/mobile/ChevronDown';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import IntroGuardianIcon from '@/assets/guardian.png'
 import useScreenSize from '@/hooks/useScreenSize'
@@ -16,7 +13,6 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
   const { openModal } = useWalletContext()
   const { innerHeight } = useScreenSize()
 
-  console.log('isDashboard', isDashboard)
   useOutsideClick({
     ref: menuRef,
     handler: () => onClose(),
@@ -88,7 +84,7 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
                       width={isDashboard ? '330px' : '100%'}
                       margin={isDashboard ? '0 auto' : '0'}
                       as={Box}
-                      onClick={() => { isOpen ? onClose() : onOpen()}}
+                      onClick={() => { isOpen ? onClose() : onOpen() }}
                       cursor="pointer"
                     >
                       <Box

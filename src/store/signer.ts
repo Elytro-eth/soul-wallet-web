@@ -9,7 +9,7 @@ export interface ISignerStore {
   setSignerId: (signerId: string) => void;
   credentials: ICredentialItem[];
   getSelectedKeyType: () => SignkeyType;
-  getSelectedCredential: () => void;
+  getSelectedCredential: () => ICredentialItem;
   setCredentials: (credentials: ICredentialItem[]) => void;
   changeCredentialName: (credentialId: string, name: string) => void;
   clearSigners: () => void;
@@ -20,6 +20,8 @@ export interface ICredentialItem {
   algorithm: string;
   name: string;
   publicKey: string;
+  onchainPublicKey?: string
+  credentialID?: string
 }
 
 export const getIndexByCredentialId = (credentials: ICredentialItem[], id: string) => {

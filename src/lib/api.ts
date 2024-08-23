@@ -29,6 +29,8 @@ const authenticated = {
   getKey: (params: any) => axio.post('/walletapi/authenticated/get-key-info', params),
   saveGuardianInfo: (params: any) => axio.post('/walletapi/authenticated/save-guardian-info', params),
   getGuardianInfo: (params: any) => axio.post('/walletapi/authenticated/get-guardian-info', params),
+  getKeyList: (params: unknown = {}) => axio.post('/walletapi/authenticated/get-key-list', params),
+  addNewKey: (params: { key: string }) => axio.post('/walletapi/authenticated/add-new-passkey', params)
 }
 
 const auth = {
@@ -45,7 +47,7 @@ const account = {
 
 const backup = {
   publicBackupGuardians: (params: any) => axio.post('/walletapi/backup/public-backup-guardians', params),
-  publicGetGuardians: (params: any) => axio.get('/walletapi/backup/guardian-info', {params}),
+  publicGetGuardians: (params: any) => axio.get('/walletapi/backup/guardian-info', { params }),
   publicBackupCredentialId: (params: any) => axio.post('/walletapi/backup/public-backup-credential-id', params),
   credential: (params: any) => axio.get('/walletapi/backup/credential', { params }),
 };
@@ -65,7 +67,7 @@ const sponsor = {
       entryPoint,
       op,
     }),
-    leftTimes: (params: any) => axio.post('/walletapi/sponsor/sponsor-op-check', params),
+  leftTimes: (params: any) => axio.post('/walletapi/sponsor/sponsor-op-check', params),
 };
 
 const invitation = {
@@ -73,10 +75,10 @@ const invitation = {
 }
 
 const token = {
-  interest: (params: any) => axio.post('/walletapi/token/interest',params),
-  balance: (params: any) => axio.post('/walletapi/token/ft',params),
+  interest: (params: any) => axio.post('/walletapi/token/interest', params),
+  balance: (params: any) => axio.post('/walletapi/token/ft', params),
   price: (params: any) => axio.post('/walletapi/token/ft-price', params),
-  spendTrialInterest: (params: any) => axio.post('/walletapi/token/spend-trial-interest',params),
+  spendTrialInterest: (params: any) => axio.post('/walletapi/token/spend-trial-interest', params),
 }
 
 const op = {

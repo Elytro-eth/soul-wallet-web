@@ -15,6 +15,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@endo/lockdown": "^1.0.7",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@passwordless-id/webauthn": "^1.5.0",
     "@peculiar/asn1-ecc": "^2.3.6",
     "@peculiar/asn1-schema": "^2.3.6",
