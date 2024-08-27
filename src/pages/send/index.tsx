@@ -2,9 +2,7 @@ import { useState, useCallback } from 'react';
 import { Box } from '@chakra-ui/react';
 import SetAddress from './SetAddress';
 import SetAmount from './SetAmount';
-import Review from './Review';
-import FadeSwitch from '@/components/FadeSwitch';
-import { ZeroAddress } from 'ethers';
+import Review from '@/components/Review';
 import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Send({ isModal }: any) {
