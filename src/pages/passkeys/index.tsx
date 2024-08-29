@@ -167,7 +167,7 @@ export default function PassKeyPage() {
             <Box
                 pos="absolute"
                 bottom={{ sm: '40px' }}
-                top={{ md: "40px" }}
+                top={{ lg: "40px", md: '10px' }}
                 left={{
                     sm: "40px",
                     md: "unset"
