@@ -257,14 +257,17 @@ export default function Review({
                 )}
                 {!isSent && (
                     <Box marginTop="24px" width="100%" display="flex">
-                        {!isSending && (
+                        {!isSending && onPrev && (
                             <Box width="50%" paddingRight="7px">
                                 <Button width="calc(100% - 7px)" disabled={false} size="xl" type="white" onClick={onPrev} color="black">
                                     Back
                                 </Button>
                             </Box>
                         )}
-                        <Box width={isSending ? '100%' : '50%'} paddingLeft="7px">
+                        <Box width={{
+                            sm: isSending || !onPrev ? '100%' : '50%',
+                            md: '50%'
+                        }} paddingLeft="7px">
                             <Button
                                 width="calc(100% - 7px)"
                                 disabled={isSending}
