@@ -123,7 +123,7 @@ export default function Send({ isModal }: any) {
             selectedToken={selectedToken}
             sendTo={sendTo}
             onPrev={onPrev}
-            onClose={closeFullScreenModal}
+            onClose={() => closeFullScreenModal()}
           />}
         </Box>
       </Box>
