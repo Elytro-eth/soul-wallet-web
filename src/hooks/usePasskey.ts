@@ -17,7 +17,7 @@ import useTransaction from './useTransaction';
 import { AuthType, RegistrationEncoded, RegistrationParsed } from '@passwordless-id/webauthn/dist/esm/types';
 import { Address } from 'viem';
 
-interface Credential {
+export interface Credential {
   challenge: string,
   registrationData: string,
   id: string,

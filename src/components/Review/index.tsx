@@ -7,7 +7,6 @@ import Button from '@/components/mobile/Button';
 import Header from '@/components/mobile/Header';
 import SendingIcon from '@/components/Icons/mobile/Sending';
 import SentIcon from '@/components/Icons/mobile/Sent';
-import { ZeroAddress } from 'ethers';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useWallet from '@/hooks/useWallet';
 import useTools from '@/hooks/useTools';
@@ -18,11 +17,44 @@ import api from '@/lib/api';
 import { useAddressStore } from '@/store/address';
 import NetWorkDetialModal from '@/components/NetworkDetailModal';
 import FeeSelectModal from '../FeeSelectModal';
+import { formatEther, TransactionRequestBase } from 'viem';
+import ReviewActionIcon from '@/assets/actions/review-action.svg'
 
-export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, selectedToken }: any) {
-    const { closeModal, closeFullScreenModal } = useWalletContext();
+interface ReViewProps {
+    sendTo: string,
+    isModal: boolean,
+    transactionType: TransactionType,
+    actionName?: string
+    selectedToken?: {
+        logoURI: string,
+        symbol: string,
+        decimals: number
+    },
+    tx?: TransactionRequestBase | null | undefined,
+    onPrev?: () => void,
+    afterTransfer?: () => void,
+    onClose?: () => void
+}
+
+export enum TransactionType {
+    transfer,
+    callContract
+}
+
+export default function Review({
+    sendTo,
+    isModal,
+    tx,
+    transactionType,
+    actionName = 'Action Name',
+    selectedToken,
+    afterTransfer,
+    onPrev,
+    onClose,
+}: ReViewProps) {
+    const { closeModal } = useWalletContext();
     const { chainConfig } = useConfig();
-    const { signAndSend, getTransferEthOp, getTransferErc20Op } = useWallet();
+    const { signAndSend, getUserOp } = useWallet();
     const [isSent, setIsSent] = useState(false);
     const [txHash, setTxHash] = useState('');
     const [isSending, setIsSending] = useState(false);
@@ -38,11 +70,8 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
 
     const prepareAction = async () => {
         try {
-            if (tokenAddress === ZeroAddress) {
-                const _userOp = await getTransferEthOp(String(amount), sendTo, !useSponsor);
-                userOpRef.current = _userOp;
-            } else {
-                const _userOp = await getTransferErc20Op(String(amount), selectedToken.decimals, sendTo, !useSponsor, tokenAddress);
+            if (tx) {
+                const _userOp = await getUserOp([tx])
                 userOpRef.current = _userOp;
             }
         } catch (e) {
@@ -80,12 +109,13 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 isTransferingRef.current = false;
                 isCompletedRef.current = true;
                 setIsSent(true);
+                afterTransfer && afterTransfer();
             } catch (e) {
                 executingRef.current = false;
                 isTransferingRef.current = false;
                 isCompletedRef.current = false;
                 setIsSending(false);
-                onPrev();
+                onPrev && onPrev();
             }
         } else {
             executingRef.current = false;
@@ -96,7 +126,6 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
     };
 
     const getSponsorLeftTimes = async () => {
-        console.count()
         try {
             const res = await api.sponsor.leftTimes({
                 chainID: chainConfig.chainIdHex,
@@ -149,20 +178,30 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 )}
                 <Box marginTop="24px">
                     <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" color="#95979C">
-                        Send
+                        {transactionType === TransactionType.transfer ? 'Send' : 'Action'}
                     </Box>
                     <Box marginTop="8px" display="flex" alignItems="center">
                         <Box marginRight="8px">
-                            <Image w="32px" h="32px" src={selectedToken && selectedToken.logoURI} />
+                            {
+                                transactionType === TransactionType.transfer ?
+                                    <Image w="32px" h="32px" src={selectedToken && selectedToken.logoURI} /> :
+                                    <Image w="32px" h="32px" src={ReviewActionIcon} />
+                            }
                         </Box>
                         <Box fontSize="22px" fontWeight="500">
-                            {amount} {selectedToken && selectedToken.symbol}
+                            {
+                                transactionType === TransactionType.transfer ?
+                                    `${tx?.value ? formatEther(tx.value) : ''} ${selectedToken && selectedToken.symbol}`
+                                    : actionName
+                            }
                         </Box>
                     </Box>
                 </Box>
                 <Box marginTop="24px">
                     <Box fontSize="14px" lineHeight="17.5px" fontWeight="400" color="#95979C">
-                        To
+                        {
+                            transactionType === TransactionType.transfer ? 'To' : 'Interact with'
+                        }
                     </Box>
                     <Box
                         marginTop="8px"
@@ -172,7 +211,7 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                         lineHeight="24.2px"
                     >
                         <Box as="span" fontSize="22px" fontWeight={"500"} color="brand.red">
-                            {chainConfig.chainPrefix}
+                            {transactionType === TransactionType.transfer ? chainConfig.chainPrefix : 'oeth:'}
                         </Box>
                         <Box as="span" fontSize="22px" color="#161f36" >
                             {sendTo}
@@ -195,7 +234,12 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
                 {isSent && (
                     <Box marginTop="24px" width="100%">
                         <Box width="100%" marginBottom="8px">
-                            <Button width="calc(100%)" size="xl" type="gradientBlue" onClick={() => closeFullScreenModal()}>
+                            <Button
+                                width="calc(100%)"
+                                size="xl"
+                                type="gradientBlue"
+                                onClick={onClose}
+                            >
                                 Done
                             </Button>
                         </Box>

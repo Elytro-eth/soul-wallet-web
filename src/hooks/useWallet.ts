@@ -4,21 +4,18 @@ import useQuery from './useQuery';
 import { ABI_SocialRecoveryModule, ABI_SoulWallet } from '@soulwallet/abi';
 import { useSlotStore } from '@/store/slot';
 import { addPaymasterData } from '@/lib/tools';
-import { erc20Abi, verifyMessage } from 'viem';
+import { Address, erc20Abi, TransactionRequestBase, verifyMessage } from 'viem';
 import { SignkeyType, SocialRecovery, Transaction, UserOperation } from '@soulwallet/sdk';
 import { executeTransaction } from '@/lib/tx';
 import { UserOpUtils } from '@soulwallet/sdk';
 import useConfig from './useConfig';
 import api from '@/lib/api';
 import usePasskey from './usePasskey';
-import { toHex } from '@/lib/tools';
 import { useSignerStore } from '@/store/signer';
 import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
 import { defaultGuardianSafePeriod } from '@/config';
 import { fetchTokenBalanceApi } from '@/store/balance';
-// import { aaveUsdcPoolAbi, claimInterestAbi } from '@/contracts/abis';
-// import useTransaction from './useTransaction';
 import useTools from './useTools';
 import BN from 'bignumber.js';
 import useBrowser from './useBrowser';
@@ -26,7 +23,6 @@ import { useBalanceStore } from '@/store/balance';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { useTempStore } from '@/store/temp';
-// import { useGuardianStore } from '@/store/guardian';
 
 export const noGuardian = {
   initialGuardianHash: ethers.ZeroHash,
@@ -113,57 +109,57 @@ export default function useWallet() {
     navigate('/landing');
   };
 
-  const getTransferEthOp = async (amount: string, to: string, skipSponsor: boolean) => {
+  const getTransferEthOpTxs = (amount: string, to: Address) => {
     const ethBalance = getTokenBalance(ZeroAddress)?.tokenBalanceFormatted;
 
-    let txs = [];
+    let tx: TransactionRequestBase | null = null;
 
     if (BN(amount).isGreaterThan(BN(ethBalance))) {
       toast({
         title: 'Insufficient balance',
         status: 'error',
       });
-      return;
+      return tx;
     }
 
-    txs.push({
-      from: selectedAddress,
+    tx = {
+      from: selectedAddress as Address,
       to,
       data: '0x',
-      value: parseEther(amount).toString(),
-    });
+      value: parseEther(amount),
+    };
 
-    return await getUserOp(txs, skipSponsor);
+    return tx;
   };
 
-  const getTransferErc20Op = async (
+  const getTransferErc20OpTxs = (
     amount: string,
     decimals: number,
     to: string,
-    skipSponsor: boolean,
-    tokenAddress: string,
+    tokenAddress?: string,
   ) => {
-    const erc20 = new ethers.Interface(erc20Abi);
 
-    const erc20Balance = getTokenBalance(tokenAddress)?.tokenBalanceFormatted;
+    let tx: TransactionRequestBase | null = null;
+    if (tokenAddress) {
+      const erc20 = new ethers.Interface(erc20Abi);
 
-    let txs = [];
+      const erc20Balance = getTokenBalance(tokenAddress)?.tokenBalanceFormatted;
+      if (BN(amount).isGreaterThan(BN(erc20Balance))) {
+        toast({
+          title: 'Insufficient balance',
+          status: 'error',
+        });
+        return tx;
+      }
 
-    if (BN(amount).isGreaterThan(BN(erc20Balance))) {
-      toast({
-        title: 'Insufficient balance',
-        status: 'error',
-      });
-      return;
+      tx = {
+        from: selectedAddress as Address,
+        to: tokenAddress as Address,
+        data: erc20.encodeFunctionData('transfer', [to, ethers.parseUnits(String(amount), decimals)]) as Address,
+      };
+
     }
-
-    txs.push({
-      from: selectedAddress,
-      to: tokenAddress,
-      data: erc20.encodeFunctionData('transfer', [to, ethers.parseUnits(String(amount), decimals)]),
-    });
-
-    return await getUserOp(txs, skipSponsor);
+    return tx;
   };
 
   const getChangeGuardianOp = async (newGuardianHash: string) => {
@@ -411,8 +407,8 @@ export default function useWallet() {
 
   return {
     loginWallet,
-    getTransferEthOp,
-    getTransferErc20Op,
+    getTransferEthOpTxs,
+    getTransferErc20OpTxs,
     addPaymasterData,
     getActivateOp,
     signAndSend,
@@ -422,6 +418,7 @@ export default function useWallet() {
     getSponsor,
     getChangeGuardianOp,
     boostAfterRecovered,
-    sendTxs
+    sendTxs,
+    getUserOp
   };
 }

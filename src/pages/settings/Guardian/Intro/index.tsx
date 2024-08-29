@@ -21,7 +21,7 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
   return (
     <Box
       width="100%"
-      height={isDashboard ? (innerHeight - 84) : (innerHeight - 60)}
+      // height={isDashboard ? (innerHeight - 84) : (innerHeight - 60)} margic number?
       paddingTop="40px"
       background="white"
       display="flex"
