@@ -12,11 +12,12 @@ import { useAddressStore } from "@/store/address";
 import { init } from '@paralleldrive/cuid2';
 import { Address, encodeFunctionData, TransactionRequestBase } from "viem";
 import { ABI_SoulWalletOwnerManager } from "@soulwallet/abi";
-import IconLoading from '@/assets/mobile/loading.gif';
+import IconLoading from '@/assets/loading.svg';
 import { useChainStore } from "@/store/chain";
 import { getCurrentDateFormatted } from "@/lib/tools";
 import ReviewModal from "@/components/ReviewModal";
 import { RegistrationEncoded, RegistrationParsed } from "@passwordless-id/webauthn/dist/esm/types";
+import PageLoading from "@/components/PageLoading";
 
 const cuid2 = init({ length: 4 })
 
@@ -51,7 +52,7 @@ export default function PassKeyPage() {
     })
     const { getSelectedCredential } = useSignerStore()
     const localPasskey = getSelectedCredential()
-    if (isPending) return 'Loading';
+    if (isPending) return <PageLoading />;
     const splitPasskey = (list: PasskeyDTO[], localkey: ICredentialItem) => {
         const local = list.find(l => l.credentialID === localkey.credentialID);
         const other = list.filter(l => l.credentialID !== localkey.credentialID);
@@ -175,7 +176,7 @@ export default function PassKeyPage() {
                     fontWeight='normal'
                     onClick={addNewPasskey}
                 >
-                    {isAdding ? <Image src={IconLoading} width="50px" /> : <>
+                    {isAdding ? <Image src={IconLoading} width="36px" height='36px' /> : <>
                         <Image src={AddIcon} />
                         <Text fontSize="14px">Add a new passkey</Text>
                     </>}
