@@ -24,7 +24,10 @@ const cuid2 = init({ length: 4 })
 const DevicesContainer = ({ children }: { children: ReactNode }) => <Grid
     marginTop={'20px'}
     templateColumns={{
-        md: 'repeat(4, 1fr)',
+        '2xl': 'repeat(4, 1fr)',
+        xl: 'repeat(3, 1fr)',
+        lg: 'repeat(2, 1fr)',
+        md: 'repeat(1, 1fr)',
         sm: 'repeat(1, 1fr)'
     }}
     gap={4}
@@ -46,7 +49,12 @@ export default function PassKeyPage() {
     const {
         createPasskey, backupCredential, setJwt, saveKeyInfo
     } = usePasskey();
-    const { isPending, error, data: passkeys, refetch } = useQuery<{ data: { keys: PasskeyDTO[] } }>({
+    const {
+        isPending,
+        error,
+        data: passkeys,
+        refetch
+    } = useQuery<{ data: { keys: PasskeyDTO[] } }>({
         queryKey: ['passkey-list'],
         queryFn: () => api.authenticated.getKeyList().then((res) => res),
     })
@@ -80,7 +88,7 @@ export default function PassKeyPage() {
                     })
                 }
                 setChallenge(challenge)
-                setCredential(credential as any)
+                setCredential(credential)
                 setVerifiedRegistration(verifiedRegistration)
                 setRegistration(registration)
                 setPasskeyName(name)
