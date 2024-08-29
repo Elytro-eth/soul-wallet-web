@@ -5,14 +5,16 @@ import { Address, TransactionRequestBase } from "viem";
 interface ReviewModalProps {
     isOpen: boolean,
     sendTo: Address,
+    actionName: string,
     tx?: TransactionRequestBase | null,
     onClose: () => void
-    afterTransfer: () => void
+    afterTransfer?: () => void
 }
 
 export default function ReviewModal({
     isOpen,
     sendTo,
+    actionName,
     tx,
     onClose,
     afterTransfer
@@ -49,8 +51,9 @@ export default function ReviewModal({
                     tx={tx}
                     transactionType={TransactionType.callContract}
                     sendTo={sendTo}
-                    actionName="Add New Passkey"
+                    actionName={actionName}
                     afterTransfer={afterTransfer}
+                    onClose={onClose}
                 />
             </ModalBody>
         </ModalContent>

@@ -149,6 +149,7 @@ export default function PassKeyPage() {
                                 name={o.name}
                                 deviceType={o.platform}
                                 onchainPublicKey={o.onchainPublicKey}
+                                reFetch={refetch}
                             />)
                         }
                     </DevicesContainer>
@@ -185,6 +186,7 @@ export default function PassKeyPage() {
             tx={tx}
             sendTo={selectedAddress as Address}
             isOpen={isOpen}
+            actionName="Add New Passkey"
             onClose={onClose}
             afterTransfer={afterTransfer}
         />
