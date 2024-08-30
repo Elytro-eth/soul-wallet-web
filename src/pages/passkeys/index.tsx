@@ -70,7 +70,7 @@ export default function PassKeyPage() {
     const addNewPasskey = async () => {
         try {
             setIsAdding(true);
-            const name = `${walletName}-${getCurrentDateFormatted()}-${cuid2()}`;
+            const name = `${walletName}_${getCurrentDateFormatted()}-${cuid2()}`;
             const {
                 credential,
                 verifiedRegistration,
