@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Image,
-  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -13,26 +12,12 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/mobile/Header';
 import Button from '@/components/mobile/Button';
-import IntroItem1Icon from '@/components/Icons/mobile/Intro/Item1';
-import IntroItem2Icon from '@/components/Icons/mobile/Intro/Item2';
-import IntroItem3Icon from '@/components/Icons/mobile/Intro/Item3';
-import TwitterIcon from '@/components/Icons/desktop/Twitter';
-import TelegramIcon from '@/components/Icons/desktop/Telegram';
-import GithubIcon from '@/components/Icons/desktop/Github';
-import LinkedInIcon from '@/components/Icons/desktop/LinkedIn';
-import USDCIcon from '@/assets/tokens/usdc.png';
 import IconLoading from '@/assets/mobile/loading.gif';
 import Toolbar1 from '@/assets/toolbar1.png';
 import Toolbar2 from '@/assets/toolbar2.png';
 import AddHomeIMG from '@/assets/add-home.svg';
 import config from '@/config';
 import useWallet from '@/hooks/useWallet';
-import { useBalanceStore } from '@/store/balance';
-import treasuryIcon from '@/assets/mobile/treasury.png';
-import CoinbaseIcon from '@/assets/mobile/coinbase.png';
-import AAVEIcon from '@/assets/mobile/aave.png';
-import BN from 'bignumber.js';
-import APYCard from '@/components/mobile/APYCard';
 import useScreenSize from '@/hooks/useScreenSize';
 import { useSettingStore } from '@/store/setting';
 import { isPwaMode } from '@/lib/tools';
@@ -44,12 +29,11 @@ export default function Landing() {
   const [loaded, setLoaded] = useState(false);
   const { loginWallet } = useWallet();
   const { selectedAddress } = useAddressStore();
-  const { sevenDayApy } = useBalanceStore();
   const [logging, setLogging] = useState(false);
   const { clearTempInfo } = useTempStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { innerHeight } = useScreenSize();
-  const { getShouldShowAddedToHomeScreen, setLastAddedToHomeScreenTime} = useSettingStore();
+  const { getShouldShowAddedToHomeScreen, setLastAddedToHomeScreenTime } = useSettingStore();
   const marginHeight = innerHeight - ((innerHeight - 40) < 620 ? (innerHeight - 40) : 620);
 
   const isPwa = isPwaMode();
@@ -60,7 +44,7 @@ export default function Landing() {
       setLogging(true);
       await loginWallet();
       setLogging(false);
-      navigate('/dashboard');
+      navigate('/dashboard/assets');
     } catch (err) {
       setLogging(false);
     }
@@ -87,9 +71,9 @@ export default function Landing() {
     navigate('/recover')
   }
 
-  useEffect(()=>{
-    if(selectedAddress){
-      navigate('/dashboard')
+  useEffect(() => {
+    if (selectedAddress) {
+      navigate('/dashboard/assets')
     }
   }, [selectedAddress])
 
@@ -153,8 +137,8 @@ export default function Landing() {
                 textAlign="left"
                 color="#161F36"
               >
-                Simplified<br/>
-                Ethereum<br/>
+                Simplified<br />
+                Ethereum<br />
                 Experience
               </Box>
               <Box
@@ -167,8 +151,7 @@ export default function Landing() {
                 marginBottom="48px"
                 color="rgba(0, 0, 0, 0.6)"
               >
-                Setup up new account to receive
-                10 USDC
+                Setup up new account to receive 10 USDC
               </Box>
               <Box
                 width="100%"
@@ -181,7 +164,7 @@ export default function Landing() {
                   md: 'block'
                 }}
               >
-                If you have any questions, reach out to us at <Box as="span" fontWeight="500">support@soulwallet.io</Box>
+                If you have any questions, reach out to us at <Box as="strong" fontWeight="500">support@soulwallet.io</Box>
               </Box>
               <Box
                 marginTop="14px"
@@ -197,24 +180,8 @@ export default function Landing() {
                   <a href={item.link} target='_blank' key={idx}
                   >
                     <Image src={item.icon} />
-                    {/* <TwitterIcon /> */}
                   </a>
                 ))}
-                {/* <Box
-                  cursor="pointer"
-                >
-                  <TelegramIcon />
-                </Box>
-                <Box
-                  cursor="pointer"
-                >
-                  <GithubIcon />
-                </Box>
-                <Box
-                  cursor="pointer"
-                >
-                  <LinkedInIcon />
-                </Box> */}
               </Box>
             </Box>
           </Box>
@@ -368,10 +335,6 @@ export default function Landing() {
                 width="96px"
                 mb="3"
                 ml="8"
-                // borderRadius="120px"
-                // marginBottom="30px"
-                // marginLeft="32px"
-                // marginRight="32px"
               >
                 <Image src={AddHomeIMG} />
               </Box>

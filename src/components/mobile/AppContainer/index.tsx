@@ -6,7 +6,7 @@ import IconSetting from '@/assets/icons/setting.svg';
 import Button from '@/components/mobile/Button'
 import useWallet from '@/hooks/useWallet';
 import AddressIcon from '@/components/AddressIcon';
-import Settings from '@/pages/settings'
+import Settings from '@/pages/settings/SettingsMenu.tsx'
 import Activity from '@/pages/activity'
 import Deposit from '@/pages/deposit'
 import Send from '@/pages/send'
@@ -140,7 +140,7 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
   )
 }
 
-export default function AppContainer() {
+export default function AppContainer({ children }: any) {
   const {
     isModalOpen,
     openModal,
@@ -151,32 +151,9 @@ export default function AppContainer() {
     closeFullScreenModal,
     activeFullScreenModal
   } = useWalletContext()
-  const { logoutWallet } = useWallet();
   const { innerHeight } = useScreenSize()
-  // const innerHeight = window.innerHeight
-  const contentHeight = innerHeight //  - 56
-  console.log('isModalOpen', isModalOpen, activeModal)
-  console.log('isFullScreenModalOpen', isFullScreenModalOpen)
 
   const isTransparentBg = activeModal && activeModal.name === 'receive';
-
-  const doLogout = async () => {
-    logoutWallet();
-  }
-
-  const getContentStyles = (isOpen: any) => {
-    if (isOpen) {
-      return {}
-      return {
-        'transform': 'perspective(1300px) translateZ(-80px)',
-        'transform-style': 'preserve-3d',
-        'border-radius': '20px',
-        'overflow': 'hidden'
-      }
-    }
-
-    return {}
-  }
 
   const desktopModalStyle: any = {
     width: activeModal?.props?.width || 480,
@@ -191,10 +168,8 @@ export default function AppContainer() {
     <Box background="black">
       <Box
         height={innerHeight}
-        // background="#F2F3F5"
         background="white"
         transition="all 0.2s ease"
-        sx={getContentStyles(isModalOpen)}
       >
         <Flex
           h={innerHeight}
@@ -204,7 +179,7 @@ export default function AppContainer() {
           paddingTop="0"
         >
           <Box w="100%">
-            <Outlet context={[openModal]} />
+            {children}
           </Box>
         </Flex>
         <Box
@@ -225,14 +200,12 @@ export default function AppContainer() {
               height="100%"
               width="100%"
               position="absolute"
-            // background={isFullScreenModalOpen ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0)'}
               transition="all 0.3s ease"
             />
             <Box
               height="100%"
               width="100%"
               position="absolute"
-              // background="white"
               top={isFullScreenModalOpen ? '0' : '100%'}
               transition="all 0.3s ease"
             >

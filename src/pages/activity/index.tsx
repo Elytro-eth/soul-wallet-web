@@ -1,25 +1,9 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { Box, Flex, Image, Link } from '@chakra-ui/react';
-import Header from '@/components/mobile/Header';
-import Button from '@/components/mobile/Button';
-import { Link as Rlink } from 'react-router-dom';
-import DetailsIMG from '@/components/Icons/mobile/Details';
-import TabIcon from '@/components/Icons/mobile/Tab';
-import { formatDate, getIconMapping, toFixed, toShortAddress } from '@/lib/tools';
-import BN from 'bignumber.js';
-import { useNavigate } from 'react-router-dom';
-import USDCIcon from '@/assets/mobile/usdc_lg.png';
-import ETHIcon from '@/assets/tokens/eth.svg';
-import { aaveLink } from '@/config';
-import useWallet from '@/hooks/useWallet';
-import { headerHeight, tgLink } from '@/config';
-import { useAddressStore } from '@/store/address';
+
+import { Box, Flex, Image } from '@chakra-ui/react';
+import { getIconMapping, toShortAddress } from '@/lib/tools';
 import { useHistoryStore } from '@/store/history';
-import ActivityDepositIcon from '@/components/Icons/mobile/Activity/Deposit';
-import ActivityTransferIcon from '@/components/Icons/mobile/Activity/Transfer';
 import OpenIcon from '@/components/Icons/desktop/Open';
 import ActivityEmptyIcon from '@/assets/mobile/activity-empty.png';
-import TokenIcon from '@/components/TokenIcon';
 import useConfig from '@/hooks/useConfig';
 
 const getSubject = (functionName: any) => {
@@ -48,7 +32,7 @@ const shouldShowAmount = (functionName: any) => {
   }
 }
 
-export default function Activity({ isModal, isDashboard }: any) {
+export default function Activity({ isDashboard }: any) {
   const { historyList } = useHistoryStore();
   const { chainConfig } = useConfig();
 
@@ -61,16 +45,12 @@ export default function Activity({ isModal, isDashboard }: any) {
       alignItems="center"
       justifyContent="flex-start"
       width="100%"
+      height="100%"
       position="relative"
-      marginTop={isDashboard ? '0' : '24px'}
-      height={isDashboard ? 'calc(100vh - 104px)' : (window.innerHeight - 20)}
       background="white"
     >
       <Box
-        width={{
-          sm: '100%',
-          md: isDashboard ? '100%' : '798px',
-        }}
+        width='100%'
       >
         <Box
           fontSize="32px"
@@ -85,12 +65,10 @@ export default function Activity({ isModal, isDashboard }: any) {
         </Box>
         <Box
           width="100%"
-          background="white"
           marginTop="27px"
           overflow="auto"
           paddingLeft="30px"
           paddingRight="30px"
-          height={isDashboard ? 'calc(100vh - 170px)' : (window.innerHeight - 60)}
         >
           {historyList.length ? (
             <Flex gap="16px" padding="0" flexDir="column" width="100%" paddingBottom="16px">
@@ -100,7 +78,6 @@ export default function Activity({ isModal, isDashboard }: any) {
                   alignItems="center"
                   height={{
                     sm: '52px',
-                    // md: '42px',
                   }}
                   key={index}
                   width="100%"
@@ -170,51 +147,6 @@ export default function Activity({ isModal, isDashboard }: any) {
             </Flex>
           )}
         </Box>
-        {/* {finalHistoryList && finalHistoryList.length > 0 && (
-            <Box
-            width="100%"
-            background="white"
-            marginTop="27px"
-            overflow="auto"
-            ref={scrollableRef}
-            paddingLeft="30px"
-            paddingRight="30px"
-            >
-            <Flex
-            gap="36px"
-            padding="0"
-            flexDir="column"
-            width="100%"
-            overflow="auto"
-            // maxHeight="calc(100% - 120px)"
-            >
-            {finalHistoryList.map((item: any, i: any) => (
-            <Box
-            key={i}
-            display="flex"
-            alignItems="center"
-            height="40px"
-            >
-            <Box marginRight="12px">
-            {item.action === 'Deposit' ? <ActivityDepositIcon /> :  <ActivityTransferIcon />}
-            </Box>
-            <Box>
-            <Box
-            display="flex"
-            alignItems="center"
-            >
-            <Box fontSize="14px" fontWeight="500">{item.action}</Box>
-            </Box>
-            <Box fontSize="12px">{item.dateFormatted}</Box>
-            </Box>
-            <Box marginLeft="auto">
-            <Box fontSize="14px" fontWeight="500">{item.amountFormatted} USDC</Box>
-            </Box>
-            </Box>
-            ))}
-            </Flex>
-            </Box>
-            )} */}
       </Box>
     </Box>
   );
