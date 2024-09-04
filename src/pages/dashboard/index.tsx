@@ -10,7 +10,7 @@ import {
   ModalBody,
   useDisclosure
 } from '@chakra-ui/react';
-import { Link, Outlet, useLocation, useOutletContext, useRoutes } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import useBrowser from '@/hooks/useBrowser';
 import useScreenSize from '@/hooks/useScreenSize';
 import { useAddressStore } from '@/store/address';
@@ -20,18 +20,16 @@ import ThemePage from '@/components/ThemeChange';
 import SettingsMenu from '@/pages/settings/SettingsMenu.tsx'
 import GuardianIntroPage from '@/pages/settings/Guardian/Intro'
 import GuardianManagePage from '@/pages/settings/Guardian/Manage'
-import AssetsIcon2 from '@/components/Icons/desktop/Assets';
-import ActivityIcon2 from '@/components/Icons/desktop/Activity';
-import SettingsIcon2 from '@/components/Icons/desktop/Settings';
 import { thirdPartyLicenseUrl } from '@/config/constants';
 import config from '@/config';
 import { Header } from './Header';
 import useWalletContext from '@/context/hooks/useWalletContext';
+import SideMenu from './SideMenu';
 
 export function GuardianPage({ isDashboard }: any) {
   const { guardiansInfo } = useGuardianStore();
 
-  if (!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash || true) {
+  if (!guardiansInfo || !guardiansInfo.guardianHash || guardiansInfo.guardianHash === ZeroHash) {
     return (
       <GuardianIntroPage isDashboard={isDashboard} />
     )
@@ -48,20 +46,6 @@ export default function Dashboard() {
   const { navigate } = useBrowser();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { openModal } = useWalletContext()
-  const location = useLocation()
-  const sideMenus = [{
-    icon: (props: any) => <AssetsIcon2 {...props} />,
-    name: 'Assets',
-    link: '/dashboard/assets'
-  }, {
-    icon: (props: any) => <ActivityIcon2 {...props} />,
-    name: 'Activity',
-    link: '/dashboard/activity'
-  }, {
-    icon: (props: any) => <SettingsIcon2 {...props} />,
-    name: 'Settings',
-    link: '/dashboard/settings'
-  }]
 
   useEffect(() => {
     if (!selectedAddress) {
@@ -103,38 +87,7 @@ export default function Dashboard() {
             flexDirection="column"
           >
             <Box width="100%">
-              {
-                sideMenus.map(({
-                  icon,
-                  name,
-                  link
-                }) => (
-                  <Link to={link}>
-                    <Box
-                      width="100%"
-                      padding="12px 20px"
-                      cursor="pointer"
-                      display="flex"
-                      alignItems="center"
-                    >
-
-                      <Box marginRight="8px">
-                        {icon({
-                          color: location.pathname === link ? '#2D3CBD' : '#676B75'
-                        })}
-                      </Box>
-                      <Box
-                        fontSize="18px"
-                        fontWeight={location.pathname === link ? '500' : '400'}
-                        color={location.pathname === link ? '#2D3CBD' : '#676B75'}
-                        lineHeight="22.5px"
-                      >
-                        {name}
-                      </Box>
-                    </Box>
-                  </Link>
-                ))
-              }
+              <SideMenu />
             </Box>
             <Box marginTop="auto">
               <Box color="#676B75" fontSize="12px" lineHeight="15px" fontWeight="400" paddingLeft="20px" paddingRight="20px" paddingBottom="12px">Version: Alpha 0.0.1</Box>
@@ -176,11 +129,11 @@ export default function Dashboard() {
           >
             <Box
               padding={{
-                sm: (true) ? '8px' : '0',
+                sm: '8px',
                 md: '0'
               }}
               height="100%"
-              overflowY="scroll"
+              overflowY="hidden"
               borderRadius={{
                 sm: '0',
                 md: '32px',
