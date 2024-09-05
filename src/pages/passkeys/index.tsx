@@ -27,8 +27,7 @@ const DevicesContainer = ({ children }: { children: ReactNode }) => <Grid
         '2xl': 'repeat(4, 1fr)',
         xl: 'repeat(3, 1fr)',
         lg: 'repeat(2, 1fr)',
-        md: 'repeat(1, 1fr)',
-        sm: 'repeat(1, 1fr)'
+        base: 'repeat(1, 1fr)',
     }}
     gap={4}
 >
@@ -132,7 +131,7 @@ export default function PassKeyPage() {
         <Box
             width="100%"
             p='28px'
-            pos={{ md: "relative" }}
+            pos={{ lg: "relative" }}
             overflowY='scroll'
         >
             <Box mb='20px'>
@@ -166,25 +165,28 @@ export default function PassKeyPage() {
             }
             <Box
                 pos="absolute"
-                bottom={{ sm: '40px' }}
-                top={{ lg: "40px", md: '10px' }}
+                bottom={{ base: '40px', lg: 'unset' }}
+                top={{ xl: "40px", lg: '10px' }}
                 left={{
-                    sm: "40px",
-                    md: "unset"
+                    base: "40px",
+                    lg: "unset"
                 }}
                 right="40px"
             >
                 <Button
                     type="white"
                     w={{
-                        sm: '100%',
-                        md: 'auto'
+                        base: '100%',
+                        lg: 'auto'
+                    }}
+                    minW={{
+                        lg: '184px'
                     }}
                     size="lg"
                     fontWeight='normal'
                     onClick={addNewPasskey}
                 >
-                    {isAdding ? <Image src={IconLoading} width="36px" height='36px' /> : <>
+                    {isAdding ? <Image src={IconLoading} width="20px" height='20px' /> : <>
                         <Image src={AddIcon} />
                         <Text fontSize="14px">Add a new passkey</Text>
                     </>}

@@ -23,10 +23,10 @@ export default function RecoverVerifyEmail() {
       marginTop="60px"
       position="relative"
       height={{
-        sm: innerHeight - 60,
-        md: "calc(100% - 60px)",
+        base: innerHeight - 60,
+        lg: "calc(100% - 60px)",
       }}
-      // overflowY="auto"
+    // overflowY="auto"
     >
       <Box
         height="calc(100% - 100px)"
@@ -73,7 +73,7 @@ export default function RecoverVerifyEmail() {
             </Box>
             <Box
               padding="8px"
-              // marginBottom="24px"
+            // marginBottom="24px"
             >
               <Box
                 display="flex"
@@ -96,7 +96,7 @@ export default function RecoverVerifyEmail() {
                 <Box width="40px" marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C">To</Box>
                 <Box display="flex" alignItems="center" fontSize="18px" color="#161F36">
                   <Box wordBreak={"break-word"}>{emailTemplate.to || '...'}</Box>
-                  <Box marginLeft="4px" onClick={()=> doCopy(emailTemplate.to)}><CopyIcon /></Box>
+                  <Box marginLeft="4px" onClick={() => doCopy(emailTemplate.to)}><CopyIcon /></Box>
                 </Box>
               </Box>
               <Box
@@ -110,9 +110,9 @@ export default function RecoverVerifyEmail() {
               >
                 <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
                   <Box>Subject</Box>
-                  <Box onClick={()=> doCopy(emailTemplate.subject)}><CopyIcon /></Box>
+                  <Box onClick={() => doCopy(emailTemplate.subject)}><CopyIcon /></Box>
                 </Box>
-                <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
+                <Box marginTop="5px" display="flex" alignItems="center" width="100%">
                   <Box width="100%">{emailTemplate.subject}</Box>
                 </Box>
               </Box>
@@ -128,7 +128,7 @@ export default function RecoverVerifyEmail() {
                 <Box marginRight="25px" fontSize="14px" fontWeight="500" color="#95979C" display="flex" alignItems="center" justifyContent="space-between" width="100%">
                   <Box>Content</Box>
                 </Box>
-                <Box marginTop="5px" display="flex" alignItems="center"  width="100%">
+                <Box marginTop="5px" display="flex" alignItems="center" width="100%">
                   <Box width="100%" color="#95979C">(Empty)</Box>
                 </Box>
               </Box>
@@ -137,7 +137,7 @@ export default function RecoverVerifyEmail() {
         </Box>
       </Box>
       <Box
-        position={{ sm: 'fixed', md: 'absolute' }}
+        position={{ base: 'fixed', lg: 'absolute' }}
         padding="0 30px"
         width="100%"
         paddingTop="20px"

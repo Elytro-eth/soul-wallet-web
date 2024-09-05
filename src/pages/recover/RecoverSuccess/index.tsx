@@ -49,8 +49,8 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
     <Box
       width="100%"
       height={{
-        sm: innerHeight - 80,
-        md: '440px',
+        base: innerHeight - 80,
+        lg: '440px',
       }}
       padding="30px"
       display="flex"
@@ -118,7 +118,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
                     </Box>
                   </Box>
                   <Box padding="8px" fontWeight="500" fontSize="20px">
-            :
+                    :
                   </Box>
                   <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
                     <Box

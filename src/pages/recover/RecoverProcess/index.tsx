@@ -9,14 +9,14 @@ export default function RecoverProcess({ step }: any) {
   return (
     <Box
       position={{
-        sm: "fixed",
-        md: "static",
+        base: "fixed",
+        lg: "static",
       }}
       bottom="20px"
       left="16px"
       width={{
-        sm: "calc(100vw - 32px)",
-        md: "345px",
+        base: "calc(100vw - 32px)",
+        lg: "345px",
       }}
       padding="24px"
       borderRadius="20px"
@@ -25,17 +25,17 @@ export default function RecoverProcess({ step }: any) {
       border="1px solid #F2F3F5"
       zIndex="1"
       marginLeft={{
-        sm: '0',
-        md: '33px'
+        base: '0',
+        lg: '33px'
       }}
     >
       <Box onClick={() => setIsOpen(!isOpen)} display="flex" alignItems="center" justifyContent="space-between" cursor="pointer">
-        <Box fontSize="18px" fontWeight="500" color="#161F36">Recovery process ({step+1}/3)</Box>
+        <Box fontSize="18px" fontWeight="500" color="#161F36">Recovery process ({step + 1}/3)</Box>
         <Box
           transform={isOpen ? '' : 'rotate(180deg)'}
           display={{
-            sm: 'flex',
-            md: 'none'
+            base: 'flex',
+            lg: 'none'
           }}
         >
           <ChevronDown />
@@ -43,8 +43,8 @@ export default function RecoverProcess({ step }: any) {
       </Box>
       <Box
         display={{
-          sm: isOpen ? 'flex' : 'none',
-          md: 'flex',
+          base: isOpen ? 'flex' : 'none',
+          lg: 'flex',
         }}
         gap="8px"
         flexDirection="column"

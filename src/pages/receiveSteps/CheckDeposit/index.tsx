@@ -47,8 +47,8 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
   const scrollableRef = useRef<any>()
   // console.log('isModal', isModal)
 
-  useEffect(()=>{
-    if(historyList.filter(item => item.action === 'Deposit').length > 3){
+  useEffect(() => {
+    if (historyList.filter(item => item.action === 'Deposit').length > 3) {
       setChecked1(true)
       setChecked2(true)
       setChecked3(true)
@@ -70,7 +70,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
   return (
     <Box
       width="100%"
-      height={{ sm: contentHeight, md: '440px' }}
+      height={{ base: contentHeight, lg: '440px' }}
       position="relative"
       overflowY={isAllChecked ? 'auto' : 'hidden'}
       ref={scrollableRef}
@@ -80,7 +80,7 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
         marginBottom={isAllChecked ? '80px' : '0px'}
       >
         <Box width="100%" fontSize="30px" fontWeight="500" textAlign="center" lineHeight="36px" marginTop="20px">
-          Prior to deposit,<br/> please verify
+          Prior to deposit,<br /> please verify
         </Box>
         <Box
           width="100%"
@@ -190,10 +190,10 @@ export default function CheckDeposit({ onPrev, onNext, setIsPaginationActive, is
           {/* <ModalCloseButton /> */}
           <ModalBody>
             <Box marginBottom="24px">
-              <ReceiveCode address={selectedAddress} onSet={setQrcodeSrc}  />
+              <ReceiveCode address={selectedAddress} onSet={setQrcodeSrc} />
             </Box>
             <Box textAlign={'center'}>
-              <Button size="xl" type="black" width="224px" onClick={()=> shareFile(qrcodeSrc)}>
+              <Button size="xl" type="black" width="224px" onClick={() => shareFile(qrcodeSrc)}>
                 Share
               </Button>
             </Box>

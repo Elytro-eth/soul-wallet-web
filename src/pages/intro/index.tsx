@@ -15,7 +15,7 @@ import useScreenSize from '@/hooks/useScreenSize'
 
 export default function Intro() {
   const [loaded, setLoaded] = useState(false);
-  const { sevenDayApy,} = useBalanceStore();
+  const { sevenDayApy, } = useBalanceStore();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { historyList } = useHistoryStore();
   const navigate = useNavigate();
@@ -26,8 +26,8 @@ export default function Intro() {
   const baseHeight = 59;
   const aaveHeight = BN(sevenDayApy).div(5).times(baseHeight).toNumber();
 
-  useEffect(()=>{
-    if(historyList.length){
+  useEffect(() => {
+    if (historyList.length) {
       navigate('/dashboard')
     }
   }, [historyList])
@@ -40,13 +40,13 @@ export default function Intro() {
     <Box
       width="100%"
       height="100%"
-      // background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
+    // background="linear-gradient(180deg, #FBFBFB 0%, #F0F0F0 100%)"
     >
       <Box width="100%" padding="30px" display="flex" alignItems="center" flexDirection="column">
-        <Box  fontSize="36px" fontWeight="500" textAlign="center" lineHeight="56px">
+        <Box fontSize="36px" fontWeight="500" textAlign="center" lineHeight="56px">
           Deposit and earn
         </Box>
-        <Box  fontSize="14px" fontWeight="500" textAlign="center" marginTop="14px">
+        <Box fontSize="14px" fontWeight="500" textAlign="center" marginTop="14px">
           Deposit to your Stable.cash account, get <Text as="span" fontWeight="500">auto-saved</Text> into the best interest rate pool and start earning today!
         </Box>
         <Link as={RLink} to="/deposit" mt="50px">
@@ -74,16 +74,16 @@ export default function Intro() {
         <ModalOverlay />
         <ModalContent
           borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
+            base: '20px 20px 0 0',
+            lg: '20px',
           }}
           maxW={{
-            sm: '100vw',
-            md: '430px'
+            base: '100vw',
+            lg: '430px'
           }}
           marginTop={{
-            sm: `${marginHeight}px`,
-            md: 'calc(50vh - 214px)'
+            base: `${marginHeight}px`,
+            lg: 'calc(50vh - 214px)'
           }}
           height="428px"
           overflow="auto"

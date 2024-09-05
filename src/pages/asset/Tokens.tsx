@@ -43,10 +43,11 @@ export default function Tokens() {
         position="relative"
         zIndex="1"
         paddingBottom={{
-            sm: '0',
-            md: '4px'
+            base: '0',
+            lg: '4px'
         }}
         height="100%"
+        overflow='auto'
     >
         <Box
             fontSize="22px"
@@ -55,16 +56,16 @@ export default function Tokens() {
             padding="22px 32px"
             paddingBottom="0"
             display={{
-                sm: 'none',
-                md: 'flex'
+                base: 'none',
+                lg: 'flex'
             }}
         >
             Tokens
         </Box>
         <Box
             padding={{
-                sm: '12px 16px',
-                md: '12px 32px'
+                base: '12px 16px',
+                lg: '12px 32px'
             }}
             paddingBottom="0"
             display="flex"

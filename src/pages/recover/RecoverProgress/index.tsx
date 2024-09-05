@@ -55,7 +55,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
     openModal('recoverVerifyEmail');
   };
 
-  const shareLink:any = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
+  const shareLink: any = `${location.origin}/public/sign/${recoverInfo.recoveryID}`
 
   const onShare = () => {
     if (!navigator.share) {
@@ -90,16 +90,16 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
       </Box>
       <Box
         display="flex"
-        flexDirection={{ sm: 'column', md: 'row' }}
+        flexDirection={{ base: 'column', lg: 'row' }}
       >
         <Box
           width={{
-            sm: '100%',
-            md: '50%',
+            base: '100%',
+            lg: '50%',
           }}
-          paddingRight={{ sm: '0', md: '32px' }}
+          paddingRight={{ base: '0', lg: '32px' }}
         >
-          {walletGurdians && walletGurdians.length ?  <Box marginTop="40px">
+          {walletGurdians && walletGurdians.length ? <Box marginTop="40px">
             <Box fontSize="20px" fontWeight="500" mb="3" color="#161F36">
               Wallet recovery contact
             </Box>
@@ -108,21 +108,21 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
               const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
               const isLast = index === guardiansList.length - 1
               return <Box
-                       fontWeight="500"
-                       fontSize="14px"
-                       key={index}
-                       width="100%"
-                       padding="16px 0"
-                       height="64px"
-                       borderBottom={isLast ? '1px solid #F0F0F0' : ''}
-                       display="flex"
-                       alignItems="center"
-                //  marginTop="12px"
-                     >
+                fontWeight="500"
+                fontSize="14px"
+                key={index}
+                width="100%"
+                padding="16px 0"
+                height="64px"
+                borderBottom={isLast ? '1px solid #F0F0F0' : ''}
+                display="flex"
+                alignItems="center"
+              //  marginTop="12px"
+              >
                 {/* <AddressIcon width={32} address={guardianAddress} /> */}
                 <Flex align={'center'} gap="2">
                   <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
-                  {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
+                  {!isEmail && <Box onClick={() => doCopy(label)}><CopyIcon /></Box>}
                 </Flex>
                 <Box marginLeft="auto">
                   {(signedGuardians.includes(guardianAddress)) ? (
@@ -180,13 +180,13 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
 
         <Box
           width={{
-            sm: '100%',
-            md: '50%',
+            base: '100%',
+            lg: '50%',
           }}
-          paddingLeft={{ sm: '0', md: '32px' }}
-          borderLeft={{ sm: 'none', md: '1px solid #F2F3F5' }}
+          paddingLeft={{ base: '0', lg: '32px' }}
+          borderLeft={{ base: 'none', lg: '1px solid #F2F3F5' }}
         >
-          {emailGurdians && emailGurdians.length > 0 ? <Box marginTop="24px" borderTop={{ sm: '1px solid #BDC0C7', md: 'none' }} paddingTop="24px">
+          {emailGurdians && emailGurdians.length > 0 ? <Box marginTop="24px" borderTop={{ base: '1px solid #BDC0C7', lg: 'none' }} paddingTop="24px">
             <Box fontSize="20px" fontWeight="500" color="#161F36" mb="3">
               Email recovery contact
             </Box>
@@ -195,20 +195,20 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
               const label = guardianAddressEmail[guardianAddress] || toShortAddress(guardianAddress, 6);
               const isLast = index === guardiansList.length - 1
               return <Box
-                       fontWeight="500"
-                       fontSize="14px"
-                       key={index}
-                       width="100%"
-                       padding="16px 0"
-                       height="64px"
-                       borderBottom={isLast ? '1px solid #F0F0F0' : ''}
-                       display="flex"
-                       alignItems="center"
-                     >
+                fontWeight="500"
+                fontSize="14px"
+                key={index}
+                width="100%"
+                padding="16px 0"
+                height="64px"
+                borderBottom={isLast ? '1px solid #F0F0F0' : ''}
+                display="flex"
+                alignItems="center"
+              >
                 {/* <AddressIcon width={32} address={guardianAddress} /> */}
                 <Flex align={'center'} gap="2">
                   <Box wordBreak={"break-all"} fontSize="14px" fontWeight="500" color="#161F36">{label}</Box>
-                  {!isEmail && <Box onClick={()=> doCopy(label)}><CopyIcon /></Box>}
+                  {!isEmail && <Box onClick={() => doCopy(label)}><CopyIcon /></Box>}
                 </Flex>
                 <Box marginLeft="auto">
                   {(signedGuardians.includes(guardianAddress)) ? (
@@ -229,14 +229,14 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
                       <Box>Confirmed</Box>
                     </Box>
                   ) : <Box
-                        color="#848488"
-                        background="#F3F3F3"
-                        padding="2px 12px"
-                        borderRadius="24px"
-                        display="flex"
-                        alignItems="center"
-                        height="31px"
-                      >
+                    color="#848488"
+                    background="#F3F3F3"
+                    padding="2px 12px"
+                    borderRadius="24px"
+                    display="flex"
+                    alignItems="center"
+                    height="31px"
+                  >
                     <Box marginRight="4px">
                       <WaitingIcon />
                     </Box>
@@ -253,7 +253,7 @@ export default function RecoverProgress({ onNext, signedGuardians }: any) {
           </Box> : ''}
         </Box>
       </Box>
-      <Box height="110px" display={{ sm: 'block', md: 'none' }} />
+      <Box height="110px" display={{ base: 'block', lg: 'none' }} />
     </Box>
   );
 }

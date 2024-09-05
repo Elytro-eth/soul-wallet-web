@@ -58,8 +58,8 @@ export default function Dashboard() {
       <Box
         height={innerHeight}
         background={{
-          sm: `#F2F3F5`,
-          md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+          base: `#F2F3F5`,
+          lg: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
         }}
       >
         <Header
@@ -75,13 +75,13 @@ export default function Dashboard() {
         >
           <Box
             minWidth={{
-              sm: '0',
-              md: '240px'
+              base: '0',
+              lg: '240px'
             }}
             height="100%"
             display={{
-              sm: 'none',
-              md: 'flex'
+              base: 'none',
+              lg: 'flex'
             }}
             padding="24px 0"
             flexDirection="column"
@@ -100,8 +100,8 @@ export default function Dashboard() {
                 gap="17px"
                 width="100%"
                 display={{
-                  sm: 'none',
-                  md: 'flex'
+                  base: 'none',
+                  lg: 'flex'
                 }}
                 padding="0 20px"
               >
@@ -115,28 +115,28 @@ export default function Dashboard() {
           </Box>
           <Box
             width={{
-              sm: '100%',
-              md: 'calc(100% - 240px)'
+              base: '100%',
+              lg: 'calc(100% - 240px)'
             }}
             paddingRight={{
-              sm: '0',
-              md: '20px'
+              base: '0',
+              lg: '20px'
             }}
             marginBottom={{
-              sm: '0',
-              md: '20px'
+              base: '0',
+              lg: '20px'
             }}
           >
             <Box
               padding={{
-                sm: '8px',
-                md: '0'
+                base: '8px',
+                lg: '0'
               }}
               height="100%"
               overflowY="hidden"
               borderRadius={{
-                sm: '0',
-                md: '32px',
+                base: '0',
+                lg: '32px',
               }}
             >
               <Outlet context={[openModal]} />
@@ -152,16 +152,16 @@ export default function Dashboard() {
           <ModalOverlay height="100vh" />
           <ModalContent
             borderRadius={{
-              sm: '32px 32px 0 0',
-              md: '32px',
+              base: '32px 32px 0 0',
+              lg: '32px',
             }}
             maxW={{
-              sm: '100vw',
-              md: '430px',
+              base: '100vw',
+              lg: '430px',
             }}
             marginTop={{
-              sm: `${innerHeight - 474}px`,
-              md: 'calc(50vh - 237px)',
+              base: `${innerHeight - 474}px`,
+              lg: 'calc(50vh - 237px)',
             }}
             height={474}
             overflow="visible"

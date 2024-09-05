@@ -9,14 +9,14 @@ export default function Header() {
     <Flex
       as="header"
       h={`${headerHeight}px`}
-      px={{ base: '2', md: 5 }}
+      px={{ base: '2', lg: 5 }}
       bg="#fff"
       borderBottom={'1px solid #e6e6e6'}
       align="center"
       justify={'space-between'}
     >
-      <Link to="/dashboard">
-        <Image src={IconLogo} h={{base: "24px", sm: "32px", md: "44px"}} />
+      <Link to="/dashboard/assets">
+        <Image src={IconLogo} h={{ base: "24px", md: "32px", lg: "44px" }} />
       </Link>
       <Flex gap="2" align={'center'}>
         <Flex

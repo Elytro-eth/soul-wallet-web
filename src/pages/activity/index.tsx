@@ -14,9 +14,11 @@ export default function Activity() {
       height="100%"
       position="relative"
       background="white"
+      overflow='hidden'
     >
       <Box
         width='100%'
+        height="100%"
       >
         <Box
           fontSize="32px"
@@ -27,17 +29,18 @@ export default function Activity() {
           alignItems="center"
           justifyContent="span-between"
           width="100%"
+          height='90px'
         >
           Activity
         </Box>
         <Box
           width="100%"
-          marginTop="27px"
           overflow="auto"
           paddingLeft="30px"
           paddingRight="30px"
+          height='calc(100% - 90px)'
         >
-          <ActivityList />
+          <ActivityList /><ActivityList />
         </Box>
       </Box>
     </Box>

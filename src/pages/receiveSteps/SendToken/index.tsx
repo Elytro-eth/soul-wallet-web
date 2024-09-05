@@ -14,7 +14,7 @@ export default function SelectToken({
   return (
     <Box
       width="100%"
-      height={{ sm: contentHeight, md: '440px' }}
+      height={{ base: contentHeight, lg: '440px' }}
       position="relative"
       overflow="auto"
       sx={{

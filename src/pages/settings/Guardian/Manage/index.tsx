@@ -173,7 +173,7 @@ export default function Manage({ isDashboard }: any) {
           closeModal();
         },
       });
-    } else if(guardianType === 1) {
+    } else if (guardianType === 1) {
       openModal('addWalletGuardian', {
         width: 640,
         height: 450,
@@ -191,25 +191,25 @@ export default function Manage({ isDashboard }: any) {
     }
   };
 
-  useEffect(()=>{
-    if(tempGuardians.length === 0) {
+  useEffect(() => {
+    if (tempGuardians.length === 0) {
       setTempThreshold(0);
-    }else if(tempGuardians.length < tempThreshold) {
+    } else if (tempGuardians.length < tempThreshold) {
       setTempThreshold(tempGuardians.length);
     }
   }, [tempGuardians])
 
   // const isActiveGuardianEmail = guardianAddressEmail[tempGuardians[activeGuardianIndex]];
-  const emailGuardianCount = tempGuardians.filter((guardianAddress:any) => guardianAddressEmail[guardianAddress]).length;
+  const emailGuardianCount = tempGuardians.filter((guardianAddress: any) => guardianAddressEmail[guardianAddress]).length;
   const walletGuardianCount = tempGuardians.length - emailGuardianCount;
 
-  const onAddRecoveryContact = () => { 
-    if(isGuardianMenuOpen){
+  const onAddRecoveryContact = () => {
+    if (isGuardianMenuOpen) {
       onGuardianMenuClose();
-    }else{
-      if(emailGuardianCount === 1){
+    } else {
+      if (emailGuardianCount === 1) {
         onCreateGuardianOpen(1);
-      }else{
+      } else {
         onGuardianMenuOpen();
       }
     }
@@ -233,8 +233,8 @@ export default function Manage({ isDashboard }: any) {
               <Box
                 position="relative"
                 display={{
-                  sm: 'none',
-                  md: 'flex'
+                  base: 'none',
+                  lg: 'flex'
                 }}
               >
                 <Box>
@@ -258,8 +258,8 @@ export default function Manage({ isDashboard }: any) {
           marginTop="14px"
           display="flex"
           flexDirection={{
-            sm: 'column',
-            md: 'row',
+            base: 'column',
+            lg: 'row',
           }}
           flexWrap="wrap"
         >
@@ -274,12 +274,12 @@ export default function Manage({ isDashboard }: any) {
               marginBottom="16px"
               key={index}
               width={{
-                sm: '100%',
-                md: 'calc(50% - 8px)'
+                base: '100%',
+                lg: 'calc(50% - 8px)'
               }}
               marginRight={{
-                sm: '0',
-                md: ((index % 2) === 0) ? '16px' : '0',
+                base: '0',
+                lg: ((index % 2) === 0) ? '16px' : '0',
               }}
             >
               <Box width="48px" height="48px" marginRight="8px">
@@ -288,15 +288,15 @@ export default function Manage({ isDashboard }: any) {
               <Box>
                 <Box fontSize="18px" fontWeight="400" color="#161F36" lineHeight="22.5px">
                   {guardianAddressEmail[guardianAddress]
-                  ? 'Email recovery contact'
-                  : guardianAddressName[guardianAddress]
-                  ? guardianAddressName[guardianAddress]
-                  : 'Recovery contact'}
+                    ? 'Email recovery contact'
+                    : guardianAddressName[guardianAddress]
+                      ? guardianAddressName[guardianAddress]
+                      : 'Recovery contact'}
                 </Box>
                 <Box fontSize="12px" fontWeight="500" marginTop="4px" lineHeight="18px" color="#676B75">
                   {guardianAddressEmail[guardianAddress]
-                  ? guardianAddressEmail[guardianAddress]
-                  : toShortAddress(guardianAddress)}
+                    ? guardianAddressEmail[guardianAddress]
+                    : toShortAddress(guardianAddress)}
                 </Box>
               </Box>
               {isEditing && (
@@ -314,8 +314,8 @@ export default function Manage({ isDashboard }: any) {
           {isEditing && tempGuardians.length < 10 && (
             <Box
               display={{
-                sm: 'flex',
-                md: 'none'
+                base: 'flex',
+                lg: 'none'
               }}
             >
               <Menu isOpen={isGuardianMenuOpen} isLazy autoSelect={false}>
@@ -352,8 +352,8 @@ export default function Manage({ isDashboard }: any) {
               marginTop="16px"
               borderRadius="16px"
               width={{
-                sm: '100%',
-                md: 'calc(50% - 8px)'
+                base: '100%',
+                lg: 'calc(50% - 8px)'
               }}
             >
               <Box marginBottom="14px" marginTop="12px" position="relative">
@@ -415,8 +415,8 @@ export default function Manage({ isDashboard }: any) {
           <Box width="50%" paddingRight="7px">
             <Button
               width={{
-                sm: 'calc(100% - 7px)',
-                md: '200px',
+                base: 'calc(100% - 7px)',
+                lg: '200px',
               }}
               disabled={false} size="xl"
               type="white"
@@ -428,8 +428,8 @@ export default function Manage({ isDashboard }: any) {
           <Box width="50%" paddingLeft="7px">
             <Button
               width={{
-                sm: 'calc(100% - 7px)',
-                md: '200px',
+                base: 'calc(100% - 7px)',
+                lg: '200px',
               }}
               loading={changingGuardian}
               disabled={changingGuardian}
@@ -437,8 +437,8 @@ export default function Manage({ isDashboard }: any) {
               type="gradientBlue"
               onClick={() => doChangeGuardian()}
               marginLeft={{
-                sm: "0",
-                md: 'calc(100% - 200px)',
+                base: "0",
+                lg: 'calc(100% - 200px)',
               }}
             >
               <Box display="flex" alignItems="center" justifyContent="center">
@@ -453,8 +453,8 @@ export default function Manage({ isDashboard }: any) {
         <Box marginTop="auto" width="100%" display="flex" paddingBottom="20px" padding="30px" borderTop="1px solid #F2F3F5">
           <Button
             width={{
-              sm: "100%",
-              md: '200px',
+              base: "100%",
+              lg: '200px',
             }}
             disabled={false}
             size="xl"
@@ -462,8 +462,8 @@ export default function Manage({ isDashboard }: any) {
             onClick={() => setIsEditing(true)}
             color="black"
             marginLeft={{
-              sm: "0",
-              md: 'auto',
+              base: "0",
+              lg: 'auto',
             }}
           >
             Edit
@@ -475,16 +475,16 @@ export default function Manage({ isDashboard }: any) {
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
+            base: '20px 20px 0 0',
+            lg: '20px',
           }}
           maxW={{
-            sm: '100vw',
-            md: '430px',
+            base: '100vw',
+            lg: '430px',
           }}
           marginTop={{
-            sm: `${innerHeight - 468}px`,
-            md: 'calc(50vh - 234px)',
+            base: `${innerHeight - 468}px`,
+            lg: 'calc(50vh - 234px)',
           }}
           height="468px"
           overflow="auto"
@@ -523,16 +523,16 @@ export default function Manage({ isDashboard }: any) {
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
+            base: '20px 20px 0 0',
+            lg: '20px',
           }}
           maxW={{
-            sm: '100vw',
-            md: '430px',
+            base: '100vw',
+            lg: '430px',
           }}
           marginTop={{
-            sm: `${innerHeight - 528}px`,
-            md: 'calc(50vh - 264px)',
+            base: `${innerHeight - 528}px`,
+            lg: 'calc(50vh - 264px)',
           }}
           height="528px"
           overflow="auto"
@@ -600,12 +600,12 @@ export default function Manage({ isDashboard }: any) {
           borderRadius="24px"
           justifyContent="flex-end"
           maxW={{
-            sm: 'calc(100vw - 32px)',
-            md: '330px',
+            base: 'calc(100vw - 32px)',
+            lg: '330px',
           }}
           marginTop={{
-            sm: `auto`,
-            md: 'calc(50vh - 100px)',
+            base: `auto`,
+            lg: 'calc(50vh - 100px)',
           }}
           overflow="visible"
           mb="0"
@@ -683,20 +683,20 @@ export default function Manage({ isDashboard }: any) {
         <ModalOverlay
           height="100vh"
           background={{
-            sm: 'transparent',
-            md: 'rgba(0, 0, 0, 0.5)',
+            base: 'transparent',
+            lg: 'rgba(0, 0, 0, 0.5)',
           }}
         />
         <ModalContent
           borderRadius="24px"
           justifyContent="flex-end"
           maxW={{
-            sm: 'calc(100vw - 32px)',
-            md: '330px',
+            base: 'calc(100vw - 32px)',
+            lg: '330px',
           }}
           marginTop={{
-            sm: `auto`,
-            md: 'calc(50vh - 100px)',
+            base: `auto`,
+            lg: 'calc(50vh - 100px)',
           }}
           overflow="visible"
           mb="0"

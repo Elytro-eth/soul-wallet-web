@@ -98,28 +98,28 @@ export default function Receive({ isModal, registerScrollable }: any) {
     <Box
       width="100%"
       height={{
-        sm: innerHeight,
-        md: '100%',
+        base: innerHeight,
+        lg: '100%',
       }}
       overflowY="scroll"
       background={{
-        sm: '#F2F3F5',
-        md: 'white',
+        base: '#F2F3F5',
+        lg: 'white',
       }}
       display="flex"
-      alignItems={{ sm: 'center', md: 'flex-start' }}
+      alignItems={{ base: 'center', lg: 'flex-start' }}
       justifyContent="center"
     >
       <Box
         marginTop="0px"
         padding="30px 8px"
         minHeight={{
-          sm: isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)',
-          md: isModal ? 'calc(100%)' : 'calc(100vh - 62px)'
+          base: isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)',
+          lg: isModal ? 'calc(100%)' : 'calc(100vh - 62px)'
         }}
         width={{
-          sm: '100%',
-          md: '380px'
+          base: '100%',
+          lg: '380px'
         }}
       >
         <Box fontSize="28px" fontWeight="500" padding="0 24px">
@@ -155,30 +155,30 @@ export default function Receive({ isModal, registerScrollable }: any) {
                 </Box>
               </Box>
             </Box>
-            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" marginTop={{ sm: '40px', md: '10px' }}>
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" marginTop={{ base: '40px', lg: '10px' }}>
               <Box
                 display="flex"
                 alignItems="center"
                 width={{
-                  sm: '205px',
-                  md: '144px'
+                  base: '205px',
+                  lg: '144px'
                 }}
                 height={{
-                  sm: '205px',
-                  md: '144px'
+                  base: '205px',
+                  lg: '144px'
                 }}
               >
                 <ReceiveCode
                   address={selectedAddress}
                   width={{
-                    sm: '205px',
-                    md: '144px'
+                    base: '205px',
+                    lg: '144px'
                   }}
                   height={{
-                    sm: '205px',
-                    md: '144px'
+                    base: '205px',
+                    lg: '144px'
                   }}
-                  onSet={() => {}}
+                  onSet={() => { }}
                 />
               </Box>
               <Box

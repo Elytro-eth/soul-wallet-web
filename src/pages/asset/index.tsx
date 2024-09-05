@@ -12,18 +12,18 @@ export function AssetPage() {
             height="100%"
             display='flex'
             flexDirection={{
-                sm: 'column',
-                md: 'row'
+                base: 'column',
+                lg: 'row'
             }}
         >
             <Box
                 flexBasis={{
-                    md: '56%'
+                    lg: '56%'
                 }}
                 display="flex"
                 height={{
-                    sm: 'auto',
-                    md: '100%'
+                    base: 'auto',
+                    lg: '100%'
                 }}
             >
                 <Box width="100%">
@@ -31,20 +31,20 @@ export function AssetPage() {
                     <Box
                         width="100%"
                         padding={{
-                            sm: '0 8px',
-                            md: '32px',
+                            base: '0 8px',
+                            lg: '32px',
                         }}
                         background={{
-                            sm: 'transparent',
-                            md: 'white'
+                            base: 'transparent',
+                            lg: 'white'
                         }}
                         borderRadius={{
-                            sm: '0',
-                            md: '32px'
+                            base: '0',
+                            lg: '32px'
                         }}
                         marginBottom={{
-                            sm: '0',
-                            md: '20px'
+                            base: '0',
+                            lg: '20px'
                         }}
                     >
                         <Balance />
@@ -56,12 +56,12 @@ export function AssetPage() {
                         position="relative"
                         zIndex="1"
                         paddingBottom={{
-                            sm: '0',
-                            md: '4px'
+                            base: '0',
+                            lg: '4px'
                         }}
                         display={{
-                            sm: 'none',
-                            md: 'flex'
+                            base: 'none',
+                            lg: 'flex'
                         }}
                         height="calc(100% - 220px)"
                         flexDirection="column"
@@ -74,8 +74,8 @@ export function AssetPage() {
                             fontWeight="500"
                             color="#161F36"
                             display={{
-                                sm: 'none',
-                                md: 'flex'
+                                base: 'none',
+                                lg: 'flex'
                             }}
                             alignItems="center"
                             justifyContent="span-between"
@@ -99,8 +99,8 @@ export function AssetPage() {
                         marginTop="14px"
                         marginBottom="40px"
                         display={{
-                            sm: 'flex',
-                            md: 'none'
+                            base: 'flex',
+                            lg: 'none'
                         }}
                     >
                         <MobileActionBar />
@@ -109,12 +109,17 @@ export function AssetPage() {
             </Box>
             <Box
                 width={{
-                    sm: '100%',
-                    md: '44%'
+                    base: '100%',
+                    lg: '44%'
                 }}
+                flex={1}
                 paddingLeft={{
-                    sm: '0',
-                    md: '20px',
+                    base: '0',
+                    lg: '20px',
+                }}
+                paddingBottom={{
+                    base: '10px',
+                    lg: '0',
                 }}
             >
                 <Tokens />

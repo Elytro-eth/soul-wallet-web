@@ -22,7 +22,7 @@ export default function ConnectWalletModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent background="white" maxW={{base: "95%", lg: "840px"}} borderRadius="20px">
+      <ModalContent background="white" maxW={{ base: "95%", lg: "840px" }} borderRadius="20px">
         <ModalHeader
           display="flex"
           justifyContent="flex-start"
@@ -75,7 +75,7 @@ export default function ConnectWalletModal({
                   width="100%"
                   display="flex"
                   flexWrap="wrap"
-                  justifyContent={{ base: 'space-between', md: 'flex-start' }}
+                  justifyContent={{ base: 'space-between', lg: 'flex-start' }}
                 >
                   {connectors.filter(item => supportedEoas.includes(item.id)).map((connector: Connector) =>
                     <WalletOption

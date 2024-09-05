@@ -99,8 +99,8 @@ export function Header({ openMenu, username, ...props }: any) {
         >
             <Box
                 display={{
-                    sm: 'none',
-                    md: 'flex',
+                    base: 'none',
+                    lg: 'flex',
                 }}
                 cursor="pointer"
                 onClick={() => navigate('/landing')}
@@ -109,8 +109,8 @@ export function Header({ openMenu, username, ...props }: any) {
             </Box>
             <Box
                 display={{
-                    sm: 'flex',
-                    md: 'none',
+                    base: 'flex',
+                    lg: 'none',
                 }}
                 gap="2"
                 alignItems="center"
@@ -136,8 +136,8 @@ export function Header({ openMenu, username, ...props }: any) {
                     paddingLeft="18px"
                     background="rgba(255, 255, 255, 1)"
                     display={{
-                        sm: "none",
-                        md: "flex"
+                        base: "none",
+                        lg: "flex"
                     }}
                     cursor="pointer"
                     marginRight="12px"
@@ -228,8 +228,8 @@ export function Header({ openMenu, username, ...props }: any) {
                     padding="10px 12px"
                     background="rgba(255, 255, 255, 0.5)"
                     display={{
-                        sm: "none",
-                        md: "flex"
+                        base: "none",
+                        lg: "flex"
                     }}
                 >
                     <Box
@@ -316,8 +316,8 @@ export function Header({ openMenu, username, ...props }: any) {
                     justifyContent="center"
                     onClick={openMenu}
                     display={{
-                        sm: "flex",
-                        md: "none"
+                        base: "flex",
+                        lg: "none"
                     }}
                 >
                     <Box

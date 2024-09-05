@@ -15,8 +15,8 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
     <Box
       width="100%"
       height={{
-        sm: isModal ? (innerHeight - 94) : (innerHeight - 60),
-        md: 'calc(100% - 94px)'
+        base: isModal ? (innerHeight - 94) : (innerHeight - 60),
+        lg: 'calc(100% - 94px)'
       }}
       padding="30px"
     >
@@ -27,7 +27,7 @@ export default function ConfirmGuardians({ onPrev, onChangeGuardian, changingGua
         flexDirection="column"
         overflowY="auto"
       >
-        <Box marginBottom={{ sm: '40px', md: '10px' }} height="120px">
+        <Box marginBottom={{ base: '40px', lg: '10px' }} height="120px">
           <Image height="120px" src={GuardianIcon} />
         </Box>
         <Box

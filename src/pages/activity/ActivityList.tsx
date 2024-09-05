@@ -39,7 +39,6 @@ export default function ActivityList() {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height="100%"
     >
         <Box width="100%" display="flex" alignItems="center" justifyContent="center" flexDirection="column">
             <Image src={ActivityEmptyIcon} w={'216px'} h="108px" />
@@ -54,7 +53,7 @@ export default function ActivityList() {
                 display="flex"
                 alignItems="center"
                 height={{
-                    sm: '52px',
+                    base: '52px',
                 }}
                 key={index}
                 width="100%"
@@ -65,12 +64,12 @@ export default function ActivityList() {
                     alignItems="flex-start"
                     width="calc(100% - 42px)"
                     flexDirection={{
-                        sm: 'column',
-                        md: 'row',
+                        base: 'column',
+                        lg: 'row',
                     }}
                     justifyContent={{
-                        sm: 'center',
-                        md: 'space-between',
+                        base: 'center',
+                        lg: 'space-between',
                     }}
                 >
                     <Box display="flex" alignItems="center">
@@ -92,8 +91,8 @@ export default function ActivityList() {
                             marginLeft="8px"
                             cursor="pointer"
                             display={{
-                                sm: 'none',
-                                md: 'block'
+                                base: 'none',
+                                lg: 'block'
                             }}
                             onClick={() => window.open(`${chainConfig.scanUrl}/tx/${item.txHash}`, '_blank')}
                         >

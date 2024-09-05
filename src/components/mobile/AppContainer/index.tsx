@@ -122,12 +122,12 @@ export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
       borderTopRightRadius="32px"
       borderTopLeftRadius="32px"
       borderBottomRightRadius={{
-        sm: '0',
-        md: '32px',
+        base: '0',
+        lg: '32px',
       }}
       borderBottomLeftRadius={{
-        sm: '0',
-        md: '32px',
+        base: '0',
+        lg: '32px',
       }}
       overflow="hidden"
       onTouchStart={handleTouchStart}
@@ -174,7 +174,7 @@ export default function AppContainer({ children }: any) {
         <Flex
           h={innerHeight}
           flexDir={{ base: 'column', lg: 'row' }}
-          gap={{ base: 6, md: 8, lg: '50px' }}
+          gap={{ base: 6, lg: 8 }}
           overflow="auto"
           paddingTop="0"
         >
@@ -259,20 +259,20 @@ export default function AppContainer({ children }: any) {
               position="absolute"
               transition="all 0.3s ease"
               top={{
-                sm: isModalOpen ? '0' : '100%',
-                md: isModalOpen ? desktopModalStyle.top : '100%'
+                base: isModalOpen ? '0' : '100%',
+                lg: isModalOpen ? desktopModalStyle.top : '100%'
               }}
               left={{
-                sm: '0',
-                md: desktopModalStyle.left
+                base: '0',
+                lg: desktopModalStyle.left
               }}
               height={{
-                sm: "100%",
-                md: desktopModalStyle.height
+                base: "100%",
+                lg: desktopModalStyle.height
               }}
               width={{
-                sm: "100%",
-                md: desktopModalStyle.width
+                base: "100%",
+                lg: desktopModalStyle.width
               }}
             >
               <Box
@@ -292,8 +292,8 @@ export default function AppContainer({ children }: any) {
               </Box>
               <ModalPage
                 height={{
-                  sm: window.innerHeight,
-                  md: desktopModalStyle.height,
+                  base: window.innerHeight,
+                  lg: desktopModalStyle.height,
                 }}
                 activeModal={activeModal}
                 openModal={openModal}

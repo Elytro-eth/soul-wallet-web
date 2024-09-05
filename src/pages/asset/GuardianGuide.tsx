@@ -22,12 +22,12 @@ export default function GuardianGuide() {
     if (!(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash)) return null;
     return <Box
         paddingLeft={{
-            sm: '8px',
-            md: '0',
+            base: '8px',
+            lg: '0',
         }}
         paddingRight={{
-            sm: '8px',
-            md: '0',
+            base: '8px',
+            lg: '0',
         }}
         marginBottom="20px"
     >
@@ -36,23 +36,23 @@ export default function GuardianGuide() {
             alignItems="center"
             width='100%'
             minHeight={{
-                sm: '79px',
-                md: '48px',
+                base: '79px',
+                lg: '48px',
             }}
             borderRadius="32px"
             padding="12px 16px"
             color="#0E1736"
             justifyContent={{
-                sm: "space-between",
-                md: "start"
+                base: "space-between",
+                lg: "start"
             }}
             flexDirection={{
-                sm: 'row',
-                md: 'row-reverse',
+                base: 'row',
+                lg: 'row-reverse',
             }}
             background={{
-                sm: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
-                md: 'white',
+                base: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+                lg: 'white',
             }}
             onClick={handleVerifyEmailClick}
             cursor="pointer"
@@ -63,28 +63,28 @@ export default function GuardianGuide() {
                     lineHeight={"1"}
                     fontWeight="500"
                     display={{
-                        sm: 'flex',
-                        md: 'none'
+                        base: 'flex',
+                        lg: 'none'
                     }}
                 >
                     $10
                 </Box>
                 <Box
                     fontSize={{
-                        sm: '14px',
-                        md: '18px',
+                        base: '14px',
+                        lg: '18px',
                     }}
                     lineHeight={{
-                        sm: '17px',
-                        md: '22.5px',
+                        base: '17px',
+                        lg: '22.5px',
                     }}
                     fontWeight={{
-                        sm: '400',
-                        md: '500',
+                        base: '400',
+                        lg: '500',
                     }}
                     opacity={{
-                        sm: '0.64',
-                        md: '1',
+                        base: '0.64',
+                        lg: '1',
                     }}
                     color="#161F36"
                     display="flex"
@@ -94,8 +94,8 @@ export default function GuardianGuide() {
                     <Box
                         marginLeft="10px"
                         display={{
-                            sm: 'none',
-                            md: 'flex',
+                            base: 'none',
+                            lg: 'flex',
                         }}
                     >
                         <ArrowRightIcon />
@@ -105,16 +105,16 @@ export default function GuardianGuide() {
             <Box>
                 <Image
                     width={{
-                        sm: '40px',
-                        md: '32px'
+                        base: '40px',
+                        lg: '32px'
                     }}
                     height={{
-                        sm: '40px',
-                        md: '32px'
+                        base: '40px',
+                        lg: '32px'
                     }}
                     marginRight={{
-                        sm: '0px',
-                        md: '10px'
+                        base: '0px',
+                        lg: '10px'
                     }}
                     src={USDCIcon}
                 />

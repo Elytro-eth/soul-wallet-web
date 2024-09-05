@@ -24,7 +24,7 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
       </Box>
       <Box width="100%" marginBottom="30px">
         <Input
-        // autoFocus
+          // autoFocus
           onChange={(e: any) => onChange((e.target.value).toLowerCase())}
           onBlur={(e: any) => onBlur(e.target.value)}
           value={email}
@@ -57,8 +57,8 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
         // width="100%"
         loading={sendingEmail}
         onClick={onSendEmail}
-        width={{ sm: '100%', md: '200px' }}
-        marginLeft={{ sm: '0', md: 'calc(100% - 200px)' }}
+        width={{ base: '100%', lg: '200px' }}
+        marginLeft={{ base: '0', lg: 'calc(100% - 200px)' }}
       >
         Continue
       </Button>
@@ -66,16 +66,16 @@ export default function SetEmail({ email, onChange, onBlur, errorMsg, disabled, 
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '32px 32px 0 0',
-            md: '32px',
+            base: '32px 32px 0 0',
+            lg: '32px',
           }}
           maxW={{
-            sm: '100vw',
-            md: '430px',
+            base: '100vw',
+            lg: '430px',
           }}
           marginTop={{
-            sm: `${marginHeight}px`,
-            md: 'calc(50vh - 229px)',
+            base: `${marginHeight}px`,
+            lg: 'calc(50vh - 229px)',
           }}
           height="458px"
           overflow="auto"

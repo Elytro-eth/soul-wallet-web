@@ -78,12 +78,12 @@ export default function Deposit({ isModal, registerScrollable }: any) {
   const [step, setStep] = useState(0)
   const [isPaginationActive, setIsPaginationActive] = useState(false)
   const { historyList } = useHistoryStore();
-  const {selectedChainId} = useChainStore();
+  const { selectedChainId } = useChainStore();
   const { selectedAddress } = useAddressStore();
   const screenSize = useScreenSize()
   const innerHeight = isModal ? (screenSize.innerHeight - 40) : screenSize.innerHeight
 
-  const onFinish = useCallback(async() => {
+  const onFinish = useCallback(async () => {
     if (isModal) {
       closeModal()
     }
@@ -95,19 +95,19 @@ export default function Deposit({ isModal, registerScrollable }: any) {
     }
   }, [isModal])
 
-  const onPrev = useCallback(async() => {
+  const onPrev = useCallback(async () => {
     console.log('prev')
 
     if (step > 0) {
       // setStep(step - 1)
       swiper.slidePrev()
-    }else{
-      if(historyList.length){
+    } else {
+      if (historyList.length) {
         navigate('/dashboard')
         return
       }
       // get history length
-      const res = await api.op.list(selectedAddress, [selectedChainId ]);
+      const res = await api.op.list(selectedAddress, [selectedChainId]);
       if (res.data.history.length) {
         navigate('/dashboard')
       } else {
@@ -142,7 +142,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
 
   console.log('isModal', isModal)
   return (
-    <Box width="100%" height={{ sm: innerHeight, md: '640px' }} overflow="hidden">
+    <Box width="100%" height={{ base: innerHeight, lg: '640px' }} overflow="hidden">
       <Header
         title=""
         showBackButton={!isModal}
@@ -163,7 +163,7 @@ export default function Deposit({ isModal, registerScrollable }: any) {
           <SelectNetwork onPrev={onPrev} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
         <SwiperSlide>
-          <SendToken onFinish={onFinish} onNext={onNext}isModal={isModal} registerScrollable={registerScrollable} />
+          <SendToken onFinish={onFinish} onNext={onNext} isModal={isModal} registerScrollable={registerScrollable} />
         </SwiperSlide>
 
         <SwiperSlide>

@@ -69,8 +69,8 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
               top="60px"
               left="calc(-50vw + 32px)"
               width={{
-                sm: 'calc(100vw - 64px)',
-                md: '100%',
+                base: 'calc(100vw - 64px)',
+                lg: '100%',
               }}
             >
               <Menu
@@ -117,20 +117,20 @@ export default function Intro({ onPrev, onNext, isDashboard }: any) {
           <ModalOverlay
             height="100vh"
             background={{
-              sm: 'transparent',
-              md: 'rgba(0, 0, 0, 0.5)',
+              base: 'transparent',
+              lg: 'rgba(0, 0, 0, 0.5)',
             }}
           />
           <ModalContent
             borderRadius="24px"
             justifyContent="flex-end"
             maxW={{
-              sm: 'calc(100vw - 32px)',
-              md: '330px',
+              base: 'calc(100vw - 32px)',
+              lg: '330px',
             }}
             marginTop={{
-              sm: `auto`,
-              md: 'calc(50vh - 100px)',
+              base: `auto`,
+              lg: 'calc(50vh - 100px)',
             }}
             overflow="visible"
             mb="0"

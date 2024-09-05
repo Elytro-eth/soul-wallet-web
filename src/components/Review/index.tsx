@@ -145,14 +145,15 @@ export default function Review({
     }, [])
 
     return (
-        <Box width="100%" height={innerHeight} overflowY="scroll">
+        <Box width="100%" height={innerHeight}
+            overflow="hidden">
             <Header title="" showBackButton={!isModal} onBack={onPrev} />
             <Box
                 padding="30px"
                 minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
                 paddingTop={{
-                    sm: '30px',
-                    md: '0',
+                    base: '30px',
+                    lg: '0',
                 }}
             >
                 {isSent && (
@@ -265,8 +266,8 @@ export default function Review({
                             </Box>
                         )}
                         <Box width={{
-                            sm: isSending || !onPrev ? '100%' : '50%',
-                            md: '50%'
+                            base: isSending || !onPrev ? '100%' : '50%',
+                            lg: '50%'
                         }} paddingLeft="7px">
                             <Button
                                 width="calc(100% - 7px)"

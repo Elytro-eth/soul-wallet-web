@@ -10,7 +10,7 @@ export default function WalletOption({ name, icon, onClick }: { name: string, ic
       border="1px solid rgba(0, 0, 0, 0.1)"
       borderRadius="12px"
       padding="16px"
-      marginRight={{ base: '0px', md: '16px' }}
+      marginRight={{ base: '0px', lg: '16px' }}
       marginBottom="24px"
       width="45%"
       cursor="pointer"
@@ -23,8 +23,8 @@ export default function WalletOption({ name, icon, onClick }: { name: string, ic
         height="48px"
         border="1px solid rgba(0, 0, 0, 0.1)"
         borderRadius="12px"
-        marginRight={{ base: '0px', md: '12px' }}
-        marginBottom={{ base: '4px', md: '0' }}
+        marginRight={{ base: '0px', lg: '12px' }}
+        marginBottom={{ base: '4px', lg: '0' }}
         display="flex"
         alignItems="center"
         justifyContent="center"

@@ -11,18 +11,18 @@ export default function GreySection({ leftPart, rightPart, ...props }: any) {
       alignItems="flex-start"
       justifyContent="space-around"
       margin="0 auto"
-      flexDirection={{ base: 'column', md: 'row' }}
+      flexDirection={{ base: 'column', lg: 'row' }}
       {...props}
     >
       <Box
-        width={{ base: '100%', md: '40%' }}
-        paddingRight={{ base: '0', md: '30px' }}
+        width={{ base: '100%', lg: '40%' }}
+        paddingRight={{ base: '0', lg: '30px' }}
       >
         {leftPart}
       </Box>
       <Box
-        width={{ base: '100%', md: '60%' }}
-        marginTop={{ base: '10px', md: '0' }}
+        width={{ base: '100%', lg: '60%' }}
+        marginTop={{ base: '10px', lg: '0' }}
       >
         {rightPart}
       </Box>

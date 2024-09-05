@@ -115,16 +115,16 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       width="100%"
       padding="30px"
       height={{
-        sm: innerHeight,
-        md: '440px',
+        base: innerHeight,
+        lg: '440px',
       }}
       display="flex"
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
       maxWidth={{
-        sm: '100%',
-        md: '400px'
+        base: '100%',
+        lg: '400px'
       }}
     >
       <Box marginBottom="40px">
@@ -133,12 +133,12 @@ export default function CreateSuccess({ credential, username, invitationCode }: 
       <Box fontWeight="500" fontSize="24px" lineHeight="14px" marginBottom="32px">
         Your account is ready
       </Box>
-      <Box style={{width: "100%"}} >
+      <Box style={{ width: "100%" }} >
         <Button width="100%" size="xl" type="gradientBlue" minWidth="195px" onClick={() => navigate('/dashboard')}>
           Let’s go
         </Button>
       </Box>
-      <Box height="100px" display={{ sm: 'block', md: 'none' }} />
+      <Box height="100px" display={{ base: 'block', lg: 'none' }} />
     </Box>
   );
 }

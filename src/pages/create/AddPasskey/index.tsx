@@ -4,7 +4,7 @@ import FadeId from '@/components/Icons/mobile/FaceId'
 import PasskeyIcon from '@/assets/add-passkey.png'
 import useScreenSize from '@/hooks/useScreenSize'
 
-export default function AddPasskey({ addingPasskey, onNext}: any) {
+export default function AddPasskey({ addingPasskey, onNext }: any) {
   const { innerHeight } = useScreenSize()
 
   return (
@@ -12,16 +12,16 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
       width="100%"
       padding="30px"
       height={{
-        sm: innerHeight - 64,
-        md: 'auto',
+        base: innerHeight - 64,
+        lg: 'auto',
       }}
       display="flex"
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
       maxWidth={{
-        sm: '100%',
-        md: '400px'
+        base: '100%',
+        lg: '400px'
       }}
     >
       <Box
@@ -55,7 +55,7 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
         width="100%"
       >
         <Box width="100%" fontSize="14px" lineHeight="17.5px" fontWeight="400" textAlign="center" color="#676B75">
-          Setup with your fingerprint, Face, or Lock ID.<br/><br/>
+          Setup with your fingerprint, Face, or Lock ID.<br /><br />
           Use passkey to sent transaction in a safer and more secure way. You can change it later.
         </Box>
       </Box>
@@ -65,7 +65,7 @@ export default function AddPasskey({ addingPasskey, onNext}: any) {
           <Box>Setup</Box>
         </Box>
       </Button>
-      <Box height="100px" display={{ sm: 'block', md: 'none' }} />
+      <Box height="100px" display={{ base: 'block', lg: 'none' }} />
     </Box>
   );
 }

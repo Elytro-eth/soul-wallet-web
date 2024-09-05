@@ -60,15 +60,15 @@ export default function Send({ isModal }: any) {
       height={innerHeight}
       display="flex"
       padding={{
-        sm: '0',
-        md: '72px'
+        base: '0',
+        lg: '72px'
       }}
     >
       <Box
         width="380px"
         display={{
-          sm: 'none',
-          md: 'flex'
+          base: 'none',
+          lg: 'flex'
         }}
         flexDirection="column"
         marginTop="64px"
@@ -109,8 +109,8 @@ export default function Send({ isModal }: any) {
       </Box>
       <Box
         width={{
-          sm: '100%',
-          md: '480px'
+          base: '100%',
+          lg: '480px'
         }}
       >
         <Box width="100%">

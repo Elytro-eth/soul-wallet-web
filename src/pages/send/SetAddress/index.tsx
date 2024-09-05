@@ -131,8 +131,8 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
         padding="30px"
         minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
         paddingTop={{
-          sm: '30px',
-          md: '0',
+          base: '30px',
+          lg: '0',
         }}
       >
         <Box fontSize="28px" fontWeight="500" color="#161F36">
@@ -155,7 +155,7 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
                 fontSize="20px"
                 lineHeight="24px"
                 fontWeight="400"
-              // autoFocus
+                // autoFocus
                 placeholder="Enter wallet address or ENS"
                 border="none"
                 outline="none"
@@ -201,12 +201,12 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
             >
               <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
                 {isSelf
-                ? 'You cannot send to yourself'
-                : isInvalidNetwork
-                ? 'Invalid network'
-                : disabled
-                ? 'Invalid wallet address'
-                : ''}
+                  ? 'You cannot send to yourself'
+                  : isInvalidNetwork
+                    ? 'Invalid network'
+                    : disabled
+                      ? 'Invalid wallet address'
+                      : ''}
               </Box>
             </Box>
           )}
@@ -235,16 +235,16 @@ export default function SetAddress({ isModal, onPrev, onNext, sendTo, setSendTo 
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '32px 32px 0 0',
-            md: '32px',
+            base: '32px 32px 0 0',
+            lg: '32px',
           }}
           maxW={{
-            sm: '100vw',
-            md: '430px',
+            base: '100vw',
+            lg: '430px',
           }}
           marginTop={{
-            sm: `${marginHeight}px`,
-            md: 'calc(50vh - 234px)',
+            base: `${marginHeight}px`,
+            lg: 'calc(50vh - 234px)',
           }}
           height="468px"
           overflow="auto"
