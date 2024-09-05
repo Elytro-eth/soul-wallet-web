@@ -40,7 +40,7 @@ export default function Activity() {
           paddingRight="30px"
           height='calc(100% - 90px)'
         >
-          <ActivityList /><ActivityList />
+          <ActivityList />
         </Box>
       </Box>
     </Box>

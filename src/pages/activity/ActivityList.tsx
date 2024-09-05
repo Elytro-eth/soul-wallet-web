@@ -35,6 +35,7 @@ export default function ActivityList() {
         gap="16px"
         padding="0"
         width="100%"
+        height='100%'
         paddingBottom="16px"
         display="flex"
         alignItems="center"
