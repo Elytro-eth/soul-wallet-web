@@ -4,15 +4,18 @@ import EmptyIcon from '@/assets/mobile/activity-empty.png'
 import TokenIcon from '@/components/TokenIcon';
 import Button from '@/components/mobile/Button';
 import useWalletContext from "@/context/hooks/useWalletContext";
+import useIsMobile from "@/hooks/useIsMobile";
 
 export default function Tokens() {
     const { tokenBalance, tokenBalanceValid } = useBalanceStore();
-    const { openModal } = useWalletContext();
+    const { openModal, openFullScreenModal } = useWalletContext();
+    const isMobile = useIsMobile()
+    console.log(isMobile)
     if (!tokenBalanceValid) return <Box
         width="100%"
         background="white"
         borderRadius="32px"
-        height="377px"
+        height='100%'
         boxShadow="0px 4px 30px 0px rgba(44, 53, 131, 0.08)"
         position="relative"
         zIndex="1"
@@ -32,7 +35,16 @@ export default function Tokens() {
             </Box>
             <Box fontSize="18px" fontWeight="400" lineHeight="22.5px" color="#676B75">Deposit your first token to start</Box>
             <Box marginTop="12px">
-                <Button size="lg" type="white" width="100px" fontSize="17px" onClick={() => openModal('receive', { width: 480, height: 600 })}>Deposit</Button>
+                <Button
+                    size="lg"
+                    type="white"
+                    width="100px"
+                    fontSize="17px"
+                    onClick={() => {
+                        if (isMobile) return openFullScreenModal('receive');
+                        return openModal('receive')
+                    }}
+                >Deposit</Button>
             </Box>
         </Box>
     </Box>
