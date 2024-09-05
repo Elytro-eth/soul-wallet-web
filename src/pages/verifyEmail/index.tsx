@@ -276,7 +276,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
   };
 
   return (
-    <Box width="100%" bg="#fff" height={innerHeight}>
+    <Box width="100%" bg="#fff">
       {step < 3 && (
         <Fragment>
           <Header

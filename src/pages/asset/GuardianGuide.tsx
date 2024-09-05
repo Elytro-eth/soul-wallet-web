@@ -5,18 +5,18 @@ import { Box, useMediaQuery, Image } from "@chakra-ui/react";
 import { ZeroHash } from 'ethers';
 import ArrowRightIcon from '@/components/Icons/desktop/ArrowRight';
 import USDCIcon from '@/assets/mobile/usdc.png'
+import useIsMobile from "@/hooks/useIsMobile";
 
 
 export default function GuardianGuide() {
     const { guardiansInfo } = useGuardianStore();
-    const [isLargerThan768] = useMediaQuery('min-width: 768px');
-    const { navigate } = useBrowser();
-    const { openModal } = useWalletContext()
+    const isMobile = useIsMobile()
+    const { openFullScreenModal, openModal } = useWalletContext()
     const handleVerifyEmailClick = () => {
-        if (isLargerThan768) {
-            openModal('verifyEmail', { width: 640, height: 420 })
+        if (isMobile) {
+            openFullScreenModal('verifyEmail')
         } else {
-            navigate('/verify-email')
+            openModal('verifyEmail')
         }
     }
     if (!(guardiansInfo && guardiansInfo.guardianHash && guardiansInfo.guardianHash === ZeroHash)) return null;

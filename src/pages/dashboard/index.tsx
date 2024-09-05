@@ -25,6 +25,7 @@ import config from '@/config';
 import { Header } from './Header';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import SideMenu from './SideMenu';
+import MobileMenuModal from './MobileMenuModal';
 
 export function GuardianPage({ isDashboard }: any) {
   const { guardiansInfo } = useGuardianStore();
@@ -76,7 +77,8 @@ export default function Dashboard() {
           <Box
             minWidth={{
               base: '0',
-              lg: '240px'
+              md: '200px',
+              xl: '240px'
             }}
             height="100%"
             display={{
@@ -114,9 +116,9 @@ export default function Dashboard() {
             </Box>
           </Box>
           <Box
+            flex={1}
             width={{
               base: '100%',
-              lg: 'calc(100% - 240px)'
             }}
             paddingRight={{
               base: '0',
@@ -143,48 +145,11 @@ export default function Dashboard() {
             </Box>
           </Box>
         </Box>
-        <Modal
-          isOpen={isOpen}
-          onClose={onClose}
-          motionPreset="slideInBottom"
-          blockScrollOnMount={true}
-        >
-          <ModalOverlay height="100vh" />
-          <ModalContent
-            borderRadius={{
-              base: '32px 32px 0 0',
-              lg: '32px',
-            }}
-            maxW={{
-              base: '100vw',
-              lg: '430px',
-            }}
-            marginTop={{
-              base: `${innerHeight - 474}px`,
-              lg: 'calc(50vh - 237px)',
-            }}
-            height={474}
-            overflow="visible"
-            mb="0"
-            position="relative"
-            overflowY="scroll"
-          >
-            <ModalCloseButton />
-            <ModalBody
-              display="flex"
-              flexDirection="column"
-              alignItems="flex-start"
-              justifyContent="center"
-              width="100%"
-              paddingLeft="0"
-              paddingRight="0"
-              paddingTop="60px"
-            >
-              <SettingsMenu closeModal={onClose} />
-            </ModalBody>
-          </ModalContent>
-        </Modal>
       </Box>
+      <MobileMenuModal
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </ThemePage>
   );
 }

@@ -5,9 +5,9 @@ import ActivitiesIcon from '@/components/Icons/mobile/Activities';
 import useWalletContext from "@/context/hooks/useWalletContext";
 
 export default function MobileActionBar() {
-    const { openModal, openFullScreenModal } = useWalletContext();
+    const { openFullScreenModal } = useWalletContext();
     return <>
-        <Box width="calc((100% - 16px) / 3)" marginRight="8px">
+        <Box display='flex' justifyContent="space-around" width="100%">
             <Box
                 background="#DCE4F2"
                 borderRadius="32px"
@@ -20,6 +20,7 @@ export default function MobileActionBar() {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                flex={1}
                 onClick={() => openFullScreenModal('send')}
             >
                 <Box
@@ -32,9 +33,8 @@ export default function MobileActionBar() {
                 </Box>
                 <Box>Send</Box>
             </Box>
-        </Box>
-        <Box width="calc((100% - 16px) / 3)" marginRight="8px">
             <Box
+                flex={1}
                 background="#DCE4F2"
                 borderRadius="32px"
                 color="#161F36"
@@ -46,8 +46,9 @@ export default function MobileActionBar() {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                marginX='6px'
                 onClick={() => {
-                    openModal('receive', { width: 480, height: 600 })
+                    openFullScreenModal('receive')
                 }}
             >
                 <Box
@@ -60,9 +61,8 @@ export default function MobileActionBar() {
                 </Box>
                 <Box>Receive</Box>
             </Box>
-        </Box>
-        <Box width="calc((100% - 16px) / 3)">
             <Box
+                flex={1}
                 background="#DCE4F2"
                 borderRadius="32px"
                 color="#161F36"

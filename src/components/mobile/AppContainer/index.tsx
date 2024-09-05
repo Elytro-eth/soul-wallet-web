@@ -21,122 +21,72 @@ import AddWalletGuardian from '@/pages/settings/Guardian/AddWalletGuardian'
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useScreenSize from '@/hooks/useScreenSize'
 
-export function ModalPage({ height, activeModal, openModal, closeModal }: any) {
-  const scrollableRef = useRef(null);
-  const scrollTop = useRef(0);
-  const [startPosition, setStartPosition] = useState(null);
-
-  const handleStart = (position: any) => {
-    setStartPosition(position);
-  };
-
-  const handleMove = (currentPosition: any) => {
-    if (startPosition == null) return;
-
-    if (startPosition > currentPosition + 20) {
-      // console.log('Moving up');
-    } else if (startPosition < currentPosition - 30) {
-      console.log('Moving down', scrollTop.current);
-      if (scrollTop.current == 0 && activeModal.name === 'activity') {
-        closeModal()
-      }
-    }
-  };
-
-  const handleTouchStart = (e: any) => {
-    handleStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: any) => {
-    handleMove(e.touches[0].clientX);
-  };
-
-  const handleMouseDown = (e: any) => {
-    handleStart(e.clientX);
-  };
-
-  const handleMouseMove = (e: any) => {
-    if (e.buttons === 1) {
-      handleMove(e.clientX);
-    }
-  };
-
-  const setScrollableRef = (e: any) => {
-    scrollableRef.current = e
-  };
-
-  const renderPage = (activeModal: any) => {
-    const name = activeModal && activeModal.name
-    const props = activeModal && activeModal.props
-    console.log('activeModal', activeModal)
-
+export function GlobalModal({
+  isOpen,
+  activeModal,
+  onClose
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  activeModal?: any
+}) {
+  if (!activeModal) return null;
+  const name = activeModal && activeModal.name
+  const props = activeModal && activeModal.props
+  const style = activeModal && activeModal.style
+  const extraStyle = Object.assign({ ...style })
+  const renderPage = () => {
     if (name === 'settings') {
-      return <Settings isModal={true} {...props} />
+      return <Settings isModal {...props} />
     } else if (name === 'activity') {
-      return <Activity isModal={true} {...props} registerScrollable={registerScrollable} />
+      return <Activity isModal {...props} />
     } else if (name === 'details') {
-      return <Details isModal={true} {...props} />
+      return <Details isModal {...props} />
     } else if (name === 'deposit') {
-      return <Deposit isModal={true} {...props} />
+      return <Deposit isModal {...props} />
     } else if (name === 'send') {
-      return <Send isModal={true} {...props} />
+      return <Send isModal {...props} />
     } else if (name === 'receive') {
-      return <Receive isModal={true} {...props} />
+      return <Receive isModal {...props} />
     } else if (name === 'receiveSteps') {
-      return <ReceiveSteps isModal={true} {...props} />
+      return <ReceiveSteps isModal {...props} />
     } else if (name === 'recoverVerifyEmail') {
-      return <RecoverVerifyEmail isModal={true} {...props} />
+      return <RecoverVerifyEmail isModal {...props} />
     } else if (name === 'addWalletGuardian') {
-      return <AddWalletGuardian isModal={true} {...props} />
+      return <AddWalletGuardian isModal {...props} />
     } else if (name === 'verifyEmail') {
-      return <VerifyEmail isModal={true} {...props} />
+      return <VerifyEmail isModal {...props} />
     } else if (name === 'verifyEmailGuardian') {
-      return <VerifyEmail isModal={true} {...props} />
+      return <VerifyEmail isModal {...props} />
     } else if (name === 'lisence') {
-      return <Lisence isModal={true} {...props} />
+      return <Lisence isModal {...props} />
     }
   }
 
-  const registerScrollable = (element: any) => {
-    const handleScroll = () => {
-      scrollTop.current = element.scrollTop
-      console.log('handleScroll', scrollTop.current)
-    };
-
-    if (element) {
-      element.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (element) {
-        element.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }
-
-  return (
-    <Box
-      width="100%"
-      height={height}
-      background="white"
-      borderTopRightRadius="32px"
-      borderTopLeftRadius="32px"
-      borderBottomRightRadius={{
-        base: '0',
-        lg: '32px',
-      }}
-      borderBottomLeftRadius={{
-        base: '0',
-        lg: '32px',
-      }}
+  return (<Modal
+    isOpen={isOpen}
+    onClose={onClose}
+    motionPreset="slideInBottom"
+    blockScrollOnMount
+    size={props && props?.size ? props.size : 'xl'}
+    isCentered
+  >
+    <ModalOverlay height="100vh" />
+    <ModalContent
+      width='100%'
       overflow="hidden"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
+      {...extraStyle}
     >
-      {renderPage(activeModal)}
-    </Box>
+      <ModalCloseButton zIndex={9} />
+      <ModalBody
+        display="flex"
+        overflow="hidden"
+        padding={0}
+      >
+        {renderPage()}
+      </ModalBody>
+    </ModalContent>
+  </Modal>
   )
 }
 
@@ -154,15 +104,7 @@ export default function AppContainer({ children }: any) {
   const { innerHeight } = useScreenSize()
 
   const isTransparentBg = activeModal && activeModal.name === 'receive';
-
-  const desktopModalStyle: any = {
-    width: activeModal?.props?.width || 480,
-    height: activeModal?.props?.height || 600,
-  }
-
-  if (desktopModalStyle.height > innerHeight) desktopModalStyle.height = innerHeight
-  desktopModalStyle.top = `calc(50vh - (${desktopModalStyle.height}px / 2))`
-  desktopModalStyle.left = `calc(50vw - (${desktopModalStyle.width}px / 2))`
+  console.log({ activeModal, closeModal })
 
   return (
     <Box background="black">
@@ -182,127 +124,8 @@ export default function AppContainer({ children }: any) {
             {children}
           </Box>
         </Flex>
-        <Box
-          position="fixed"
-          width="100vw"
-          height="100vh"
-          top="0"
-          left="0"
-          zIndex="99"
-          pointerEvents={isFullScreenModalOpen ? 'all' : 'none'}
-        >
-          <Box
-            height="100%"
-            width="100%"
-            position="relative"
-          >
-            <Box
-              height="100%"
-              width="100%"
-              position="absolute"
-              transition="all 0.3s ease"
-            />
-            <Box
-              height="100%"
-              width="100%"
-              position="absolute"
-              top={isFullScreenModalOpen ? '0' : '100%'}
-              transition="all 0.3s ease"
-            >
-              <Box
-                height="32px"
-                width="32px"
-                borderRadius="30px"
-                position="absolute"
-                top="12px"
-                right="16px"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                onClick={closeFullScreenModal}
-                zIndex="2"
-              >
-                <CloseButton />
-              </Box>
-              <ModalPage
-                height={window.innerHeight}
-                activeModal={activeFullScreenModal}
-                openModal={openFullScreenModal}
-                closeModal={closeFullScreenModal}
-              />
-            </Box>
-          </Box>
-        </Box>
-        <Box
-          position="fixed"
-          width="100vw"
-          height="100vh"
-          top="0"
-          left="0"
-          zIndex="99"
-          pointerEvents={isModalOpen ? 'all' : 'none'}
-        >
-          <Box
-            height="100%"
-            width="100%"
-            position="relative"
-          >
-            <Box
-              height="100%"
-              width="100%"
-              position="absolute"
-              background={isTransparentBg ? 'transparent' : isModalOpen ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0)'}
-              transition="all 0.3s ease"
-              onClick={closeModal}
-            />
-            <Box
-              position="absolute"
-              transition="all 0.3s ease"
-              top={{
-                base: isModalOpen ? '0' : '100%',
-                lg: isModalOpen ? desktopModalStyle.top : '100%'
-              }}
-              left={{
-                base: '0',
-                lg: desktopModalStyle.left
-              }}
-              height={{
-                base: "100%",
-                lg: desktopModalStyle.height
-              }}
-              width={{
-                base: "100%",
-                lg: desktopModalStyle.width
-              }}
-            >
-              <Box
-                height="32px"
-                width="32px"
-                borderRadius="30px"
-                position="absolute"
-                top="12px"
-                right="16px"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                onClick={closeModal}
-                zIndex="2"
-              >
-                <CloseButton />
-              </Box>
-              <ModalPage
-                height={{
-                  base: window.innerHeight,
-                  lg: desktopModalStyle.height,
-                }}
-                activeModal={activeModal}
-                openModal={openModal}
-                closeModal={closeModal}
-              />
-            </Box>
-          </Box>
-        </Box>
       </Box>
+      <GlobalModal isOpen={!!activeModal} activeModal={activeModal} onClose={closeModal} />
     </Box>
   );
 }

@@ -98,10 +98,9 @@ export default function Receive({ isModal, registerScrollable }: any) {
     <Box
       width="100%"
       height={{
-        base: innerHeight,
-        lg: '100%',
+        lg: 'auto',
+        base: '100%',
       }}
-      overflowY="scroll"
       background={{
         base: '#F2F3F5',
         lg: 'white',
@@ -113,13 +112,9 @@ export default function Receive({ isModal, registerScrollable }: any) {
       <Box
         marginTop="0px"
         padding="30px 8px"
-        minHeight={{
-          base: isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)',
-          lg: isModal ? 'calc(100%)' : 'calc(100vh - 62px)'
-        }}
         width={{
           base: '100%',
-          lg: '380px'
+          lg: '430px'
         }}
       >
         <Box fontSize="28px" fontWeight="500" padding="0 24px">

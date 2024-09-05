@@ -24,7 +24,7 @@ export default function SideMenu() {
         name,
         link
     }) => (
-        <Link to={link}>
+        <Link to={link} key={name}>
             <Box
                 width="100%"
                 padding="12px 20px"

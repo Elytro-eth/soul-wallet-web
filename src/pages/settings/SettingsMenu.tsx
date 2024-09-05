@@ -6,14 +6,13 @@ import SettingIcon from '@/components/Icons/mobile/Setting'
 import PasskeyIcon from '@/components/Icons/mobile/Passkey'
 import TelegramIcon from '@/components/Icons/mobile/Telegram'
 import LicenseIcon from '@/components/Icons/mobile/License'
-import { useAddressStore } from '@/store/address';
 import LogoutIcon from '@/components/Icons/mobile/Logout'
 import useWalletContext from '@/context/hooks/useWalletContext';
 import useBrowser from '@/hooks/useBrowser';
 import { useGuardianStore } from '@/store/guardian';
 import { ZeroHash } from 'ethers';
 
-export default function SettingsMenu({ closeModal }: any) {
+export default function SettingsMenu({ closeModal }: { closeModal: () => void }) {
   const { openFullScreenModal } = useWalletContext();
   const { guardiansInfo, } = useGuardianStore();
   const { navigate } = useBrowser();

@@ -200,7 +200,7 @@ export function Header({ openMenu, username, ...props }: any) {
                                             padding="0 8px"
                                             onClick={() => {
                                                 onTransferClose()
-                                                openModal('receive', { width: 480, height: 600 })
+                                                openModal('receive', { size: 'md' })
                                             }}
                                             display="flex"
                                             alignItems="center"
