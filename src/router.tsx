@@ -95,6 +95,9 @@ export const router = createBrowserRouter([
         }, {
           path: '/dashboard/activity',
           element: <Activity />
+        }, {
+          path: '/dashboard',
+          element: <Navigate to="/dashboard/assets" replace />,
         }]
       },
       {
