@@ -1,18 +1,15 @@
-import React, { useState, useCallback, useEffect, Fragment } from 'react';
+import { useState, useCallback, useEffect, Fragment } from 'react';
 import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
 import ProgressBar from '@/components/ProgressBar';
-import Intro from './Intro';
 import SetUsername from './SetUsername';
 import SetPasskey from './SetPasskey';
 import RecoverProgress from './RecoverProgress';
 import RecoverSuccess from './RecoverSuccess';
 import api from '@/lib/api';
 import { useTempStore } from '@/store/temp';
-import { SocialRecovery } from '@soulwallet/sdk';
-import { useSettingStore } from '@/store/setting';
 import useWallet from '@/hooks/useWallet';
 import useQuery from '@/hooks/useQuery';
 import RecoverProcess from './RecoverProcess';
@@ -140,22 +137,10 @@ export default function Recover() {
 
   const doRecover = async () => {
     try {
-      while (true) {
-        setIsRecovering(true);
-        const res: any = await api.recovery.execute({ recoveryID });
-        if (res.msg === 'scheduleRecovery triggered' || res.msg === 'need to wait') {
-          getPreviousRecord();
-          // const recoverRecord = await getPreviousRecord();
-          // await boostAfterRecovered(recoverRecord);
-          // break;
-          // trigger login again, and use current credential id
-          // try {
-          //   await loginWallet(newCredential.id);
-          // } finally {
-          //   navigate('/dashboard');
-          //   break;
-          // }
-        }
+      setIsRecovering(true);
+      const res: any = await api.recovery.execute({ recoveryID });
+      if (res.msg === 'scheduleRecovery triggered' || res.msg === 'need to wait') {
+        getPreviousRecord();
       }
     } catch (err: any) {
       setIsRecovering(false);

@@ -26,7 +26,7 @@ export function AssetPage() {
                     lg: '100%'
                 }}
             >
-                <Box width="100%">
+                <Box width="100%" display='flex' flexDirection='column'>
                     <GuardianGuide />
                     <Box
                         width="100%"
@@ -68,6 +68,7 @@ export function AssetPage() {
                         overflow='hidden'
                         py="22px"
                         px='20px'
+                        flex={1}
                     >
                         <Box
                             fontSize='22px'

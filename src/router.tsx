@@ -10,7 +10,6 @@ import VerifyEmail from '@/pages/verifyEmail';
 import Intro from '@/pages/intro';
 import DashboardDetails from '@/pages/dashboard/Details';
 import Recover from '@/pages/recover';
-// import RecoverSign from '@/pages/public/RecoverSign';
 import Sign from '@/pages/public/Sign';
 import Lisence from '@/pages/public/Lisence';
 import GuardianSetting from '@/pages/settings/Guardian';
@@ -20,63 +19,6 @@ import PassKeyMobile from './pages/passkeys/passkeyMobile';
 import { AssetPage } from './pages/asset';
 import Setting from './pages/settings';
 import Activity from './pages/activity';
-
-// const Wrapper = () => {
-//   return <div><Outlet /></div>
-// }
-
-// const Home = () => {
-//   return <div>
-//     <div>Home</div>
-//     <div>
-//       <Link to='/home/first'>first</Link>
-//       &nbsp;&nbsp;
-//       <Link to='/home/second'>second</Link>
-//       &nbsp;&nbsp;
-//       <Link to='/home/third'>third</Link>
-//     </div>
-//     <Outlet />
-//   </div>
-// }
-
-// const FirstPage1 = () => {
-//   return <div>first 1</div>
-// }
-
-// const SecondPage1 = () => {
-//   return <div>second 1</div>
-// }
-
-// const ThirdPage1 = () => {
-//   return <div>third 1</div>
-// }
-
-// export const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <Wrapper />,
-//     children: [
-//       {
-//         path: '/home',
-//         element: <Home />,
-//         children: [
-//           {
-//             path: '/home/first',
-//             element: <FirstPage1 />,
-//           },
-//           {
-//             path: '/home/second',
-//             element: <SecondPage1 />,
-//           },
-//           {
-//             path: '/home/third',
-//             element: <ThirdPage1 />,
-//           }
-//         ]
-//       }
-//     ]
-//   }
-// ])
 
 export const router = createBrowserRouter([
   {
