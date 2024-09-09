@@ -31,7 +31,7 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
           fontSize="20px"
           lineHeight="24px"
           fontWeight="400"
-        // placeholder="Enter username"
+          // placeholder="Enter username"
           border="none"
           outline="none"
           background="#F2F3F5"
@@ -68,12 +68,12 @@ export default function SepupUsername({ value, onChange, onNext, checking, nameS
         size="xl"
         type="gradientBlue"
         width={{
-          sm: '100%',
-          md: '200px',
+          base: '100%',
+          lg: '200px',
         }}
         marginLeft={{
-          sm: '0',
-          md: 'calc(100% - 200px)',
+          base: '0',
+          lg: 'calc(100% - 200px)',
         }}
         onClick={onNext}
       >

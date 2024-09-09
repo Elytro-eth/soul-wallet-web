@@ -24,16 +24,15 @@ export default function ReviewModal({
         onClose={onClose}
         motionPreset="slideInBottom"
         blockScrollOnMount
-        size='full'
+        size='xl'
     >
         <ModalOverlay height="100vh" />
         <ModalContent
             pos='absolute'
-            height='100%'
+            top='5vh'
+            bottom='5vh'
             width='100%'
-            top={0}
             overflow="hidden"
-            borderRadius='32px 32px 0 0'
             margin={0}
         >
             <ModalCloseButton zIndex={9} />
@@ -43,7 +42,10 @@ export default function ReviewModal({
                 alignItems="flex-start"
                 justifyContent="center"
                 width="100%"
+                height='100%'
+                overflow="hidden"
                 padding={0}
+                borderRadius='32px 32px 0 0'
             >
                 <Review
                     isModal

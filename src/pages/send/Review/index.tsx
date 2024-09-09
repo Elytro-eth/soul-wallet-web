@@ -116,8 +116,8 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   //       padding="30px"
   //       minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
   //       paddingTop={{
-  //         sm: '30px',
-  //         md: '0',
+  //         base: '30px',
+  //         lg: '0',
   //       }}
   //     >
   //       {isSent && (
@@ -261,16 +261,16 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   //       <ModalOverlay height="100vh" />
   //       <ModalContent
   //         borderRadius={{
-  //           sm: '32px 32px 0 0',
-  //           md: '32px',
+  //           base: '32px 32px 0 0',
+  //           lg: '32px',
   //         }}
   //         maxW={{
-  //           sm: '100vw',
-  //           md: '430px',
+  //           base: '100vw',
+  //           lg: '430px',
   //         }}
   //         marginTop={{
-  //           sm: `${marginHeight}px`,
-  //           md: 'calc(50vh - 234px)',
+  //           base: `${marginHeight}px`,
+  //           lg: 'calc(50vh - 234px)',
   //         }}
   //         height="468px"
   //         overflow="auto"
@@ -302,10 +302,10 @@ export default function Review({ onPrev, amount, sendTo, tokenAddress, isModal, 
   //         borderRadius="24px"
   //         justifyContent="flex-end"
   //         maxW={{
-  //           sm: 'calc(100vw - 32px)',
+  //           base: 'calc(100vw - 32px)',
   //         }}
   //         marginTop={{
-  //           sm: `auto`,
+  //           base: `auto`,
   //         }}
   //         overflow="visible"
   //         mb="0"

@@ -23,17 +23,17 @@ interface IWalletContext {
 
 export const WalletContext = createContext<IWalletContext>({
   ethersProvider: new ethers.JsonRpcProvider(),
-  showSignMessage: async () => {},
-  showReceive: async () => {},
-  showSend: async () => {},
+  showSignMessage: async () => { },
+  showReceive: async () => { },
+  showSend: async () => { },
   isModalOpen: false,
   activeModal: null,
-  openModal: () => {},
-  closeModal: () => {},
+  openModal: () => { },
+  closeModal: () => { },
   isFullScreenModalOpen: false,
   activeFullScreenModal: null,
-  openFullScreenModal: () => {},
-  closeFullScreenModal: () => {},
+  openFullScreenModal: () => { },
+  closeFullScreenModal: () => { },
 });
 
 export const WalletContextProvider = ({ children }: any) => {
@@ -69,12 +69,12 @@ export const WalletContextProvider = ({ children }: any) => {
   }
 
   const openFullScreenModal = (name: any, props: any) => {
-    setActiveFullScreenModal({ name, props })
+    setActiveModal({ name, props: Object.assign({ ...props, size: 'full' }), style: { height: '100%' } })
     onOpenFullScreen()
   }
 
   const closeFullScreenModal = () => {
-    setActiveFullScreenModal(null)
+    setActiveModal(null)
     onCloseFullScreen()
   }
 

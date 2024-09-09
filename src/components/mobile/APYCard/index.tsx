@@ -128,10 +128,10 @@ export default function APYCard() {
           </Box>
         </Box>
         <Flex align={'center'} gap="1px">
-          <Box  fontSize="18px" fontWeight="500">
+          <Box fontSize="18px" fontWeight="500">
             7D Average APY
           </Box>
-          <Image src={IconQuestion} onClick={()=> onOpen()} />
+          <Image src={IconQuestion} onClick={() => onOpen()} />
         </Flex>
       </Box>
       <Box display="flex" overflow="hidden">
@@ -296,16 +296,16 @@ export default function APYCard() {
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
+            base: '20px 20px 0 0',
+            lg: '20px',
           }}
           maxW={{
-            sm: '100vw',
-            md: '430px'
+            base: '100vw',
+            lg: '430px'
           }}
           marginTop={{
-            sm: `${marginHeight}px`,
-            md: 'calc(50vh - 125px)'
+            base: `${marginHeight}px`,
+            lg: 'calc(50vh - 125px)'
           }}
           height="428px"
           overflow="auto"
@@ -337,7 +337,7 @@ export default function APYCard() {
               The APY data is acquired from <CLink href="https://www.vaults.fyi/vaults" textDecoration={"underline"} >https://www.vaults.fyi/vaults</CLink>, presented and shown by Stable.cash.
             </Box>
             <Box width="100%">
-              <Button onClick={()=> onClose()} size="xl" type="black" width="100%">Got it</Button>
+              <Button onClick={() => onClose()} size="xl" type="black" width="100%">Got it</Button>
             </Box>
           </ModalBody>
         </ModalContent>

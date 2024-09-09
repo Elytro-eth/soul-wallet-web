@@ -11,8 +11,8 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
     <Box
       width="100%"
       height={{
-        sm: isModal ? (innerHeight - 94) : (innerHeight - 60),
-        md: 'calc(100% - 94px)'
+        base: isModal ? (innerHeight - 94) : (innerHeight - 60),
+        lg: 'calc(100% - 94px)'
       }}
       padding="30px"
     >
@@ -35,7 +35,7 @@ export default function ConfirmEmail({ onPrev, email, countDown, sendingEmail, o
           color="#161F36"
           mb="3"
         >
-          Verification sent. <br/>
+          Verification sent. <br />
           Please confirm in your email.
         </Box>
         <Box

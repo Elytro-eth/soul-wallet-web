@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Image,
-  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -13,26 +12,12 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/mobile/Header';
 import Button from '@/components/mobile/Button';
-import IntroItem1Icon from '@/components/Icons/mobile/Intro/Item1';
-import IntroItem2Icon from '@/components/Icons/mobile/Intro/Item2';
-import IntroItem3Icon from '@/components/Icons/mobile/Intro/Item3';
-import TwitterIcon from '@/components/Icons/desktop/Twitter';
-import TelegramIcon from '@/components/Icons/desktop/Telegram';
-import GithubIcon from '@/components/Icons/desktop/Github';
-import LinkedInIcon from '@/components/Icons/desktop/LinkedIn';
-import USDCIcon from '@/assets/tokens/usdc.png';
 import IconLoading from '@/assets/mobile/loading.gif';
 import Toolbar1 from '@/assets/toolbar1.png';
 import Toolbar2 from '@/assets/toolbar2.png';
 import AddHomeIMG from '@/assets/add-home.svg';
 import config from '@/config';
 import useWallet from '@/hooks/useWallet';
-import { useBalanceStore } from '@/store/balance';
-import treasuryIcon from '@/assets/mobile/treasury.png';
-import CoinbaseIcon from '@/assets/mobile/coinbase.png';
-import AAVEIcon from '@/assets/mobile/aave.png';
-import BN from 'bignumber.js';
-import APYCard from '@/components/mobile/APYCard';
 import useScreenSize from '@/hooks/useScreenSize';
 import { useSettingStore } from '@/store/setting';
 import { isPwaMode } from '@/lib/tools';
@@ -44,12 +29,11 @@ export default function Landing() {
   const [loaded, setLoaded] = useState(false);
   const { loginWallet } = useWallet();
   const { selectedAddress } = useAddressStore();
-  const { sevenDayApy } = useBalanceStore();
   const [logging, setLogging] = useState(false);
   const { clearTempInfo } = useTempStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { innerHeight } = useScreenSize();
-  const { getShouldShowAddedToHomeScreen, setLastAddedToHomeScreenTime} = useSettingStore();
+  const { getShouldShowAddedToHomeScreen, setLastAddedToHomeScreenTime } = useSettingStore();
   const marginHeight = innerHeight - ((innerHeight - 40) < 620 ? (innerHeight - 40) : 620);
 
   const isPwa = isPwaMode();
@@ -60,7 +44,7 @@ export default function Landing() {
       setLogging(true);
       await loginWallet();
       setLogging(false);
-      navigate('/dashboard');
+      navigate('/dashboard/assets');
     } catch (err) {
       setLogging(false);
     }
@@ -87,9 +71,9 @@ export default function Landing() {
     navigate('/recover')
   }
 
-  useEffect(()=>{
-    if(selectedAddress){
-      navigate('/dashboard')
+  useEffect(() => {
+    if (selectedAddress) {
+      navigate('/dashboard/assets')
     }
   }, [selectedAddress])
 
@@ -101,8 +85,8 @@ export default function Landing() {
         width="100%"
         height={innerHeight}
         background={{
-          sm: `radial-gradient(476.97% 147.07% at 0% -21.13%, #FBFBF9 0%, #F7F0ED 45.5%, #BAD5F5 100%)`,
-          md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+          base: `radial-gradient(476.97% 147.07% at 0% -21.13%, #FBFBF9 0%, #F7F0ED 45.5%, #BAD5F5 100%)`,
+          lg: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
         }}
       >
         <Header showLogo={false} title="" height="60px" background="transparent" />
@@ -115,33 +99,33 @@ export default function Landing() {
           display="flex"
           alignItems="flex-start"
           flexDirection={{
-            sm: 'column',
-            md: 'row',
+            base: 'column',
+            lg: 'row',
           }}
           height={innerHeight - 60}
           overflowY="auto"
           paddingTop={{
-            sm: '0',
-            md: '118px',
+            base: '0',
+            lg: '118px',
           }}
         >
           <Box
             width={{
-              sm: '100%',
-              md: '50%',
+              base: '100%',
+              lg: '50%',
             }}
             display="flex"
             alignItems="center"
             flexDirection="column"
             marginTop={{
-              sm: 'auto',
-              md: '0',
+              base: 'auto',
+              lg: '0',
             }}
           >
             <Box
               width={{
-                sm: '100%',
-                md: '450px',
+                base: '100%',
+                lg: '450px',
               }}
               maxWidth="100%"
             >
@@ -153,8 +137,8 @@ export default function Landing() {
                 textAlign="left"
                 color="#161F36"
               >
-                Simplified<br/>
-                Ethereum<br/>
+                Simplified<br />
+                Ethereum<br />
                 Experience
               </Box>
               <Box
@@ -167,8 +151,7 @@ export default function Landing() {
                 marginBottom="48px"
                 color="rgba(0, 0, 0, 0.6)"
               >
-                Setup up new account to receive
-                10 USDC
+                Setup up new account to receive 10 USDC
               </Box>
               <Box
                 width="100%"
@@ -177,11 +160,11 @@ export default function Landing() {
                 fontWeight="400"
                 lineHeight="24px"
                 display={{
-                  sm: 'none',
-                  md: 'block'
+                  base: 'none',
+                  lg: 'block'
                 }}
               >
-                If you have any questions, reach out to us at <Box as="span" fontWeight="500">support@soulwallet.io</Box>
+                If you have any questions, reach out to us at <Box as="strong" fontWeight="500">support@soulwallet.io</Box>
               </Box>
               <Box
                 marginTop="14px"
@@ -189,39 +172,23 @@ export default function Landing() {
                 justifyContent="flex-start"
                 gap="17px"
                 display={{
-                  sm: 'none',
-                  md: 'flex'
+                  base: 'none',
+                  lg: 'flex'
                 }}
               >
                 {config.socials.map((item, idx) => (
                   <a href={item.link} target='_blank' key={idx}
                   >
                     <Image src={item.icon} />
-                    {/* <TwitterIcon /> */}
                   </a>
                 ))}
-                {/* <Box
-                  cursor="pointer"
-                >
-                  <TelegramIcon />
-                </Box>
-                <Box
-                  cursor="pointer"
-                >
-                  <GithubIcon />
-                </Box>
-                <Box
-                  cursor="pointer"
-                >
-                  <LinkedInIcon />
-                </Box> */}
               </Box>
             </Box>
           </Box>
           <Box
             width={{
-              sm: '100%',
-              md: '50%',
+              base: '100%',
+              lg: '50%',
             }}
             display="flex"
             alignItems="center"
@@ -229,21 +196,21 @@ export default function Landing() {
           >
             <Box
               width={{
-                sm: '100%',
-                md: '480px',
+                base: '100%',
+                lg: '480px',
               }}
               maxWidth="100%"
               display="flex"
               alignItems="center"
               flexDirection="column"
               background={{
-                sm: 'transparent',
-                md: 'white',
+                base: 'transparent',
+                lg: 'white',
               }}
               borderRadius="32px"
               padding={{
-                sm: '0',
-                md: '32px'
+                base: '0',
+                lg: '32px'
               }}
             >
               <Box
@@ -252,8 +219,8 @@ export default function Landing() {
                 fontWeight="500"
                 width="100%"
                 display={{
-                  sm: 'none',
-                  md: 'flex',
+                  base: 'none',
+                  lg: 'flex',
                 }}
                 alignItems="center"
                 justifyContent="center"
@@ -277,8 +244,8 @@ export default function Landing() {
                     width="100%"
                     border="none"
                     display={{
-                      sm: 'none',
-                      md: 'flex'
+                      base: 'none',
+                      lg: 'flex'
                     }}
                   >
                     Create account
@@ -290,8 +257,8 @@ export default function Landing() {
                     width="100%"
                     border="none"
                     display={{
-                      sm: 'flex',
-                      md: 'none'
+                      base: 'flex',
+                      lg: 'none'
                     }}
                   >
                     Create account
@@ -334,16 +301,16 @@ export default function Landing() {
           <ModalOverlay height="100vh" />
           <ModalContent
             borderRadius={{
-              sm: '32px 32px 0 0',
-              md: '32px',
+              base: '32px 32px 0 0',
+              lg: '32px',
             }}
             maxW={{
-              sm: '100vw',
-              md: '430px',
+              base: '100vw',
+              lg: '430px',
             }}
             marginTop={{
-              sm: `${marginHeight}px`,
-              md: `calc(50vh - ${modalHeight / 2}px)`,
+              base: `${marginHeight}px`,
+              lg: `calc(50vh - ${modalHeight / 2}px)`,
             }}
             height={modalHeight}
             overflow="visible"
@@ -368,10 +335,6 @@ export default function Landing() {
                 width="96px"
                 mb="3"
                 ml="8"
-                // borderRadius="120px"
-                // marginBottom="30px"
-                // marginLeft="32px"
-                // marginRight="32px"
               >
                 <Image src={AddHomeIMG} />
               </Box>

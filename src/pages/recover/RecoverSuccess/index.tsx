@@ -1,15 +1,9 @@
-import { Box, Input, Image, useToast } from '@chakra-ui/react';
+import { Box, Image } from '@chakra-ui/react';
 import Button from '@/components/mobile/Button';
-import LoadingIcon from '@/assets/mobile/loading.gif';
-import ReadyIcon from '@/assets/mobile/ready.gif';
-import ReadyStaticIcon from '@/assets/mobile/ready_static.svg';
-import { useEffect, useRef, useState } from 'react';
-import useWallet from '@/hooks/useWallet';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import RecoverSuccessIcon from '@/assets/recover-success.png';
 import useScreenSize from '@/hooks/useScreenSize';
 import { useTempStore } from '@/store/temp';
-import FadeId from '@/components/Icons/mobile/FaceId';
 import SuccessIcon from '@/components/Icons/Success';
 
 export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering }: any) {
@@ -49,8 +43,8 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
     <Box
       width="100%"
       height={{
-        sm: innerHeight - 80,
-        md: '440px',
+        base: innerHeight - 80,
+        lg: '440px',
       }}
       padding="30px"
       display="flex"
@@ -118,7 +112,7 @@ export default function RecoverSuccess({ doRecover, doPastRecover, isRecovering 
                     </Box>
                   </Box>
                   <Box padding="8px" fontWeight="500" fontSize="20px">
-            :
+                    :
                   </Box>
                   <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
                     <Box

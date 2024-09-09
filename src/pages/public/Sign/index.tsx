@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, PopoverTrigger, Link, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure  } from '@chakra-ui/react';
+import { Box, Text, Image, useToast, Grid, GridItem, Flex, Popover, PopoverTrigger, Link, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, useDisclosure } from '@chakra-ui/react';
 import IconLogo from '@/assets/logo-all-v3.svg';
 import RoundContainer from '@/components/new/RoundContainer';
 import Button from '@/components/mobile/Button'
@@ -45,12 +45,12 @@ export const SignHeader = ({ url }: { url?: string }) => {
       <Link
         display="inline-block"
         {...(url
-           ? {
-             href: url,
-           }
-           : {
-             cursor: 'default',
-        })}
+          ? {
+            href: url,
+          }
+          : {
+            cursor: 'default',
+          })}
         cursor="pointer"
         onClick={() => navigate('/landing')}
       >
@@ -73,8 +73,8 @@ export const SignContainer = ({ children, isOpen, onOpen, onClose, connectEOA }:
       width="100%"
       minHeight="100vh"
       background={{
-        sm: `white`,
-        md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+        base: `white`,
+        lg: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
       }}
     >
       <SignHeader />
@@ -89,20 +89,20 @@ export const SignContainer = ({ children, isOpen, onOpen, onClose, connectEOA }:
       >
         <Box
           background={{
-            sm: `transparent`,
-            md: 'white',
+            base: `transparent`,
+            lg: 'white',
           }}
           width={{
-            sm: `100%`,
-            md: '640px',
+            base: `100%`,
+            lg: '640px',
           }}
           padding={{
-            sm: `0`,
-            md: '40px 64px',
+            base: `0`,
+            lg: '40px 64px',
           }}
           borderRadius={{
-            sm: `0`,
-            md: '32px',
+            base: `0`,
+            lg: '32px',
           }}
           maxHeight="100%"
           overflowY="auto"
@@ -114,16 +114,16 @@ export const SignContainer = ({ children, isOpen, onOpen, onClose, connectEOA }:
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '20px 20px 0 0',
-            md: '20px',
+            base: '20px 20px 0 0',
+            lg: '20px',
           }}
           maxW={{
-            sm: '100vw',
-            md: '430px',
+            base: '100vw',
+            lg: '430px',
           }}
           marginTop={{
-            sm: `${marginHeight}px`,
-            md: 'calc(50vh - 175px)',
+            base: `${marginHeight}px`,
+            lg: 'calc(50vh - 175px)',
           }}
           height="350px"
           overflow="auto"
@@ -212,7 +212,7 @@ export default function Sign() {
 
       setSigning(true);
 
-      const typedDataToSign:any = SocialRecovery.getSocialRecoveryTypedData(
+      const typedDataToSign: any = SocialRecovery.getSocialRecoveryTypedData(
         recoveryRecord.chainID,
         chainConfig.contracts.socialRecoveryModule,
         recoveryRecord.address,
@@ -262,7 +262,7 @@ export default function Sign() {
   if (!loaded) {
     return (
       <SignContainer>
-        <Box width={{ base: '100%', md: '100%' }} flex="1" display="flex" padding="60px">
+        <Box width={{ base: '100%', lg: '100%' }} flex="1" display="flex" padding="60px">
           <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             <Box
               maxWidth="548px"
@@ -394,7 +394,7 @@ export default function Sign() {
         >
           The wallet you connected is not the recovery contact for the recovery wallet. Please double check.
         </Box>
-        <Button size="xl" type="gradientBlue" width="100%" marginTop="30px" onClick={() => {disconnectEOA(); onOpen()}}>Connect another wallet</Button>
+        <Button size="xl" type="gradientBlue" width="100%" marginTop="30px" onClick={() => { disconnectEOA(); onOpen() }}>Connect another wallet</Button>
         <Box marginTop="18px" height="42px" borderRadius="22px" padding="10px 12px" background="#F2F3F5" width="fit-content" marginLeft="auto" marginRight="auto">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Box marginRight="8px">

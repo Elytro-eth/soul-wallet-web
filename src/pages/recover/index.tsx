@@ -1,18 +1,15 @@
-import React, { useState, useCallback, useEffect, Fragment } from 'react';
+import { useState, useCallback, useEffect, Fragment } from 'react';
 import { Box, useToast } from '@chakra-ui/react';
 import Header from '@/components/mobile/Header';
 import usePasskey from '@/hooks/usePasskey';
 import { useNavigate } from 'react-router-dom';
 import ProgressBar from '@/components/ProgressBar';
-import Intro from './Intro';
 import SetUsername from './SetUsername';
 import SetPasskey from './SetPasskey';
 import RecoverProgress from './RecoverProgress';
 import RecoverSuccess from './RecoverSuccess';
 import api from '@/lib/api';
 import { useTempStore } from '@/store/temp';
-import { SocialRecovery } from '@soulwallet/sdk';
-import { useSettingStore } from '@/store/setting';
 import useWallet from '@/hooks/useWallet';
 import useQuery from '@/hooks/useQuery';
 import RecoverProcess from './RecoverProcess';
@@ -140,22 +137,10 @@ export default function Recover() {
 
   const doRecover = async () => {
     try {
-      while (true) {
-        setIsRecovering(true);
-        const res: any = await api.recovery.execute({ recoveryID });
-        if (res.msg === 'scheduleRecovery triggered' || res.msg === 'need to wait') {
-          getPreviousRecord();
-          // const recoverRecord = await getPreviousRecord();
-          // await boostAfterRecovered(recoverRecord);
-          // break;
-          // trigger login again, and use current credential id
-          // try {
-          //   await loginWallet(newCredential.id);
-          // } finally {
-          //   navigate('/dashboard');
-          //   break;
-          // }
-        }
+      setIsRecovering(true);
+      const res: any = await api.recovery.execute({ recoveryID });
+      if (res.msg === 'scheduleRecovery triggered' || res.msg === 'need to wait') {
+        getPreviousRecord();
       }
     } catch (err: any) {
       setIsRecovering(false);
@@ -265,8 +250,8 @@ export default function Recover() {
       width="100%"
       height={innerHeight}
       background={{
-        sm: 'white',
-        md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+        base: 'white',
+        lg: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
       }}
     >
       <Header
@@ -275,8 +260,8 @@ export default function Recover() {
         width="100%"
         background="transparent"
         display={{
-          sm: 'none',
-          md: 'flex',
+          base: 'none',
+          lg: 'flex',
         }}
       />
       <Box
@@ -284,36 +269,36 @@ export default function Recover() {
         alignItems="flex-start"
         justifyContent="center"
         height={{
-          sm: "100%",
-          md: "calc(100% - 60px)"
+          base: "100%",
+          lg: "calc(100% - 60px)"
         }}
         paddingTop={{
-          sm: "0",
-          md: "40px"
+          base: "0",
+          lg: "40px"
         }}
         paddingLeft={{
-          sm: "0",
-          md: "20px"
+          base: "0",
+          lg: "20px"
         }}
         paddingRight={{
-          sm: "0",
-          md: "20px"
+          base: "0",
+          lg: "20px"
         }}
         overflow="scroll"
         paddingBottom={{
-          sm: '0px',
-          md: '80px'
+          base: '0px',
+          lg: '80px'
         }}
       >
         <Box
           width={{
-            sm: "100%",
-            md: "640px",
+            base: "100%",
+            lg: "640px",
           }}
           bg="#fff"
           borderRadius={{
-            sm: '0',
-            md: '32px',
+            base: '0',
+            lg: '32px',
           }}
           overflow="hidden"
         >
@@ -327,8 +312,8 @@ export default function Recover() {
                   step={step}
                   onBack={onPrev}
                   display={{
-                    sm: 'flex',
-                    md: 'none'
+                    base: 'flex',
+                    lg: 'none'
                   }}
                 />
               )}
@@ -336,16 +321,16 @@ export default function Recover() {
           )}
           <Box
             display={{
-              sm: 'flex',
-              md: 'none'
+              base: 'flex',
+              lg: 'none'
             }}
           >
             {step > -1 && step < 3 && <ProgressBar size={3} activeIndex={step} />}
           </Box>
           <Box
             height={{
-              sm: step < 4 ? innerHeight - 64 : innerHeight,
-              md: 'auto',
+              base: step < 4 ? innerHeight - 64 : innerHeight,
+              lg: 'auto',
             }}
             width="100%"
             overflowY="auto"

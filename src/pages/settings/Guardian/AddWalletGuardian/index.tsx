@@ -21,7 +21,7 @@ import { useSettingStore } from '@/store/setting';
 import useWalletContext from '@/context/hooks/useWalletContext';
 import { isAddress } from 'viem';
 
-export default function AddWalletGuardian({isModal, callback, defaultGuardianAddress, defaultGuardianName}: any) {
+export default function AddWalletGuardian({ isModal, callback, defaultGuardianAddress, defaultGuardianName }: any) {
   // const toast = useToast();
   // const navigate = useNavigate();
   // const [step, setStep] = useState(0);
@@ -130,9 +130,9 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
   };
 
   const onConfirm = async () => {
-    if(callback){
+    if (callback) {
       callback(guardianAddress, guardianName)
-    }else{
+    } else {
       doChangeGuardian()
     }
   }
@@ -143,8 +143,8 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
     <Box
       width="100%"
       height={{
-        sm: innerHeight,
-        md: '100%',
+        base: innerHeight,
+        lg: '100%',
       }}
       overflowY="auto"
     >
@@ -153,8 +153,8 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
         fontWeight="500"
         padding="10px 30px"
         display={{
-          sm: 'flex',
-          md: 'none'
+          base: 'flex',
+          lg: 'none'
         }}
       >
 
@@ -171,7 +171,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
             <Box fontSize="28px" fontWeight="500" color="#161F36">
               Add wallet address
             </Box>
-            <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px"  marginTop="24px" color="#95979C">
+            <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px" marginTop="24px" color="#95979C">
               ENS or wallet address
             </Box>
             <Box position="relative">
@@ -180,7 +180,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 spellCheck={false}
                 value={guardianAddress}
                 onChange={e => onAddressChange(e.target.value)}
-                onBlur={() => {setAddressStatus(1); handleBlur();}}
+                onBlur={() => { setAddressStatus(1); handleBlur(); }}
                 onFocus={(e: any) => inputOnFocus(e.target.value)}
                 fontSize="20px"
                 lineHeight="24px"
@@ -219,13 +219,13 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
               />
             </Box>
             {!!addressStatus && !!guardianAddress && !isValidAddress &&
-             <Box display="flex" bottom="-20px" position="absolute" alignItems="center" justifyContent="flex-start" marginTop="5px">
-               <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
-                 Invalid address
-               </Box>
-             </Box>
+              <Box display="flex" bottom="-20px" position="absolute" alignItems="center" justifyContent="flex-start" marginTop="5px">
+                <Box fontWeight="400" fontSize="14px" lineHeight="15px" color="#E8424C">
+                  Invalid address
+                </Box>
+              </Box>
             }
-            <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px"  marginTop="24px" color="#95979C">
+            <Box fontWeight="400" fontSize="14px" lineHeight="14px" marginBottom="8px" marginTop="24px" color="#95979C">
               Recovery contact name (optional)
             </Box>
             <Box>
@@ -237,7 +237,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 placeholder="Enter or paste here"
                 border="none"
                 value={guardianName}
-                onChange={e=> setGuardianName(e.target.value)}
+                onChange={e => setGuardianName(e.target.value)}
                 outline="none"
                 _focusVisible={{ border: 'none', boxShadow: 'none' }}
                 background="#F2F3F5"
@@ -246,7 +246,7 @@ export default function AddWalletGuardian({isModal, callback, defaultGuardianAdd
                 height="56px"
               />
             </Box>
-            <Button size="xl" type="gradientBlue" width={{ sm: '100%', md: '200px' }} marginTop="60px" marginLeft={{ sm: '0', md: 'calc(100% - 200px)' }} disabled={!isValidAddress} loading={changingGuardian} onClick={onConfirm}>
+            <Button size="xl" type="gradientBlue" width={{ base: '100%', lg: '200px' }} marginTop="60px" marginLeft={{ base: '0', lg: 'calc(100% - 200px)' }} disabled={!isValidAddress} loading={changingGuardian} onClick={onConfirm}>
               Add
             </Button>
           </Box>

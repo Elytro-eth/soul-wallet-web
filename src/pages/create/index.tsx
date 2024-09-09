@@ -153,8 +153,8 @@ export default function Create() {
       width="100%"
       height={innerHeight}
       background={{
-        sm: 'white',
-        md: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
+        base: 'white',
+        lg: 'radial-gradient(100% 336.18% at 0% 0%, #FFFAF5 4.96%, #F7F1F0 25.15%, #C8DCF3 100%)',
       }}
     >
       <Header
@@ -163,36 +163,36 @@ export default function Create() {
         width="100%"
         background="transparent"
         display={{
-          sm: 'none',
-          md: 'flex',
+          base: 'none',
+          lg: 'flex',
         }}
       />
       <Box
         display="flex"
         alignItems={{
-          sm: 'center',
-          md: 'flex-start',
+          base: 'center',
+          lg: 'flex-start',
         }}
         justifyContent="center"
         height={{
-          sm: "100%",
-          md: "calc(100% - 60px)"
+          base: "100%",
+          lg: "calc(100% - 60px)"
         }}
         paddingTop={{
-          sm: "0",
-          md: "20px"
+          base: "0",
+          lg: "20px"
         }}
         overflow="scroll"
       >
         <Box
           width={{
-            sm: "100%",
-            md: "640px",
+            base: "100%",
+            lg: "640px",
           }}
           bg="#fff"
           borderRadius={{
-            sm: '0',
-            md: '32px',
+            base: '0',
+            lg: '32px',
           }}
           overflow="hidden"
         >
@@ -204,8 +204,8 @@ export default function Create() {
           )}
           <Box
             height={{
-              sm: (step < 3) ? (innerHeight - 64) : innerHeight,
-              md: 'auto',
+              base: (step < 3) ? (innerHeight - 64) : innerHeight,
+              lg: 'auto',
             }}
             overflowY="auto"
             display="flex"

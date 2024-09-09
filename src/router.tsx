@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Link, Navigate, Outlet } from 'react-router-dom';
 import WalletWrapper from './wrapper/WalletWrapper';
 import PublicWrapper from './wrapper/PublicWrapper';
 import Dashboard from '@/pages/dashboard';
@@ -10,15 +10,15 @@ import VerifyEmail from '@/pages/verifyEmail';
 import Intro from '@/pages/intro';
 import DashboardDetails from '@/pages/dashboard/Details';
 import Recover from '@/pages/recover';
-import Public from '@/pages/public';
-// import RecoverSign from '@/pages/public/RecoverSign';
 import Sign from '@/pages/public/Sign';
 import Lisence from '@/pages/public/Lisence';
 import GuardianSetting from '@/pages/settings/Guardian';
 import ManageGuardian from '@/pages/settings/Guardian/Manage';
 import IntroGuardian from '@/pages/settings/Guardian/Intro';
-import AppContainer from './components/mobile/AppContainer';
 import PassKeyMobile from './pages/passkeys/passkeyMobile';
+import { AssetPage } from './pages/asset';
+import Setting from './pages/settings';
+import Activity from './pages/activity';
 
 export const router = createBrowserRouter([
   {
@@ -26,59 +26,69 @@ export const router = createBrowserRouter([
     element: <WalletWrapper />,
     children: [
       {
+        path: '/dashboard',
+        element: <Dashboard />,
+        children: [{
+          path: '/dashboard/assets',
+          element: <AssetPage />
+        }, {
+          path: '/dashboard/settings',
+          element: <Setting />
+        }, {
+          path: '/dashboard/activity',
+          element: <Activity />
+        }, {
+          path: '/dashboard',
+          element: <Navigate to="/dashboard/assets" replace />,
+        }]
+      },
+      {
         path: '/',
-        element: <AppContainer />,
+        element: <Navigate to="/dashboard/assets" replace />,
+      },
+      { path: '/intro', element: <Intro /> },
+      {
+        path: '/details',
+        element: <DashboardDetails />,
+      },
+      {
+        path: '/create',
+        element: <Create />,
+      },
+      {
+        path: '/deposit',
+        element: <Deposit />,
+      },
+      {
+        path: '/landing',
+        element: <Landing />,
+      },
+      {
+        path: '/verify-email',
+        element: <VerifyEmail />,
+      },
+      {
+        path: '/recover',
+        element: <Recover />,
+      },
+      {
+        path: '/guardian',
+        element: <GuardianSetting />,
         children: [
-          { path: 'dashboard', element: <Dashboard /> },
-          { path: 'intro', element: <Intro /> },
           {
-            path: '/',
-            element: <Navigate to="/dashboard" replace />,
+            path: 'intro',
+            element: <IntroGuardian />,
           },
           {
-            path: '/details',
-            element: <DashboardDetails />,
+            path: 'manage',
+            element: <ManageGuardian />,
           },
-          {
-            path: '/create',
-            element: <Create />,
-          },
-          {
-            path: '/deposit',
-            element: <Deposit />,
-          },
-          {
-            path: '/landing',
-            element: <Landing />,
-          },
-          {
-            path: '/verify-email',
-            element: <VerifyEmail />,
-          },
-          {
-            path: '/recover',
-            element: <Recover />,
-          },
-          {
-            path: '/guardian',
-            element: <GuardianSetting />,
-            children: [
-              {
-                path: 'intro',
-                element: <IntroGuardian />,
-              },
-              {
-                path: 'manage',
-                element: <ManageGuardian />,
-              },
-            ],
-          },
-          {
-            path: '/passkeys',
-            element: <PassKeyMobile />
-          }
         ],
       },
+      {
+        path: '/passkeys',
+        element: <PassKeyMobile />
+      }
     ],
   },
   {

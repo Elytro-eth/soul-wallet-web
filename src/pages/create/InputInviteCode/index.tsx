@@ -5,7 +5,7 @@ import { xLink } from '@/config';
 import XIcon from '@/assets/x.png';
 import useScreenSize from '@/hooks/useScreenSize'
 
-export default function InputInviteCode({value, onChange, codeStatus, checking, onNext}: any) {
+export default function InputInviteCode({ value, onChange, codeStatus, checking, onNext }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const disabled = !value || codeStatus !== 0
   const { innerHeight } = useScreenSize()
@@ -36,7 +36,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
           autoFocus
           lineHeight="34px"
           fontWeight="500"
-        // placeholder="Enter or paste here"
+          // placeholder="Enter or paste here"
           border="none"
           outline="none"
           background="#F2F3F5"
@@ -68,12 +68,12 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
         size="xl"
         type="gradientBlue"
         width={{
-          sm: '100%',
-          md: '200px',
+          base: '100%',
+          lg: '200px',
         }}
         marginLeft={{
-          sm: '0',
-          md: 'calc(100% - 200px)',
+          base: '0',
+          lg: 'calc(100% - 200px)',
         }}
         onClick={onNext}
       >
@@ -88,16 +88,16 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
         <ModalOverlay height="100vh" />
         <ModalContent
           borderRadius={{
-            sm: '32px 32px 0 0',
-            md: '32px',
+            base: '32px 32px 0 0',
+            lg: '32px',
           }}
           maxW={{
-            sm: '100vw',
-            md: '430px'
+            base: '100vw',
+            lg: '430px'
           }}
           marginTop={{
-            sm: `${marginHeight}px`,
-            md: 'calc(50vh - 234px)'
+            base: `${marginHeight}px`,
+            lg: 'calc(50vh - 234px)'
           }}
           height="468px"
           overflow="auto"
@@ -134,7 +134,7 @@ export default function InputInviteCode({value, onChange, codeStatus, checking, 
               textAlign="center"
               marginBottom="40px"
             >
-              We are currently under internal testing. We’ll send out more invitations soon. 
+              We are currently under internal testing. We’ll send out more invitations soon.
             </Box>
             <Box width="100%">
               <Link target='_blank' href={xLink}>

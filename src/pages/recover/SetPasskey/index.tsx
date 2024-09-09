@@ -12,8 +12,8 @@ export default function SetPasskey({ onNext, addingPasskey }: any) {
       width="100%"
       padding="30px"
       height={{
-        sm: innerHeight - 64,
-        md: 'auto',
+        base: innerHeight - 64,
+        lg: 'auto',
       }}
       display="flex"
       alignItems="center"

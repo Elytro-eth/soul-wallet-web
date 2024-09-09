@@ -58,10 +58,10 @@ export default function FeeSelectModal({
                 borderRadius="24px"
                 justifyContent="flex-end"
                 maxW={{
-                    sm: 'calc(100vw - 32px)',
+                    base: 'calc(100vw - 32px)',
                 }}
                 marginTop={{
-                    sm: `auto`,
+                    base: `auto`,
                 }}
                 overflow="visible"
                 mb="0"

@@ -52,7 +52,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
   const [verifyExpireTime, setVerifyExpireTime] = useState(0);
   const { selectedChainId } = useChainStore();
   const { closeModal } = useWalletContext();
-  const { guardianAddressEmail,} = useSettingStore();
+  const { guardianAddressEmail, } = useSettingStore();
   const { selectedAddress } = useAddressStore();
   const { doSetGuardians } = useRecover();
   const [countDown, setCountDown] = useState(0);
@@ -180,15 +180,15 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
     setChangingGuardian(true);
     try {
       const guardianAddress = await doGenerateAddress();
-      if(callback){
+      if (callback) {
         callback(guardianAddress, values.email);
-      }else{
+      } else {
         const defaultThreshold = 1;
         await doSetGuardians([guardianAddress], [values.email], defaultThreshold);
-        if(isModal){
+        if (isModal) {
           closeModal();
           navigate('/dashboard');
-        }else{
+        } else {
           toast({
             title: '10 USDC reward received',
             status: 'success',
@@ -250,17 +250,17 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
       );
     } else if (step == 1) {
       return (verifyToken && (verifyStatus === 2 || verifyStatus === 3)) ? (
-        callback ? <ConfirmTempEmail  changingGuardian={changingGuardian}
-        onPrev={onPrev}
-        onChangeGuardian={doChangeGuardian}
-        email={values.email}
-        isModal={isModal}/> :
-         <ConfirmGuardians
-          changingGuardian={changingGuardian}
+        callback ? <ConfirmTempEmail changingGuardian={changingGuardian}
           onPrev={onPrev}
           onChangeGuardian={doChangeGuardian}
-          isModal={isModal}
-        />
+          email={values.email}
+          isModal={isModal} /> :
+          <ConfirmGuardians
+            changingGuardian={changingGuardian}
+            onPrev={onPrev}
+            onChangeGuardian={doChangeGuardian}
+            isModal={isModal}
+          />
       ) : (
         <ConfirmEmail
           email={values.email}
@@ -276,7 +276,7 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
   };
 
   return (
-    <Box width="100%" bg="#fff" height={innerHeight}>
+    <Box width="100%" bg="#fff">
       {step < 3 && (
         <Fragment>
           <Header
@@ -284,24 +284,24 @@ export default function VerifyEmail({ isModal, callback, defaultEmail, }: any) {
             showBackButton={!(isModal && step === 0)}
             onBack={onPrev}
             display={{
-              sm: 'flex',
-              md: 'none'
+              base: 'flex',
+              lg: 'none'
             }}
           />
         </Fragment>
       )}
       <Box
         height={{
-          sm: isModal ? 'calc(${innerHeight} - 94)' : innerHeight - 60,
-          md: '100%'
+          base: isModal ? 'calc(${innerHeight} - 94)' : innerHeight - 60,
+          lg: '100%'
         }}
         overflowY="auto"
         display="flex"
         alignItems="flex-start"
         justifyContent="center"
         marginTop={{
-          sm: '0',
-          md: '0',
+          base: '0',
+          lg: '0',
         }}
       >
         {renderStep(isModal)}

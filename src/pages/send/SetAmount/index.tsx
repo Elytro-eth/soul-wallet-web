@@ -89,8 +89,8 @@ export default function SetAmount({
         padding="30px"
         minHeight={isModal ? 'calc(100vh - 118px)' : 'calc(100vh - 62px)'}
         paddingTop={{
-          sm: '30px',
-          md: '0',
+          base: '30px',
+          lg: '0',
         }}
       >
         <Box fontSize="28px" fontWeight="500" color="#161F36">

@@ -28,16 +28,16 @@ export default function NetWorkDetialModal() {
                 overflow="auto"
                 mb="0"
                 bottom={{
-                    sm: 0,
-                    md: `calc(50vh - ${modalContentHeight / 2}px)`
+                    base: 0,
+                    lg: `calc(50vh - ${modalContentHeight / 2}px)`
                 }}
                 maxW={{
-                    sm: '100vw',
-                    md: '430px',
+                    base: '100vw',
+                    lg: '430px',
                 }}
                 borderRadius={{
-                    sm: '32px 32px 0 0',
-                    md: '32px',
+                    base: '32px 32px 0 0',
+                    lg: '32px',
                 }}
             >
                 <ModalCloseButton />

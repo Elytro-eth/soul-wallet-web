@@ -20,7 +20,7 @@ export default function MakeTransfer({ onNext, registerScrollable }: any) {
   return (
     <Box
       width="100%"
-      height={{ sm: contentHeight, md: '440px' }}
+      height={{ base: contentHeight, lg: '440px' }}
       position="relative"
       ref={scrollableRef}
       display="flex"

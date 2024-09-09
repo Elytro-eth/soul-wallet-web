@@ -13,12 +13,12 @@ const SignHeader = ({ url }: { url?: string }) => {
       <Link
         display="inline-block"
         {...(url
-           ? {
-             href: url,
-           }
-           : {
-             cursor: 'default',
-        })}
+          ? {
+            href: url,
+          }
+          : {
+            cursor: 'default',
+          })}
       >
         <Image src={IconLogo} h="44px" />
       </Link>
@@ -47,7 +47,7 @@ function SignContainer({ children }: any) {
           display="flex"
           padding="0"
           overflow="hidden"
-          flexDirection={{ base: 'column', md: 'row' }}
+          flexDirection={{ base: 'column', lg: 'row' }}
         >
           {children}
         </Box>
@@ -62,15 +62,15 @@ export default function VerifySecret() {
   const [status, setStatus] = useState(0);
 
   const doConfirm = async () => {
-    try{
-      const res:any = await api.emailVerify.confirmVerification({ verifySecret: secret });
+    try {
+      const res: any = await api.emailVerify.confirmVerification({ verifySecret: secret });
       console.log('confirm result', res);
-      if (res.code === 200&& res.data.verifyResult === 1) {
+      if (res.code === 200 && res.data.verifyResult === 1) {
         setStatus(1);
       } else {
         setStatus(2);
       }
-    }catch(e){
+    } catch (e) {
       setStatus(2);
     }
   };
@@ -84,7 +84,7 @@ export default function VerifySecret() {
   if (status === 0) {
     return (
       <SignContainer>
-        <Box width={{ base: '100%', md: '100%' }} flex="1" display="flex" padding="60px">
+        <Box width={{ base: '100%', lg: '100%' }} flex="1" display="flex" padding="60px">
           <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             <Box
               maxWidth="548px"
@@ -107,7 +107,7 @@ export default function VerifySecret() {
   if (status === 1) {
     return (
       <SignContainer>
-        <Box width={{ base: '100%', md: '100%' }} flex="1" display="flex" padding="60px">
+        <Box width={{ base: '100%', lg: '100%' }} flex="1" display="flex" padding="60px">
           <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             <Box
               maxWidth="548px"
@@ -127,7 +127,7 @@ export default function VerifySecret() {
               >
                 <SuccessIcon size="120" />
               </Box>
-              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="500" lineHeight={'normal'}>
+              <Box fontSize={{ base: '26px', lg: '32px' }} fontWeight="500" lineHeight={'normal'}>
                 Email verified successfully!
               </Box>
               <Box
@@ -136,7 +136,7 @@ export default function VerifySecret() {
                 lineHeight={'normal'}
                 color="black"
                 marginTop="34px"
-                maxWidth={{ base: '300px', md: '500px' }}
+                maxWidth={{ base: '300px', lg: '500px' }}
               >
                 Your email has been verified. Please continue recovery contact setup.
               </Box>
@@ -150,7 +150,7 @@ export default function VerifySecret() {
   if (status === 2) {
     return (
       <SignContainer>
-        <Box width={{ base: '100%', md: '100%' }} flex="1" display="flex" padding="60px">
+        <Box width={{ base: '100%', lg: '100%' }} flex="1" display="flex" padding="60px">
           <Box width="100%" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             <Box
               maxWidth="548px"
@@ -170,7 +170,7 @@ export default function VerifySecret() {
               >
                 <ErrorIcon size="120" />
               </Box>
-              <Box fontSize={{ base: '26px', md: '32px' }} fontWeight="500" lineHeight={'normal'}>
+              <Box fontSize={{ base: '26px', lg: '32px' }} fontWeight="500" lineHeight={'normal'}>
                 Failed to verify secret.
               </Box>
             </Box>
