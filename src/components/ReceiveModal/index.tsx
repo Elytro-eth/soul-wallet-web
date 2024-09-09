@@ -1,6 +1,6 @@
 import { useState, useImperativeHandle, forwardRef, Ref } from 'react';
 import { Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody } from '@chakra-ui/react';
-import Receive from '../Receive';
+import Receive from '@/components/Receive';
 
 function ReceiveModal(_: any, ref: Ref<any>) {
   const [visible, setVisible] = useState(false);

@@ -2,6 +2,8 @@
  * Listen to the message from injector and send message back
  */
 
+// TODO: need to refactor as a hook
+
 import { useEffect } from 'react';
 import { useAddressStore } from '@/store/address';
 import { useChainStore } from '@/store/chain';
@@ -49,7 +51,7 @@ export default function InjectorMessage() {
     //   address: selectedAddress,
     //   chainId: selectedChainId,
     // } });
-    setInterval(()=>{
+    setInterval(() => {
       (window as any).top.postMessage({
         type: 'wallet/getAccount',
         accountInfo: {
@@ -60,7 +62,7 @@ export default function InjectorMessage() {
     }, 3000)
     // send message to parent window
     // window.parent.postMessage({ type: 'FROM_PAGE', text: 'Hello from the webpage!' }, '*');
-    
+
     // window.addEventListener('message', listener, false);
   }, [selectedAddress, selectedChainId]);
 

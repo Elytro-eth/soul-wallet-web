@@ -1,7 +1,7 @@
 import { useState, forwardRef, useImperativeHandle, useEffect, Ref } from 'react';
-import { Text, useToast } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 import SignMessage from './comp/SignMessage';
-import TxModal from '../TxModal';
+import TxModal from '@/components/TxModal';
 
 const SignMessageModal = (_: unknown, ref: Ref<any>) => {
   const [visible, setVisible] = useState(false);

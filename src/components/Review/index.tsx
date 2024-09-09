@@ -16,7 +16,7 @@ import FadeId from '@/components/Icons/mobile/FaceId';
 import api from '@/lib/api';
 import { useAddressStore } from '@/store/address';
 import NetWorkDetialModal from '@/components/NetworkDetailModal';
-import FeeSelectModal from '../FeeSelectModal';
+import FeeSelectModal from '@/components/FeeSelectModal';
 import { formatEther, TransactionRequestBase } from 'viem';
 import ReviewActionIcon from '@/assets/actions/review-action.svg'
 

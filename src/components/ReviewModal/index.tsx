@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay } from "@chakra-ui/react";
-import Review, { TransactionType } from "../Review";
+import Review, { TransactionType } from "@/components/Review";
 import { Address, TransactionRequestBase } from "viem";
 
 interface ReviewModalProps {
