@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Flex, Box, Text, Image, useToast } from '@chakra-ui/react';
-import Button from '../../Button';
+import Button from '@/components/Button';
 import { useAccount, useSignTypedData, useSwitchChain, useConnect, useDisconnect } from 'wagmi';
 import useWallet from '@/hooks/useWallet';
 import { motion } from 'framer-motion';

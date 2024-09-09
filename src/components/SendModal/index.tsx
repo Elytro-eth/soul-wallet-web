@@ -9,7 +9,7 @@ import {
   ModalCloseButton,
   ModalBody,
 } from '@chakra-ui/react';
-import SendAssets from '../SendAssets';
+import SendAssets from '@/components/SendAssets';
 import { ethers } from 'ethers';
 
 function SendModal(_: any, ref: Ref<any>) {
