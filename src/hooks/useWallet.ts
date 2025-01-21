@@ -174,7 +174,7 @@ export default function useWallet() {
         : Number(finalTos.length * 50000).toString(16)
     }`;
     userOp.preVerificationGas = `0x${BN(userOp.preVerificationGas.toString()).plus(15000).toString(16)}`;
-    userOp.verificationGasLimit = `0x${BN(userOp.verificationGasLimit.toString()).plus(30000).toString(16)}`;
+    userOp.verificationGasLimit = `0x${BN(userOp.verificationGasLimit.toString()).plus(10_000).toString(16)}`;
 
     return userOp;
   };
